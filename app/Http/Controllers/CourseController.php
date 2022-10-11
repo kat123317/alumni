@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+
+use Inertia\Inertia;
 
 class CourseController extends Controller
 {
@@ -35,7 +38,12 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Course::create([
+            'college_id' => $request->college_id,
+            'name' => $request->name,
+            'abbrevation' => $request->abbrevation
+        ]);
+        return Redirect::back();
     }
 
     /**

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\College;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+
+use Inertia\Inertia;
 
 class CollegeController extends Controller
 {
@@ -14,7 +17,11 @@ class CollegeController extends Controller
      */
     public function index()
     {
-        //
+        $colleges = College::all();
+
+        return Inertia::render('College/Index', [
+            'colleges' => $colleges
+        ]);
     }
 
     /**
@@ -35,7 +42,10 @@ class CollegeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        College::create([
+            'name' => $request->name
+        ]);
+        return Redirect::back();
     }
 
     /**

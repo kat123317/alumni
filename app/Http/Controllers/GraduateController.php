@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Graduate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+
+use Inertia\Inertia;
 
 class GraduateController extends Controller
 {
@@ -14,7 +17,11 @@ class GraduateController extends Controller
      */
     public function index()
     {
-        //
+        $graduates = Graduate::all();
+
+        return Inertia::render('Yearbook/Graduate', [
+            'graduates' => $graduates
+        ]);
     }
 
     /**
@@ -35,7 +42,15 @@ class GraduateController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Graduate::create([
+            'yearbook_id' => $request->yearbook_id,
+            'course_id' => $request->course_id,
+            'firstname' => $request->firstname,
+            'middlename' => $request->middlename,
+            'lastname' => $request->lastname,
+            'suffix' => $request->suffix
+        ]);
+        return Redirect::back();
     }
 
     /**

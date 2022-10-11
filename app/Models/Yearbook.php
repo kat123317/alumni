@@ -12,11 +12,6 @@ class Yearbook extends Model
 
     protected $guarded = [];
 
-    protected $casts = [
-        'schoolyear_from' => 'datetime',
-        'schoolyear_to' => 'datetime'
-    ];
-
     public function graduates()
     {
         return $this->hasMany(Graduate::class);

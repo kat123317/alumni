@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Yearbook;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+
+use Inertia\Inertia;
 
 class YearbookController extends Controller
 {
@@ -14,7 +17,11 @@ class YearbookController extends Controller
      */
     public function index()
     {
-        //
+        $yearbooks = Yearbook::all();
+
+        return Inertia::render('Yearbook/Index', [
+            'yearbooks' => $yearbooks
+        ]);
     }
 
     /**
@@ -35,7 +42,11 @@ class YearbookController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Yearbook::create([
+            'schoolyear_from' => $request->schoolyear_from,
+            'schoolyear_to' => $request->schoolyear_to
+        ]);
+        return Redirect::back();
     }
 
     /**
