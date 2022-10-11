@@ -14,10 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('status');
-            $table->string('user_type');
-            $table->foreignId('college_id')->nullable(); // filter admin by college for staff admin
-            $table->json('details')->nullable();
+            $table->string('status')->after('password');
+            $table->string('user_type')->after('status');
+            $table->foreignId('college_id')->nullable()->after('user_type'); // filter admin by college for staff admin
+            $table->json('details')->nullable()->after('college_id');
         });
     }
 
