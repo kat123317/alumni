@@ -18,9 +18,9 @@ const form = useForm({
     religion:'',
     civil_status:'',
     gender:'',
-    college:'',
-    course:'',
-    adress:'',
+    college_id:'',
+    course_id:'',
+    address:'',
     phone_number:'',
     current_work:'',
     year_graduated:'',
@@ -152,31 +152,31 @@ const submit = () => {
                         </div>
 
                         <div class="mt-4 col-span-3">
-                            <InputLabel for="college" value="College" />
+                            <InputLabel for="college_id" value="College" />
                             <select
-                                id="college"
-                                v-model="form.college"
+                                id="college_id"
+                                v-model="form.college_id"
                                 class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm w-full"
                             >
                                 <option value="1">College of Engineering</option>
-                                <option value="1">College of Agriculture</option>
-                                <option value="1">College of Arts and Sciences</option>
+                                <option value="2">College of Agriculture</option>
+                                <option value="3">College of Arts and Sciences</option>
                             </select>
-                            <InputError class="mt-2" :message="form.errors.college_error" />
+                            <InputError class="mt-2" :message="form.errors.college_id" />
                         </div>
 
                         <div class="mt-4 col-span-3">
-                            <InputLabel for="course" value="Course" />
+                            <InputLabel for="course_id" value="Course" />
                             <select
-                                id="course"
-                                v-model="form.course"
+                                id="course_id"
+                                v-model="form.course_id"
                                 class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm w-full"
                             >
                                 <option value="1">Batchelor of Science in Information Technology</option>
-                                <option value="1">Batchelor of Science in Civil Engineering</option>
-                                <option value="1">Batchelor of Science in Mechanichal Engineering</option>
+                                <option value="2">Batchelor of Science in Civil Engineering</option>
+                                <option value="3">Batchelor of Science in Mechanichal Engineering</option>
                             </select>
-                            <InputError class="mt-2" :message="form.errors.course" />
+                            <InputError class="mt-2" :message="form.errors.course_id" />
                         </div>
 
                         <div class="mt-4 col-span-3">

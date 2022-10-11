@@ -3,7 +3,12 @@
 namespace App\Providers;
 
 use App\Actions\Jetstream\DeleteUser;
+use App\Models\User;
+use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Validation\ValidationException;
+use Laravel\Fortify\Fortify;
 use Laravel\Jetstream\Jetstream;
 
 class JetstreamServiceProvider extends ServiceProvider
@@ -28,6 +33,27 @@ class JetstreamServiceProvider extends ServiceProvider
         $this->configurePermissions();
 
         Jetstream::deleteUsersUsing(DeleteUser::class);
+
+
+        Fortify::authenticateUsing(function (Request $request) {
+            $user = User::where('email', $request->email)->first();
+            try{
+                if ($user->status != 'pending') {
+                    return $user;
+                }
+                else {
+                    throw ValidationException::withMessages([
+                        Fortify::username() => "Your account is not yet validated by the administrators.",
+                    ]);
+                }
+            }
+            catch(DecryptException $e){
+                throw ValidationException::withMessages([
+                    Fortify::username() => "These credentials do not match our records.",
+                ]);
+            }
+            
+        });
     }
 
     /**

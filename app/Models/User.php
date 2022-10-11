@@ -18,14 +18,13 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
-    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var string[]
      */
-    protected $guarded = [];
+    protected $fillable = ['name','email','password','status','user_type','college_id','details'];
 
     /**
      * The attributes that should be hidden for serialization.
