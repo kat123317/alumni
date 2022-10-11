@@ -3,6 +3,7 @@
 use App\Http\Controllers\CollegeController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\GraduateController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\YearbookController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -27,6 +28,9 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+
+Route::post('/register_user', [UserController::class, 'register'])->name('register_user');
+
 
 Route::middleware([
     'auth:sanctum',
