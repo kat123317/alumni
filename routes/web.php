@@ -35,3 +35,8 @@ Route::middleware([
 });
 
 
+Route::get('/alumni', function () {
+    return Inertia::render('Yearbook');
+})->name("yearbook");
+
+
