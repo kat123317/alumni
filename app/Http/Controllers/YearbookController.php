@@ -80,7 +80,11 @@ class YearbookController extends Controller
      */
     public function update(Request $request, Yearbook $yearbook)
     {
-        //
+        $yearbook->update([
+            'schoolyear_from' => $request->schoolyear_from,
+            'schoolyear_to' => $request->schoolyear_to
+        ]);
+        return Redirect::back();
     }
 
     /**

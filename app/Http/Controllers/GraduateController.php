@@ -84,7 +84,15 @@ class GraduateController extends Controller
      */
     public function update(Request $request, Graduate $graduate)
     {
-        //
+        $graduate->update([
+            'yearbook_id' => $request->yearbook_id,
+            'course_id' => $request->course_id,
+            'firstname' => $request->firstname,
+            'middlename' => $request->middlename,
+            'lastname' => $request->lastname,
+            'suffix' => $request->suffix
+        ]);
+        return Redirect::back();
     }
 
     /**

@@ -79,7 +79,10 @@ class CollegeController extends Controller
      */
     public function update(Request $request, College $college)
     {
-        //
+        $college->update([
+            'name' => $request->name
+        ]);
+        return Redirect::back();
     }
 
     /**

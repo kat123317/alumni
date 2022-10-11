@@ -77,7 +77,12 @@ class CourseController extends Controller
      */
     public function update(Request $request, Course $course)
     {
-        //
+        $course->update([
+            'college_id' => $request->college_id,
+            'name' => $request->name,
+            'abbrevation' => $request->abbrevation
+        ]);
+        return Redirect::back();
     }
 
     /**

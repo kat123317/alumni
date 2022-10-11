@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\CollegeController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\GraduateController;
 use App\Http\Controllers\YearbookController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -35,7 +38,23 @@ Route::middleware([
     })->name('dashboard');
 
     Route::prefix('yearbooks')->name('yearbooks.')->group(function () {
+        Route::post('/index', [YearbookController::class, 'index'])->name('index');
         Route::post('/store', [YearbookController::class, 'store'])->name('store');
+
+        Route::prefix('alumni')->name('alumni.')->group(function () {
+            Route::post('/index', [GraduateController::class, 'index'])->name('index');
+            Route::post('/store', [GraduateController::class, 'store'])->name('store');
+        });
+    });
+
+    Route::prefix('colleges')->name('colleges.')->group(function () {
+        Route::post('/index', [CollegeController::class, 'index'])->name('index');
+        Route::post('/store', [CollegeController::class, 'store'])->name('store');
+    });
+
+    Route::prefix('courses')->name('courses.')->group(function () {
+        Route::post('/index', [CourseController::class, 'index'])->name('index');
+        Route::post('/store', [CourseController::class, 'store'])->name('store');
     });
 });
 
