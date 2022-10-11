@@ -6,6 +6,7 @@ use App\Actions\Jetstream\DeleteUser;
 use App\Models\User;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\ValidationException;
 use Laravel\Fortify\Fortify;
@@ -38,14 +39,17 @@ class JetstreamServiceProvider extends ServiceProvider
         Fortify::authenticateUsing(function (Request $request) {
             $user = User::where('email', $request->email)->first();
             try{
-                if ($user->status != 'pending') {
-                    return $user;
+                if($user->password == Hash::make($request->password)){
+                    if ($user->status != 'pending') {
+                        return $user;
+                    }
+                    else {
+                        throw ValidationException::withMessages([
+                            Fortify::username() => "Your account is not yet validated by the administrators.",
+                        ]);
+                    }
                 }
-                else {
-                    throw ValidationException::withMessages([
-                        Fortify::username() => "Your account is not yet validated by the administrators.",
-                    ]);
-                }
+                
             }
             catch(DecryptException $e){
                 throw ValidationException::withMessages([
