@@ -55,16 +55,17 @@ const logout = () => {
                             </div>
 
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink :href="route('yearbook')" :active="route().current('yearbook')">
-                                    YB
+                                <NavLink :href="route('graduates.index')" :active="route().current('graduates.index')">
+                                    Yearbook
                                 </NavLink>
                             </div>
 
-                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex" v-if="($page.props.user.user_type == 'admin')">
                                 <NavLink :href="route('administrator')" :active="route().current('administrator')">
                                     Administrator
                                 </NavLink>
                             </div>
+                            
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -221,7 +222,7 @@ const logout = () => {
                 <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                            Dashboard
+                            Announcements
                         </ResponsiveNavLink>
                     </div>
 

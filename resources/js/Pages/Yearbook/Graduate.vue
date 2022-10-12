@@ -1,5 +1,24 @@
 <script setup>
+import AppLayout from '@/Layouts/AppLayout.vue';
+import GraduateList from '@/Pages/Yearbook/GraduateList.vue';
+
+const props = defineProps(['graduates', 'courses', 'colleges']);
 </script>
+
 <template>
-    <h1>graduate here</h1>
+    <AppLayout title="Yearbook">
+        <template #header>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                Yearbook
+            </h2>
+        </template>
+
+        <div class="py-12">
+            <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                    <GraduateList />
+                </div>
+            </div>
+        </div>
+    </AppLayout>
 </template>

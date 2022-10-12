@@ -35,7 +35,23 @@ class AnnouncementController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $foreign_ids = [];
+        switch ($request->shown_only) {
+            case 'college':
+            case 'course':
+                $foreign_ids = $request->foreign_ids;
+                break;
+            default: //all
+                
+                break;
+        }
+        Announcement::create([
+            'title' => $request->title,
+            'content' => $request->content,
+            'shown_only' => $request->shown_only,
+            'foreign_ids' => $foreign_ids
+        ]);
+        return Redirect::back();
     }
 
     /**

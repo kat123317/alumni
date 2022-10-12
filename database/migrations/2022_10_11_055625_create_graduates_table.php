@@ -18,9 +18,9 @@ return new class extends Migration
             $table->foreignId('yearbook_id')->index();
             $table->foreignId('course_id');
             $table->string('firstname');
-            $table->string('middlename');
+            $table->string('middlename')->nullable();
             $table->string('lastname');
-            $table->string('suffix');
+            $table->string('suffix')->nullable();
             $table->json('details')->nullable();
             $table->timestamps();
             $table->softDeletes();

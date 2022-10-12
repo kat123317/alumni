@@ -34,7 +34,7 @@ class CreateNewUser implements CreatesNewUsers
             'civil_status'=>['required'],
             'gender'=>['required'],
             'address'=>['required'],
-            'phone_number'=>['required', 'integer'],
+            'phone_number'=>['required','string'],
             'current_work'=>['required'],
             'year_graduated'=>['required'],
             'motto'=>['required'],

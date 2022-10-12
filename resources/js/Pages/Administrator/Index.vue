@@ -1,11 +1,49 @@
 <script setup>
+import { useForm } from '@inertiajs/inertia-vue3';
 import { ref, onMounted } from 'vue'
 import route from '../../../../vendor/tightenco/ziggy/src/js';
 
 const trigger  = ref(1);
+const props = defineProps([
+    'colleges', 
+    'notifications', 
+    'courses',
+    'users',
+    'announcements'
+]);
 
-const backDashboard = () => {
-    route('dashnoard')
+const form_announcement = useForm({
+    title: '',
+    content: '',
+    shown_only: 'all',
+    foreign_ids: []
+});
+
+const form_graduate = useForm({
+    yearbook_id: null,
+    course_id: null,
+    firstname: '',
+    middlename: '',
+    lastname: '',
+    suffix: '' 
+});
+
+const saveAnnouncement = () => {
+    form_announcement.post(route('announcements.store'), {
+        preserveScroll: true,
+        onSuccess: () => {
+            form_announcement.reset();
+        }
+    });
+}
+
+const addGraduate = () => {
+    form_graduate.post(route('graduates.store'), {
+        preserveScroll: true,
+        onSuccess: () => {
+            form_announcement.reset();
+        }
+    });
 }
 </script>
 <template>
@@ -22,11 +60,11 @@ const backDashboard = () => {
                 <button @click="trigger = 3" class="mr-5 text-white hover:text-gray-200">User Managenment</button>
                 <button @click="trigger = 4" class="mr-5 text-white hover:text-gray-200">Survey</button>
                 </nav>
-                <button @click="backDashboard()" class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Back to home
+                <a :href="route('dashboard')" class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Back to home
                 <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
                     <path d="M5 12h14M12 5l7 7-7 7"></path>
                 </svg>
-                </button>
+                </a>
             </div>
         </header>
         
@@ -40,15 +78,15 @@ const backDashboard = () => {
                 <h2 class="text-gray-900 text-lg mb-5 font-medium title-font">Post-Announcement</h2>
                 
                 <div class="relative mb-4">
-                    <label for="email" class="leading-7 text-sm text-gray-600">Privacy</label>
-                    <select id="underline_select" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
-                        <option selected>Only Me</option>
-                        <option value="COE">Private</option>
-                        <option value="COED">Public</option>
+                    <label for="email" class="leading-7 text-sm text-gray-600">Shown Only</label>
+                    <select v-model="form_announcement.shown_only" id="underline_select" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
+                        <option value="all" selected>All</option>
+                        <option value="college">College</option>
+                        <option value="course">Department</option>
                     </select>
                 </div>
                 <div class="relative mb-4">
-                <label for="email" class="leading-7  text-sm text-gray-600">Department</label>
+                    <label for="email" class="leading-7  text-sm text-gray-600">Department</label>
                     <select id="underline_select" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
                         <option selected>All</option>
                        
@@ -62,7 +100,7 @@ const backDashboard = () => {
                     <label for="message" class="leading-7 text-sm text-gray-600">Announcement</label>
                     <textarea id="message" name="message" class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
                 </div>
-                <button class="text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded text-lg">Post</button>
+                <button @click="saveAnnouncement()" :disabled="form_announcement.processing" class="text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded text-lg">Post</button>
                 <p class="text-xs text-gray-500 mt-3">Post some NEWS, events and other important matters.</p>
                 </div>
             </div>
@@ -161,7 +199,7 @@ const backDashboard = () => {
                     </div>
                     </div>
                     <div class="p-2 w-full">
-                    <button class="flex mx-auto text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">Submit</button>
+                    <button @click="addGraduate()" class="flex mx-auto text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">Submit</button>
                     </div>
                     <div class="p-2 w-full pt-8 mt-8 border-t border-gray-200 text-center">
 

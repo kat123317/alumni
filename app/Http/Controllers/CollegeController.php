@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Announcement;
 use App\Models\College;
+use App\Models\Course;
 use App\Models\Notification;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -35,13 +36,15 @@ class CollegeController extends Controller
         $colleges = College::with(['courses' => function($query) {
             $query->withCount('users');
         }])->get();
-        $announcement = Announcement::with('user')->get();
+        $announcements = Announcement::with('user')->get();
+        $courses = Course::all();
 
         return Inertia::render('Dashboard', [
             'notifications' => $notifications,
             'colleges' => $colleges,
             'users' => $users,
-            'announcement' => $announcement
+            'announcements' => $announcements,
+            'courses' => $courses
         ]);
     }
 

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Graduate;
+use App\Models\College;
+use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -15,12 +17,32 @@ class GraduateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $graduates = Graduate::all();
+        $search = $request->search ?? false;
+        if ($search != null) {
+            $graduates = Graduate::when($search, function($query, $search) {
+                $query->where('firstname', 'like', "%{$search}%")
+                    ->orWhere('middlename', 'like', "%{$search}%")
+                    ->orWhere('lastname', 'like', "%{$search}%")
+                    ->orWhere('suffix', 'like', "%{$search}%");
+            })->orderBy('lastname', 'desc')->paginate(20);
+        } else {
+            $yearbook_id = $request->yearbook_id ?? false;
+            //$course_id = $request->course_id ?? false;
 
+            $graduates = Graduate::when($yearbook_id, function($query, $yearbook_id) {
+                $query->where('yearbook_id', $yearbook_id);
+            })/* ->when($college_id, function($query, $college_id) {
+                $query->where('college_id', $college_id);
+            })->when($course, function($query, $search) {
+                $$query->where('yearbook_id', $yearbook_id);
+            }) */->orderBy('lastname', 'desc')->paginate(10);
+        }
         return Inertia::render('Yearbook/Graduate', [
-            'graduates' => $graduates
+            'graduates' => $graduates,
+            'courses' => Course::all(),
+            'colleges' => College::all()
         ]);
     }
 
