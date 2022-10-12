@@ -33,13 +33,13 @@ const option_view  = ref(true)
                 <div class="bg-white p-5 overflow-hidden shadow-xl sm:rounded-lg">
                     <!-- <Welcome /> -->
                     <div class="grid grid-flow-row-dense grid-cols-3 grid-rows-1 ...">   
-                    <div>
-                        <div class=" w-full max-w-md bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                    <div class="mr-5">
+                        <div class=" bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                             <time class="text-lg font-semibold text-gray-900 dark:text-white">Notifications</time>
                             <ol class="mt-3 divide-y max-h-[40vmin] overflow-hidden overflow-y-auto divider-gray-200 dark:divide-gray-700">
                                 <li v-for="items in 10">
                                     <a href="#" class="block items-center p-3 sm:flex hover:bg-gray-100 dark:hover:bg-gray-700">
-                                        <img class="mr-3 mb-3 w-12 h-12 rounded-full sm:mb-0" src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a0/Central_Mindanao_University_logo.png/180px-Central_Mindanao_University_logo.png" alt="Jese Leos image">
+                                        <img class="mr-3 mb-3 w-12 h-12 rounded-full sm:mb-0" src="https://image.shutterstock.com/image-vector/circle-abstract-design-logotype-round-260nw-1542183188.jpghttps://image.shutterstock.com/image-vector/circle-abstract-design-logotype-round-260nw-1542183188.jpg" alt="Jese Leos image">
                                         <div class="text-gray-600 dark:text-gray-400">
                                             <div class="text-base font-normal"><span class="font-medium text-gray-900 dark:text-white">College of Engineering</span>
                                                 <span class="inline-flex items-center ml-2 text-xs font-normal text-gray-500 dark:text-gray-400">
@@ -56,7 +56,7 @@ const option_view  = ref(true)
                             
                      
                         </div>
-                        <div class="p-4 mt-10 w-full max-w-md bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                        <div class="p-4 mt-10  bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                             <div class="flex justify-between items-center mb-4">
                                 <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Colleges</h5>
                             </div>
@@ -65,7 +65,7 @@ const option_view  = ref(true)
                                         <li v-for="ïtems in 4" class="py-3 sm:py-4">
                                             <div class="flex items-center space-x-4">
                                                 <div class="flex-shrink-0">
-                                                    <img class="w-8 h-8 rounded-full" src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a0/Central_Mindanao_University_logo.png/180px-Central_Mindanao_University_logo.png" alt="Neil image">
+                                                    <img class="w-8 h-8 rounded-full" src="https://image.shutterstock.com/image-vector/circle-abstract-design-logotype-round-260nw-1542183188.jpghttps://image.shutterstock.com/image-vector/circle-abstract-design-logotype-round-260nw-1542183188.jpg" alt="Neil image">
                                                 </div>
                                                 <div class="flex-1 min-w-0">
                                                     <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
@@ -110,7 +110,7 @@ const option_view  = ref(true)
                                  
                                     <li  v-for="announcements in 10" class="mb-5 px-10 border-b-1 bg-gray-100 rounded p-5 border-gray-500">
                                         <div class="flex ">             
-                                              <img width="35" class="mr-2" src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a0/Central_Mindanao_University_logo.png/180px-Central_Mindanao_University_logo.png" alt="">
+                                              <img width="35" class="mr-2" src="https://image.shutterstock.com/image-vector/circle-abstract-design-logotype-round-260nw-1542183188.jpghttps://image.shutterstock.com/image-vector/circle-abstract-design-logotype-round-260nw-1542183188.jpg" alt="">
                                               <h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white">College of Education<span class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-800 ml-3">Just Now</span></h3>
                                         </div>
                                       
