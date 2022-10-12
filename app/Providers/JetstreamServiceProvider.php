@@ -47,7 +47,7 @@ class JetstreamServiceProvider extends ServiceProvider
                     }
                     else {
                         throw ValidationException::withMessages([
-                            'custom'=> "Your account is not yet validated by the administrators.",
+                            'custom'=> "Sorry! Your account is not yet validated by the administrators.",
                         ]);
                     }
                 }
