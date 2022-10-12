@@ -36,30 +36,35 @@ class JetstreamServiceProvider extends ServiceProvider
         Jetstream::deleteUsersUsing(DeleteUser::class);
 
 
-        /* Fortify::authenticateUsing(function (Request $request) {
+        Fortify::authenticateUsing(function (Request $request) {
             $user = User::where('email', $request->email)->first();
             // $password = 
-            // dd($user->password);
+            // dd();
             try{
-                if($user->password == Hash::make($request->password)){
+                if(Hash::check($request->password, $user->password)){
                     if ($user->status != 'pending') {
                         return $user;
                     }
                     else {
                         throw ValidationException::withMessages([
-                            Fortify::username() => "Your account is not yet validated by the administrators.",
+                            'custom'=> "Your account is not yet validated by the administrators.",
                         ]);
                     }
+                }
+                else{
+                    throw ValidationException::withMessages([
+                        'custom' => "These credentials do not match our records.",
+                    ]);
                 }
                 
             }
             catch(DecryptException $e){
                 throw ValidationException::withMessages([
-                    Fortify::username() => "These credentials do not match our records.",
+                    'custom' => "These credentials do not match our records.",
                 ]);
             }
             
-        }); */
+        });
     }
 
     /**

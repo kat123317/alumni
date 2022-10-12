@@ -42,6 +42,7 @@ const submit = () => {
         </div>
 
         <form @submit.prevent="submit">
+            <InputError class="mt-2" :message="form.errors.custom" />
             <div>
                 <InputLabel for="email" value="Email" />
                 <TextInput
