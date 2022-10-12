@@ -42,13 +42,13 @@ const option_view  = ref(true)
                                     <a href="#" class="block items-center p-3 sm:flex hover:bg-gray-100">
                                         <img class="mr-3 mb-3 w-12 h-12 rounded-full sm:mb-0" src="shttps://upload.wikimedia.org/wikipedia/en/thumb/a/a0/Central_Mindanao_University_logo.png/180px-Central_Mindanao_University_logo.png" alt="Jese Leos image">
                                         <div class="text-gray-600">
-                                            <div class="text-base font-normal"><span class="font-medium text-gray-900">College of Engineering</span>
+                                            <div class="text-base font-normal"><span class="font-medium text-gray-900">{{ notifications.title }}</span>
                                                 <span class="inline-flex items-center ml-2 text-xs font-normal text-gray-500">
                                                 <svg aria-hidden="true" class="mr-1 w-3 h-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.083 9h1.946c.089-1.546.383-2.97.837-4.118A6.004 6.004 0 004.083 9zM10 2a8 8 0 100 16 8 8 0 000-16zm0 2c-.076 0-.232.032-.465.262-.238.234-.497.623-.737 1.182-.389.907-.673 2.142-.766 3.556h3.936c-.093-1.414-.377-2.649-.766-3.556-.24-.56-.5-.948-.737-1.182C10.232 4.032 10.076 4 10 4zm3.971 5c-.089-1.546-.383-2.97-.837-4.118A6.004 6.004 0 0115.917 9h-1.946zm-2.003 2H8.032c.093 1.414.377 2.649.766 3.556.24.56.5.948.737 1.182.233.23.389.262.465.262.076 0 .232-.032.465-.262.238-.234.498-.623.737-1.182.389-.907.673-2.142.766-3.556zm1.166 4.118c.454-1.147.748-2.572.837-4.118h1.946a6.004 6.004 0 01-2.783 4.118zm-6.268 0C6.412 13.97 6.118 12.546 6.03 11H4.083a6.004 6.004 0 002.783 4.118z" clip-rule="evenodd"></path></svg>
-                                                Public
+                                                {{ (notifications.user_type == 1) ? 'Public':'Staff' }}
                                             </span> 
                                          </div>
-                                         <div class="text-sm font-normal">"COE palaro Meeting"</div>
+                                         <div class="text-sm font-normal truncate">"{{ notifications.content }}"</div>
                                          <button type="button" class="text-white  text-xs bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Show More</button>
                                         </div>
                                     </a>
@@ -72,7 +72,7 @@ const option_view  = ref(true)
                                                     <p class="text-sm font-medium text-gray-900 truncate" :title="colleges.name">
                                                         College of {{ colleges.name }}
                                                     </p>
-                                                    <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                                    <p class="text-sm text-gray-500 truncate ">
                                                         {{ colleges.abbreviation }}
                                                     </p>
                                                 </div>
