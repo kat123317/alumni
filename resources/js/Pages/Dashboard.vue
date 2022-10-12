@@ -33,14 +33,15 @@ const option_view  = ref(true)
 
                 <div class="bg-white p-5 overflow-hidden shadow-xl sm:rounded-lg">
                     <!-- <Welcome /> -->
-                    <div class="grid grid-flow-row-dense grid-cols-3 grid-rows-1 ...">   
-                    <div>
-                        <div class=" w-full max-w-md bg-white rounded-lg border shadow-md sm:p-8">
+                    
+                    <div class="grid grid-flow-row-dense grid-cols-1 sm:grid-cols-3  grid-rows-1 ...">   
+                    <div class="lg:mr-5 mb-10">
+                        <div class=" bg-white p-2 rounded-lg border shadow-md sm:p-8">
                             <time class="text-lg font-semibold text-gray-900">Notifications</time>
                             <ol class="mt-3 divide-y max-h-[40vmin] overflow-hidden overflow-y-auto divider-gray-200">
                                 <li v-for="(notifications, key) in usePage().props.value.notifications" :key="key">
                                     <a href="#" class="block items-center p-3 sm:flex hover:bg-gray-100">
-                                        <img class="mr-3 mb-3 w-12 h-12 rounded-full sm:mb-0" src="shttps://upload.wikimedia.org/wikipedia/en/thumb/a/a0/Central_Mindanao_University_logo.png/180px-Central_Mindanao_University_logo.png" alt="Jese Leos image">
+                                        <img class="mr-3 mb-3 w-12 h-12 rounded-full sm:mb-0" src="https://th.bing.com/th/id/R.b4d35e6241b2840e8d62ae852f42ff38?rik=TqLvw0YR%2bKrNlw&riu=http%3a%2f%2fmattingly.design%2farticles%2fwp-content%2fuploads%2f2019%2f10%2fpied-piper-3.gif&ehk=r6%2ftXJgnQShtzu6PZbpJGRTVdXca%2fvgy5CN2NugQRuw%3d&risl=&pid=ImgRaw&r=0" alt="Jese Leos image">
                                         <div class="text-gray-600">
                                             <div class="text-base font-normal"><span class="font-medium text-gray-900">{{ notifications.title }}</span>
                                                 <span class="inline-flex items-center ml-2 text-xs font-normal text-gray-500">
@@ -57,7 +58,7 @@ const option_view  = ref(true)
                             
                      
                         </div>
-                        <div class="p-4 mt-10 w-full max-w-md bg-white rounded-lg border shadow-md sm:p-8">
+                        <div class="p-4 mt-10  bg-white rounded-lg border shadow-md sm:p-8">
                             <div class="flex justify-between items-center mb-4">
                                 <h5 class="text-xl font-bold leading-none text-gray-900 ">Colleges</h5>
                             </div>
@@ -66,7 +67,7 @@ const option_view  = ref(true)
                                         <li v-for="(colleges, key) in usePage().props.value.colleges" :key="key" class="py-3 sm:py-4">
                                             <div class="flex items-center space-x-4">
                                                 <div class="flex-shrink-0">
-                                                    <img class="w-8 h-8 rounded-full" src="shttps://upload.wikimedia.org/wikipedia/en/thumb/a/a0/Central_Mindanao_University_logo.png/180px-Central_Mindanao_University_logo.png" alt="Neil image">
+                                                    <img class="w-8 h-8 rounded-full" src="https://th.bing.com/th/id/R.b4d35e6241b2840e8d62ae852f42ff38?rik=TqLvw0YR%2bKrNlw&riu=http%3a%2f%2fmattingly.design%2farticles%2fwp-content%2fuploads%2f2019%2f10%2fpied-piper-3.gif&ehk=r6%2ftXJgnQShtzu6PZbpJGRTVdXca%2fvgy5CN2NugQRuw%3d&risl=&pid=ImgRaw&r=0" alt="Neil image">
                                                 </div>
                                                 <div class="flex-1 min-w-0">
                                                     <p class="text-sm font-medium text-gray-900 truncate" :title="colleges.name">
@@ -89,8 +90,111 @@ const option_view  = ref(true)
                                 </div>
                             </div>
                         </div>
-                            <div class="col-span-2 w-full  bg-white rounded-lg border shadow-md sm:p-8 px-10">
+                            <div class="col-span-2 w-full rounded-lg border shadow-md sm:p-8 px-10">
+                                <div class="container  bg-green-50 mb-5 p-5 grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mx-auto">
+                                    <div class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
+                                        <div class="flex-auto p-4">
+                                            <div class="flex flex-row -mx-3">
+                                            <div class="flex-none w-2/3 max-w-full px-3">
+                                                <div>
+                                                <p class="mb-0 font-sans font-semibold leading-normal uppercase text-sm">High School</p>
+                                                <h5 class="mb-2 font-bold dark:text-white">200</h5>
+                                                <p class="mb-0 dark:text-white dark:opacity-60">
+                                                  
+                                                </p>
+                                                </div>
+                                            </div>
+                                            <div class="px-3 text-right basis-1/3">
+                                                <div class="inline-block w-12 h-12   rounded-circle bg-gradient-to-tl from-yellow-500 to-yellow-500">
+                                                    <svg class="w-6 h-6 m-auto my-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 14l9-5-9-5-9 5 9 5z"></path><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"></path></svg>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
+                                        <div class="flex-auto p-4">
+                                            <div class="flex flex-row -mx-3">
+                                            <div class="flex-none w-2/3 max-w-full px-3">
+                                                <div>
+                                                <p class="mb-0 font-sans font-semibold leading-normal uppercase text-sm">Bachelors Degree</p>
+                                                <h5 class="mb-2 font-bold dark:text-white">200</h5>
+                                                <p class="mb-0 dark:text-white dark:opacity-60">
+                                                  
+                                                </p>
+                                                </div>
+                                            </div>
+                                            <div class="px-3 text-right basis-1/3">
+                                                <div class="inline-block w-12 h-12   rounded-circle bg-gradient-to-tl from-green-500 to-green-500">
+                                                    <svg class="w-6 h-6 m-auto my-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 14l9-5-9-5-9 5 9 5z"></path><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"></path></svg>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
+                                        <div class="flex-auto p-4">
+                                            <div class="flex flex-row -mx-3">
+                                            <div class="flex-none w-2/3 max-w-full px-3">
+                                                <div>
+                                                <p class="mb-0 font-sans font-semibold leading-normal uppercase text-sm">Masters Degree</p>
+                                                <h5 class="mb-2 font-bold dark:text-white">300</h5>
+                                                <p class="mb-0 dark:text-white dark:opacity-60">
+                                                  
+                                                </p>
+                                                </div>
+                                            </div>
+                                            <div class="px-3 text-right basis-1/3">
+                                                <div class="inline-block w-12 h-12   rounded-circle bg-gradient-to-tl from-pink-500 to-pink-500">
+                                                    <svg class="w-6 h-6 m-auto my-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 14l9-5-9-5-9 5 9 5z"></path><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"></path></svg>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
+                                        <div class="flex-auto p-4">
+                                            <div class="flex flex-row -mx-3">
+                                            <div class="flex-none w-2/3 max-w-full px-3">
+                                                <div>
+                                                <p class="mb-0 font-sans font-semibold leading-normal uppercase text-sm">Doctors Degree</p>
+                                                <h5 class="mb-2 font-bold dark:text-white">300</h5>
+                                                <p class="mb-0 dark:text-white dark:opacity-60">
+                                                  
+                                                </p>
+                                                </div>
+                                            </div>
+                                            <div class="px-3 text-right basis-1/3">
+                                                <div class="inline-block w-12 h-12   rounded-circle bg-gradient-to-tl from-gray-500 to-gray-500">
+                                                    <svg class="w-6 h-6 m-auto my-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 14l9-5-9-5-9 5 9 5z"></path><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"></path></svg>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
+                                        <div class="flex-auto p-4">
+                                            <div class="flex flex-row -mx-3">
+                                            <div class="flex-none w-2/3 max-w-full px-3">
+                                                <div>
+                                                <p class="mb-0 font-sans font-semibold leading-normal uppercase text-sm">TOTAL</p>
+                                                <h5 class="mb-2 font-bold dark:text-white">300</h5>
+                                                <p class="mb-0 dark:text-white dark:opacity-60">
+                                                  
+                                                </p>
+                                                </div>
+                                            </div>
+                                            <div class="px-3 text-right basis-1/3">
+                                                <div class="inline-block w-12 h-12   rounded-circle bg-gradient-to-tl from-blue-500 to-blue-500">
+                                                    <svg class="w-6 h-6  m-auto my-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <time class="text-lg font-semibold  text-gray-900 ">Announcements</time>
+                        
                                 <form class="flex mt-5 items-center">   
                                     <label for="simple-search" class="sr-only">Search</label>
                                     <div class="relative w-full">
@@ -111,7 +215,7 @@ const option_view  = ref(true)
                                  
                                     <li  v-for="(announcements, key) in 10" :key="key" class="mb-5 px-10 border-b-1 bg-gray-100 rounded p-5 border-gray-500">
                                         <div class="flex ">             
-                                              <img width="35" class="mr-2" src="shttps://upload.wikimedia.org/wikipedia/en/thumb/a/a0/Central_Mindanao_University_logo.png/180px-Central_Mindanao_University_logo.png" alt="">
+                                              <img width="35" class="mr-2" src="https://th.bing.com/th/id/R.b4d35e6241b2840e8d62ae852f42ff38?rik=TqLvw0YR%2bKrNlw&riu=http%3a%2f%2fmattingly.design%2farticles%2fwp-content%2fuploads%2f2019%2f10%2fpied-piper-3.gif&ehk=r6%2ftXJgnQShtzu6PZbpJGRTVdXca%2fvgy5CN2NugQRuw%3d&risl=&pid=ImgRaw&r=0" alt="">
                                               <h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900 ">College of Education<span class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded ml-3">Just Now</span></h3>
                                         </div>
                                       
