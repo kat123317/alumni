@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Announcement;
 use App\Models\College;
 use App\Models\Notification;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -29,11 +31,17 @@ class CollegeController extends Controller
     public function forDashboard()
     {
         $notifications = Notification::with('user')->get();
-        $colleges = College::all();
+        $users = User::all();
+        $colleges = College::with(['courses' => function($query) {
+            $query->withCount('users');
+        }])->get();
+        $announcement = Announcement::with('user')->get();
 
         return Inertia::render('Dashboard', [
             'notifications' => $notifications,
-            'colleges' => $colleges
+            'colleges' => $colleges,
+            'users' => $users,
+            'announcement' => $announcement
         ]);
     }
 

@@ -21,4 +21,10 @@ class Course extends Model
     {
         return $this->hasMany(Graduate::class);
     }
+
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
+
 }

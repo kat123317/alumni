@@ -4,6 +4,13 @@ import Welcome from '@/Components/Welcome.vue';
 import { Head, Link, useForm, usePage } from '@inertiajs/inertia-vue3';
 import { ref, onMounted } from 'vue'
 
+import moment from 'moment'
+
+const date_conversion = (value) => {
+            if (value) {
+                return moment(value).format('MMMM Do YYYY, h:mm:ss a')
+            }
+        }
 const option_view  = ref(true)
 
 </script>
@@ -49,6 +56,7 @@ const option_view  = ref(true)
                                                 {{ (notifications.user_type == 1) ? 'Public':'Staff' }}
                                             </span> 
                                          </div>
+                                        <em class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ notifications.user.name }}</em>
                                          <div class="text-sm font-normal truncate">"{{ notifications.content }}"</div>
                                          <button type="button" class="text-white  text-xs bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Show More</button>
                                         </div>
@@ -92,96 +100,37 @@ const option_view  = ref(true)
                         </div>
                             <div class="col-span-2 w-full rounded-lg border shadow-md sm:p-8 px-10">
                                 <div class="container  bg-green-50 mb-5 p-5 grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mx-auto">
-                                    <div class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
-                                        <div class="flex-auto p-4">
-                                            <div class="flex flex-row -mx-3">
-                                            <div class="flex-none w-2/3 max-w-full px-3">
-                                                <div>
-                                                <p class="mb-0 font-sans font-semibold leading-normal uppercase text-sm">High School</p>
-                                                <h5 class="mb-2 font-bold dark:text-white">200</h5>
-                                                <p class="mb-0 dark:text-white dark:opacity-60">
-                                                  
-                                                </p>
+                                    <div  v-for="(colleges, key) in usePage().props.value.colleges" :key="key">
+                                        <div class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
+                                            <div class="flex-auto p-4">
+                                                <div class="flex flex-row -mx-3">
+                                                <div class="flex-none w-2/3 max-w-full px-3">
+                                                    <div>
+                                                    <h1 class="mb-0 font-sans font-semibold leading-normal uppercase text-lg">{{ colleges.abbreviation }}</h1>
+                                                    <h5 class="mb-2 font-bold text-md"># of Courses: <span class="mb-2 font-bold text-sm">{{ colleges.courses.length }}</span></h5>
+                                                    <span v-for="(courses, key) in colleges.courses" :key="key">
+                                                        <h5 class="mb-2 font-bold text-md">{{ courses.abbrevation }}: <span class="mb-2 font-bold text-sm">{{ courses.users_count }}</span></h5>
+                                                    </span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="px-3 text-right basis-1/3">
-                                                <div class="inline-block w-12 h-12   rounded-circle bg-gradient-to-tl from-yellow-500 to-yellow-500">
-                                                    <svg class="w-6 h-6 m-auto my-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 14l9-5-9-5-9 5 9 5z"></path><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"></path></svg>
+                                                <div class="px-3 text-right basis-1/3">
+                                                    <div class="inline-block w-12 h-12   rounded-circle bg-gradient-to-tl from-yellow-500 to-yellow-500">
+                                                        <svg class="w-6 h-6 m-auto my-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 14l9-5-9-5-9 5 9 5z"></path><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"></path></svg>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                    
+                                    
                                     <div class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
                                         <div class="flex-auto p-4">
                                             <div class="flex flex-row -mx-3">
                                             <div class="flex-none w-2/3 max-w-full px-3">
                                                 <div>
-                                                <p class="mb-0 font-sans font-semibold leading-normal uppercase text-sm">Bachelors Degree</p>
-                                                <h5 class="mb-2 font-bold dark:text-white">200</h5>
-                                                <p class="mb-0 dark:text-white dark:opacity-60">
-                                                  
-                                                </p>
-                                                </div>
-                                            </div>
-                                            <div class="px-3 text-right basis-1/3">
-                                                <div class="inline-block w-12 h-12   rounded-circle bg-gradient-to-tl from-green-500 to-green-500">
-                                                    <svg class="w-6 h-6 m-auto my-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 14l9-5-9-5-9 5 9 5z"></path><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"></path></svg>
-                                                </div>
-                                            </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
-                                        <div class="flex-auto p-4">
-                                            <div class="flex flex-row -mx-3">
-                                            <div class="flex-none w-2/3 max-w-full px-3">
-                                                <div>
-                                                <p class="mb-0 font-sans font-semibold leading-normal uppercase text-sm">Masters Degree</p>
-                                                <h5 class="mb-2 font-bold dark:text-white">300</h5>
-                                                <p class="mb-0 dark:text-white dark:opacity-60">
-                                                  
-                                                </p>
-                                                </div>
-                                            </div>
-                                            <div class="px-3 text-right basis-1/3">
-                                                <div class="inline-block w-12 h-12   rounded-circle bg-gradient-to-tl from-pink-500 to-pink-500">
-                                                    <svg class="w-6 h-6 m-auto my-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 14l9-5-9-5-9 5 9 5z"></path><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"></path></svg>
-                                                </div>
-                                            </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
-                                        <div class="flex-auto p-4">
-                                            <div class="flex flex-row -mx-3">
-                                            <div class="flex-none w-2/3 max-w-full px-3">
-                                                <div>
-                                                <p class="mb-0 font-sans font-semibold leading-normal uppercase text-sm">Doctors Degree</p>
-                                                <h5 class="mb-2 font-bold dark:text-white">300</h5>
-                                                <p class="mb-0 dark:text-white dark:opacity-60">
-                                                  
-                                                </p>
-                                                </div>
-                                            </div>
-                                            <div class="px-3 text-right basis-1/3">
-                                                <div class="inline-block w-12 h-12   rounded-circle bg-gradient-to-tl from-gray-500 to-gray-500">
-                                                    <svg class="w-6 h-6 m-auto my-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 14l9-5-9-5-9 5 9 5z"></path><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"></path></svg>
-                                                </div>
-                                            </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
-                                        <div class="flex-auto p-4">
-                                            <div class="flex flex-row -mx-3">
-                                            <div class="flex-none w-2/3 max-w-full px-3">
-                                                <div>
-                                                <p class="mb-0 font-sans font-semibold leading-normal uppercase text-sm">TOTAL</p>
-                                                <h5 class="mb-2 font-bold dark:text-white">300</h5>
-                                                <p class="mb-0 dark:text-white dark:opacity-60">
-                                                  
-                                                </p>
+                                                <p class="mb-0 font-sans font-semibold leading-normal uppercase text-lg">TOTAL Users</p>
+                                                <h5 class="mb-2 font-bold text-md">{{ usePage().props.value.users.length }}</h5>
                                                 </div>
                                             </div>
                                             <div class="px-3 text-right basis-1/3">
@@ -213,14 +162,14 @@ const option_view  = ref(true)
                                 
                                 <ol class="relative mt-10 border-b  z-20 overflow-auto max-h-[120vmin]">
                                  
-                                    <li  v-for="(announcements, key) in 10" :key="key" class="mb-5 px-10 border-b-1 bg-gray-100 rounded p-5 border-gray-500">
+                                    <li  v-for="(announcements, key) in usePage().props.value.announcement" :key="key" class="mb-5 px-10 border-b-1 bg-gray-100 rounded p-5 border-gray-500">
                                         <div class="flex ">             
                                               <img width="35" class="mr-2" src="https://th.bing.com/th/id/R.b4d35e6241b2840e8d62ae852f42ff38?rik=TqLvw0YR%2bKrNlw&riu=http%3a%2f%2fmattingly.design%2farticles%2fwp-content%2fuploads%2f2019%2f10%2fpied-piper-3.gif&ehk=r6%2ftXJgnQShtzu6PZbpJGRTVdXca%2fvgy5CN2NugQRuw%3d&risl=&pid=ImgRaw&r=0" alt="">
-                                              <h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900 ">College of Education<span class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded ml-3">Just Now</span></h3>
+                                              <h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900 ">{{ announcements.title }}<span class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded ml-3">{{ date_conversion(announcements.created_at) }}</span></h3>
                                         </div>
                                       
-                                        <time class="block mb-5 ml-10 text-sm font-normal leading-none text-gray-400"> January 13th, 2022</time>
-                                        <p class="mb-4 text-base font-normal text-gray-500">Get access to over 20+ pages including a dashboard layout, charts, kanban board, calendar, and pre-order E-commerce &amp; Marketing pages.</p>
+                                        <time class="block mb-5 ml-10 text-sm font-normal leading-none text-gray-400"> {{ announcements.user.name }} </time>
+                                        <p class="mb-4 text-base font-normal text-gray-500">{{ announcements.content }}</p>
                                         
                                     </li>
                                
