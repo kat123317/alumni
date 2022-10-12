@@ -53,14 +53,14 @@ class JetstreamServiceProvider extends ServiceProvider
                 }
                 else{
                     throw ValidationException::withMessages([
-                        'custom' => "These credentials do not match our records.",
+                        'custom' => "Opps! These credentials do not match our records.",
                     ]);
                 }
                 
             }
             catch(DecryptException $e){
                 throw ValidationException::withMessages([
-                    'custom' => "These credentials do not match our records.",
+                    'custom' => "Opps! These credentials do not match our records.",
                 ]);
             }
             
