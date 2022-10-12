@@ -70,4 +70,7 @@ Route::get('/alumni', function () {
     return Inertia::render('Yearbook');
 })->name("yearbook");
 
+Route::get('/administrator', function () {
+    return Inertia::render('Administrator/Index');
+})->name("administrator");
 

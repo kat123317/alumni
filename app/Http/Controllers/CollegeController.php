@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\College;
 use App\Models\Notification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 use Inertia\Inertia;
@@ -27,7 +28,7 @@ class CollegeController extends Controller
 
     public function forDashboard()
     {
-        $notifications = Notification::all();
+        $notifications = Notification::with('user')->get();
         $colleges = College::all();
 
         return Inertia::render('Dashboard', [
