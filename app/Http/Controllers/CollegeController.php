@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\College;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -20,6 +21,17 @@ class CollegeController extends Controller
         $colleges = College::all();
 
         return Inertia::render('College/Index', [
+            'colleges' => $colleges
+        ]);
+    }
+
+    public function forDashboard()
+    {
+        $notifications = Notification::all();
+        $colleges = College::all();
+
+        return Inertia::render('Dashboard', [
+            'notifications' => $notifications,
             'colleges' => $colleges
         ]);
     }

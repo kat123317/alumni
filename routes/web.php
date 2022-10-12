@@ -3,6 +3,7 @@
 use App\Http\Controllers\CollegeController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\GraduateController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\YearbookController;
 use Illuminate\Foundation\Application;
@@ -37,9 +38,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [CollegeController::class, 'forDashboard'])->name('dashboard');
 
     Route::prefix('yearbooks')->name('yearbooks.')->group(function () {
         Route::get('/index', [YearbookController::class, 'index'])->name('index');
