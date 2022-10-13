@@ -184,5 +184,7 @@ class UserController extends Controller
                 'status' => 'rejected'
             ]);
         }
+
+        return Redirect::back();
     }
 }
