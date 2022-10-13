@@ -155,6 +155,7 @@ class UserController extends Controller
 
     public function registerAction(Request $request)
     {
+        $notification = Notification::find($request->notification_id);
         $user = User::find($request->user_id);
         if ($request->action == 'approve') {
             switch (Auth::user()->user_type) {
@@ -162,10 +163,16 @@ class UserController extends Controller
                     $user->update([
                         'status' => 'active'
                     ]);
+                    $notification->update([
+                        'is_processed' => true
+                    ]);
                     break;
                 case 'staff_admin':
                     $user->update([
                         'status' => 'admin_pending'
+                    ]);
+                    $notification->update([
+                        'user_type' => 'admin'
                     ]);
                     break;
                 default: //student
