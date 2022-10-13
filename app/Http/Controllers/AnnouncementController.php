@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Announcement;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
 
 class AnnouncementController extends Controller
 {
@@ -13,9 +15,17 @@ class AnnouncementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        $search = $request->search_text;
+        $notifications = User::with('user')->when($search, function($query, $search) {
+            $query->where('title', 'like', "%{$search}%");
+        })->orderBy('id', 'desc')->get();
+
+        return Inertia::render('Dashboard', [
+            'notifications' => $notifications,
+        ]);
     }
 
     /**
