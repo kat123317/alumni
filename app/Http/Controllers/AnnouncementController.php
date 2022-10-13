@@ -38,7 +38,8 @@ class AnnouncementController extends Controller
             'colleges' => $colleges,
             'users' => $users,
             'announcements' => $announcements,
-            'courses' => $courses
+            'courses' => $courses,
+            'search_text' => $search
         ]);
     }
 

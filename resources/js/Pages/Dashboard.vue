@@ -14,7 +14,7 @@ const date_conversion = (value) => {
 const option_view  = ref(true)
 
 const form_announcement = useForm({
-    search_text:(usePage().props.value.search_text != null) ? usePage().props.value.search_text : "",
+    search_text:(usePage().props.value.search_text != null) ? usePage().props.value.search_text : null,
 })
 
 const search_announcement = () => {
