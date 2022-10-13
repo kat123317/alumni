@@ -72,6 +72,8 @@ Route::middleware([
         Route::post('/store', [AnnouncementController::class, 'store'])->name('store');
         Route::put('/update/{id}', [AnnouncementController::class, 'update'])->name('update');
     });
+
+    Route::post('/register_action', [UserController::class, 'registerAction'])->name('register_action');
 });
 
 Route::get('/administrator', function () {

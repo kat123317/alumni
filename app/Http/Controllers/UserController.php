@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Actions\Fortify\PasswordValidationRules;
 use App\Models\User;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Jetstream\Jetstream;
-
+use Illuminate\Support\Facades\Auth;
 
 
 class UserController extends Controller
@@ -130,16 +131,51 @@ class UserController extends Controller
             'motto'=>$input['motto'], 
             'nickname'=>$input['nickname']);
             
-         User::create([
+        $user = User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
             'status' => 'pending',
             'user_type' => 'student',
             'college_id' => $input['college_id'],
+            'college_id' => $input['course_id'],
             'details' => $user_details,
+        ]);
+
+        //insert notification for new registrating users
+        Notification::create([
+            'user_id' => $user->id,
+            'title' => 'New user registration',
+            'user_type' => 'staff_admin',
+            'content' => 'User '.$user->name.' is pending for approval',
+            'is_processed' => false
         ]);
         return Redirect::route('login');
     }
 
+    public function registerAction(Request $request)
+    {
+        $user = User::find($request->user_id);
+        if ($request->action == 'approve') {
+            switch (Auth::user()->user_type) {
+                case 'admin':
+                    $user->update([
+                        'status' => 'active'
+                    ]);
+                    break;
+                case 'staff_admin':
+                    $user->update([
+                        'status' => 'admin_pending'
+                    ]);
+                    break;
+                default: //student
+                    dd('Something went wrong');
+                    break;
+            }
+        } else { //rejected
+            $user->update([
+                'status' => 'rejected'
+            ]);
+        }
+    }
 }
