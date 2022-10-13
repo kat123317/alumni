@@ -39,6 +39,14 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
+    Route::get('/administrator', [CollegeController::class, 'administrator_page'])->name('administrator');
+
+    // Route::get('/administrator', function () {
+    //     Route::get('/', [AnnouncementController::class, 'index'])->name('index');
+    
+    //     // return Inertia::render('Administrator/Index');
+    // })->name("administrator");
+
     Route::get('/dashboard', [CollegeController::class, 'forDashboard'])->name('dashboard');
 
     Route::prefix('yearbooks')->name('yearbooks.')->group(function () {
@@ -76,7 +84,5 @@ Route::middleware([
     Route::post('/register_action', [UserController::class, 'registerAction'])->name('register_action');
 });
 
-Route::get('/administrator', function () {
-    return Inertia::render('Administrator/Index');
-})->name("administrator");
+
 
