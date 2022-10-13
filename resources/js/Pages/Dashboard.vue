@@ -13,6 +13,15 @@ const date_conversion = (value) => {
         }
 const option_view  = ref(true)
 
+const form_announcement = useForm({
+    text_search:"",
+})
+
+const search_announcement = () => {
+    // form_announcement.get(route('announcements.search'))
+    alert(text_search)
+}
+
 </script>
 
 <template>
@@ -150,9 +159,9 @@ const option_view  = ref(true)
                                         <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                                             <svg aria-hidden="true" class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
                                         </div>
-                                        <input type="text" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full pl-10 p-2.5" placeholder="Search" required>
+                                        <input v-model="text_search" type="text" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full pl-10 p-2.5" placeholder="Search" required>
                                     </div>
-                                    <button type="submit" class="p-2.5 ml-2 text-sm font-medium text-white bg-green-700 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300">
+                                    <button  @click="search_announcement()" class="p-2.5 ml-2 text-sm font-medium text-white bg-green-700 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                                         <span class="sr-only">Search</span>
                                     </button>
@@ -162,7 +171,7 @@ const option_view  = ref(true)
                                 
                                 <ol class="relative mt-10 border-b  z-20 overflow-auto max-h-[120vmin]">
                                  
-                                    <li  v-for="(announcements, key) in usePage().props.value.announcement" :key="key" class="mb-5 px-10 border-b-1 bg-gray-100 rounded p-5 border-gray-500">
+                                    <li  v-for="(announcements, key) in usePage().props.value.announcements" :key="key" class="mb-5 px-10 border-b-1 bg-gray-100 rounded p-5 border-gray-500">
                                         <div class="flex ">             
                                               <img width="35" class="mr-2" src="https://th.bing.com/th/id/R.b4d35e6241b2840e8d62ae852f42ff38?rik=TqLvw0YR%2bKrNlw&riu=http%3a%2f%2fmattingly.design%2farticles%2fwp-content%2fuploads%2f2019%2f10%2fpied-piper-3.gif&ehk=r6%2ftXJgnQShtzu6PZbpJGRTVdXca%2fvgy5CN2NugQRuw%3d&risl=&pid=ImgRaw&r=0" alt="">
                                               <h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900 ">{{ announcements.title }}<span class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded ml-3">{{ date_conversion(announcements.created_at) }}</span></h3>

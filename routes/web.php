@@ -79,6 +79,7 @@ Route::middleware([
         Route::get('/', [AnnouncementController::class, 'index'])->name('index');
         Route::post('/store', [AnnouncementController::class, 'store'])->name('store');
         Route::put('/update/{id}', [AnnouncementController::class, 'update'])->name('update');
+        Route::put('/search', [AnnouncementController::class, 'index'])->name('search');
     });
 
     Route::post('/register_action', [UserController::class, 'registerAction'])->name('register_action');
