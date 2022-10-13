@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Announcement;
+use App\Models\College;
+use App\Models\Course;
+use App\Models\Notification;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -19,12 +22,23 @@ class AnnouncementController extends Controller
     {
         //
         $search = $request->search_text;
-        $notifications = User::with('user')->when($search, function($query, $search) {
+
+        $notifications = Notification::with('user')->get();
+        $users = User::all();
+        $colleges = College::with(['courses' => function($query) {
+            $query->withCount('users');
+        }])->get();
+        $announcements = Announcement::with('user')->when($search, function($query, $search) {
             $query->where('title', 'like', "%{$search}%");
         })->orderBy('id', 'desc')->get();
+        $courses = Course::all();
 
         return Inertia::render('Dashboard', [
             'notifications' => $notifications,
+            'colleges' => $colleges,
+            'users' => $users,
+            'announcements' => $announcements,
+            'courses' => $courses
         ]);
     }
 
