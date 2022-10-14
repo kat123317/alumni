@@ -2,7 +2,7 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Welcome from '@/Components/Welcome.vue';
 import { Head, Link, useForm, usePage } from '@inertiajs/inertia-vue3';
-import { ref, onMounted,  } from 'vue';
+import { ref, onMounted,  computed} from 'vue';
 
 
 import moment from 'moment'
@@ -14,18 +14,32 @@ const date_conversion = (value) => {
         }
 const option_view  = ref(true)
 
+const chart_total_array = computed(() => {
+    let chart_array = [];
+    for (let i = 0; i < usePage().props.value.colleges.length; i++) {
+        chart_array.push([usePage().props.value.colleges[i].name,usePage().props.value.colleges[i].users_count])
+    }
+    return chart_array
+})
+
+const chart_colleges_array = computed(() => {
+    let chart_array = {};
+    for (let i = 0; i < usePage().props.value.colleges.length; i++) {
+        let pie_data = []
+        usePage().props.value.colleges[i].courses.forEach(course => {
+            pie_data.push([course.abbreviation, course.users_count])
+        });
+        let key = usePage().props.value.colleges[i].abbreviation
+        chart_array[key] = pie_data
+    }
+    return chart_array
+})
 
 onMounted(() => {
     // const ramUsage = window.performance.memory;
 
     // console.log("=-----------RAM----------= ", ramUsage)
-    let chart_total_array = []
-    for (let i = 0; i < usePage().props.value.colleges.length; i++) {
-        // chart_total_array.push()
-        console.log(usePage().props.value.colleges[i].name)
-    }
 })
-
 
 const form_announcement = useForm({
     search_text:(usePage().props.value.search_text != null) ? usePage().props.value.search_text : null,
@@ -134,9 +148,9 @@ const search_announcement = () => {
                                                     <div>
                                                     <h1 class="mb-0 font-sans font-semibold leading-normal uppercase text-lg">{{ colleges.abbreviation }}</h1>
                                                     <h5 class="mb-2 font-bold text-md"># of Courses: <span class="mb-2 font-bold text-sm">{{ colleges.courses.length }}</span></h5>
-                                                    <span v-for="(courses, key) in colleges.courses" :key="key">
-                                                        <h5 class="mb-2 font-bold text-md">{{ courses.abbrevation }}: <span class="mb-2 font-bold text-sm">{{ courses.users_count }}</span></h5>
-                                                    </span>
+                                                    <!-- <span v-for="(courses, key) in colleges.courses" :key="key">
+                                                        <h5 class="mb-2 font-bold text-md">{{ courses.abbreviation }}: <span class="mb-2 font-bold text-sm">{{ courses.users_count }}</span></h5>
+                                                    </span> -->
                                                     </div>       
           
                                                 </div>
@@ -148,22 +162,22 @@ const search_announcement = () => {
                                                 </div>
                                                 </div>
                                                 <div class="flex justify-center w-auto bg-red-50">
-                                                <pie-chart :colors="['#b00', '#666']" :data="[['Blueberry', 23],['SSD', 63], ['Overall', usePage().props.value.users.length]]" :donut="false"></pie-chart>
+                                                    <pie-chart  :data="chart_colleges_array[colleges.abbreviation]" legend="left" :donut="false"></pie-chart>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
                                     
-                                    
-                                    <div class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
+                                </div>
+                                <div class="container mb-5 p-5">
+                                    <div class="relative flex flex-col min-w-0 break-words bg-white shadow-xl rounded-2xl bg-clip-border">
                                         <div class="flex-auto p-4">
                                            
                                             <div class="flex flex-row -mx-3">
                                             <div class="flex-none w-2/3 max-w-full px-3">
                                                 <div>
-                                                <p class="mb-0 font-sans font-semibold leading-normal uppercase text-lg">TOTAL Users</p>
-                                                <h5 class="mb-2 font-bold text-md">{{ usePage().props.value.users.length }}</h5>
-                                               
+                                                    <p class="mb-0 font-sans font-semibold leading-normal uppercase text-lg">TOTAL Users:  <span class="mb-2 font-bold text-md">{{ usePage().props.value.users.length }}</span></p>
                                                 </div>
                                             </div>
                                           
@@ -174,8 +188,8 @@ const search_announcement = () => {
                                             </div>
                                             </div>
                                             <!-- HERE -->
-                                                <div class="flex justify-center w-auto bg-red-50">
-                                                    <pie-chart :data="[[ 'colleges.name' , 1 ]]" :donut="false"></pie-chart>
+                                                <div class="flex justify-left w-auto bg-red-50">
+                                                    <pie-chart :data="chart_total_array" legend="bottom" :donut="false"></pie-chart>
                                                 </div>
                                         </div>
                                     </div>
