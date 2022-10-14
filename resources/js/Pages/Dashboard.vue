@@ -38,7 +38,6 @@ const chart_colleges_array = computed(() => {
         
         usePage().props.value.colleges[i].courses.forEach(course => {
             let count_registered_user = 0;
-
             course.users.forEach(users => {
                 if(users.status == 'approved'){
                     count_registered_user += 1;
