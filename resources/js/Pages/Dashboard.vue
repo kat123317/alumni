@@ -68,6 +68,22 @@ const search_announcement = () => {
     // alert(form_announcement.text_search)
 }
 
+
+const total_users_model = ref('0')
+
+const total_users_line = ref(false)
+const total_users_pie = ref(true)
+const total_users = () => {
+    if(total_users_model.value == 1)
+    {
+        total_users_pie.value = true
+        total_users_line.value =false
+    }
+    else if(total_users_model.value == 2){
+        total_users_pie.value = false
+        total_users_line.value =true
+    }
+}
 </script>
 
 <template>
@@ -152,8 +168,11 @@ const search_announcement = () => {
                        
 
                             <div class="col-span-2 w-full rounded-lg border shadow-md sm:p-8 px-10">
-                                <!-- <pie-chart :data="[['Blueberry', 44], ['Strawberry', 23]]"></pie-chart> -->
-                               
+                                <div class="flex-none w-2/3 max-w-full px-3">
+                                                <div>
+                                                    <p class="mb-0 font-sans font-semibold leading-normal uppercase text-lg">Categorized registered users population by courses</p>
+                                                </div>
+                                            </div>
                                 <div class="container mb-5 p-5 grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mx-auto">
                                     
                                     <div  v-for="(colleges, key) in usePage().props.value.colleges" :key="key">
@@ -166,9 +185,6 @@ const search_announcement = () => {
                                                     <div>
                                                     <h1 class="mb-0 font-sans font-semibold leading-normal uppercase text-lg">{{ colleges.abbreviation }}</h1>
                                                     <h5 class="mb-2 font-bold text-md"># of Courses: <span class="mb-2 font-bold text-sm">{{ colleges.courses.length }}</span></h5>
-                                                    <!-- <span v-for="(courses, key) in colleges.courses" :key="key">
-                                                        <h5 class="mb-2 font-bold text-md">{{ courses.abbreviation }}: <span class="mb-2 font-bold text-sm">{{ courses.users_count }}</span></h5>
-                                                    </span> -->
                                                     </div>       
           
                                                 </div>
@@ -188,14 +204,19 @@ const search_announcement = () => {
 
                                     
                                 </div>
-                                <div class="container mb-5 p-5">
+                                <select v-model="total_users_model" @change="total_users(total_users_model)">
+                                    <option value="0" disabled>Select Charts</option>
+                                    <option value="1">Pie Chart</option>
+                                    <option value="2">Line Chart</option>
+                                </select>
+                                <div v-if="total_users_pie" class="container mb-5 p-5">
                                     <div class="relative flex flex-col min-w-0 break-words bg-white shadow-xl rounded-2xl bg-clip-border">
                                         <div class="flex-auto p-4">
                                            
                                             <div class="flex flex-row -mx-3">
                                             <div class="flex-none w-2/3 max-w-full px-3">
                                                 <div>
-                                                    <p class="mb-0 font-sans font-semibold leading-normal uppercase text-lg">TOTAL Users:  <span class="mb-2 font-bold text-md">{{ usePage().props.value.users.length }}</span></p>
+                                                    <p class="mb-0 font-sans font-semibold leading-normal uppercase text-lg">TOTAL Users by colleges:  <span class="mb-2 font-bold text-md">{{ usePage().props.value.users.length }}</span> user/users</p>
                                                 </div>
                                             </div>
                                           
@@ -208,6 +229,59 @@ const search_announcement = () => {
                                             <!-- HERE -->
                                                 <div class="flex justify-left w-auto bg-red-50">
                                                     <pie-chart :data="chart_total_array" legend="bottom" :donut="false"></pie-chart>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div v-if="total_users_line" class="container mb-5 p-5">
+                                    <div class="relative flex flex-col min-w-0 break-words bg-white shadow-xl rounded-2xl bg-clip-border">
+                                        <div class="flex-auto p-4">
+                                           
+                                            <div class="flex flex-row -mx-3">
+                                            <div class="flex-none w-2/3 max-w-full px-3">
+                                                <div>
+                                                    <p class="mb-0 font-sans font-semibold leading-normal uppercase text-lg">Users in line graph: <span class="mb-2 font-bold text-md">{{ usePage().props.value.users.length }}</span> user/users</p>
+                                                </div>
+                                            </div>
+                                          
+                                            <div class="px-3 text-right basis-1/3">
+                                                <div class="inline-block w-12 h-12   rounded-circle bg-gradient-to-tl from-blue-500 to-blue-500">
+                                                    <svg class="w-6 h-6  m-auto my-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                                                </div>
+                                            </div>
+                                            </div>
+                                            <!-- HERE -->
+                                                <div class="flex justify-left w-auto bg-red-50">
+                                                    <line-chart :data="chart_total_array" legend="bottom" :donut="false"></line-chart>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="container mb-5 p-5">
+                                    <div class="relative flex flex-col min-w-0 break-words bg-white shadow-xl rounded-2xl bg-clip-border">
+                                        <div class="flex-auto p-4">
+                                           
+                                            <div class="flex flex-row -mx-3">
+                                            <div class="flex-none w-2/3 max-w-full px-3">
+                                                <div>
+                                                    <p class="mb-0 font-sans font-semibold leading-normal uppercase text-lg">Graduates</p>
+                                                </div>
+                                            </div>
+                                                <div>
+                                                    <p class="mb-0 font-sans font-semibold leading-normal uppercase text-lg">Filter</p>
+                                                    <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full pl-10 p-2.5" type="date">
+                                                    <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full pl-10 p-2.5" type="date">
+                                                </div>
+                                          
+                                            <div class="px-3 text-right basis-1/3">
+                                                <div class="inline-block w-12 h-12   rounded-circle bg-gradient-to-tl from-blue-500 to-blue-500">
+                                                    <svg class="w-6 h-6 m-auto my-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 14l9-5-9-5-9 5 9 5z"></path><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"></path></svg>
+                                                </div>
+                                            </div>
+                                            </div>
+                                            <!-- HERE -->
+                                                <div class="flex justify-left w-auto bg-red-50">
+                                                    <column-chart :data="[['1997', 32], ['1998', 46], ['1999', 28], ['2000', 28], ['2001', 28], ['2002', 28], ['2003', 28], ['2004', 100]]"></column-chart>
                                                 </div>
                                         </div>
                                     </div>
