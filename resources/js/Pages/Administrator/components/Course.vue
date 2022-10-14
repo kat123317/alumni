@@ -2,7 +2,7 @@
 <section class="text-gray-600 body-font relative">
   <div class="container px-5 py-24 mx-auto">
     <div class="flex flex-col text-center w-full mb-12">
-      <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Add Department</h1>
+      <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Add Course</h1>
 
     </div>
     <div class="lg:w-1/2 md:w-2/3 mx-auto">
@@ -21,9 +21,9 @@
         </div>
         <div class="p-2 p-2 w-1/3">
           <div class="relative">
-            <label for="email" class="leading-7 text-sm text-gray-600">Department</label>
+            <label for="email" class="leading-7 text-sm text-gray-600">College</label>
             <select id="countries" class="bg-gray-50 border border-gray-300 w text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              <option selected>Choose a Department</option>
+              <option selected>Choose a College</option>
               <option value="US">COE</option>
               <option value="CA">COD</option>
               <option value="FR">COED</option>
