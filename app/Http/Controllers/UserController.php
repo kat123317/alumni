@@ -138,7 +138,7 @@ class UserController extends Controller
             'status' => 'pending',
             'user_type' => 'student',
             'college_id' => $input['college_id'],
-            'college_id' => $input['course_id'],
+            'course_id' => $input['course_id'],
             'details' => $user_details,
         ]);
 
