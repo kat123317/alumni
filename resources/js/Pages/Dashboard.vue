@@ -25,7 +25,7 @@ const form_announcement = useForm({
 })
 
 const search_announcement = () => {
-    form_announcement.get(route('search_announcement'))
+    form_announcement.get(route('announcements.search'))
     // alert(form_announcement.text_search)
 }
 
