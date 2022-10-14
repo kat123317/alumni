@@ -16,9 +16,14 @@ const option_view  = ref(true)
 
 
 onMounted(() => {
-    const ramUsage = window.performance.memory;
+    // const ramUsage = window.performance.memory;
 
-    console.log("=-----------RAM----------= ", ramUsage)
+    // console.log("=-----------RAM----------= ", ramUsage)
+    let chart_total_array = []
+    for (let i = 0; i < usePage().props.value.colleges.length; i++) {
+        // chart_total_array.push()
+        console.log(usePage().props.value.colleges[i].name)
+    }
 })
 
 
@@ -27,7 +32,7 @@ const form_announcement = useForm({
 })
 
 const search_announcement = () => {
-    form_announcement.get(route('announcements.search'))
+    form_announcement.get(route('dashboard'))
     // alert(form_announcement.text_search)
 }
 
@@ -170,7 +175,7 @@ const search_announcement = () => {
                                             </div>
                                             <!-- HERE -->
                                                 <div class="flex justify-center w-auto bg-red-50">
-                                                <pie-chart :data="[['Blueberry', 23],['SSD', 63], ['Overall', usePage().props.value.users.length]]" :donut="false"></pie-chart>
+                                                    <pie-chart :data="[[ 'colleges.name' , 1 ]]" :donut="false"></pie-chart>
                                                 </div>
                                         </div>
                                     </div>

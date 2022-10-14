@@ -21,15 +21,15 @@ class AnnouncementController extends Controller
     public function index(Request $request)
     {
         //
-        $search = $request->search_text;
+        $search_text = $request->search_text;
 
         $notifications = Notification::with('user')->get();
         $users = User::all();
-        $colleges = College::with(['courses' => function($query) {
+        $colleges = College::with('users')->with(['courses' => function($query) {
             $query->withCount('users');
         }])->get();
-        $announcements = Announcement::with('user')->when($search, function($query, $search) {
-            $query->where('title', 'like', "%{$search}%");
+        $announcements = Announcement::with('user')->when($search_text, function($query, $search_text) {
+            $query->where('title', 'like', "%{$search_text}%");
         })->orderBy('id', 'desc')->get();
         $courses = Course::all();
 
@@ -39,7 +39,7 @@ class AnnouncementController extends Controller
             'users' => $users,
             'announcements' => $announcements,
             'courses' => $courses,
-            'search_text' => $search
+            'search_text' => $search_text
         ]);
     }
 

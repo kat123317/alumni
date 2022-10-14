@@ -4,6 +4,7 @@ use App\Http\Controllers\CollegeController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\GraduateController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\AdministratorController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\YearbookController;
@@ -39,7 +40,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/administrator', [CollegeController::class, 'administrator_page'])->name('administrator');
+    Route::get('/administrator', [AdministratorController::class, 'index'])->name('administrator');
 
     // Route::get('/administrator', function () {
     //     Route::get('/', [AnnouncementController::class, 'index'])->name('index');
@@ -47,7 +48,7 @@ Route::middleware([
     //     // return Inertia::render('Administrator/Index');
     // })->name("administrator");
 
-    Route::get('/dashboard', [CollegeController::class, 'forDashboard'])->name('dashboard');
+    Route::get('/dashboard', [AnnouncementController::class, 'index'])->name('dashboard');
 
     Route::prefix('yearbooks')->name('yearbooks.')->group(function () {
         Route::get('/', [YearbookController::class, 'index'])->name('index');
@@ -76,10 +77,10 @@ Route::middleware([
     });
 
     Route::prefix('announcements')->name('announcements.')->group(function () {
-        Route::get('/', [AnnouncementController::class, 'index'])->name('index');
+        // Route::get('/', [AnnouncementController::class, 'index'])->name('index');
         Route::post('/store', [AnnouncementController::class, 'store'])->name('store');
         Route::put('/update/{id}', [AnnouncementController::class, 'update'])->name('update');
-        Route::get('/dashboard/search', [AnnouncementController::class, 'index'])->name('search');
+        // Route::get('/search', [AnnouncementController::class, 'index'])->name('search');
 
     });
 

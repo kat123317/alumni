@@ -29,50 +29,6 @@ class CollegeController extends Controller
         ]);
     }
 
-    public function forDashboard()
-    {
-        $notifications = Notification::with('user')->get();
-        $users = User::all();
-        $colleges = College::with(['courses' => function($query) {
-            $query->withCount('users');
-        }])->get();
-        $announcements = Announcement::with('user')->get();
-        $courses = Course::all();
-
-        return Inertia::render('Dashboard', [
-            'notifications' => $notifications,
-            'colleges' => $colleges,
-            'users' => $users,
-            'announcements' => $announcements,
-            'courses' => $courses
-        ]);
-    }
-
-    public function administrator_page(Request $request)
-    {
-        // dd($request->user_type);
-        if($request->user_type =='admin'){
-            return Inertia::render('Administrator/Index');
-        }
-        else{
-            $notifications = Notification::with('user')->get();
-            $users = User::all();
-            $colleges = College::with(['courses' => function($query) {
-                $query->withCount('users');
-            }])->get();
-            $announcements = Announcement::with('user')->get();
-            $courses = Course::all();
-
-            return Inertia::render('Dashboard', [
-                'notifications' => $notifications,
-                'colleges' => $colleges,
-                'users' => $users,
-                'announcements' => $announcements,
-                'courses' => $courses
-            ]);
-        }
-    }
-
     /**
      * Show the form for creating a new resource.
      *

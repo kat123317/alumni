@@ -30,9 +30,6 @@ const logout = () => {
 const form_announcement = useForm({
     user_type: usePage().props.value.user.user_type,
 });
-const function_administrator = () => {
-    form_announcement.get(route('administrator'))
-}
 </script>
 
 <template>
@@ -67,10 +64,10 @@ const function_administrator = () => {
                                 </NavLink>
                             </div>
 
-                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex" v-if="($page.props.user.user_type == 'admin')">
-                                <a class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition" @click="function_administrator()" :active="route().current('administrator')">
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <NavLink :href="route('administrator')" :active="route().current('administrator')">
                                     Administrator
-                                </a>
+                                </NavLink>
                             </div>
                             
                         </div>
