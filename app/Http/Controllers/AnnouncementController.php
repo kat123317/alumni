@@ -24,7 +24,7 @@ class AnnouncementController extends Controller
         $search_text = $request->search_text;
 
         $notifications = Notification::with('user')->orderBy('id','desc')->get();
-        $users = User::all();
+        $users = User::where('status','approved')->get();
         $colleges = College::with('users')->withCount('users')->with(['courses' => function($query) {
             $query->with('users');
         }])->get();
