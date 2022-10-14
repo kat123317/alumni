@@ -16,7 +16,9 @@ const option_view  = ref(true)
 
 
 onMounted(() => {
+    const ramUsage = window.performance.memory;
 
+    console.log("=-----------RAM----------= ", ramUsage)
 })
 
 
@@ -101,10 +103,7 @@ const search_announcement = () => {
                                                     </p>
                                                 </div>
                                                 <div class="inline-flex items-center text-base font-semibold text-gray-900 ">
-                                                    <button type="button" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center">
-                                                        Show
-                                                        <svg aria-hidden="true" class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                                                    </button>
+
                                                 </div>
                                             </div>
                                         </li>
@@ -142,6 +141,9 @@ const search_announcement = () => {
                                                         <svg class="w-6 h-6 m-auto my-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 14l9-5-9-5-9 5 9 5z"></path><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"></path></svg>
                                                     </div>
                                                 </div>
+                                                </div>
+                                                <div class="flex justify-center w-auto bg-red-50">
+                                                <pie-chart :colors="['#b00', '#666']" :data="[['Blueberry', 23],['SSD', 63], ['Overall', usePage().props.value.users.length]]" :donut="false"></pie-chart>
                                                 </div>
                                             </div>
                                         </div>
