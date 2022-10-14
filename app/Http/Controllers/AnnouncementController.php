@@ -23,10 +23,10 @@ class AnnouncementController extends Controller
         //
         $search_text = $request->search_text;
 
-        $notifications = Notification::with('user')->get();
+        $notifications = Notification::with('user')->orderBy('id','desc')->get();
         $users = User::all();
         $colleges = College::with('users')->withCount('users')->with(['courses' => function($query) {
-            $query->withCount('users');
+            $query->with('users');
         }])->get();
         $announcements = Announcement::with('user')->when($search_text, function($query, $search_text) {
             $query->where('title', 'like', "%{$search_text}%");

@@ -16,8 +16,17 @@ const option_view  = ref(true)
 
 const chart_total_array = computed(() => {
     let chart_array = [];
+    let count_registered_user = 0;
+
     for (let i = 0; i < usePage().props.value.colleges.length; i++) {
-        chart_array.push([usePage().props.value.colleges[i].name,usePage().props.value.colleges[i].users_count])
+        usePage().props.value.colleges[i].users.forEach(users => {
+            if(users.status == 'approved'){
+                count_registered_user += 1;
+            }
+        });
+        chart_array.push([usePage().props.value.colleges[i].name,count_registered_user])
+        count_registered_user=0
+
     }
     return chart_array
 })
@@ -26,8 +35,18 @@ const chart_colleges_array = computed(() => {
     let chart_array = {};
     for (let i = 0; i < usePage().props.value.colleges.length; i++) {
         let pie_data = []
+        
         usePage().props.value.colleges[i].courses.forEach(course => {
-            pie_data.push([course.abbreviation, course.users_count])
+            let count_registered_user = 0;
+
+            course.users.forEach(users => {
+                if(users.status == 'approved'){
+                    count_registered_user += 1;
+                }
+            });
+            pie_data.push([course.abbreviation, count_registered_user])
+            count_registered_user=0
+
         });
         let key = usePage().props.value.colleges[i].abbreviation
         chart_array[key] = pie_data
