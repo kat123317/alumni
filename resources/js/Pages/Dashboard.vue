@@ -2,7 +2,8 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Welcome from '@/Components/Welcome.vue';
 import { Head, Link, useForm, usePage } from '@inertiajs/inertia-vue3';
-import { ref, onMounted } from 'vue'
+import { ref, onMounted,  } from 'vue';
+
 
 import moment from 'moment'
 
@@ -12,6 +13,12 @@ const date_conversion = (value) => {
             }
         }
 const option_view  = ref(true)
+
+
+onMounted(() => {
+
+})
+
 
 const form_announcement = useForm({
     search_text:(usePage().props.value.search_text != null) ? usePage().props.value.search_text : null,
@@ -34,7 +41,6 @@ const search_announcement = () => {
 
         <div class="py-12">
             <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
-                
             <nav class="flex mb-5" aria-label="Breadcrumb">
                 <ol class="inline-flex items-center space-x-1 md:space-x-3">
                     <li class="inline-flex items-center">
@@ -107,21 +113,30 @@ const search_announcement = () => {
                                 </div>
                             </div>
                         </div>
+                       
+
                             <div class="col-span-2 w-full rounded-lg border shadow-md sm:p-8 px-10">
-                                <div class="container  bg-green-50 mb-5 p-5 grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mx-auto">
+                                <!-- <pie-chart :data="[['Blueberry', 44], ['Strawberry', 23]]"></pie-chart> -->
+                               
+                                <div class="container mb-5 p-5 grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mx-auto">
+                                    
                                     <div  v-for="(colleges, key) in usePage().props.value.colleges" :key="key">
                                         <div class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
                                             <div class="flex-auto p-4">
                                                 <div class="flex flex-row -mx-3">
+                                                    
                                                 <div class="flex-none w-2/3 max-w-full px-3">
+                                                    
                                                     <div>
                                                     <h1 class="mb-0 font-sans font-semibold leading-normal uppercase text-lg">{{ colleges.abbreviation }}</h1>
                                                     <h5 class="mb-2 font-bold text-md"># of Courses: <span class="mb-2 font-bold text-sm">{{ colleges.courses.length }}</span></h5>
                                                     <span v-for="(courses, key) in colleges.courses" :key="key">
                                                         <h5 class="mb-2 font-bold text-md">{{ courses.abbrevation }}: <span class="mb-2 font-bold text-sm">{{ courses.users_count }}</span></h5>
                                                     </span>
-                                                    </div>
+                                                    </div>       
+          
                                                 </div>
+                                                
                                                 <div class="px-3 text-right basis-1/3">
                                                     <div class="inline-block w-12 h-12   rounded-circle bg-gradient-to-tl from-yellow-500 to-yellow-500">
                                                         <svg class="w-6 h-6 m-auto my-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 14l9-5-9-5-9 5 9 5z"></path><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"></path></svg>
@@ -135,19 +150,26 @@ const search_announcement = () => {
                                     
                                     <div class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
                                         <div class="flex-auto p-4">
+                                           
                                             <div class="flex flex-row -mx-3">
                                             <div class="flex-none w-2/3 max-w-full px-3">
                                                 <div>
                                                 <p class="mb-0 font-sans font-semibold leading-normal uppercase text-lg">TOTAL Users</p>
                                                 <h5 class="mb-2 font-bold text-md">{{ usePage().props.value.users.length }}</h5>
+                                               
                                                 </div>
                                             </div>
+                                          
                                             <div class="px-3 text-right basis-1/3">
                                                 <div class="inline-block w-12 h-12   rounded-circle bg-gradient-to-tl from-blue-500 to-blue-500">
                                                     <svg class="w-6 h-6  m-auto my-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                                                 </div>
                                             </div>
                                             </div>
+                                            <!-- HERE -->
+                                                <div class="flex justify-center w-auto bg-red-50">
+                                                <pie-chart :data="[['Blueberry', 23],['SSD', 63], ['Overall', usePage().props.value.users.length]]" :donut="false"></pie-chart>
+                                                </div>
                                         </div>
                                     </div>
                                 </div>

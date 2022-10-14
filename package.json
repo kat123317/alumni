@@ -21,6 +21,9 @@
         "vue": "^3.2.31"
     },
     "dependencies": {
-        "moment": "^2.29.4"
+        "chart.js": "^3.9.1",
+        "moment": "^2.29.4",
+        "vue-chartkick": "^1.1.0",
+        "vue3-charts": "^1.1.31"
     }
 }
