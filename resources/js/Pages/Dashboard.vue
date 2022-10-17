@@ -113,8 +113,10 @@ const total_users = () => {
                     
                     <div class="grid grid-flow-row-dense grid-cols-1 sm:grid-cols-3  grid-rows-1 ...">   
                     <div class="lg:mr-5 mb-10">
-                        <div class=" bg-white p-2 rounded-lg border shadow-md sm:p-8">
-                            <time class="text-lg font-semibold text-gray-900">Notifications</time>
+                        <div class="bg-green-600 rounded-t-lg  p-3">
+                            <time class="text-lg text-white font-semibold">Notifications</time>
+                        </div>
+                        <div class="p-2  border shadow-md sm:p-8">
                             <ol class="mt-3 divide-y max-h-[40vmin] overflow-hidden overflow-y-auto divider-gray-200">
                                 <li v-for="(notifications, key) in usePage().props.value.notifications" :key="key">
                                     <a href="#" class="block items-center p-3 sm:flex hover:bg-gray-100">
@@ -136,10 +138,11 @@ const total_users = () => {
                             
                      
                         </div>
-                        <div class="p-4 mt-10  bg-white rounded-lg border shadow-md sm:p-8">
-                            <div class="flex justify-between items-center mb-4">
-                                <h5 class="text-xl font-bold leading-none text-gray-900 ">Colleges</h5>
-                            </div>
+                        <div class="bg-green-600 mt-10 rounded-t-lg  p-3">
+                            <time class="text-lg text-white font-semibold">Colleges</time>
+                        </div>
+                        <div class="p-4   bg-white rounded-lg border shadow-md sm:p-8">
+    
                                 <div class="flow-root">
                                     <ul role="list" class="divide-y divide-gray-200">
                                         <li v-for="(colleges, key) in usePage().props.value.colleges" :key="key" class="py-3 sm:py-4">
@@ -166,8 +169,9 @@ const total_users = () => {
                             </div>
                         </div>
                        
-
+       
                             <div class="col-span-2 w-full rounded-lg border shadow-md sm:p-8 px-10">
+                                
                                 <div class="flex-none w-2/3 max-w-full px-3">
                                                 <div>
                                                     <p class="mb-0 font-sans font-semibold leading-normal uppercase text-lg">Categorized registered users population by courses</p>
@@ -176,26 +180,20 @@ const total_users = () => {
                                 <div class="container mb-5 p-5 grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mx-auto">
                                     
                                     <div  v-for="(colleges, key) in usePage().props.value.colleges" :key="key">
+                                        
                                         <div class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
+                                                <div class="bg-green-600 rounded-t-lg  p-2">
+                                                <div class="flex justify-between">
+                                                <h1 class="mb-0 font-sans text-white font-semibold leading-normal uppercase text-lg">{{ colleges.abbreviation }}</h1>
+                                                <h5 class="mb-2 font-bold text-white text-md"># of Courses: <span class="mb-2 font-bold text-sm">{{ colleges.courses.length }}</span></h5>
+                                                </div>   
+                                             </div>
                                             <div class="flex-auto p-4">
                                                 <div class="flex flex-row -mx-3">
                                                     
-                                                <div class="flex-none w-2/3 max-w-full px-3">
-                                                    
-                                                    <div>
-                                                    <h1 class="mb-0 font-sans font-semibold leading-normal uppercase text-lg">{{ colleges.abbreviation }}</h1>
-                                                    <h5 class="mb-2 font-bold text-md"># of Courses: <span class="mb-2 font-bold text-sm">{{ colleges.courses.length }}</span></h5>
-                                                    </div>       
-          
+                                 
                                                 </div>
-                                                
-                                                <div class="px-3 text-right basis-1/3 ">
-                                                    <div class="inline-block w-12 h-12   rounded-circle bg-gradient-to-tl from-yellow-500 to-yellow-500">
-                                                        <svg class="w-6 h-6 m-auto my-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 14l9-5-9-5-9 5 9 5z"></path><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"></path></svg>
-                                                    </div>
-                                                </div>
-                                                </div>
-                                                <div class="flex justify-center w-auto bg-red-50">
+                                                <div class="flex justify-center w-auto bg-gray-50">
                                                     <pie-chart  :data="chart_colleges_array[colleges.abbreviation]" legend="left" :donut="false"></pie-chart>
                                                 </div>
                                             </div>
@@ -204,7 +202,7 @@ const total_users = () => {
 
                                     
                                 </div>
-                                <select v-model="total_users_model" @change="total_users(total_users_model)">
+                                <select class="mb-2 ml-5 block p-2 px-[4vmin] text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-lg focus:ring-green-500 focus:border-green-500" v-model="total_users_model" @change="total_users(total_users_model)">
                                     <option value="0" disabled>Select Charts</option>
                                     <option value="1">Pie Chart</option>
                                     <option value="2">Line Chart</option>
@@ -219,15 +217,15 @@ const total_users = () => {
                                                     <p class="mb-0 font-sans font-semibold leading-normal uppercase text-lg">TOTAL Users by colleges:  <span class="mb-2 font-bold text-md">{{ usePage().props.value.users.length }}</span> user/users</p>
                                                 </div>
                                             </div>
-                                          
+                                            
                                             <div class="px-3 text-right basis-1/3">
-                                                <div class="inline-block w-12 h-12   rounded-circle bg-gradient-to-tl from-blue-500 to-blue-500">
+                                                <div class="inline-block w-12 h-12   rounded-circle bg-gradient-to-tl from-green-500 to-green-500">
                                                     <svg class="w-6 h-6  m-auto my-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                                                 </div>
                                             </div>
                                             </div>
                                             <!-- HERE -->
-                                                <div class="flex justify-left w-auto bg-red-50">
+                                                <div class="flex justify-left w-auto bg-gray-50">
                                                     <pie-chart :data="chart_total_array" legend="bottom" :donut="false"></pie-chart>
                                                 </div>
                                         </div>
@@ -245,13 +243,13 @@ const total_users = () => {
                                             </div>
                                           
                                             <div class="px-3 text-right basis-1/3">
-                                                <div class="inline-block w-12 h-12   rounded-circle bg-gradient-to-tl from-blue-500 to-blue-500">
+                                                <div class="inline-block w-12 h-12   rounded-circle bg-gradient-to-tl from-green-500 to-green-500">
                                                     <svg class="w-6 h-6  m-auto my-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                                                 </div>
                                             </div>
                                             </div>
                                             <!-- HERE -->
-                                                <div class="flex justify-left w-auto bg-red-50">
+                                                <div class="flex justify-left w-auto bg-gray-50">
                                                     <line-chart :data="chart_total_array" legend="bottom" :donut="false"></line-chart>
                                                 </div>
                                         </div>
@@ -266,21 +264,22 @@ const total_users = () => {
                                                 <div>
                                                     <p class="mb-0 font-sans font-semibold leading-normal uppercase text-lg">Graduates</p>
                                                 </div>
-                                            </div>
-                                                <div>
-                                                    <p class="mb-0 font-sans font-semibold leading-normal uppercase text-lg">Filter</p>
-                                                    <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full pl-10 p-2.5" type="date">
-                                                    <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full pl-10 p-2.5" type="date">
+                                                <!-- <em class="mb-0 font-sans mt-5 font-semibold leading-normal uppercase text-lg">Filter</em> -->
+                                                <div class="flex  my-5">        
+                                                    <input class="bg-gray-50 mr-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block  pl-10 p-2.5" type="date">
+                                                    <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block  pl-10 p-2.5" type="date">
                                                 </div>
+                                            </div>
+                                           
                                           
                                             <div class="px-3 text-right basis-1/3">
-                                                <div class="inline-block w-12 h-12   rounded-circle bg-gradient-to-tl from-blue-500 to-blue-500">
+                                                <div class="inline-block w-12 h-12   rounded-circle bg-gradient-to-tl from-green-500 to-green-500">
                                                     <svg class="w-6 h-6 m-auto my-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 14l9-5-9-5-9 5 9 5z"></path><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"></path></svg>
                                                 </div>
                                             </div>
                                             </div>
                                             <!-- HERE -->
-                                                <div class="flex justify-left w-auto bg-red-50">
+                                                <div class="flex justify-left w-auto bg-gray-50">
                                                     <column-chart :data="[['1997', 32], ['1998', 46], ['1999', 28], ['2000', 28], ['2001', 28], ['2002', 28], ['2003', 28], ['2004', 100]]"></column-chart>
                                                 </div>
                                         </div>
@@ -288,7 +287,7 @@ const total_users = () => {
                                 </div>
                                 <time class="text-lg font-semibold  text-gray-900 ">Announcements</time>
                         
-                                <div class="flex mt-5 items-center">   
+                                <div class="flex mt-mb-10 items-center">   
                                     <label for="simple-search" class="sr-only">Search</label>
                                     <div class="relative w-full">
                                         <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
@@ -303,7 +302,7 @@ const total_users = () => {
                                 </div>
                                 
 
-                                
+<!--                                 
                                 <ol class="relative mt-10 border-b  z-20 overflow-auto max-h-[120vmin]">
                                  
                                     <li  v-for="(announcements, key) in usePage().props.value.announcements" :key="key" class="mb-5 px-10 border-b-1 bg-gray-100 rounded p-5 border-gray-500">
@@ -311,13 +310,27 @@ const total_users = () => {
                                               <img width="35" class="mr-2" src="https://th.bing.com/th/id/R.b4d35e6241b2840e8d62ae852f42ff38?rik=TqLvw0YR%2bKrNlw&riu=http%3a%2f%2fmattingly.design%2farticles%2fwp-content%2fuploads%2f2019%2f10%2fpied-piper-3.gif&ehk=r6%2ftXJgnQShtzu6PZbpJGRTVdXca%2fvgy5CN2NugQRuw%3d&risl=&pid=ImgRaw&r=0" alt="">
                                               <h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900 ">{{ announcements.title }}<span class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded ml-3">{{ date_conversion(announcements.created_at) }}</span></h3>
                                         </div>
-                                      
+                                        
                                         <time class="block mb-5 ml-10 text-sm font-normal leading-none text-gray-400"> {{ announcements.user.name }} </time>
                                         <p class="mb-4 text-base font-normal text-gray-500">{{ announcements.content }}</p>
                                         
                                     </li>
                                
-                                </ol>
+                                </ol> -->
+                                <ol class="border-l-2 mt-10 border-green-600">
+                                    <li  v-for="(announcements, key) in usePage().props.value.announcements" :key="key" >
+                                        <div class="flex flex-start items-center">
+                                        <div class="bg-green-600 w-4 h-4 flex items-center justify-center rounded-full -ml-2 mr-3 -mt-2"></div>
+                                        <img width="35" class="mr-2" src="https://th.bing.com/th/id/R.b4d35e6241b2840e8d62ae852f42ff38?rik=TqLvw0YR%2bKrNlw&riu=http%3a%2f%2fmattingly.design%2farticles%2fwp-content%2fuploads%2f2019%2f10%2fpied-piper-3.gif&ehk=r6%2ftXJgnQShtzu6PZbpJGRTVdXca%2fvgy5CN2NugQRuw%3d&risl=&pid=ImgRaw&r=0" alt="">
+                                        <h4 class="text-gray-800 font-semibold text-xl -mt-2">{{ announcements.user.name }} - {{ announcements.title }}</h4>
+                                        </div>
+                                        <div class="ml-6 mb-6 pb-6">
+                                        <a href="#!" class="text-green-600 hover:text-green-700 focus:text-green-800 duration-300 transition ease-in-out text-sm">{{ date_conversion(announcements.created_at) }}</a>
+                                        <p class="text-gray-700 mt-5">{{ announcements.content }}</p>
+                                        <!-- <button type="button" class="inline-block px-4 py-1.5 bg-green-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-700 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out">Read more</button> -->
+                                        </div>
+                                    </li>
+                                 </ol>
                          </div>
                     </div>
               
@@ -347,4 +360,6 @@ const total_users = () => {
 ::-webkit-scrollbar-thumb:hover {
   background: #555; 
 }
+
+
 </style>
