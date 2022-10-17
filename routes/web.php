@@ -6,6 +6,7 @@ use App\Http\Controllers\GraduateController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\AdministratorController;
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\SocialMediaController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\YearbookController;
 use Illuminate\Foundation\Application;
@@ -41,6 +42,7 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/administrator', [AdministratorController::class, 'index'])->name('administrator');
+   
 
     // Route::get('/administrator', function () {
     //     Route::get('/', [AnnouncementController::class, 'index'])->name('index');
@@ -85,6 +87,7 @@ Route::middleware([
     });
 
     Route::post('/register_action', [UserController::class, 'registerAction'])->name('register_action');
+    Route::get('/socialmedia', [SocialMediaController::class, 'index'])->name('socialmedia');
 });
 
 
