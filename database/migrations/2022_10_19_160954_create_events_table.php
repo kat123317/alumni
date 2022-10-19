@@ -20,6 +20,7 @@ return new class extends Migration
             $table->timestamp('from')->nullable();
             $table->timestamp('to')->nullable();
             $table->foreignId('user_id')->nullable();
+            $table->foreignId('updated_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -49,7 +49,8 @@ class EventController extends Controller
             'to' => $request->to,
             'title' => $request->title,
             'content' => $request->content,
-            'user_id' => Auth::user()->id
+            'user_id' => Auth::user()->id,
+            'updated_by' => Auth::user()->id
         ]);
         return Redirect::back();
     }
@@ -86,9 +87,12 @@ class EventController extends Controller
     public function update(Request $request, Event $event)
     {
         $event->update([
-            'when' => $request->when,
+            'from' => $request->from,
+            'to' => $request->to,
             'title' => $request->title,
-            'content' => $request->content
+            'content' => $request->content,
+            'user_id' => Auth::user()->id,
+            'updated_by' => Auth::user()->id
         ]);
         return Redirect::back();
     }

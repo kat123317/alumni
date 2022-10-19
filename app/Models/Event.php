@@ -11,4 +11,13 @@ class Event extends Model
     use HasFactory, SoftDeletes;
     protected $guarded = [];
 
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function updated_by()
+    {
+        return $this->belongsTo(User::class, 'updated_by', 'id');
+    }
 }
