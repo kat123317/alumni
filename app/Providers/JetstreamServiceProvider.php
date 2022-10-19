@@ -42,7 +42,7 @@ class JetstreamServiceProvider extends ServiceProvider
             // dd();
             try{
                 if(Hash::check($request->password, $user->password)){
-                    if ($user->status != 'pending') {
+                    if ($user->status == 'approved') {
                         return $user;
                     }
                     else {
