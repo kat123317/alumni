@@ -6,6 +6,7 @@ use App\Http\Controllers\GraduateController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\AdministratorController;
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\SocialMediaController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\YearbookController;
@@ -88,6 +89,12 @@ Route::middleware([
 
     Route::post('/register_action', [UserController::class, 'registerAction'])->name('register_action');
     Route::get('/socialmedia', [SocialMediaController::class, 'index'])->name('socialmedia');
+
+    Route::prefix('events')->name('events.')->group(function () {
+        Route::get('/', [EventController::class, 'index'])->name('index');
+        Route::post('/store', [EventController::class, 'store'])->name('store');
+        Route::put('/update/{id}', [EventController::class, 'update'])->name('update');
+    });
 });
 
 
