@@ -161,7 +161,7 @@ class UserController extends Controller
             switch (Auth::user()->user_type) {
                 case 'admin':
                     $user->update([
-                        'status' => 'active'
+                        'status' => 'approved'
                     ]);
                     $notification->update([
                         'is_processed' => true

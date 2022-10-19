@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\College;
+use App\Models\Course;
+
 use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
@@ -11,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Fortify;
+use Inertia\Inertia;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -44,6 +48,13 @@ class FortifyServiceProvider extends ServiceProvider
 
         RateLimiter::for('two-factor', function (Request $request) {
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
+        });
+
+        Fortify::registerView(function () {
+            return Inertia::render('Auth/Register', [
+                'colleges' => College::with('courses')->get(),
+                'courses' => Course::all()
+            ]);
         });
     }
 }
