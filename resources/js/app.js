@@ -8,6 +8,7 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 import VueChartkick from 'vue-chartkick'
 import 'chartkick/chart.js'
+import ScrollParallax from 'vue3-parallax/src/components/ScrollParallax.vue';
 
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
@@ -20,6 +21,7 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue, Ziggy)
             .use(VueChartkick)
+            .component('scroll-parallax', ScrollParallax)
             .mount(el);
             
     },

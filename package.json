@@ -24,6 +24,7 @@
         "chart.js": "^3.9.1",
         "moment": "^2.29.4",
         "vue-chartkick": "^1.1.0",
-        "vue3-charts": "^1.1.31"
+        "vue3-charts": "^1.1.31",
+        "vue3-parallax": "^0.1.4"
     }
 }
