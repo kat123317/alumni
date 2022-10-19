@@ -7,6 +7,9 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import { computed } from 'vue';
+
+const props = defineProps(['colleges', 'courses']);
 
 const form = useForm({
     name: '',
@@ -28,6 +31,15 @@ const form = useForm({
     nickname:'',
 
 });
+
+const shown_courses = computed(() => {
+    let tmp_college = props.colleges.find(col => col.id == form.college_id);
+    if (tmp_college == null) {
+        return [];
+    } else {
+        return tmp_college.courses;
+    }
+})
 
 const submit = () => {
     form.post(route('register_user'), {
@@ -158,9 +170,10 @@ const submit = () => {
                                 v-model="form.college_id"
                                 class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm w-full"
                             >
-                                <option value="1">College of Engineering</option>
-                                <option value="2">College of Agriculture</option>
-                                <option value="3">College of Arts and Sciences</option>
+                                <option value="" disabled>Select College</option>
+                                <template v-for="college in colleges">
+                                    <option :value="college.id">{{ college.name }}</option>
+                                </template>
                             </select>
                             <InputError class="mt-2" :message="form.errors.college_id" />
                         </div>
@@ -172,9 +185,10 @@ const submit = () => {
                                 v-model="form.course_id"
                                 class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm w-full"
                             >
-                                <option value="1">Batchelor of Science in Information Technology</option>
-                                <option value="2">Batchelor of Science in Civil Engineering</option>
-                                <option value="3">Batchelor of Science in Mechanichal Engineering</option>
+                                <option value="" disabled>Select Course</option>
+                                <template v-for="course in shown_courses">
+                                    <option :value="course.id">{{ course.name }}</option>
+                                </template>
                             </select>
                             <InputError class="mt-2" :message="form.errors.course_id" />
                         </div>
@@ -195,7 +209,7 @@ const submit = () => {
                             <InputLabel for="phone_number" value="Phone / Mobile #" />
                             <TextInput
                                 id="phone_number"
-                                v-model="form.phone_number"
+                                v-model.number="form.phone_number"
                                 type="number"
                                 class="mt-1 block w-full"
                                 required
