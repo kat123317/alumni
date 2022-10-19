@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+
+use Inertia\Inertia;
 
 class EventController extends Controller
 {
@@ -14,7 +18,11 @@ class EventController extends Controller
      */
     public function index()
     {
-        //
+        $events = Event::all();
+
+        return Inertia::render('Event/Index', [
+            'events' => $events
+        ]);
     }
 
     /**
@@ -35,7 +43,12 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Event::create([
+            'when' => $request->when,
+            'title' => $request->title,
+            'content' => $request->content
+        ]);
+        return Redirect::back();
     }
 
     /**
@@ -69,7 +82,12 @@ class EventController extends Controller
      */
     public function update(Request $request, Event $event)
     {
-        //
+        $event->update([
+            'when' => $request->when,
+            'title' => $request->title,
+            'content' => $request->content
+        ]);
+        return Redirect::back();
     }
 
     /**
