@@ -6,15 +6,16 @@ import Alumni from './components/Alumni.vue';
 import Usermangement from './components/Usermangement.vue';
 import Department from './components/Department.vue';
 import Course from './components/Course.vue';
+import Events from './components/Events.vue';
 
 const trigger  = ref(1);
-const props = defineProps([
-    'colleges', 
-    'notifications', 
-    'courses',
-    'users',
-    'announcements'
-]);
+// const props = defineProps([
+//     'colleges', 
+//     'notifications', 
+//     'courses',
+//     'users',
+//     'announcements'
+// ]);
 
 </script>
 <template>
@@ -31,7 +32,8 @@ const props = defineProps([
                 <button @click="trigger = 3" class="mr-5 text-white hover:text-gray-200">User Managenment</button>
                 <button @click="trigger = 4" class="mr-5 text-white hover:text-gray-200">Department</button>
                 <button @click="trigger = 5" class="mr-5 text-white hover:text-gray-200">Course</button>
-                <button @click="trigger = 7" class="mr-5 text-white hover:text-gray-200">Survey</button>
+                <button @click="trigger = 6" class="mr-5 text-white hover:text-gray-200">Survey</button>
+                <button @click="trigger = 7" class="mr-5 text-white hover:text-gray-200">Events</button>
                 </nav>
                 <a :href="route('dashboard')" class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Back to home
                 <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
@@ -46,6 +48,8 @@ const props = defineProps([
         <Usermangement v-if="trigger == 3" />
         <Department v-if="trigger == 4" />
         <Course v-if="trigger == 5" />
+        <Course v-if="trigger == 6" />
+        <Events v-if="trigger == 7" />
 
     </div>
 </template>

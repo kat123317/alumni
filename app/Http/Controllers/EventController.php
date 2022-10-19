@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 use Inertia\Inertia;
@@ -44,9 +45,11 @@ class EventController extends Controller
     public function store(Request $request)
     {
         Event::create([
-            'when' => $request->when,
+            'from' => $request->from,
+            'to' => $request->to,
             'title' => $request->title,
-            'content' => $request->content
+            'content' => $request->content,
+            'user_id' => Auth::user()->id
         ]);
         return Redirect::back();
     }

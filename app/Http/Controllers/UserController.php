@@ -136,7 +136,7 @@ class UserController extends Controller
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
             'status' => 'pending',
-            'user_type' => 'student',
+            'user_type' => 'alumni',
             'college_id' => $input['college_id'],
             'course_id' => $input['course_id'],
             'details' => $user_details,

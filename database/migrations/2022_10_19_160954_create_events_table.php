@@ -17,7 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->longText('content');
-            $table->timestamp('when')->nullable();
+            $table->timestamp('from')->nullable();
+            $table->timestamp('to')->nullable();
+            $table->foreignId('user_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
