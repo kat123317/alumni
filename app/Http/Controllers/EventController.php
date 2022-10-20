@@ -84,8 +84,9 @@ class EventController extends Controller
      * @param  \App\Models\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Event $event)
+    public function update(Request $request, $id)
     {
+        $event = Event::find($id);
         $event->update([
             'from' => $request->from,
             'to' => $request->to,

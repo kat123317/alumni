@@ -16,10 +16,13 @@ const date_conversion_from_now = (value) => {
     }
 }
 
-const modal_update = ref(true)
+const modal_update = ref(false)
 
 const from_date = ref(usePage().props.value.from_request);
 const to_date = ref(usePage().props.value.to_request);
+
+const from_date_update = ref();
+const to_date_update = ref();
 
 const event_data = useForm({
     from:'',
@@ -32,7 +35,8 @@ const update_event_data = useForm({
     from:'',
     to:'',
     title:'',
-    content:''
+    content:'',
+    id:''
 })
 
 const function_submit = () => {
@@ -52,10 +56,32 @@ const function_submit = () => {
     }   
 }
 
-const function_open_update_modal = (title, content) => {
+const function_open_update_modal = (title, content, from, to, id) => {
+    from_date_update.value = moment(from).format('YYYY-MM-DD');
+    to_date_update.value = moment(to).format('YYYY-MM-DD');
     update_event_data.title = title;
     update_event_data.content = content; 
+    update_event_data.id = id;
     modal_update.value  = ! modal_update.value;
+
+}
+
+const function_update_event = () => {
+    update_event_data.from =  from_date_update.value;
+    update_event_data.to =  to_date_update.value;
+    if(update_event_data.title == "" || update_event_data.content ==""){
+        alert("Please fill out all fields")
+    }
+    else{
+
+        update_event_data.put(route('events.update', [update_event_data.id]), {
+            preserveScroll:true,
+            onSuccess: () => {
+                alert("Updated")
+                modal_update.value  = ! modal_update.value;
+            }
+        })
+    }   
 }
 </script>
 <template>
@@ -160,7 +186,7 @@ const function_open_update_modal = (title, content) => {
                                 {{date_conversion_from_now(events.updated_at)}}
                             </td>
                             <td class="py-4 px-6">
-                                <a @click="function_open_update_modal(events.title, events.content)" class="font-medium text-green-600 dark:text-green-500 hover:underline">Edit</a>
+                                <a @click="function_open_update_modal(events.title, events.content, events.from, events.to, events.id)" class="font-medium text-green-600 dark:text-green-500 hover:underline">Edit</a>
                                 <a href="#" class="font-medium ml-2 text-red-600 dark:text-red-500 hover:underline">Delete</a>
                             </td>
                         </tr>
@@ -175,13 +201,13 @@ const function_open_update_modal = (title, content) => {
                                     <div class="p-2 w-full">
                                         <div class="relative">
                                             <label for="name" class="leading-7 text-sm text-gray-600">From</label>
-                                            <input v-model="from_date" type="date" id="name" name="name" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                            <input v-model="from_date_update" type="date" id="name" name="name" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                         </div>
                                     </div>
                                     <div class="p-2 w-full">
                                         <div class="relative">
                                             <label for="name" class="leading-7 text-sm text-gray-600">To</label>
-                                            <input v-model="to_date" type="date" id="name" name="name" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                            <input v-model="to_date_update" type="date" id="name" name="name" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                         </div>
                                     </div>
                                     <div class="p-2 w-full">
@@ -205,7 +231,7 @@ const function_open_update_modal = (title, content) => {
                             <div class="p-6 text-center">
                                 <svg aria-hidden="true" class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to update this event?</h3>
-                                <button data-modal-toggle="popup-modal" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+                                <button @click="function_update_event()" data-modal-toggle="popup-modal" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
                                     Yes, I'm sure
                                 </button>
                                 <button @click="function_open_update_modal()" data-modal-toggle="popup-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 ">No, cancel</button>
