@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->longText('content');
-            $table->string('shown_only');
-            $table->json('foreign_ids')->nullable();
+            // $table->string('shown_only');
+            // $table->json('foreign_ids')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

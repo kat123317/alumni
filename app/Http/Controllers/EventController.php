@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Announcement;
 use App\Models\Event;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
@@ -28,13 +29,15 @@ class EventController extends Controller
 
     public function welcome(){
         $events = Event::all();
+        $announcements = Announcement::with('user')->limit(6)->get();
         return Inertia::render('Welcome', [
                     'canLogin' => Route::has('login'),
                     'canRegister' => Route::has('register'),
                     'laravelVersion' => Application::VERSION,
                     'phpVersion' => PHP_VERSION,
                     
-                    'events' => $events
+                    'events' => $events,
+                    'announcements' => $announcements
                 ]);
     }
 

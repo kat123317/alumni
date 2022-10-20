@@ -60,7 +60,7 @@ class AnnouncementController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {/* 
         $foreign_ids = [];
         switch ($request->shown_only) {
             case 'college':
@@ -70,12 +70,10 @@ class AnnouncementController extends Controller
             default: //all
                 
                 break;
-        }
+        } */
         Announcement::create([
             'title' => $request->title,
             'content' => $request->content,
-            'shown_only' => $request->shown_only,
-            'foreign_ids' => $foreign_ids
         ]);
         return Redirect::back();
     }

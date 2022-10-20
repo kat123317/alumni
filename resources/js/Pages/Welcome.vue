@@ -8,6 +8,11 @@ const date_conversion = (value) => {
                 return moment(value).format('MMMM DD YYYY')
             }
         }
+const date_conversion_complete = (value) => {
+    if(value){
+    return moment(value).format('MMMM Do YYYY, h:mm:ss a');
+  }
+        }
 
 defineProps({
     canLogin: Boolean,
@@ -208,19 +213,17 @@ defineProps({
                         <!-- <p class="text-gray-500 sm:text-xl dark:text-gray-400">Here at Flowbite we focus on markets where technology, innovation, and capital can unlock long-term value and drive economic growth.</p> -->
                     </div>
                     <div class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-2 md:gap-12 md:space-y-0">
-                        <div v-for="items in 5" class="bg-white p-2 rounded drop-shadow-sm">
+                        <div v-for="(announcement, key) in usePage().props.value.announcements" :key="key" class="bg-white p-2 rounded drop-shadow-sm">
 
                             <div class="bg-gray-400 flex p-0 items-center">
                                 <h3
-                                    class="border-double border-4 border-white text-xl px-4 max-w-[8rem] bg-green-800 font-bold text-white">
-                                    OCT 10</h3>
-                                <h3 class="ml-4 text-sm font-bold text-white">College of Agriculture</h3>
+                                    class="border-double border-4 border-white text-xl px-4 max-w-[20rem] bg-green-800 font-bold text-white">
+                                    {{ announcement.title}}</h3>
+                                <h3 class="ml-4 text-sm font-bold text-white">{{ date_conversion_complete(announcement.created_at)}}</h3>
                             </div>
 
-                            <p class="text-gray-500 mb-2 ">Plan it, create it, launch it. Collaborate
-                                seamlessly with all the organization and hit your marketing goals every month with our
-                                marketing plan.</p>
-                            <p class="text-sm font-bold text-green-800">October 2 2022 </p>
+                            <p class="text-gray-500 mb-2 mt-6">{{announcement.content}}</p>
+                            <p class="text-sm font-bold text-green-800">Posted by : Admin - {{ announcement.user.name }}</p>
                         </div>
                     </div>
                 </div>
