@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Announcement;
+use App\Models\College;
 use App\Models\Event;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
@@ -29,6 +30,7 @@ class EventController extends Controller
 
     public function welcome(){
         $events = Event::all();
+        $colleges = College::get();
         $announcements = Announcement::with('user')->limit(6)->get();
         return Inertia::render('Welcome', [
                     'canLogin' => Route::has('login'),
@@ -37,7 +39,8 @@ class EventController extends Controller
                     'phpVersion' => PHP_VERSION,
                     
                     'events' => $events,
-                    'announcements' => $announcements
+                    'announcements' => $announcements,
+                    'colleges' => $colleges
                 ]);
     }
 

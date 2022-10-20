@@ -154,49 +154,9 @@ defineProps({
 
 
                     <div class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-6 md:gap-12 md:space-y-0">
-                        <div class="  p-2 drop-shadow-sm">
+                        <div class="  p-2 drop-shadow-sm" v-for="(colleges, key) in usePage().props.value.colleges" :key="key">
                             <img class="grayscale  w-25 "
-                                src="http://devops.cmu.edu.ph/formlinks/assets/dist/assets/img/logos/College%20of%20Agriculture.png">
-                        </div>
-                        <div class="  p-2 drop-shadow-sm">
-                            <img class="grayscale  w-25"
-                                src="http://devops.cmu.edu.ph/formlinks/assets/dist/assets/img/logos/College%20of%20Engineering.png">
-                        </div>
-                        <div class="  p-2 drop-shadow-sm">
-                            <img class="grayscale  w-25"
-                                src="http://devops.cmu.edu.ph/formlinks/assets/dist/assets/img/logos/College%20of%20Nursing.png">
-                        </div>
-                        <div class="  p-2 drop-shadow-sm">
-                            <img class="grayscale  w-25"
-                                src="http://devops.cmu.edu.ph/formlinks/assets/dist/assets/img/logos/College%20of%20Education.png">
-                        </div>
-                        <div class="  p-2 drop-shadow-sm">
-                            <img class="grayscale  w-25"
-                                src="http://devops.cmu.edu.ph/formlinks/assets/dist/assets/img/logos/College%20of%20Arts%20and%20Science.png">
-                        </div>
-                        <div class="  p-2 drop-shadow-sm">
-                            <img class="grayscale  w-25"
-                                src="http://devops.cmu.edu.ph/formlinks/assets/dist/assets/img/logos/College%20of%20Forestry%20and%20Evironmental%20Science.png">
-                        </div>
-                        <div class="  p-2 drop-shadow-sm">
-                            <img class="grayscale  w-25"
-                                src="http://devops.cmu.edu.ph/formlinks/assets/dist/assets/img/logos/College%20of%20Human%20Ecology.png">
-                        </div>
-                        <div class="  p-2 drop-shadow-sm">
-                            <img class="grayscale  w-25"
-                                src="http://devops.cmu.edu.ph/formlinks/assets/dist/assets/img/logos/College%20of%20Business%20Management.png">
-                        </div>
-                        <div class="  p-2 drop-shadow-sm">
-                            <img class="grayscale  w-25"
-                                src="http://devops.cmu.edu.ph/formlinks/assets/dist/assets/img/logos/College%20of%20Veterinary%20Medicine.png">
-                        </div>
-                        <div class="  p-2 drop-shadow-sm">
-                            <img class="grayscale  w-25"
-                                src="http://devops.cmu.edu.ph/formlinks/assets/dist/assets/img/logos/College%20of%20Information%20Science%20and%20Computing.jpg">
-                        </div>
-                        <div class="  p-2 drop-shadow-sm">
-                            <img class="grayscale  w-25"
-                                src="http://devops.cmu.edu.ph/formlinks/assets/dist/assets/img/logos/CMU-LOGO.png">
+                                :src=colleges.logo>
                         </div>
                     </div>
 
