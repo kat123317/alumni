@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Announcement;
 use App\Models\College;
 use App\Models\Event;
 use Carbon\Carbon;
@@ -21,7 +22,8 @@ class AdministratorController extends Controller
                 'colleges' => College::all(),
                 'from_request' => $request->from_date ?? Carbon::today()->format('Y-m-d'),
                 'to_request' => $request->to_date ?? Carbon::today()->format('Y-m-d'),
-                'events' => Event::with('user')->with('updated_by')->get()
+                'events' => Event::with('user')->with('updated_by')->orderBY('id','desc')->get(),
+                'announcements' => Announcement::with('user')->with('updated_by')->orderBY('id','desc')->get()
             ]);
         }
         else{

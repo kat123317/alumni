@@ -20,4 +20,8 @@ class Announcement extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function updated_by()
+    {
+        return $this->belongsTo(User::class, 'updated_by', 'id');
+    }
 }

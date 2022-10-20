@@ -110,7 +110,6 @@ class EventController extends Controller
             'to' => $request->to,
             'title' => $request->title,
             'content' => $request->content,
-            'user_id' => Auth::user()->id,
             'updated_by' => Auth::user()->id
         ]);
         return Redirect::back();

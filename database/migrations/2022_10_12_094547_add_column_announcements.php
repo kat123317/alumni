@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::table('announcements', function (Blueprint $table) {
             $table->string('title')->after('user_id');
+            $table->string('updated_by')->after('id');
         });
     }
 

@@ -8,6 +8,7 @@ use App\Models\Course;
 use App\Models\Notification;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
@@ -74,6 +75,8 @@ class AnnouncementController extends Controller
         Announcement::create([
             'title' => $request->title,
             'content' => $request->content,
+            'user_id' => Auth::user()->id,
+            'updated_by' => Auth::user()->id
         ]);
         return Redirect::back();
     }
@@ -107,9 +110,15 @@ class AnnouncementController extends Controller
      * @param  \App\Models\Announcement  $announcement
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Announcement $announcement)
+    public function update(Request $request, $id)
     {
-        //
+        $announcement = Announcement::find($id);
+        $announcement->update([
+            'title' => $request->title,
+            'content' => $request->content,
+            'updated_by' => Auth::user()->id
+        ]);
+        return Redirect::back();
     }
 
     /**
@@ -118,8 +127,12 @@ class AnnouncementController extends Controller
      * @param  \App\Models\Announcement  $announcement
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Announcement $announcement)
+    public function destroy($id)
     {
         //
+        $announcement = Announcement::find($id);
+        $announcement->delete();
+        return Redirect::back();
+
     }
 }
