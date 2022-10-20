@@ -30,7 +30,7 @@ const trigger  = ref(1);
                 <button @click="trigger = 1" class="mr-5 text-white hover:text-gray-200">Announcements</button>
                 <button  @click="trigger = 2" class="mr-5 text-white hover:text-gray-200">Year Book</button>
                 <button @click="trigger = 3" class="mr-5 text-white hover:text-gray-200">User Managenment</button>
-                <button @click="trigger = 4" class="mr-5 text-white hover:text-gray-200">Department</button>
+                <button @click="trigger = 4" class="mr-5 text-white hover:text-gray-200">College</button>
                 <button @click="trigger = 5" class="mr-5 text-white hover:text-gray-200">Course</button>
                 <button @click="trigger = 6" class="mr-5 text-white hover:text-gray-200">Survey</button>
                 <button @click="trigger = 7" class="mr-5 text-white hover:text-gray-200">Events</button>

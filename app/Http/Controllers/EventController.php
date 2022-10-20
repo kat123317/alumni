@@ -29,9 +29,9 @@ class EventController extends Controller
     }
 
     public function welcome(){
-        $events = Event::all();
+        $events = Event::with('updated_by')->get();
         $colleges = College::get();
-        $announcements = Announcement::with('user')->limit(6)->get();
+        $announcements = Announcement::with('updated_by')->limit(6)->get();
         return Inertia::render('Welcome', [
                     'canLogin' => Route::has('login'),
                     'canRegister' => Route::has('register'),

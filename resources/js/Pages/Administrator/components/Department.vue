@@ -6,6 +6,35 @@ import route from '../../../../../vendor/tightenco/ziggy/src/js';
 const modal_update = ref(false)
 const modal_delete = ref(false)
 
+const alertOn = ref(false)
+const alertOnUpdate = ref(false)
+const alertOnDelete = ref(false)
+const alertOnError = ref(false)
+
+const onAlert = (data) => {
+    if(data == 'Success'){
+        alertOn.value = true;
+    }else if(data == 'Update'){
+        alertOnUpdate.value = true
+    }else if(data == 'Delete'){
+        alertOnDelete.value = true
+    }else{
+        alertOnError.value = true
+    }
+
+    setTimeout(() => {
+        if(data == 'Success'){
+        alertOn.value = false;
+        }else if(data == 'Update'){
+            alertOnUpdate.value = false
+        }else if(data == 'Delete'){
+            alertOnDelete.value = false
+        }else{
+            alertOnError.value = false
+        }
+    }, 4000);
+}
+
 
 const college_data = useForm({
     name:'',
@@ -26,14 +55,14 @@ const delete_college_data = useForm({
 
 const function_add_college = () => {
   if(college_data.name == '' || college_data.abbreviation == '' || college_data.logo == ''){
-    alert('Please fill out all fields');
+    onAlert('Others')
   }
   else{
     college_data.post(route('colleges.store'),{
             preserveScroll:true,
             onSuccess: () => {
                 college_data.reset()
-                alert('Success')
+                onAlert('Success')
             }
         })
   }
@@ -52,7 +81,7 @@ const function_update_college = () => {
             preserveScroll:true,
             onSuccess: () => {
                 college_data.reset()
-                alert('Updated')
+                onAlert('Update')
                 modal_update.value  = ! modal_update.value;
 
             }
@@ -70,7 +99,7 @@ const function_delete_college = () => {
             preserveScroll:true,
             onSuccess: () => {
                 college_data.reset()
-                alert('Deleted')
+                onAlert('Delete')
                 modal_delete.value  = ! modal_delete.value;
 
             }
@@ -79,6 +108,35 @@ const function_delete_college = () => {
 </script>
 <template>
 <section  class="text-gray-600 body-font relative">
+    
+    <div v-if="alertOn" class="bg-green-100 alertanim text-center py-4 lg:px-4">
+            <div class="p-2 bg-green-800 items-center text-green-100 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
+                <span class="flex rounded-full bg-green-500 uppercase px-2 py-1 text-xs font-bold mr-3">Success</span>
+                <span class="font-semibold mr-2 text-left flex-auto">College Successfully added</span>
+                <svg class="fill-current opacity-75 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z"/></svg>
+            </div>
+        </div>  
+        <div v-if="alertOnUpdate" class="bg-blue-100 alertanim text-center py-4 lg:px-4">
+            <div class="p-2 bg-blue-800 items-center text-blue-100 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
+                <span class="flex rounded-full bg-blue-500 uppercase px-2 py-1 text-xs font-bold mr-3">Success</span>
+                <span class="font-semibold mr-2 text-left flex-auto">College Successfully updated</span>
+                <svg class="fill-current opacity-75 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z"/></svg>
+            </div>
+        </div>
+        <div v-if="alertOnDelete" class="bg-red-100 alertanim text-center py-4 lg:px-4">
+            <div class="p-2 bg-red-800 items-center text-red-100 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
+                <span class="flex rounded-full bg-red-500 uppercase px-2 py-1 text-xs font-bold mr-3">Success</span>
+                <span class="font-semibold mr-2 text-left flex-auto">College Successfully deleted</span>
+                <svg class="fill-current opacity-75 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z"/></svg>
+            </div>
+        </div>  
+        <div v-if="alertOnError" class="bg-gray-100 text-center py-4 lg:px-4">
+            <div class="p-2 bg-gray-800 items-center text-gray-100 alertanim leading-none lg:rounded-full flex lg:inline-flex" role="alert">
+                <span class="flex rounded-full bg-gray-500 uppercase px-2 py-1 text-xs font-bold mr-3">Notice</span>
+                <span class="font-semibold mr-2 text-left flex-auto">Fill Empty fields</span>
+                <svg class="fill-current opacity-75 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z"/></svg>
+            </div>
+        </div> 
   <div class="container px-5 py-24 mx-auto">
     <div class="flex flex-col text-center w-full mb-12">
       <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Add College</h1>
@@ -204,7 +262,7 @@ const function_delete_college = () => {
                     </button>
                     <div class="p-6 text-center">
                         <svg aria-hidden="true" class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to delete this event?</h3>
+                        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to delete this College?</h3>
                         <button @click="function_delete_college()" data-modal-toggle="popup-modal" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
                             Yes, I'm sure
                         </button>

@@ -42,10 +42,9 @@ defineProps({
                 <nav class="bg-white border-gray-200 px-4 lg:px-6 py-2.5 ">
                     <div class="flex flex-wrap justify-between items-center mx-auto ">
                         <a href="https://flowbite.com" class="flex items-center">
-                            <img src="https://flowbite.com/docs/images/logo.svg" class="mr-3 h-6 sm:h-9"
+                            <img src="http://devops.cmu.edu.ph/formlinks/assets/dist/assets/img/logos/CMU-LOGO.png" class="mr-3 h-6 sm:h-9"
                                 alt="Flowbite Logo" />
-                            <span class="self-center text-xl font-semibold whitespace-nowrap ">Allan Mark
-                                Studio Practice</span>
+                            <span class="self-center text-xl font-bold whitespace-nowrap ">Central Mindanao University</span>
                         </a>
                         <div class="flex items-center lg:order-2" v-if="canLogin">
                             <a :href="route('login')"
@@ -63,30 +62,20 @@ defineProps({
                 </nav>
             </header>
             <section>
-                <div class="bg-black text-white py-20">
+                <div class=" overflow-hidden bg-cmu backdrop-opacity-50 backdrop-blur-lg text-white py-20" style="background-image: url('https://devops.cmu.edu.ph/formlinks/assets/dist/assets/img/backgrounds/main_gate.jpg');">
                     <scroll-parallax :right="true" direction="x">
-                        <div class="container mx-auto flex flex-col md:flex-row items-center my-12 md:my-24">
-                            <div class="flex flex-col w-full lg:w-1/3 justify-center items-start p-8">
-                                <h1 class="text-3xl md:text-5xl p-2 text-green-300 tracking-loose">TechFest</h1>
-                                <h2 class="text-3xl md:text-5xl leading-relaxed md:leading-snug mb-2">Space : The
-                                    Timeless
-                                    Infinity
+                        <div class="container backdrop-blur-md bg-white/30   max-w-[100vmin] flex-col md:flex-row items-center my-12 md:my-24">
+                            <div class="flex flex-col    justify-center items-start p-8">
+                                <h1 class="text-3xl md:text-5xl p-2 text-green-800 w-full ">Central Mindanao University </h1>
+                                <h2 class="text-3xl md:text-5xl leading-relaxed md:leading-snug mb-2">Alumni Association Incorporated
                                 </h2>
                                 <p class="text-sm md:text-base text-gray-50 mb-4">Explore your favourite events and
-                                    register now to showcase your talent and win exciting prizes.</p>
+                                    register now.</p>
                                 <a :href="route('login')"
                                     class="bg-transparent hover:bg-green-300 text-green-300 hover:text-black rounded shadow hover:shadow-lg py-2 px-4 border border-green-300 hover:border-transparent">
                                     Login</a>
                             </div>
-                            <div class="p-8 mt-12 mb-6 md:mb-0 md:mt-0 ml-0 md:ml-12 lg:w-2/3  justify-center">
-                                <div class="h-48 flex flex-wrap content-center">
-                                    <div>
-                                        <img class="inline-block mt-28 hidden xl:block"
-                                            src="https://s.yimg.com/ny/api/res/1.2/E.XEHApTT5lv1PtuFKk6aQ--/YXBwaWQ9aGlnaGxhbmRlcjt3PTk2MDtoPTU0MC42NjY2NjY2NjY2NjY2/https://s.yimg.com/uu/api/res/1.2/bYsw7QtVNbS58wqCg0tvNQ--~B/aD04MTE7dz0xNDQwO2FwcGlkPXl0YWNoeW9u/https://media.zenfs.com/en/cosmopolitan_438/842a18738bf42ecd803a576d6349a8e0">
-                                    </div>
-
-                                </div>
-                            </div>
+   
                         </div>
                     </scroll-parallax>
                 </div>
@@ -229,7 +218,7 @@ defineProps({
                             </div>
 
                             <p class="text-gray-500 mb-2 mt-6">{{announcement.content}}</p>
-                            <p class="text-sm font-bold text-green-800">Posted by : Admin - {{ announcement.user.name }}
+                            <p class="text-sm font-bold text-green-800">Posted by : Admin - {{ announcement.updated_by.name }}
                             </p>
                         </div>
                     </div>
@@ -256,6 +245,7 @@ defineProps({
 
                             <p class="text-gray-500 mb-2 ">{{events.content}}</p>
                             <p class="text-sm font-bold text-green-800">- {{events.title}}</p>
+                            <p class="text-sm font-bold text-green-800">Posted by - {{events.updated_by.name}}</p>
                         </div>
                     </div>
                 </div>
@@ -277,3 +267,12 @@ defineProps({
         </div>
     </div>
 </template>
+
+<style>
+.bg-cmu{
+    background-image: url('https://devops.cmu.edu.ph/formlinks/assets/dist/assets/img/backgrounds/main_gate.jpg');
+    background-repeat: no-repeat;
+    object-fit:cover; 
+    background-size: cover;   
+}
+</style>
