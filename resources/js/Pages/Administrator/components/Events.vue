@@ -261,8 +261,8 @@ const function_delete_event = () => {
                                 {{date_conversion_from_now(events.updated_at)}}
                             </td>
                             <td class="py-4 px-6">
-                                <a @click="function_open_update_modal(events.title, events.content, events.from, events.to, events.id)" class="font-medium text-green-600 dark:text-green-500 hover:underline">Edit</a>
-                                <a @click="function_open_delete_modal(events.id)" class="font-medium ml-2 text-red-600 dark:text-red-500 hover:underline">Delete</a>
+                                <a href="#" @click="function_open_update_modal(events.title, events.content, events.from, events.to, events.id)" class="font-medium text-green-600 dark:text-green-500 hover:underline">Edit</a>
+                                <a href="#" @click="function_open_delete_modal(events.id)" class="font-medium ml-2 text-red-600 dark:text-red-500 hover:underline">Delete</a>
                             </td>
                         </tr>
                     </tbody>

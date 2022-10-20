@@ -74,6 +74,8 @@ Route::middleware([
         Route::get('/', [CollegeController::class, 'index'])->name('index');
         Route::post('/store', [CollegeController::class, 'store'])->name('store');
         Route::put('/update/{id}', [CollegeController::class, 'update'])->name('update');
+        Route::delete('/delete/{id}', [CollegeController::class, 'destroy'])->name('delete');
+
     });
 
     Route::prefix('courses')->name('courses.')->group(function () {

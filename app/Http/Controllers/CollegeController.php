@@ -48,7 +48,9 @@ class CollegeController extends Controller
     public function store(Request $request)
     {
         College::create([
-            'name' => $request->name
+            'name' => $request->name,
+            'abbreviation' => $request->abbreviation,
+            'logo' => $request->logo
         ]);
         return Redirect::back();
     }
@@ -82,10 +84,13 @@ class CollegeController extends Controller
      * @param  \App\Models\College  $college
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, College $college)
+    public function update(Request $request, $id)
     {
+        $college = College::find($id);
         $college->update([
-            'name' => $request->name
+            'name' => $request->name,
+            'abbreviation' => $request->abbreviation,
+            'logo' => $request->logo
         ]);
         return Redirect::back();
     }
@@ -96,8 +101,11 @@ class CollegeController extends Controller
      * @param  \App\Models\College  $college
      * @return \Illuminate\Http\Response
      */
-    public function destroy(College $college)
+    public function destroy($id)
     {
         //
+        $college = College::find($id);
+        $college->delete();
+        return Redirect::back();
     }
 }
