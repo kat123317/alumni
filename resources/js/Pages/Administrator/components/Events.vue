@@ -18,6 +18,10 @@ const date_conversion_from_now = (value) => {
 
 const modal_update = ref(false)
 const modal_delete = ref(false)
+const alertOn = ref(false)
+const alertOnUpdate = ref(false)
+const alertOnDelete = ref(false)
+const alertOnError = ref(false)
 
 const from_date = ref(usePage().props.value.from_request);
 const to_date = ref(usePage().props.value.to_request);
@@ -43,18 +47,41 @@ const update_event_data = useForm({
 const delete_event_data = useForm({
     id:''
 })
+const onAlert = (data) => {
+    if(data == 'Success'){
+        alertOn.value = true;
+    }else if(data == 'Update'){
+        alertOnUpdate.value = true
+    }else if(data == 'Delete'){
+        alertOnDelete.value = true
+    }else{
+        alertOnError.value = true
+    }
+
+    setTimeout(() => {
+        if(data == 'Success'){
+        alertOn.value = false;
+        }else if(data == 'Update'){
+            alertOnUpdate.value = false
+        }else if(data == 'Delete'){
+            alertOnDelete.value = false
+        }else{
+            alertOnError.value = false
+        }
+    }, 4000);
+}
 
 const function_submit = () => {
     event_data.from = from_date.value;
     event_data.to = to_date.value;
     if(event_data.title == "" || event_data.content ==""){
-        alert("Please fill out all fields")
+        onAlert('other')
     }
     else{
         event_data.post(route('events.store'), {
             preserveScroll:true,
             onSuccess: () => {
-                alert("Added")
+                onAlert('Success')
                 event_data.reset()
             }
         })
@@ -82,7 +109,7 @@ const function_update_event = () => {
         update_event_data.put(route('events.update', [update_event_data.id]), {
             preserveScroll:true,
             onSuccess: () => {
-                alert("Updated")
+                onAlert('Update')
                 modal_update.value  = ! modal_update.value;
             }
         })
@@ -98,7 +125,7 @@ const function_delete_event = () => {
     delete_event_data.delete(route('events.delete',[delete_event_data.id]),{
         preserveScroll:true,
             onSuccess: () => {
-                alert("Deleted")
+                onAlert('Delete')
                 modal_delete.value  = ! modal_delete.value;
             }
     })
@@ -106,6 +133,34 @@ const function_delete_event = () => {
 </script>
 <template>
     <section  class="text-gray-600 body-font relative">
+        <div v-if="alertOn" class="bg-green-100 alertanim text-center py-4 lg:px-4">
+            <div class="p-2 bg-green-800 items-center text-green-100 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
+                <span class="flex rounded-full bg-green-500 uppercase px-2 py-1 text-xs font-bold mr-3">Success</span>
+                <span class="font-semibold mr-2 text-left flex-auto">Event Successfully added</span>
+                <svg class="fill-current opacity-75 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z"/></svg>
+            </div>
+        </div>  
+        <div v-if="alertOnUpdate" class="bg-blue-100 alertanim text-center py-4 lg:px-4">
+            <div class="p-2 bg-blue-800 items-center text-blue-100 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
+                <span class="flex rounded-full bg-blue-500 uppercase px-2 py-1 text-xs font-bold mr-3">Success</span>
+                <span class="font-semibold mr-2 text-left flex-auto">Event Successfully updated</span>
+                <svg class="fill-current opacity-75 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z"/></svg>
+            </div>
+        </div>
+        <div v-if="alertOnDelete" class="bg-red-100 alertanim text-center py-4 lg:px-4">
+            <div class="p-2 bg-red-800 items-center text-red-100 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
+                <span class="flex rounded-full bg-red-500 uppercase px-2 py-1 text-xs font-bold mr-3">Success</span>
+                <span class="font-semibold mr-2 text-left flex-auto">Event Successfully deleted</span>
+                <svg class="fill-current opacity-75 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z"/></svg>
+            </div>
+        </div>  
+        <div v-if="alertOnError" class="bg-gray-100 text-center py-4 lg:px-4">
+            <div class="p-2 bg-gray-800 items-center text-gray-100 alertanim leading-none lg:rounded-full flex lg:inline-flex" role="alert">
+                <span class="flex rounded-full bg-gray-500 uppercase px-2 py-1 text-xs font-bold mr-3">Notice</span>
+                <span class="font-semibold mr-2 text-left flex-auto">Fill Empty fields</span>
+                <svg class="fill-current opacity-75 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z"/></svg>
+            </div>
+        </div> 
       <div class="container px-5 py-24 mx-auto">
         <div class="flex flex-col text-center w-full mb-12">
           <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Add Events</h1>
@@ -214,9 +269,9 @@ const function_delete_event = () => {
                 </table>
             </div>      
             
-            <div v-if="modal_update" class="float-center">
-                <div id="popup-modal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full">
-                    <div class="relative p-4 w-full max-w-md h-full md:h-auto">
+            <div v-if="modal_update" class=" ">
+                <div id="popup-modal" tabindex="-1" class="overflow-y-auto  flex fixed justify-center w-full backdrop-blur-sm overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full">
+                    <div class="relative p-4 w-full animate mt-10 max-w-md h-full md:h-auto">
                         <div class="relative bg-white rounded-lg shadow">
                                     <div class="p-2 w-full">
                                         <div class="relative">
@@ -261,8 +316,8 @@ const function_delete_event = () => {
                 </div>
             </div>
             <div v-if="modal_delete">
-                <div id="popup-modal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full">
-                    <div class="relative p-4 w-full max-w-md h-full md:h-auto">
+                <div id="popup-modal" tabindex="-1" class="overflow-y-auto flex justify-center backdrop-blur-sm overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full">
+                    <div class="relative p-4 animate w-full max-w-md h-full mt-[20vmin] transition ease-in-out md:h-auto">
                         <div class="relative bg-white rounded-lg shadow">
                             <button @click="function_open_delete_modal()" type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-toggle="popup-modal">
                                 <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
@@ -289,3 +344,67 @@ const function_delete_event = () => {
       </div>
     </section>
     </template>
+
+
+<style scoped>
+.animate{
+    animation: myAnim 0.5s ease 0s 1 normal forwards;
+}
+.alertanim{
+    animation: Bounce  0.5s ease 0s 1 normal forwards;
+}
+
+@keyframes myAnim {
+	0% {
+		transform: scale(0);
+	}
+
+	100% {
+		transform: scale(1);
+	}
+}
+
+@keyframes Bounce {
+	0% {
+		animation-timing-function: ease-in;
+		opacity: 0;
+		transform: translateY(-250px);
+	}
+
+	38% {
+		animation-timing-function: ease-out;
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	55% {
+		animation-timing-function: ease-in;
+		transform: translateY(-65px);
+	}
+
+	72% {
+		animation-timing-function: ease-out;
+		transform: translateY(0);
+	}
+
+	81% {
+		animation-timing-function: ease-in;
+		transform: translateY(-28px);
+	}
+
+	90% {
+		animation-timing-function: ease-out;
+		transform: translateY(0);
+	}
+
+	95% {
+		animation-timing-function: ease-in;
+		transform: translateY(-8px);
+	}
+
+	100% {
+		animation-timing-function: ease-out;
+		transform: translateY(0);
+	}
+}
+</style>
