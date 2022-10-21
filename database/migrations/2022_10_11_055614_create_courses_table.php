@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('college_id');
             $table->string('name');
             $table->string('abbreviation');
+            $table->string('logo')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
