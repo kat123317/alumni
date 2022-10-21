@@ -47,10 +47,17 @@ class CollegeController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'logo' => 'required|image|mimes:png,jpg,jpeg|max:2048'
+        ]);
+        if($request->hasfile('logo')){
+            $imageName = time().'.'.$request->logo->extension();
+            $request->logo->move(public_path().'/images/colleges/', $imageName); 
+        }
         College::create([
             'name' => $request->name,
             'abbreviation' => $request->abbreviation,
-            'logo' => $request->logo
+            'logo' => $imageName
         ]);
         return Redirect::back();
     }
@@ -87,11 +94,23 @@ class CollegeController extends Controller
     public function update(Request $request, $id)
     {
         $college = College::find($id);
-        $college->update([
-            'name' => $request->name,
-            'abbreviation' => $request->abbreviation,
-            'logo' => $request->logo
-        ]);
+        if($request->hasfile('logo')){
+            $imageName = $college->logo;
+            $filename = explode('.', $college->logo);
+            $imageName = $filename[0].'.'.$request->logo->extension();
+            $request->logo->move(public_path().'/images/colleges/', $imageName);
+            $college->update([
+                'name' => $request->name,
+                'abbreviation' => $request->abbreviation,
+                'logo' => $imageName.'?rnd='.rand(1, 100)
+            ]);
+        } else {
+            $college->update([
+                'name' => $request->name,
+                'abbreviation' => $request->abbreviation
+            ]);
+        }
+        
         return Redirect::back();
     }
 

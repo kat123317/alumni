@@ -35,7 +35,7 @@ const onAlert = (data) => {
     }, 4000);
 }
 
-
+const logo_name = ref('');//temp for preview image
 const college_data = useForm({
     name:'',
     abbreviation:'',
@@ -46,7 +46,7 @@ const update_college_data = useForm({
     id:'',
     name:'',
     abbreviation:'',
-    logo:'',
+    logo:null,
 })
 
 const delete_college_data = useForm({
@@ -68,24 +68,26 @@ const function_add_college = () => {
   }
 }
 
-const function_open_update_modal = (id, name, abbreviation, logo) => {
-  update_college_data.id = id;
-  update_college_data.name = name;
-  update_college_data.abbreviation = abbreviation;
-  update_college_data.logo = logo;
+const function_open_update_modal = (data = null) => {
+    if (data != null) {
+        update_college_data.id = data.id;
+        update_college_data.name = data.name;
+        update_college_data.abbreviation = data.abbreviation;
+        logo_name.value = data.logo;
+    }
   modal_update.value  = ! modal_update.value;
 }
 
 const function_update_college = () => {
-  update_college_data.put(route('colleges.update', [update_college_data.id]),{
-            preserveScroll:true,
-            onSuccess: () => {
-                college_data.reset()
-                onAlert('Update')
-                modal_update.value  = ! modal_update.value;
+    update_college_data.post(route('colleges.update', {id: update_college_data.id}),{
+        preserveScroll:true,
+        onSuccess: () => {
+            update_college_data.reset()
+            onAlert('Update')
+            modal_update.value  = ! modal_update.value;
 
-            }
-        })
+        }
+    })
 }
 
 const function_open_delete_modal= (id) => {
@@ -104,6 +106,27 @@ const function_delete_college = () => {
 
             }
         })
+}
+
+const openFile = ()=> { 
+    if (modal_update.value) {
+        let hidden = document.getElementById("hidden-input-edit");
+        hidden.click();
+        hidden.onchange = (e) => { 
+            let file = e.target.files[0]
+            logo_name.value = file.name;
+            update_college_data.logo = file;
+        };
+    } else {
+        let hidden = document.getElementById("hidden-input");
+        hidden.click();
+        hidden.onchange = (e) => { 
+            let file = e.target.files[0]
+            logo_name.value = file.name;
+            college_data.logo = file;
+        };
+    }
+    
 }
 </script>
 <template>
@@ -158,9 +181,13 @@ const function_delete_college = () => {
         </div>
         <div class="p-2 w-full">
           <div class="relative">
-            <label for="email" class="leading-7 text-sm text-gray-600">Logo Link</label>
-            <input v-model="college_data.logo" type="email" id="email" name="email" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-          </div>
+            <label for="email" class="leading-7 text-sm text-gray-600">Logo</label>
+            <input v-model="logo_name" disabled type="email" id="email" name="email" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+            <input id="hidden-input" type="file" class="hidden" accept="image/png, image/gif, image/jpeg"/>
+            <button @click="openFile" class="mt-2 rounded-sm px-3 py-1 bg-gray-200 hover:bg-gray-300 focus:shadow-outline focus:outline-none">
+                Select Logo
+            </button>
+        </div>
         </div>
      
         <div class="p-2 w-full">
@@ -196,10 +223,10 @@ const function_delete_college = () => {
                             {{ colleges.abbreviation }}
                         </td>
                         <td class="py-2 px-6">
-                            <img :src=colleges.logo class="h-[5vmin]">
+                            <img :src="'/images/colleges/'+colleges.logo" class="h-[5vmin]">
                         </td>
                         <td class="py-4 px-6">
-                            <a href="#" @click="function_open_update_modal(colleges.id, colleges.name, colleges.abbreviation, colleges.logo)" class="font-medium text-green-600">Edit</a>
+                            <a href="#" @click="function_open_update_modal({ id: colleges.id, name: colleges.name, abbreviation: colleges.abbreviation, logo: colleges.logo})" class="font-medium text-green-600">Edit</a>
                             <a href="#" @click="function_open_delete_modal(colleges.id)" class="font-medium ml-2 text-red-600">Delete</a>
                         </td>
                     </tr>
@@ -232,7 +259,11 @@ const function_delete_college = () => {
                             <div class="p-2 w-full">
                                 <div class="relative">
                                     <label for="title" class="leading-7 text-sm text-gray-600">Logo</label>
-                                    <input v-model="update_college_data.logo" type="text" id="title" name="title" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" required>
+                                    <input v-model="logo_name" disabled type="text" id="title" name="title" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" required>
+                                    <input id="hidden-input-edit" type="file" class="hidden" accept="image/png, image/gif, image/jpeg"/>
+                                    <button @click="openFile" class="mt-2 rounded-sm px-3 py-1 bg-gray-200 hover:bg-gray-300 focus:shadow-outline focus:outline-none">
+                                        Select Logo
+                                    </button>
                                 </div>
                             </div>
                     <button @click="function_open_update_modal()" type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-toggle="popup-modal">
