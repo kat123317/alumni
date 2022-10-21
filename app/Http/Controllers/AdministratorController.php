@@ -22,8 +22,9 @@ class AdministratorController extends Controller
                 'colleges' => College::all(),
                 'from_request' => $request->from_date ?? Carbon::today()->format('Y-m-d'),
                 'to_request' => $request->to_date ?? Carbon::today()->format('Y-m-d'),
-                'events' => Event::with('user')->with('updated_by')->orderBY('id','desc')->get(),
-                'announcements' => Announcement::with('user')->with('updated_by')->orderBY('id','desc')->paginate(10)
+                'events' => Event::with('user')->with('updated_by')->orderBY('id','desc')->paginate(10),
+                'announcements' => Announcement::with('user')->with('updated_by')->orderBY('id','desc')->paginate(10),
+                'trigger' => $request->trigger ?? 1
             ]);
         }
         else{

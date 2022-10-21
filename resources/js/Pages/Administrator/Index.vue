@@ -1,6 +1,6 @@
 <script setup>
-import { useForm } from '@inertiajs/inertia-vue3';
-import { ref, onMounted } from 'vue'
+import { useForm, usePage } from '@inertiajs/inertia-vue3';
+import { ref, onMounted, provide } from 'vue'
 import Announcement from './components/Announcement.vue';
 import Alumni from './components/Alumni.vue';
 import Usermangement from './components/Usermangement.vue';
@@ -8,7 +8,7 @@ import Department from './components/Department.vue';
 import Course from './components/Course.vue';
 import Events from './components/Events.vue';
 
-const trigger  = ref(1);
+const trigger  = ref(usePage().props.value.trigger);
 // const props = defineProps([
 //     'colleges', 
 //     'notifications', 
@@ -16,7 +16,7 @@ const trigger  = ref(1);
 //     'users',
 //     'announcements'
 // ]);
-
+provide('trigger', trigger);
 </script>
 <template>
     <div class="bg-cmu">

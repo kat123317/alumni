@@ -5,6 +5,7 @@ import { ref, onMounted,  computed} from 'vue';
 import route from '../../../../../vendor/tightenco/ziggy/src/js';
 
 import moment from 'moment';
+import Pagination from '../../Pagination.vue';
 const date_conversion = (value) => {
             if (value) {
                 return moment(value).format('MMMM Do YYYY')
@@ -23,8 +24,8 @@ const alertOnUpdate = ref(false)
 const alertOnDelete = ref(false)
 const alertOnError = ref(false)
 
-const from_date = ref(usePage().props.value.from_request);
-const to_date = ref(usePage().props.value.to_request);
+const from_date = ref(usePage().props.value.from_request.data);
+const to_date = ref(usePage().props.value.to_request.data);
 
 const from_date_update = ref();
 const to_date_update = ref();
@@ -235,7 +236,7 @@ const function_delete_event = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(events, key) in usePage().props.value.events" :key="key">
+                        <tr v-for="(events, key) in usePage().props.value.events.data" :key="key">
                             <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
                                 {{events.title}}
                             </th>
@@ -267,6 +268,9 @@ const function_delete_event = () => {
                         </tr>
                     </tbody>
                 </table>
+                <div class="px-4 w-100 py-3 flex items-center justify-center border-gray-200 sm:px-6">
+                    <Pagination v-bind:links="$page.props.events.links"/>
+                </div>
             </div>      
             
             <div v-if="modal_update" class=" ">

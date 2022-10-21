@@ -1,10 +1,17 @@
 <script setup>
 import { Link, usePage } from '@inertiajs/inertia-vue3';
-import { computed } from 'vue';
+import { computed, inject, onMounted, ref } from 'vue';
 
 const props = defineProps(['links', 'search']);
 const search_url = computed(() => (props.search != '' && props.search != undefined) ? '&search='+props.search : '');
-const search_variable = usePage().props.value.searched ? "&searchTxT=" + usePage().props.value.searched:'';
+const search_variable = ref('');
+const trigger = inject('trigger');
+onMounted(() => {
+    search_variable.value += usePage().props.value.searched ? "&searchTxT=" + usePage().props.value.searched:'';
+    if (trigger.value) {
+        search_variable.value += "&trigger=" + trigger.value;
+    }
+})
 </script>
 
 <template>
