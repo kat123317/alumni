@@ -18,7 +18,7 @@ class AdministratorController extends Controller
     public function index(Request $request)
     {
         // dd($request->user_type);
-        $colleges = College::all();
+        $colleges = College::with('courses')->get();
         if ($colleges->count() > 0 && !isset($request->id)) {
             $filter_courses_id = $colleges[0]->id;
         } else {
