@@ -28,7 +28,9 @@ onMounted(() => {
 const add_course_data = useForm({
   abbreviation:'',
   name:'',
-  college_id:''
+  college_id:'',
+  logo:'',
+  image_name:''
 })
 
 const filter_table_show = () => {
@@ -77,10 +79,13 @@ const update_course_data = useForm({
     abbreviation:'',
     name:'',
     id:'',
-    college_id:''
+    college_id:'',
+    logo:'',
+    image_name:''
 })
 
-const function_open_update_modal = (id, name, abbreviation, college_id) => {
+const function_open_update_modal = (id, name, abbreviation, college_id, logo) => {
+  update_course_data.logo = logo;
   update_course_data.id = id;
   update_course_data.college_id = college_id;
   update_course_data.name = name; 
@@ -94,7 +99,7 @@ const function_update_course = () => {
     alert('Please fill out all fields')
     }
     else{
-      update_course_data.put(route('courses.update', [update_course_data.id]), {
+      update_course_data.post(route('courses.update', [update_course_data.id]), {
             preserveScroll:true,
             onSuccess: () => {
                 // onAlert('Update')
@@ -104,6 +109,26 @@ const function_update_course = () => {
         })
     }   
 }
+
+
+const openFile = () => {
+    let hidden = document.getElementById("course-hidden-input");
+    hidden.click();
+    hidden.onchange = (e) => { 
+        let file = e.target.files[0]
+        add_course_data.image_name = file.name;
+        add_course_data.logo = file;
+    };
+    }
+const openFileEdit = () => {
+    let hidden = document.getElementById("course-hidden-edit");
+    hidden.click();
+    hidden.onchange = (e) => { 
+        let file = e.target.files[0]
+        update_course_data.image_name = file.name;
+        update_course_data.logo = file;
+    };
+    }
 </script>
 <template>
 <section class="text-gray-600 body-font relative">
@@ -132,6 +157,15 @@ const function_update_course = () => {
             <select v-model="add_course_data.college_id" id="countries" class="bg-gray-50 border border-gray-300 w text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
               <option v-for="(colleges, key) in usePage().props.value.colleges" :key="key" :value=colleges.id>{{colleges.name}}</option>
             </select>
+          </div>
+        </div>
+        <div class="p-2 p-2 w-1/3">
+          <div class="relative">
+              <input v-model="add_course_data.image_name" type="email" id="email" name="email" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" disabled>
+              <input id="course-hidden-input" type="file" class="hidden" accept="image/png, image/gif, image/jpeg"/>
+              <button @click="openFile" class="mt-2 rounded-sm px-3 py-1 bg-gray-200 hover:bg-gray-300 focus:shadow-outline focus:outline-none">
+                  Select Logo
+              </button>
           </div>
         </div>
      
@@ -179,7 +213,7 @@ const function_update_course = () => {
                             {{courses.abbreviation}}
                         </td>
                         <td class="py-4 px-6">
-                            <a href="#" @click="function_open_update_modal(courses.id, courses.name, courses.abbreviation, courses.college_id)" class="font-medium text-green-600 hover:underline">Edit</a>
+                            <a href="#" @click="function_open_update_modal(courses.id, courses.name, courses.abbreviation, courses.college_id, courses.logo)" class="font-medium text-green-600 hover:underline">Edit</a>
                             <a href="#" @click="function_open_delete_modal(courses.id)" class="font-medium ml-2 text-red-600 hover:underline">Delete</a>
                         </td>
                     </tr>
@@ -243,6 +277,16 @@ const function_update_course = () => {
 
                                         </div>
                                     </div>
+                                    <div class="p-2 w-full">
+                                      <div class="relative">
+                                          <img :src="'/images/courses/'+update_course_data.logo" class="h-[5vmin] flex flex-center" >
+                                          <input v-model="update_course_data.image_name" type="email" id="email" name="email" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" disabled>
+                                          <input id="course-hidden-edit" type="file" class="hidden" accept="image/png, image/gif, image/jpeg"/>
+                                          <button @click="openFileEdit" class="mt-2 rounded-sm px-3 py-1 bg-gray-200 hover:bg-gray-300 focus:shadow-outline focus:outline-none">
+                                              Select Logo
+                                          </button>
+                                      </div>
+                                  </div>
                             <button @click="function_open_update_modal()" type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-toggle="popup-modal">
                                 <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                                 <span class="sr-only">Close modal</span>

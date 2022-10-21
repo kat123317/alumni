@@ -38,10 +38,19 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'logo' => 'required|image|mimes:png,jpg,jpeg|max:2048'
+        ]);
+        if($request->hasfile('logo')){
+            $imageName = time().'.'.$request->logo->extension();
+            $request->logo->move(public_path().'/images/courses/', $imageName); 
+        }
+
         Course::create([
             'college_id' => $request->college_id,
             'name' => $request->name,
-            'abbreviation' => $request->abbreviation
+            'abbreviation' => $request->abbreviation,
+            'logo' => $imageName
         ]);
         return Redirect::back();
     }
@@ -78,11 +87,24 @@ class CourseController extends Controller
     public function update(Request $request, $id)
     {
         $course = Course::find($id);
+        if($request->hasfile('logo')){
+            $imageName = $course->logo;
+            $filename = explode('.', $course->logo);
+            $imageName = $filename[0].'.'.$request->logo->extension();
+            $request->logo->move(public_path().'/images/courses/', $imageName);
         $course->update([
             'college_id' => $request->college_id,
             'name' => $request->name,
-            'abbreviation' => $request->abbreviation
+            'abbreviation' => $request->abbreviation,
+            'logo' => $imageName.'?rnd='.rand(1, 100)
         ]);
+    } else {
+        $course->update([
+            'college_id' => $request->college_id,
+            'name' => $request->name,
+            'abbreviation' => $request->abbreviation,
+        ]);
+    }
         return Redirect::back();
     }
 
