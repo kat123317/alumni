@@ -4,6 +4,7 @@ import { ref, onMounted, computed } from 'vue';
 import route from '../../../../../vendor/tightenco/ziggy/src/js';
 
 import moment from 'moment';
+import Pagination from '../../Pagination.vue';
 const date_conversion = (value) => {
     if (value) {
         return moment(value).format('MMMM Do YYYY')
@@ -182,7 +183,7 @@ const function_delete_post = () => {
                                 </th>
                             </tr>
                         </thead>
-                        <tbody v-for="(announcements, key) in usePage().props.value.announcements" :key="key">
+                        <tbody v-for="(announcements, key) in usePage().props.value.announcements.data" :key="key">
                             <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
                                 <th scope="row" class="py-4 px-6 font-bold capitalize  text-gray-900 whitespace-nowrap dark:text-white">
                                     {{announcements.title}}
@@ -210,7 +211,7 @@ const function_delete_post = () => {
                         </tbody>
                     </table>
                 </div>
-
+                
             </div>
             <div class="lg:w-1/3 md:w-1/2 bg-white flex flex-col md:ml-auto w-full md:py-8 mt-8 md:mt-0">
                 <h2 class="text-gray-900 text-lg mb-1 font-medium title-font">Post-Announcement</h2>
@@ -229,7 +230,9 @@ const function_delete_post = () => {
                     class="text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded text-lg">Post</button>
             </div>
         </div>
-
+        <div class="px-4 w-100 py-3 flex items-center justify-center border-gray-200 sm:px-6">
+            <Pagination  v-bind:links="$page.props.announcements.links"/>
+        </div>
         <div v-if="modal_update" class=" ">
                 <div id="popup-modal" tabindex="-1" class="overflow-y-auto  flex fixed justify-center w-full backdrop-blur-sm overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full">
                     <div class="relative p-4 w-full animate mt-10 max-w-md h-full md:h-auto">

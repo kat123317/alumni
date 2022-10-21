@@ -23,7 +23,7 @@ class AdministratorController extends Controller
                 'from_request' => $request->from_date ?? Carbon::today()->format('Y-m-d'),
                 'to_request' => $request->to_date ?? Carbon::today()->format('Y-m-d'),
                 'events' => Event::with('user')->with('updated_by')->orderBY('id','desc')->get(),
-                'announcements' => Announcement::with('user')->with('updated_by')->orderBY('id','desc')->get()
+                'announcements' => Announcement::with('user')->with('updated_by')->orderBY('id','desc')->paginate(10)
             ]);
         }
         else{
