@@ -1,3 +1,27 @@
+<script setup>
+import { Head, Link, useForm, usePage } from '@inertiajs/inertia-vue3';
+import { ref, onMounted,  computed} from 'vue';
+import route from '../../../../../vendor/tightenco/ziggy/src/js';
+
+import moment from 'moment';
+import Pagination from '../../Pagination.vue';
+
+// const selected_course_view = computed(()=>{
+//   return usePage().props.value.filter_courses_id.id ? usePage().props.value.filter_courses_id.id:'no_select'
+// })
+
+const id_selected_in_filter = ref('');
+onMounted(() => {
+  id_selected_in_filter.value = (usePage().props.value.filter_courses_id.id == "") ? usePage().props.value.filter_courses_id.id:'no_select'
+})
+const select_course_view = useForm({
+  id:id_selected_in_filter.value
+})
+
+const filter_table_show = () => {
+  select_course_view.get(route('administrator'))
+}
+</script>
 <template>
 <section class="text-gray-600 body-font relative">
   <div class="container px-5 py-24 mx-auto">
@@ -38,11 +62,22 @@
         <div class="p-2 w-full pt-8 mt-8 border-t border-gray-200 text-center">
             
         <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
+          <div class="p-2 p-2 w-1/2">
+            <div class="relative">
+              <select v-model="select_course_view.id" @change="filter_table_show()" id="countries" class="bg-gray-50 border border-gray-300 w text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option value="no_select" selected>Choose a College Filter</option>
+                <option v-for="(colleges, key) in usePage().props.value.colleges" :key="key" :value=colleges.id>{{colleges.name}}</option>
+              </select>
+            </div>
+          </div>
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" class="py-3 px-6">
                             College
+                        </th>
+                        <th scope="col" class="py-3 px-6">
+                            Course
                         </th>
                         <th scope="col" class="py-3 px-6">
                             ABBR
@@ -54,20 +89,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            College of Something
+                    <tr v-for="(courses, key) in usePage().props.value.courses.data" :key="key">
+                        <th scope="row" class="py-4 px-6 font-medium text-gray-900 word-break font-bold">
+                            {{courses.college.name}}
+                        </th>
+                        <th scope="row" class="py-4 px-6 font-medium text-gray-900 word-break">
+                            {{courses.name}}
                         </th>
                         <td class="py-4 px-6">
-                            COS
+                            {{courses.abbreviation}}
                         </td>
                         <td class="py-4 px-6">
-                            <a href="#" class="font-medium text-green-600 dark:text-green-500 hover:underline">Edit</a>
-                            <a href="#" class="font-medium ml-2 text-green-600 dark:text-green-500 hover:underline">Delete</a>
+                            <a href="#" class="font-medium text-green-600 hover:underline">Edit</a>
+                            <a href="#" class="font-medium ml-2 text-red-600 hover:underline">Delete</a>
                         </td>
                     </tr>
                 </tbody>
             </table>
+            <div class="px-4 w-100 py-3 flex items-center justify-center border-gray-200 sm:px-6">
+                <Pagination v-bind:links="$page.props.events.links"/>
+            </div>
         </div>      
 
         </div>
