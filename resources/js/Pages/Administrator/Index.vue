@@ -9,9 +9,7 @@ import Course from './components/Course.vue';
 import Events from './components/Events.vue';
 
 const trigger  = ref(usePage().props.value.trigger);
-const select_course_view = useForm({
-  id:usePage().props.value.filter_courses_id
-})
+
 // const props = defineProps([
 //     'colleges', 
 //     'notifications', 
@@ -20,7 +18,7 @@ const select_course_view = useForm({
 //     'announcements'
 // ]);
 provide('trigger', trigger);
-provide('filter_courses_id', select_course_view.id);
+provide('filter_courses_id', usePage().props.value.filter_courses_id);
 </script>
 <template>
     <div class="bg-cmu">

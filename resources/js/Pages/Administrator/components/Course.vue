@@ -20,11 +20,10 @@ onMounted(() => {
   select_course_view.id = inject('filter_courses_id');
 })
 
-
-
 const filter_table_show = () => {
   select_course_view.get(route('administrator', {trigger:trigger.value}))
 }
+
 
 </script>
 <template>
@@ -52,11 +51,8 @@ const filter_table_show = () => {
           <div class="relative">
             <label for="email" class="leading-7 text-sm text-gray-600">College</label>
             <select id="countries" class="bg-gray-50 border border-gray-300 w text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              <option selected>Choose a College</option>
-              <option value="US">COE</option>
-              <option value="CA">COD</option>
-              <option value="FR">COED</option>
-              <option value="DE">SSD</option>
+              <option  value="no_select"  selected>Choose a College</option>
+              <option v-for="(colleges, key) in usePage().props.value.colleges" :key="key" :value=colleges.id>{{colleges.name}}</option>
             </select>
           </div>
         </div>
