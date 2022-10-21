@@ -13,11 +13,11 @@ const trigger = inject('trigger')
 const id_selected_in_filter = ref('');
 
 const select_course_view = useForm({
-  id:usePage().props.value.filter_courses_id
+  id:1
 })
 
 onMounted(() => {
-  // select_course_view.id = usePage().props.value.filter_courses_id.id ? usePage().props.value.filter_courses_id.id:'no_select'
+  select_course_view.id = inject('filter_courses_id');
 })
 
 
@@ -25,7 +25,7 @@ onMounted(() => {
 const filter_table_show = () => {
   select_course_view.get(route('administrator', {trigger:trigger.value}))
 }
-provide('filter_courses_id', select_course_view.id);
+
 </script>
 <template>
 <section class="text-gray-600 body-font relative">
