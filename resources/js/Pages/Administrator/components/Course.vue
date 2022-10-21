@@ -1,6 +1,6 @@
 <script setup>
 import { Head, Link, useForm, usePage } from '@inertiajs/inertia-vue3';
-import { ref, onMounted,  computed} from 'vue';
+import { ref, onMounted,  computed, inject, provide} from 'vue';
 import route from '../../../../../vendor/tightenco/ziggy/src/js';
 
 import moment from 'moment';
@@ -9,18 +9,23 @@ import Pagination from '../../Pagination.vue';
 // const selected_course_view = computed(()=>{
 //   return usePage().props.value.filter_courses_id.id ? usePage().props.value.filter_courses_id.id:'no_select'
 // })
-
+const trigger = inject('trigger')
 const id_selected_in_filter = ref('');
-onMounted(() => {
-  id_selected_in_filter.value = (usePage().props.value.filter_courses_id.id == "") ? usePage().props.value.filter_courses_id.id:'no_select'
-})
+
 const select_course_view = useForm({
-  id:id_selected_in_filter.value
+  id:usePage().props.value.filter_courses_id
 })
+
+onMounted(() => {
+  // select_course_view.id = usePage().props.value.filter_courses_id.id ? usePage().props.value.filter_courses_id.id:'no_select'
+})
+
+
 
 const filter_table_show = () => {
-  select_course_view.get(route('administrator'))
+  select_course_view.get(route('administrator', {trigger:trigger.value}))
 }
+provide('filter_courses_id', select_course_view.id);
 </script>
 <template>
 <section class="text-gray-600 body-font relative">

@@ -189,7 +189,7 @@ defineProps({
                     <div class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-6 md:gap-12 md:space-y-0">
                         <div class="  p-2 drop-shadow-sm" v-for="(colleges, key) in usePage().props.value.colleges"
                             :key="key">
-                            <img class="grayscale  w-25 " :src=colleges.logo>
+                            <img class="grayscale  w-25 " :src="'/images/colleges/'+colleges.logo">
                         </div>
                     </div>
 

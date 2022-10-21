@@ -6,10 +6,14 @@ const props = defineProps(['links', 'search']);
 const search_url = computed(() => (props.search != '' && props.search != undefined) ? '&search='+props.search : '');
 const search_variable = ref('');
 const trigger = inject('trigger');
+const filter_courses_id = inject('filter_courses_id');
 onMounted(() => {
     search_variable.value += usePage().props.value.searched ? "&searchTxT=" + usePage().props.value.searched:'';
     if (trigger.value) {
         search_variable.value += "&trigger=" + trigger.value;
+    }
+    if (filter_courses_id) {
+        search_variable.value += "&id=" + filter_courses_id;
     }
 })
 </script>
