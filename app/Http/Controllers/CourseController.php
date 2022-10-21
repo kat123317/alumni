@@ -41,7 +41,7 @@ class CourseController extends Controller
         Course::create([
             'college_id' => $request->college_id,
             'name' => $request->name,
-            'abbrevation' => $request->abbrevation
+            'abbreviation' => $request->abbreviation
         ]);
         return Redirect::back();
     }
@@ -75,12 +75,13 @@ class CourseController extends Controller
      * @param  \App\Models\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Course $course)
+    public function update(Request $request, $id)
     {
+        $course = Course::find($id);
         $course->update([
             'college_id' => $request->college_id,
             'name' => $request->name,
-            'abbrevation' => $request->abbrevation
+            'abbreviation' => $request->abbreviation
         ]);
         return Redirect::back();
     }
@@ -91,8 +92,10 @@ class CourseController extends Controller
      * @param  \App\Models\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Course $course)
+    public function destroy($id)
     {
-        //
+        $course = Course::find($id);
+        $course->delete();
+        return Redirect::back();
     }
 }

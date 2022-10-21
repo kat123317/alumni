@@ -12,6 +12,11 @@ import Pagination from '../../Pagination.vue';
 const trigger = inject('trigger')
 const id_selected_in_filter = ref('');
 
+const modal_update = ref(false)
+const modal_delete = ref(false)
+
+
+
 const select_course_view = useForm({
   id:1
 })
@@ -20,11 +25,85 @@ onMounted(() => {
   select_course_view.id = inject('filter_courses_id');
 })
 
+const add_course_data = useForm({
+  abbreviation:'',
+  name:'',
+  college_id:''
+})
+
 const filter_table_show = () => {
   select_course_view.get(route('administrator', {trigger:trigger.value}))
 }
 
+const course_save = () => {
+  if(add_course_data.name == '' || add_course_data.abbreviation == '' || add_course_data.college_id == ''){
+    alert('Please fill out all fields')
+  }
+  else{
+    add_course_data.post(route('courses.store'), {
+            preserveScroll:true,
+            onSuccess: () => {
+                // onAlert('Success')
+                alert("Added")
+                add_course_data.reset()
+            }
+        })
+  }
+  
+}
 
+
+const delete_course_data = useForm({
+    id:''
+})
+
+const function_open_delete_modal = (id) => {
+  delete_course_data.id = id
+    modal_delete.value  = ! modal_delete.value;
+}
+
+const function_delete_event = () => {
+  delete_course_data.delete(route('courses.delete',[delete_course_data.id]),{
+        preserveScroll:true,
+            onSuccess: () => {
+                // onAlert('Delete')
+                alert('deleted')
+                modal_delete.value  = ! modal_delete.value;
+            }
+    })
+}
+
+const update_course_data = useForm({
+    abbreviation:'',
+    name:'',
+    id:'',
+    college_id:''
+})
+
+const function_open_update_modal = (id, name, abbreviation, college_id) => {
+  update_course_data.id = id;
+  update_course_data.college_id = college_id;
+  update_course_data.name = name; 
+  update_course_data.abbreviation = abbreviation;
+  modal_update.value  = ! modal_update.value;
+
+}
+
+const function_update_course = () => {
+    if(update_course_data.name == '' || update_course_data.abbreviation == '' || update_course_data.college_id == ''){
+    alert('Please fill out all fields')
+    }
+    else{
+      update_course_data.put(route('courses.update', [update_course_data.id]), {
+            preserveScroll:true,
+            onSuccess: () => {
+                // onAlert('Update')
+                alert('Updated')
+                modal_update.value  = ! modal_update.value;
+            }
+        })
+    }   
+}
 </script>
 <template>
 <section class="text-gray-600 body-font relative">
@@ -38,34 +117,33 @@ const filter_table_show = () => {
         <div class="p-2 w-1/3">
           <div class="relative">
             <label for="name" class="leading-7 text-sm text-gray-600">Abbreviation</label>
-            <input type="text" id="name" name="name" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+            <input v-model="add_course_data.abbreviation" type="text" id="name" name="name" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
           </div>
         </div>
         <div class="p-2 w-[52vmin]">
           <div class="relative">
             <label for="email" class="leading-7 text-sm text-gray-600">Course</label>
-            <input type="email" id="email" name="email" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+            <input v-model="add_course_data.name" type="email" id="email" name="email" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
           </div>
         </div>
         <div class="p-2 p-2 w-1/3">
           <div class="relative">
             <label for="email" class="leading-7 text-sm text-gray-600">College</label>
-            <select id="countries" class="bg-gray-50 border border-gray-300 w text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              <option  value="no_select"  selected>Choose a College</option>
+            <select v-model="add_course_data.college_id" id="countries" class="bg-gray-50 border border-gray-300 w text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
               <option v-for="(colleges, key) in usePage().props.value.colleges" :key="key" :value=colleges.id>{{colleges.name}}</option>
             </select>
           </div>
         </div>
      
         <div class="p-2 w-full">
-          <button class="flex mx-auto text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">Submit</button>
+          <button @click="course_save()" class="flex mx-auto text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">Submit</button>
         </div>
         <div class="p-2 w-full pt-8 mt-8 border-t border-gray-200 text-center">
             
         <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
           <div class="p-2 p-2 w-1/2">
             <div class="relative">
-              <select v-model="select_course_view.id" @change="filter_table_show()" id="countries" class="bg-gray-50 border border-gray-300 w text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <select v-model="select_course_view.id" @change="filter_table_show()" id="countries" class="bg-gray-50 border border-gray-300 w text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                 <option value="no_select" selected>Choose a College Filter</option>
                 <option v-for="(colleges, key) in usePage().props.value.colleges" :key="key" :value=colleges.id>{{colleges.name}}</option>
               </select>
@@ -75,7 +153,7 @@ const filter_table_show = () => {
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" class="py-3 px-6">
-                            College
+                            Logo
                         </th>
                         <th scope="col" class="py-3 px-6">
                             Course
@@ -92,7 +170,7 @@ const filter_table_show = () => {
                 <tbody>
                     <tr v-for="(courses, key) in usePage().props.value.courses.data" :key="key">
                         <th scope="row" class="py-4 px-6 font-medium text-gray-900 word-break font-bold">
-                            {{courses.college.name}}
+                          <img :src="'/images/courses/'+courses.logo" class="h-[5vmin]">
                         </th>
                         <th scope="row" class="py-4 px-6 font-medium text-gray-900 word-break">
                             {{courses.name}}
@@ -101,8 +179,8 @@ const filter_table_show = () => {
                             {{courses.abbreviation}}
                         </td>
                         <td class="py-4 px-6">
-                            <a href="#" class="font-medium text-green-600 hover:underline">Edit</a>
-                            <a href="#" class="font-medium ml-2 text-red-600 hover:underline">Delete</a>
+                            <a href="#" @click="function_open_update_modal(courses.id, courses.name, courses.abbreviation, courses.college_id)" class="font-medium text-green-600 hover:underline">Edit</a>
+                            <a href="#" @click="function_open_delete_modal(courses.id)" class="font-medium ml-2 text-red-600 hover:underline">Delete</a>
                         </td>
                     </tr>
                 </tbody>
@@ -115,6 +193,73 @@ const filter_table_show = () => {
         </div>
       </div>
     </div>
+
+    <div v-if="modal_delete">
+                <div id="popup-modal" tabindex="-1" class="overflow-y-auto flex justify-center backdrop-blur-sm overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full">
+                    <div class="relative p-4 animate w-full max-w-md h-full mt-[20vmin] transition ease-in-out md:h-auto">
+                        <div class="relative bg-white rounded-lg shadow">
+                            <button @click="function_open_delete_modal()" type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-toggle="popup-modal">
+                                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                <span class="sr-only">Close modal</span>
+                            </button>
+                            <div class="p-6 text-center">
+                                <svg aria-hidden="true" class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to delete this course?</h3>
+                                <button @click="function_delete_event()" data-modal-toggle="popup-modal" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+                                    Yes, I'm sure
+                                </button>
+                                <button @click="function_open_delete_modal()" data-modal-toggle="popup-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10">No, cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div v-if="modal_update" class=" ">
+                <div id="popup-modal" tabindex="-1" class="overflow-y-auto  flex fixed justify-center w-full backdrop-blur-sm overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full">
+                    <div class="relative p-4 w-full animate mt-10 max-w-md h-full md:h-auto">
+                        <div class="relative bg-white rounded-lg shadow">
+                                    <div class="p-2 w-full">
+                                        <div class="relative">
+                                            <label for="title" class="leading-7 text-sm text-gray-600">Abbr</label>
+                                            <input v-model="update_course_data.abbreviation" type="text" id="title" name="title" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" required>
+                                        </div>
+                                    </div>
+                                    <div class="p-2 w-full">
+                                        <div class="relative">
+                                            
+                                                <label for="content" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Name</label>
+                                                <textarea v-model="update_course_data.name" id="content" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Name" required></textarea>
+
+                                        </div>
+                                    </div>
+                                    <div class="p-2 w-full">
+                                        <div class="relative">
+                                            
+                                                <label for="content" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">College</label>
+                                                <select v-model="update_course_data.college_id" id="countries" class="bg-gray-50 border border-gray-300 w text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                                  <option v-for="(colleges, key) in usePage().props.value.colleges" :key="key" :value=colleges.id>{{colleges.name}}</option>
+                                                </select>
+
+                                        </div>
+                                    </div>
+                            <button @click="function_open_update_modal()" type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-toggle="popup-modal">
+                                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                <span class="sr-only">Close modal</span>
+                            </button>
+                            <div class="p-6 text-center">
+                                <svg aria-hidden="true" class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to update this course?</h3>
+                                <button @click="function_update_course()" data-modal-toggle="popup-modal" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+                                    Yes, I'm sure
+                                </button>
+                                <button @click="function_open_update_modal()" data-modal-toggle="popup-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10">No, cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
   </div>
 </section>
 </template>
