@@ -25,13 +25,22 @@ class AdministratorController extends Controller
         } else {
             $filter_courses_id = $request->id;
         }
+
+        $announcement_search_key = $request->announcement_search_key ?? null;
+        $event_search_key = $request->event_search_key ?? null;
         if(Auth::user()->user_type =='admin'){
             return Inertia::render('Administrator/Index', [
                 'colleges' => $colleges,
                 'from_request' => $request->from_date ?? Carbon::today()->format('Y-m-d'),
                 'to_request' => $request->to_date ?? Carbon::today()->format('Y-m-d'),
-                'events' => Event::with('user')->with('updated_by')->orderBY('id','desc')->paginate(10),
-                'announcements' => Announcement::with('user')->with('updated_by')->orderBY('id','desc')->paginate(10),
+                'events' => Event::when($event_search_key, function($query, $event_search_key) {
+                    $query->where('title', 'like', "%{$event_search_key}%")
+                        ->orWhere('content', 'like', "%{$event_search_key}%");
+                })->with('user')->with('updated_by')->orderBY('id','desc')->paginate(10),
+                'announcements' => Announcement::when($announcement_search_key, function($query, $announcement_search_key) {
+                    $query->where('title', 'like', "%{$announcement_search_key}%")
+                        ->orWhere('content', 'like', "%{$announcement_search_key}%");
+                })->with('user')->with('updated_by')->orderBY('id','desc')->paginate(10),
                 'trigger' => $request->trigger ?? 1,
                 'courses' => Course::with('college')->when($filter_courses_id, function($query, $filter_courses_id) {
                     $query->where('college_id', $filter_courses_id);

@@ -1,11 +1,18 @@
 
 <script setup>
 import { Head, Link, useForm, usePage } from '@inertiajs/inertia-vue3';
-import { ref, onMounted,  computed} from 'vue';
+import { ref, onMounted,  computed, inject} from 'vue';
 import route from '../../../../../vendor/tightenco/ziggy/src/js';
 
 import moment from 'moment';
 import Pagination from '../../Pagination.vue';
+
+const trigger = inject('trigger');
+
+const event_search = useForm({
+    event_search_key: '',
+})
+
 const date_conversion = (value) => {
             if (value) {
                 return moment(value).format('MMMM Do YYYY')
@@ -130,6 +137,10 @@ const function_delete_event = () => {
                 modal_delete.value  = ! modal_delete.value;
             }
     })
+}
+
+const searchEvents = () => {
+    event_search.search_key.get(route('administrator', {trigger:trigger.value}))
 }
 </script>
 <template>

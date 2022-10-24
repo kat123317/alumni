@@ -169,7 +169,7 @@ class UserController extends Controller
                     break;
                 case 'staff_admin':
                     $user->update([
-                        'status' => 'admin_pending'
+                        'status' => 'pre_approved'
                     ]);
                     $notification->update([
                         'user_type' => 'admin'
