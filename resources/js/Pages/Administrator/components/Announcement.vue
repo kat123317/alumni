@@ -1,6 +1,6 @@
 <script setup>
 import { Head, Link, useForm, usePage } from '@inertiajs/inertia-vue3';
-import { ref, onMounted, computed, inject } from 'vue';
+import { ref, onMounted, computed, inject, provide } from 'vue';
 import route from '../../../../../vendor/tightenco/ziggy/src/js';
 
 import moment from 'moment';
@@ -53,7 +53,7 @@ const onAlert = (data) => {
 }
 
 const announcement_search = useForm({
-    announcement_search_key: '',
+    announcement_search_key: usePage().props.value.announcement_search_key ? usePage().props.value.announcement_search_key: '',
 })
 
 const announcement_data = useForm({
@@ -126,8 +126,10 @@ const function_delete_post = () => {
 }
 
 const searchAnnouncements = () => {
-    announcement_search.search_key.get(route('administrator', {trigger:trigger.value}))
+    announcement_search.get(route('administrator', {trigger:trigger.value}))
 }
+
+provide('announcement_search_key', announcement_search.announcement_search_key)
 </script>
 
 <template>
@@ -161,10 +163,18 @@ const searchAnnouncements = () => {
                 <svg class="fill-current opacity-75 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z"/></svg>
             </div>
         </div> 
+        <nav class="mb-10  flex justify-end" aria-label="Page navigation example">
+                <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label>
+                <div class="relative">
+                    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                        <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </div>
+                    <input v-model="announcement_search.announcement_search_key" type="search" id="default-search" class="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Mockups, Logos..." required>
+                    <button @click="searchAnnouncements()" type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+                </div>
+        </nav>
         <div class="container px-5 py-24 mx-auto flex sm:flex-nowrap flex-wrap">
             <div class="lg:w-2/3 md:w-1/2 bg-gray-300 rounded-lg overflow-hidden sm:mr-10 p-10 flex items-center justify-center relative">
-
-
                 <div class="overflow-x-auto flex justify-center  relative">
                     <table class="w-full max-w-7xl  text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
