@@ -5,6 +5,7 @@ import route from '../../../../../vendor/tightenco/ziggy/src/js';
 
 import moment from 'moment';
 import Pagination from '../../Pagination.vue';
+import { Inertia } from '@inertiajs/inertia';
 
 const date_conversion = (value) => {
             if (value) {
@@ -26,23 +27,25 @@ const activate_data = useForm({
 })
 
 const deactivate_user = (id) => {
-    deactivate_data.put(route('deactivate_user', [deactivate_data.id],{
+    deactivate_data.id = id
+    deactivate_data.put(route('deactivate_user', [deactivate_data.id]),{
         preserveScroll:true,
             onSuccess: () => {
                 // onAlert('Delete')
                 alert('Deactivated')
             }
-    }))
+    })
 }
 
 const activate_user = (id) => {
-    activate_data.put(route('activate_user', [activate_data.id],{
+    activate_data.id = id
+    activate_data.put(route('activate_user', [activate_data.id]),{
         preserveScroll:true,
             onSuccess: () => {
                 // onAlert('Delete')
                 alert('Activated')
             }
-    }))
+    })
 }
 
 </script>
