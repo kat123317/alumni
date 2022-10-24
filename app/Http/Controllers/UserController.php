@@ -140,7 +140,7 @@ class UserController extends Controller
             'college_id' => $input['college_id'],
             'course_id' => $input['course_id'],
             'details' => $user_details,
-            'is_active' => true,
+            'is_active' => 0,
         ]);
 
         //insert notification for new registrating users

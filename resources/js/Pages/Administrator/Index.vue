@@ -7,6 +7,7 @@ import Usermangement from './components/Usermangement.vue';
 import Department from './components/Department.vue';
 import Course from './components/Course.vue';
 import Events from './components/Events.vue';
+import YearBook from './components/YearBook.vue';
 
 const trigger  = ref(usePage().props.value.trigger);
 
@@ -30,7 +31,7 @@ provide('filter_courses_id', usePage().props.value.filter_courses_id);
                 </a>
                 <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
                 <button @click="trigger = 1" class="mr-5 text-white hover:text-gray-200">Announcements</button>
-                <button  @click="trigger = 2" class="mr-5 text-white hover:text-gray-200">Year Book</button>
+                <button  @click="trigger = 8" class="mr-5 text-white hover:text-gray-200">Year Book</button>
                 <button  @click="trigger = 2" class="mr-5 text-white hover:text-gray-200">Alumni</button>
                 <button @click="trigger = 3" class="mr-5 text-white hover:text-gray-200">User Managenment</button>
                 <button @click="trigger = 4" class="mr-5 text-white hover:text-gray-200">College</button>
@@ -54,6 +55,7 @@ provide('filter_courses_id', usePage().props.value.filter_courses_id);
         <Course v-if="trigger == 5" />
         <Course v-if="trigger == 6" />
         <Events v-if="trigger == 7" />
+        <YearBook v-if="trigger == 8" />
 
     </div>
 </template>
