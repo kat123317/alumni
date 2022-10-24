@@ -7,13 +7,17 @@ const search_url = computed(() => (props.search != '' && props.search != undefin
 const search_variable = ref('');
 const trigger = inject('trigger');
 const filter_courses_id = inject('filter_courses_id');
+const user_search_key = inject('user_search_key');
 onMounted(() => {
-    search_variable.value += usePage().props.value.searched ? "&searchTxT=" + usePage().props.value.searched:'';
+    // search_variable.value += usePage().props.value.searched ? "&searchTxT=" + usePage().props.value.searched:'';
     if (trigger.value) {
         search_variable.value += "&trigger=" + trigger.value;
     }
     if (filter_courses_id) {
         search_variable.value += "&id=" + filter_courses_id;
+    }
+    if (user_search_key) {
+        search_variable.value += "&user_search_key=" + user_search_key;
     }
 })
 </script>

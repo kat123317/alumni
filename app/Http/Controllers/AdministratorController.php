@@ -31,6 +31,8 @@ class AdministratorController extends Controller
 
         $announcement_search_key = $request->announcement_search_key ?? null;
         $event_search_key = $request->event_search_key ?? null;
+        $user_search_key = $request->user_search_key ?? null;
+        $notification_search_key = $request->notification_search_key ?? null;
         if(Auth::user()->user_type =='admin'){
             return Inertia::render('Administrator/Index', [
                 'yearbooks' => Yearbook::all(),
@@ -49,8 +51,9 @@ class AdministratorController extends Controller
                 'courses' => Course::with('college')->when($filter_courses_id, function($query, $filter_courses_id) {
                     $query->where('college_id', $filter_courses_id);
                 })->paginate(5),
-                'filter_courses_id' => $filter_courses_id,
-                'users' => User::where('status', 'approved')->with('college')->with('course')->get(),
+                'users' => User::with('college')->with('course')->where('status', 'approved')->when($user_search_key, function($query, $user_search_key) {
+                    $query->where('name', 'like', "%{$user_search_key}%");
+                })->paginate(10),
                 'notifications' => Notification::whereHas('user', function (Builder $query) {
                     if (Auth::user()->user_type == 'admin') {
                         $query->where('status', 'pre_approved');
@@ -59,7 +62,12 @@ class AdministratorController extends Controller
                     }
                 })->with(['user' => function($query) {
                     $query->with('college')->with('course'); 
-                }])->where('is_processed', false)->get()
+                }])->where('is_processed', false)->get(),
+                'filter_courses_id' => $filter_courses_id,
+                'announcement_search_key' => $announcement_search_key,
+                'event_search_key' => $event_search_key,
+                'user_search_key' => $user_search_key,
+                'notification_search_key' => $notification_search_key,
             ]);
         }
         else{

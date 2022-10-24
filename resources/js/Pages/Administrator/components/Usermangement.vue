@@ -1,12 +1,13 @@
 <script setup>
 import { Head, Link, useForm, usePage } from '@inertiajs/inertia-vue3';
-import { ref, onMounted,  computed} from 'vue';
+import { ref, onMounted,  computed, provide, inject} from 'vue';
 import route from '../../../../../vendor/tightenco/ziggy/src/js';
 
 import moment from 'moment';
 import Pagination from '../../Pagination.vue';
 import { Inertia } from '@inertiajs/inertia';
 
+const trigger = inject('trigger')
 const date_conversion = (value) => {
             if (value) {
                 return moment(value).format('MMMM Do YYYY')
@@ -33,6 +34,11 @@ const remove_staff_admin_data = useForm({
 const activate_data = useForm({
     id:''
 })
+
+const search_data = useForm({
+    user_search_key:usePage().props.value.user_search_key? usePage().props.value.user_search_key:''
+})
+
 
 const deactivate_user = (id, type) => {
     if(id == usePage().props.value.user.id){
@@ -87,7 +93,15 @@ const function_remove_as_admin = (id) => {
     })
 }
 
+const function_search_user = () => {
+    search_data.get(route('administrator', {trigger:trigger.value}),{
+        preserveScroll:true,
+            onSuccess: () => {
+            }
+    })
+}
 
+ provide('user_search_key', search_data.user_search_key)
 </script>
 <template>
 
@@ -98,16 +112,14 @@ const function_remove_as_admin = (id) => {
         </div>
         <div class="lg:w-full md:w-2/3 mx-auto">
             <nav class="mb-10  flex justify-end" aria-label="Page navigation example">
-                <form>   
                     <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label>
                     <div class="relative">
                         <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                             <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                         </div>
-                        <input type="search" id="default-search" class="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Mockups, Logos..." required>
-                        <button type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+                        <input v-model="search_data.user_search_key" type="search" id="default-search" class="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Mockups, Logos..." required>
+                        <button @click="function_search_user()" type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
                     </div>
-                </form>
             </nav>
        
                 <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
@@ -151,7 +163,7 @@ const function_remove_as_admin = (id) => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(users, index) in usePage().props.value.users" :key="index" class="bg-white border-b ">
+                            <tr v-for="(users, index) in usePage().props.value.users.data" :key="index" class="bg-white border-b ">
                                 <th scope="row" class="py-4 px-6 font-medium text-gray-900">
                                     <div class="pl-3">
                                         <img class="w-10 h-10 rounded-full" :src=users.profile_photo_url alt="Jese image">
@@ -221,7 +233,9 @@ const function_remove_as_admin = (id) => {
 
                         </tbody>
                     </table>
-                    
+                    <div class="px-4 w-100 py-3 flex items-center justify-center border-gray-200 sm:px-6">
+                        <Pagination v-bind:links="$page.props.events.links"/>
+                    </div>
                 </div>
 
         </div>
