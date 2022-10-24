@@ -134,9 +134,9 @@ const date_conversion_from_now = (value) => {
                                 </td>
                                 <td class="py-4 px-6">
                                     <span v-if="users.status == 'approved'" class="bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">Approved</span>
+                                    <span v-else-if="users.status == 'rejected'" class="bg-pink-100 text-pink-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-pink-200 dark:text-pink-900">Declined</span>
                                     <span v-else-if="users.status == 'pending' && usePage().props.value.user.user_type == 'staff_admin'" class="bg-yellow-100 text-yellow-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded ">Pending</span>
                                     <span v-else-if="users.status == 'pending' && usePage().props.value.user.user_type == 'admin'" class="bg-yellow-100 text-yellow-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">Pre - approved</span>
-                                    <!-- <span class="bg-pink-100 text-pink-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-pink-200 dark:text-pink-900">Declined</span> -->
                                 </td>
                                 <td class="py-4 px-6 text-right">
                                     <a href="#" class="font-medium text-green-600 hover:underline mr-2">Approve</a>
