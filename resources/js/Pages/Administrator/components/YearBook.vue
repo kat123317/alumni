@@ -10,23 +10,28 @@ import { Inertia } from '@inertiajs/inertia';
 const trigger = inject('trigger')
 const date_conversion = (value) => {
             if (value) {
-                return moment(value).format('MMMM Do YYYY')
+                return moment(value).format('YYYY')
             }
         }
-const date_conversion_from_now = (value) => {
-    if (value) {
-        return moment(value).fromNow()
-    }
-}
 
 const search_data = useForm({
     user_search_key:usePage().props.value.user_search_key? usePage().props.value.user_search_key:''
 })
 
 const yearbook_data = useForm({
-    from:'',
-    to:''
+    schoolyear_from:'',
+    schoolyear_to:''
 })
+
+const add_yearbook= () => {
+    yearbook_data.post(route('yearbooks.store'),{
+        preserveScroll:true,
+            onSuccess: () => {
+                yearbook_data.reset()
+                alert('Added')
+            }
+    })
+}
  provide('user_search_key', search_data.user_search_key)
 </script>
 <template>
@@ -38,18 +43,18 @@ const yearbook_data = useForm({
             <div class="p-2 w-full">
                 <div class="relative">
                 <label for="name" class="leading-7 text-sm text-gray-600">From</label>
-                <input v-model="yearbook_data.from" type="date" id="name" name="name" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                <input v-model="yearbook_data.schoolyear_from" type="date" id="name" name="name" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                 </div>
             </div>
             <div class="p-2 w-full">
                 <div class="relative">
                 <label for="name" class="leading-7 text-sm text-gray-600">To</label>
-                <input v-model="yearbook_data.to" type="date" id="name" name="name" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                <input v-model="yearbook_data.schoolyear_to" type="date" id="name" name="name" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                 </div>
             </div>
         </div>
         <div class="p-2 w-full">
-            <button @click="function_add_yearbook()" class="flex mx-auto text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">Add</button>
+            <button @click="add_yearbook()" class="flex mx-auto text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">Add</button>
         </div>
         <div class="lg:w-full md:w-2/3 mx-auto">
             <nav class="mb-10  flex justify-end" aria-label="Page navigation example">
@@ -82,12 +87,12 @@ const yearbook_data = useForm({
                             <tr v-for="(yearbooks, index) in usePage().props.value.yearbooks.data" :key="index" class="bg-white border-b ">
                                 <th scope="row" class="py-4 px-6 font-medium text-gray-900">
                                     <div class="pl-3">
-                                        <div class="font-normal text-gray-500">{{ yearbooks.from }}</div>
+                                        <div class="font-normal text-gray-500">{{ date_conversion(yearbooks.schoolyear_from) }}</div>
                                     </div>  
                                 </th>
                                 <td class="py-4 px-6">
                                     <div class="pl-3">
-                                        <div class="text-base font-semibold">{{ yearbooks.to }}</div>
+                                        <div class="text-base font-semibold">{{ date_conversion(yearbooks.schoolyear_to) }}</div>
                                     </div>  
                                 </td>
                                 <td class="py-4 px-6 text-center">
