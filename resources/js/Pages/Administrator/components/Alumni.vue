@@ -67,7 +67,7 @@ const addAchievement = () => {
                     <label for="email" class="leading-7 text-sm text-gray-600">School Year</label>
                     <select v-model="form_alumni.yearbook_id" id="underline_select" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
                         <option :value="null" disabled>Select School Year</option>
-                        <template v-for="yearbook in $page.props.yearbooks">
+                        <template v-for="(yearbook, key) in $page.props.yearbooks.data" :key="key">
                             <option :value="yearbook.id">{{ yearbook.schoolyear_from+'-'+yearbook.schoolyear_to }}</option>
                         </template>
                     </select>

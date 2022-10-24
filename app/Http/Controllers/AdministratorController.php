@@ -35,7 +35,7 @@ class AdministratorController extends Controller
         $notification_search_key = $request->notification_search_key ?? null;
         if(Auth::user()->user_type =='admin'){
             return Inertia::render('Administrator/Index', [
-                'yearbooks' => Yearbook::all(),
+                'yearbooks' => Yearbook::paginate(10),
                 'colleges' => $colleges,
                 'from_request' => $request->from_date ?? Carbon::today()->format('Y-m-d'),
                 'to_request' => $request->to_date ?? Carbon::today()->format('Y-m-d'),
