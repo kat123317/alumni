@@ -160,7 +160,6 @@ class UserController extends Controller
             'is_active'=>false
         ]);
         return Redirect::back();
-
     }
 
     public function activate_user(Request $request, $id){
@@ -169,7 +168,22 @@ class UserController extends Controller
             'is_active'=>true
         ]);
         return Redirect::back();
+    }
 
+    public function assign_as_admin(Request $request, $id){
+        $user = User::find($id);
+        $user -> update([
+            'user_type'=> 'staff_admin'
+        ]);
+        return Redirect::back();
+    }
+
+    public function remove_as_admin(Request $request, $id){
+        $user = User::find($id);
+        $user -> update([
+            'user_type'=> 'alumni'
+        ]);
+        return Redirect::back();
     }
 
     public function registerAction(Request $request)

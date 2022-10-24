@@ -97,6 +97,8 @@ Route::middleware([
     Route::post('/register_action', [UserController::class, 'registerAction'])->name('register_action');
     Route::put('/deactivate/{id}', [UserController::class, 'deactivate_user'])->name('deactivate_user');
     Route::put('/activate/{id}', [UserController::class, 'activate_user'])->name('activate_user');
+    Route::put('/assign_as_admin/{id}', [UserController::class, 'assign_as_admin'])->name('assign_as_admin');
+    Route::put('/remove_as_admin/{id}', [UserController::class, 'remove_as_admin'])->name('remove_as_admin');
 
     Route::get('/socialmedia', [SocialMediaController::class, 'index'])->name('socialmedia');
 

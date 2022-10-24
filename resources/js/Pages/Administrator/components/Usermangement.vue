@@ -22,14 +22,26 @@ const deactivate_data = useForm({
     id:''
 })
 
+const add_staff_admin_data = useForm({
+    id:''
+})
+
+const remove_staff_admin_data = useForm({
+    id:''
+})
+
 const activate_data = useForm({
     id:''
 })
 
 const deactivate_user = (id, type) => {
-    if(type == 'admin'){
-        alert('Cannot deactivate super admin')
-    }else{
+    if(id == usePage().props.value.user.id){
+        alert('Cannot deactivate your account')
+    }
+    else if(usePage().props.value.user.user_type == 'staff_admin' && type == 'admin'){
+        alert('Only super admin have the previledge to deactivate and activate account')
+    }
+    else{
         deactivate_data.id = id
         deactivate_data.put(route('deactivate_user', [deactivate_data.id]),{
             preserveScroll:true,
@@ -52,6 +64,29 @@ const activate_user = (id) => {
             }
     })
 }
+
+const function_assign_as_admin = (id) => {
+    add_staff_admin_data.id = id
+    add_staff_admin_data.put(route('assign_as_admin', [add_staff_admin_data.id]),{
+        preserveScroll:true,
+            onSuccess: () => {
+                // onAlert('Delete')
+                alert('Assign as admin complete')
+            }
+    })
+}
+
+const function_remove_as_admin = (id) => {
+    remove_staff_admin_data.id = id
+    remove_staff_admin_data.put(route('remove_as_admin', [remove_staff_admin_data.id]),{
+        preserveScroll:true,
+            onSuccess: () => {
+                // onAlert('Delete')
+                alert('Removed as admin complete')
+            }
+    })
+}
+
 
 </script>
 <template>
@@ -80,28 +115,19 @@ const activate_user = (id) => {
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
                             <tr>
                                 <th scope="col" class="py-3 px-6">
-                                    Picture
+                                    Fullname & Email
                                 </th>
                                 <th scope="col" class="py-3 px-6">
-                                    Fullname
-                                </th>
-                                <th scope="col" class="py-3 px-6">
-                                    College
-                                </th>
-                                <th scope="col" class="py-3 px-6">
-                                    Course
+                                    College & course
                                 </th>
                                 <th scope="col" class="py-3 px-6">
                                     address
                                 </th>
                                 <th scope="col" class="py-3 px-6">
-                                    Civil Status
+                                    Civil Status & gender
                                 </th>
                                 <th scope="col" class="py-3 px-6">
                                     Current Work
-                                </th>
-                                <th scope="col" class="py-3 px-6">
-                                    Gender
                                 </th>
                                 <th scope="col" class="py-3 px-6">
                                     Phone number
@@ -127,31 +153,36 @@ const activate_user = (id) => {
                         <tbody>
                             <tr v-for="(users, index) in usePage().props.value.users" :key="index" class="bg-white border-b ">
                                 <th scope="row" class="py-4 px-6 font-medium text-gray-900">
-                                    <img :src=users.profile_photo_url>
-                                </th>
-                                <th scope="row" class="py-4 px-6 font-medium text-gray-900">
-                                    {{ users.name }}
+                                    <div class="pl-3">
+                                        <img class="w-10 h-10 rounded-full" :src=users.profile_photo_url alt="Jese image">
+                                        <div class="text-base font-semibold">{{ users.name }}</div>
+                                        <div class="font-normal text-gray-500">{{ users.email }}</div>
+                                    </div>  
                                 </th>
                                 <td class="py-4 px-6">
-                                    {{ users.college.name }}
-                                </td>
-                                <td class="py-4 px-6">
-                                    {{ users.course.abbreviation }}
+                                    <div class="pl-3">
+                                        <div class="text-base font-semibold">{{ users.college.abbreviation }}</div>
+                                        <div class="font-normal text-gray-500">{{ users.course.abbreviation }}</div>
+                                    </div>  
                                 </td>
                                 <td class="py-4 px-6">
                                     {{ users.details.address }}
                                 </td>
                                 <td class="py-4 px-6">
-                                    <span v-if="users.details.civil_status == 1">Single</span>
-                                    <span v-else-if="users.details.civil_status == 2">Married</span>
-                                    <span v-else-if="users.details.civil_status == 3">Divorce</span>
+                                    <div class="pl-3">
+                                        <div class="text-base font-semibold">
+                                            <span v-if="users.details.civil_status == 1">Single</span>
+                                            <span v-else-if="users.details.civil_status == 2">Married</span>
+                                            <span v-else-if="users.details.civil_status == 3">Divorce</span>
+                                        </div>
+                                        <div class="font-normal text-gray-500">
+                                            <span v-if="users.details.gender == 1">Male</span>
+                                            <span v-else-if="users.details.gender == 2">Female</span>   
+                                        </div>
+                                    </div> 
                                 </td>
                                 <td class="py-4 px-6">
                                     {{ users.details.current_work }}
-                                </td>
-                                <td class="py-4 px-6">
-                                    <span v-if="users.details.gender == 1">Male</span>
-                                    <span v-else-if="users.details.gender == 2">Female</span>
                                 </td>
                                 <td class="py-4 px-6">
                                     {{ users.details.phone_number }}
@@ -168,15 +199,23 @@ const activate_user = (id) => {
                                     <span v-else-if="users.user_type == 'staff_admin'" class="bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">Staff Administrator</span>
                                     <span v-else-if="users.user_type == 'admin'" class="bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">Super Administrator</span>
                                 </td>
-                                <td class="py-4 px-6">
-                                    {{ date_conversion(users.created_at) }}
-                                    <br>
-                                    {{ date_conversion_from_now(users.created_at) }}
+                                <td class="py-4 px-6 w-full">
+                                    <div class="pl-3">
+                                        <div class="text-base font-semibold">{{ date_conversion(users.created_at) }}</div>
+                                        <div class="font-normal text-gray-500">{{ date_conversion_from_now(users.created_at) }}</div>
+                                    </div>  
                                 </td>
                                 <td class="py-4 px-6 text-center">
-                                    <a href="#" class="font-medium text-green-600 hover:underline mr-2">Assign as staff</a>
-                                    <a v-if="users.is_active == 1" @click="deactivate_user(users.id, users.user_type)" href="#" class="font-medium text-red-600 hover:underline">Deactivate</a>
-                                    <a v-else-if="users.is_active == 0" @click="activate_user(users.id)" href="#" class="font-medium text-red-600 hover:underline">Activate</a>
+                                    <div class="pl-3">
+                                        <div class="text-base font-semibold">
+                                            <a v-if="users.user_type == 'staff_admin'" @click="function_remove_as_admin(users.id)" href="#" class="font-medium text-red-600 hover:underline mr-2">Remove as staff</a>
+                                            <a v-else-if="users.user_type == 'alumni'" @click="function_assign_as_admin(users.id)" href="#" class="font-medium text-green-600 hover:underline mr-2">Assign as staff</a>
+                                        </div>
+                                        <div class="text-base font-semibold">
+                                            <a v-if="users.is_active == 1 && users.user_type !='admin'" @click="deactivate_user(users.id, users.user_type)" href="#" class="font-medium text-red-600 hover:underline">Deactivate</a>
+                                            <a v-else-if="users.is_active == 0" @click="activate_user(users.id)" href="#" class="font-medium text-red-600 hover:underline">Activate</a>
+                                        </div>
+                                    </div>  
                                 </td>
                             </tr>
 
