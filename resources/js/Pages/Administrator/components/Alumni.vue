@@ -3,13 +3,14 @@ import { useForm, usePage } from '@inertiajs/inertia-vue3';
 import { computed, ref } from 'vue';
 
 const image_name = ref('');
+const tmp_achievement = ref('');
 const form_alumni = useForm({
     firstname: '',
     middlename: '',
     lastname: '',
     suffix: '',
     details: {
-        achivements: [],
+        achievements: [],
         moto: '',
         profile_picture: ''
     },
@@ -45,6 +46,11 @@ const addAlumni = () => {
         }
     })
 }
+
+const addAchievement = () => {
+    form_alumni.details.achievements.push(tmp_achievement.value);
+    tmp_achievement.value = '';
+}
 </script>
 <template>
     <section  class="text-gray-600 body-font relative">
@@ -55,6 +61,18 @@ const addAlumni = () => {
         </div>
         <div class="lg:w-1/2 md:w-2/3 mx-auto">
         <div class="flex flex-wrap -m-2">
+            
+            <div class="p-2 w-full">
+                <div class="relative">
+                    <label for="email" class="leading-7 text-sm text-gray-600">School Year</label>
+                    <select v-model="form_alumni.yearbook_id" id="underline_select" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
+                        <option :value="null" disabled>Select School Year</option>
+                        <template v-for="yearbook in $page.props.yearbooks">
+                            <option :value="yearbook.id">{{ yearbook.schoolyear_from+'-'+yearbook.schoolyear_to }}</option>
+                        </template>
+                    </select>
+                </div>
+            </div>
             <div class="p-2 w-1/2">
             <div class="relative">
                 <label for="name" class="leading-7 text-sm text-gray-600">First Name</label>
@@ -96,17 +114,17 @@ const addAlumni = () => {
             </div>
             <div class="p-2 w-1/2">
                 <div class="relative">
-                    <label for="email" class="leading-7 text-sm text-gray-600">Add Achivement</label>
+                    <label for="email" class="leading-7 text-sm text-gray-600">Add Achievement</label>
                     <div class="flex items-center">   
                         <div class="relative w-full">
                             <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                                 <svg class="w-6 h-6 text-green-900" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
                             </div>
-                            <input type="text" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="Achievement" required>
+                            <input v-model="tmp_achievement" type="text" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="Achievement" required>
                         </div>
-                        <button type="submit" class="p-2.5 ml-2 text-sm font-medium text-white bg-green-700 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                        <button @click="addAchievement()" type="button" class="p-2.5 ml-2 text-sm font-medium text-white bg-green-700 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
-                            <span class="sr-only">Search</span>
+                            <span class="sr-only">Add</span>
                         </button>
                     </div>
                 </div>
@@ -115,7 +133,7 @@ const addAlumni = () => {
             <div class="relative">
             <h2 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">Achievements</h2>
             <ul class="space-y-1 max-w-md list-disc list-inside text-gray-500 dark:text-gray-400">
-                <template v-for="achivement in form_alumni.details.achivements">
+                <template v-for="achivement in form_alumni.details.achievements">
                     <li>
                         {{achivement}}
                     </li>
@@ -135,15 +153,15 @@ const addAlumni = () => {
             </div>
             </div>
             <div class="p-2 w-1/2">
-            <div class="relative">
-                <label for="email" class="leading-7 text-sm text-gray-600">Course</label>
-                <select v-model="form_alumni.course_id" id="underline_select" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
-                    <option :value="null" disabled>Select Course</option>
-                    <template v-for="course in courses">
-                        <option :value="course.id">{{ course.name }}</option>
-                    </template>
-                </select>
-            </div>
+                <div class="relative">
+                    <label for="email" class="leading-7 text-sm text-gray-600">Course</label>
+                    <select v-model="form_alumni.course_id" id="underline_select" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
+                        <option :value="null" disabled>Select Course</option>
+                        <template v-for="course in courses">
+                            <option :value="course.id">{{ course.name }}</option>
+                        </template>
+                    </select>
+                </div>
             </div>
             <div class="p-2 w-full">
             <div class="relative">

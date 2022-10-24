@@ -1,10 +1,13 @@
 <script setup>
 import { Head, Link, useForm, usePage } from '@inertiajs/inertia-vue3';
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, inject } from 'vue';
 import route from '../../../../../vendor/tightenco/ziggy/src/js';
 
 import moment from 'moment';
 import Pagination from '../../Pagination.vue';
+
+const trigger = inject('trigger');
+
 const date_conversion = (value) => {
     if (value) {
         return moment(value).format('MMMM Do YYYY')
@@ -49,6 +52,9 @@ const onAlert = (data) => {
     }, 4000);
 }
 
+const announcement_search = useForm({
+    announcement_search_key: '',
+})
 
 const announcement_data = useForm({
     title: '',
@@ -119,6 +125,9 @@ const function_delete_post = () => {
 
 }
 
+const searchAnnouncements = () => {
+    announcement_search.search_key.get(route('administrator', {trigger:trigger.value}))
+}
 </script>
 
 <template>

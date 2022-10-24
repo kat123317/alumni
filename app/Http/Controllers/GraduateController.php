@@ -63,13 +63,23 @@ class GraduateController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'profile_data' => 'required|image|mimes:png,jpg,jpeg|max:2048'
+        ]);
+        $details = $request->details;
+        if($request->hasfile('profile_data')){
+            $imageName = time().'.'.$request->profile_data->extension();
+            $request->profile_data->move(public_path().'/images/graduates/', $imageName); 
+            $details['profile_picture'] = $imageName;
+        }
         Graduate::create([
             'yearbook_id' => $request->yearbook_id,
             'course_id' => $request->course_id,
             'firstname' => $request->firstname,
             'middlename' => $request->middlename,
             'lastname' => $request->lastname,
-            'suffix' => $request->suffix
+            'suffix' => $request->suffix,
+            'details' => $details
         ]);
         return Redirect::back();
     }
