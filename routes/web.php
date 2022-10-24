@@ -67,7 +67,7 @@ Route::middleware([
     Route::prefix('alumni')->name('graduates.')->group(function () {
         Route::get('/', [GraduateController::class, 'index'])->name('index');
         Route::post('/store', [GraduateController::class, 'store'])->name('store');
-        Route::put('/update/{id}', [GraduateController::class, 'update'])->name('update');
+        Route::post('/update/{id}', [GraduateController::class, 'update'])->name('update');
     });
 
     Route::prefix('colleges')->name('colleges.')->group(function () {

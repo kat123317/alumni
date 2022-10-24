@@ -7,6 +7,7 @@ use App\Models\College;
 use App\Models\Course;
 use App\Models\Event;
 use App\Models\User;
+use App\Models\Yearbook;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,6 +31,7 @@ class AdministratorController extends Controller
         $event_search_key = $request->event_search_key ?? null;
         if(Auth::user()->user_type =='admin'){
             return Inertia::render('Administrator/Index', [
+                'yearbooks' => Yearbook::all(),
                 'colleges' => $colleges,
                 'from_request' => $request->from_date ?? Carbon::today()->format('Y-m-d'),
                 'to_request' => $request->to_date ?? Carbon::today()->format('Y-m-d'),
