@@ -30,7 +30,7 @@ provide('filter_courses_id', usePage().props.value.filter_courses_id);
                 </a>
                 <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
                 <button @click="trigger = 1" class="mr-5 text-white hover:text-gray-200">Announcements</button>
-                <button  @click="trigger = 2" class="mr-5 text-white hover:text-gray-200">Year Book</button>
+                <button  @click="trigger = 2" class="mr-5 text-white hover:text-gray-200">Alumni</button>
                 <button @click="trigger = 3" class="mr-5 text-white hover:text-gray-200">User Managenment</button>
                 <button @click="trigger = 4" class="mr-5 text-white hover:text-gray-200">College</button>
                 <button @click="trigger = 5" class="mr-5 text-white hover:text-gray-200">Course</button>
