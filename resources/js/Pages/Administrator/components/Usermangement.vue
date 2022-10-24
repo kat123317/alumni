@@ -26,15 +26,20 @@ const activate_data = useForm({
     id:''
 })
 
-const deactivate_user = (id) => {
-    deactivate_data.id = id
-    deactivate_data.put(route('deactivate_user', [deactivate_data.id]),{
-        preserveScroll:true,
-            onSuccess: () => {
-                // onAlert('Delete')
-                alert('Deactivated')
-            }
-    })
+const deactivate_user = (id, type) => {
+    if(type == 'admin'){
+        alert('Cannot deactivate super admin')
+    }else{
+        deactivate_data.id = id
+        deactivate_data.put(route('deactivate_user', [deactivate_data.id]),{
+            preserveScroll:true,
+                onSuccess: () => {
+                    // onAlert('Delete')
+                    alert('Deactivated')
+                }
+        })
+    }
+    
 }
 
 const activate_user = (id) => {
@@ -170,7 +175,7 @@ const activate_user = (id) => {
                                 </td>
                                 <td class="py-4 px-6 text-center">
                                     <a href="#" class="font-medium text-green-600 hover:underline mr-2">Assign as staff</a>
-                                    <a v-if="users.is_active == 1" @click="deactivate_user(users.id)" href="#" class="font-medium text-red-600 hover:underline">Deactivate</a>
+                                    <a v-if="users.is_active == 1" @click="deactivate_user(users.id, users.user_type)" href="#" class="font-medium text-red-600 hover:underline">Deactivate</a>
                                     <a v-else-if="users.is_active == 0" @click="activate_user(users.id)" href="#" class="font-medium text-red-600 hover:underline">Activate</a>
                                 </td>
                             </tr>
