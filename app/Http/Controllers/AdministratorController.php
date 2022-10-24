@@ -6,6 +6,7 @@ use App\Models\Announcement;
 use App\Models\College;
 use App\Models\Course;
 use App\Models\Event;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,7 +36,8 @@ class AdministratorController extends Controller
                 'courses' => Course::with('college')->when($filter_courses_id, function($query, $filter_courses_id) {
                     $query->where('college_id', $filter_courses_id);
                 })->paginate(5),
-                'filter_courses_id' => $filter_courses_id
+                'filter_courses_id' => $filter_courses_id,
+                'users' => User::all()
             ]);
         }
         else{
