@@ -133,12 +133,12 @@ const openFileEdit = () => {
 </script>
 <template>
 <section class="text-gray-600 body-font relative">
-  <div class="container px-5 py-24 mx-auto">
+  <div class="container  px-5 py-24 mx-auto">
     <div class="flex flex-col text-center w-full mb-12">
       <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Add Course</h1>
 
     </div>
-    <div class="lg:w-1/2 md:w-2/3 mx-auto">
+    <div class="lg:w-1/2  p-10 shadow-lg rounded-lg bg-white md:w-2/3 mx-auto">
       <div class="flex flex-wrap -m-2">
         <div class="p-2 w-1/3">
           <div class="relative">
@@ -175,7 +175,7 @@ const openFileEdit = () => {
         </div>
         <div class="p-2 w-full pt-8 mt-8 border-t border-gray-200 text-center">
             
-        <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
+        <div class="overflow-x-auto  relative shadow-md sm:rounded-lg">
           <div class="p-2 p-2 w-1/2">
             <div class="relative">
               <select v-model="select_course_view.id" @change="filter_table_show()" id="countries" class="bg-gray-50 border border-gray-300 w text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
@@ -185,7 +185,7 @@ const openFileEdit = () => {
             </div>
           </div>
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <thead class="text-xs text-white uppercase bg-green-500 ">
                     <tr>
                         <th scope="col" class="py-3 px-6">
                             Logo

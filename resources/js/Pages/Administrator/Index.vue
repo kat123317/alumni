@@ -67,14 +67,14 @@ provide('filter_courses_id', usePage().props.value.filter_courses_id);
       content: "";
       background: url('https://th.bing.com/th/id/R.f2794a18807eeceb02baa5f575b09553?rik=XGySs8XRrUO18w&riu=http%3a%2f%2fumap.org%2fwp-content%2fuploads%2f2018%2f09%2fCMU_LOGO_2015_transparent_1-300x300.png&ehk=wMcHjqqG%2bIHf4L1fwHJZnx914Lm01VQTU8oalYWhSDk%3d&risl=&pid=ImgRaw&r=0') no-repeat center center;
       background-size:cover;
-      opacity: 0.03;
+      opacity: 0.02;
       top: 0;
       left: 23%;
       bottom: 0;
       right: 0;
       position: absolute;
       z-index: -1;  
-      -webkit-filter: grayscale(1); /* Old WebKit */
-      filter: grayscale(1);
+      /* -webkit-filter: grayscale(1); 
+      filter: grayscale(1); */
     }
 </style>
