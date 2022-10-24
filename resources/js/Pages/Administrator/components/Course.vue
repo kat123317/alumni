@@ -38,7 +38,7 @@ const filter_table_show = () => {
 }
 
 const course_save = () => {
-  if(add_course_data.name == '' || add_course_data.abbreviation == '' || add_course_data.college_id == ''){
+  if(add_course_data.name == '' || add_course_data.abbreviation == '' || add_course_data.college_id == '' || add_course_data.image_name == ''){
     alert('Please fill out all fields')
   }
   else{
@@ -103,6 +103,7 @@ const function_update_course = () => {
             preserveScroll:true,
             onSuccess: () => {
                 // onAlert('Update')
+                update_course_data.reset()
                 alert('Updated')
                 modal_update.value  = ! modal_update.value;
             }
