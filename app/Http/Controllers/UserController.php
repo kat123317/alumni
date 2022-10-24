@@ -140,6 +140,7 @@ class UserController extends Controller
             'college_id' => $input['college_id'],
             'course_id' => $input['course_id'],
             'details' => $user_details,
+            'is_active' => true,
         ]);
 
         //insert notification for new registrating users
@@ -153,6 +154,24 @@ class UserController extends Controller
         return Redirect::route('login');
     }
 
+    public function deactivate_user(Request $request, $id){
+        $user = User::find($id);
+        $user -> update([
+            'is_active'=>false
+        ]);
+        return Redirect::back();
+
+    }
+
+    public function activate_user(Request $request, $id){
+        $user = User::find($id);
+        $user -> update([
+            'is_active'=>true
+        ]);
+        return Redirect::back();
+
+    }
+
     public function registerAction(Request $request)
     {
         $notification = Notification::find($request->notification_id);
@@ -161,7 +180,8 @@ class UserController extends Controller
             switch (Auth::user()->user_type) {
                 case 'admin':
                     $user->update([
-                        'status' => 'approved'
+                        'status' => 'approved',
+                        'details->admin_approved_by' => Auth::user()->name
                     ]);
                     $notification->update([
                         'is_processed' => true
@@ -169,7 +189,8 @@ class UserController extends Controller
                     break;
                 case 'staff_admin':
                     $user->update([
-                        'status' => 'pre_approved'
+                        'status' => 'pre_approved',
+                        'details->staff_approved_by' => Auth::user()->name
                     ]);
                     $notification->update([
                         'user_type' => 'admin'
@@ -181,7 +202,8 @@ class UserController extends Controller
             }
         } else { //rejected
             $user->update([
-                'status' => 'rejected'
+                'status' => 'rejected',
+                'details->rejected_by' => Auth::user()->name
             ]);
         }
 

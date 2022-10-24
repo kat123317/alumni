@@ -36,6 +36,7 @@ provide('filter_courses_id', usePage().props.value.filter_courses_id);
                 <button @click="trigger = 5" class="mr-5 text-white hover:text-gray-200">Course</button>
                 <button @click="trigger = 6" class="mr-5 text-white hover:text-gray-200">Survey</button>
                 <button @click="trigger = 7" class="mr-5 text-white hover:text-gray-200">Events</button>
+                <button @click="trigger = 7" class="mr-5 text-white hover:text-gray-200">Notification</button>
                 </nav>
                 <a :href="route('dashboard')" class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Back to home
                 <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">

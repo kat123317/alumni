@@ -95,6 +95,9 @@ Route::middleware([
     });
 
     Route::post('/register_action', [UserController::class, 'registerAction'])->name('register_action');
+    Route::put('/deactivate/{id}', [UserController::class, 'deactivate_user'])->name('deactivate_user');
+    Route::put('/activate/{id}', [UserController::class, 'activate_user'])->name('activate_user');
+
     Route::get('/socialmedia', [SocialMediaController::class, 'index'])->name('socialmedia');
 
     Route::prefix('events')->name('events.')->group(function () {

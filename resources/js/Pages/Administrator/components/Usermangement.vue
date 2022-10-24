@@ -17,6 +17,33 @@ const date_conversion_from_now = (value) => {
     }
 }
 
+const deactivate_data = useForm({
+    id:''
+})
+
+const activate_data = useForm({
+    id:''
+})
+
+const deactivate_user = (id) => {
+    deactivate_data.put(route('deactivate_user', [deactivate_data.id],{
+        preserveScroll:true,
+            onSuccess: () => {
+                // onAlert('Delete')
+                alert('Deactivated')
+            }
+    }))
+}
+
+const activate_user = (id) => {
+    activate_data.put(route('activate_user', [activate_data.id],{
+        preserveScroll:true,
+            onSuccess: () => {
+                // onAlert('Delete')
+                alert('Activated')
+            }
+    }))
+}
 
 </script>
 <template>
@@ -78,10 +105,10 @@ const date_conversion_from_now = (value) => {
                                     Year graduated
                                 </th>
                                 <th scope="col" class="py-3 px-6">
-                                    Applied at
+                                    Status
                                 </th>
                                 <th scope="col" class="py-3 px-6">
-                                    Status
+                                    Applied at
                                 </th>
                         
                                 <th scope="col" class="py-3 px-6">
@@ -127,20 +154,21 @@ const date_conversion_from_now = (value) => {
                                 <td class="py-4 px-6">
                                     {{ users.details.year_graduated }}
                                 </td>
+                                
+                                <td class="py-4 px-6">
+                                    <span v-if="users.user_type == 'alumni'" class="bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">Alumni</span>
+                                    <span v-else-if="users.user_type == 'staff_admin'" class="bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">Staff Administrator</span>
+                                    <span v-else-if="users.user_type == 'admin'" class="bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">Super Administrator</span>
+                                </td>
                                 <td class="py-4 px-6">
                                     {{ date_conversion(users.created_at) }}
                                     <br>
                                     {{ date_conversion_from_now(users.created_at) }}
                                 </td>
-                                <td class="py-4 px-6">
-                                    <span v-if="users.status == 'approved'" class="bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">Approved</span>
-                                    <span v-else-if="users.status == 'rejected'" class="bg-pink-100 text-pink-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-pink-200 dark:text-pink-900">Declined</span>
-                                    <span v-else-if="users.status == 'pending' && usePage().props.value.user.user_type == 'staff_admin'" class="bg-yellow-100 text-yellow-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded ">Pending</span>
-                                    <span v-else-if="users.status == 'pending' && usePage().props.value.user.user_type == 'admin'" class="bg-yellow-100 text-yellow-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">Pre - approved</span>
-                                </td>
-                                <td class="py-4 px-6 text-right">
-                                    <a href="#" class="font-medium text-green-600 hover:underline mr-2">Approve</a>
-                                    <a href="#" class="font-medium text-red-600 hover:underline">Decline</a>
+                                <td class="py-4 px-6 text-center">
+                                    <a href="#" class="font-medium text-green-600 hover:underline mr-2">Assign as staff</a>
+                                    <a v-if="users.is_active == 1" @click="deactivate_user(users.id)" href="#" class="font-medium text-red-600 hover:underline">Deactivate</a>
+                                    <a v-else-if="users.is_active == 0" @click="activate_user(users.id)" href="#" class="font-medium text-red-600 hover:underline">Activate</a>
                                 </td>
                             </tr>
 

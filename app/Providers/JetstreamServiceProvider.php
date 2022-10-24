@@ -55,6 +55,11 @@ class JetstreamServiceProvider extends ServiceProvider
                             'custom'=> "Sorry! Your account has been pre-approved by the administrators.",
                         ]);
                     }
+                    elseif($user->is_active == false){
+                        throw ValidationException::withMessages([
+                            'custom'=> "Sorry! Your account has been deactivated by the administrators.",
+                        ]);
+                    }
                     else {
                         throw ValidationException::withMessages([
                             'custom'=> "Sorry! Your account is not yet validated by the administrators.",

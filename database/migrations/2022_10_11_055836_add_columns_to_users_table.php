@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('user_type')->after('status');
             $table->foreignId('college_id')->nullable()->after('user_type'); // filter admin by college for staff admin
             $table->json('details')->nullable()->after('college_id');
+            $table->json('is_active')->nullable()->after('details');
         });
     }
 

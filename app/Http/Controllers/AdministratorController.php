@@ -6,12 +6,14 @@ use App\Models\Announcement;
 use App\Models\College;
 use App\Models\Course;
 use App\Models\Event;
+use App\Models\Notification;
 use App\Models\User;
 use App\Models\Yearbook;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Database\Eloquent\Builder;
 
 use Inertia\Inertia;
 
@@ -48,7 +50,16 @@ class AdministratorController extends Controller
                     $query->where('college_id', $filter_courses_id);
                 })->paginate(5),
                 'filter_courses_id' => $filter_courses_id,
-                'users' => User::with('college')->with('course')->get()
+                'users' => User::where('status', 'approved')->with('college')->with('course')->get(),
+                'notifications' => Notification::whereHas('user', function (Builder $query) {
+                    if (Auth::user()->user_type == 'admin') {
+                        $query->where('status', 'pre_approved');
+                    } else {
+                        $query->where('status', 'pending');
+                    }
+                })->with(['user' => function($query) {
+                    $query->with('college')->with('course'); 
+                }])->where('is_processed', false)->get()
             ]);
         }
         else{
