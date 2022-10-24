@@ -62,6 +62,11 @@ class User extends Authenticatable
         return $this->belongsTo(College::class);
     }
 
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
+    }
+
     public function notification()
     {
         return $this->belongsTo(Notification::class);

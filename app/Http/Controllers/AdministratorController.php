@@ -37,7 +37,7 @@ class AdministratorController extends Controller
                     $query->where('college_id', $filter_courses_id);
                 })->paginate(5),
                 'filter_courses_id' => $filter_courses_id,
-                'users' => User::all()
+                'users' => User::with('college')->with('course')->get()
             ]);
         }
         else{
