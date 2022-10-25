@@ -173,7 +173,7 @@ const remove_achievement= (key) => {
                 <label for="name" class="leading-7 text-sm text-gray-600">College</label>
                 <select v-model="form_alumni.college_id" id="underline_select" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none focus:outline-none focus:ring-0 focus:border-gray-200 peer">
                     <option :value="null" disabled>Select College</option>
-                    <template v-for="college in $page.props.colleges">
+                    <template v-for="(college, key) in $page.props.colleges" :key="key">
                         <option :value="college.id">{{ college.name }}</option>
                     </template>
                 </select>
@@ -184,7 +184,7 @@ const remove_achievement= (key) => {
                     <label for="email" class="leading-7 text-sm text-gray-600">Course</label>
                     <select v-model="form_alumni.course_id" id="underline_select" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none focus:outline-none focus:ring-0 focus:border-gray-200 peer">
                         <option :value="null" disabled>Select Course</option>
-                        <template v-for="course in courses">
+                        <template v-for="(course, key) in courses" :key="key">
                             <option :value="course.id">{{ course.name }}</option>
                         </template>
                     </select>
