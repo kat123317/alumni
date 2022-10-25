@@ -7,7 +7,9 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\AdministratorController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\SocialMediaController;
+use App\Http\Controllers\SurveyController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\YearbookController;
 use Illuminate\Foundation\Application;
@@ -107,6 +109,20 @@ Route::middleware([
         Route::post('/store', [EventController::class, 'store'])->name('store');
         Route::put('/update/{id}', [EventController::class, 'update'])->name('update');
         Route::delete('/delete/{id}', [EventController::class, 'destroy'])->name('delete');
+    });
+
+    Route::prefix('surveys')->name('surveys.')->group(function () {
+        Route::get('/', [SurveyController::class, 'index'])->name('index');
+        Route::post('/store', [SurveyController::class, 'store'])->name('store');
+        Route::put('/update/{id}', [SurveyController::class, 'update'])->name('update');
+        Route::delete('/delete/{id}', [SurveyController::class, 'destroy'])->name('delete');
+    });
+
+    Route::prefix('questions')->name('questions.')->group(function () {
+        Route::get('/', [QuestionController::class, 'index'])->name('index');
+        Route::post('/store', [QuestionController::class, 'store'])->name('store');
+        Route::put('/update/{id}', [QuestionController::class, 'update'])->name('update');
+        Route::delete('/delete/{id}', [QuestionController::class, 'destroy'])->name('delete');
     });
 });
 
