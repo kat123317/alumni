@@ -22,7 +22,9 @@ class GraduateController extends Controller
     {
         $search = $request->search ?? false;
         if ($search != null) {
-            $graduates = Graduate::when($search, function($query, $search) {
+            $graduates = Graduate::with('yearbook')->with(['course' => function($query) {
+                $query->with('college');
+            }])->when($search, function($query, $search) {
                 $query->where('firstname', 'like', "%{$search}%")
                     ->orWhere('middlename', 'like', "%{$search}%")
                     ->orWhere('lastname', 'like', "%{$search}%")
@@ -115,15 +117,22 @@ class GraduateController extends Controller
      * @param  \App\Models\Graduate  $graduate
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Graduate $graduate)
+    public function update(Request $request, $id)
     {
+        $graduate = Graduate::find($id);
+        if($request->hasfile('profile_data')){
+            $imageName = time().'.'.$request->profile_data->extension();
+            $request->profile_data->move(public_path().'/images/graduates/', $imageName); 
+            $details['profile_picture'] = $imageName;
+        }
         $graduate->update([
             'yearbook_id' => $request->yearbook_id,
             'course_id' => $request->course_id,
             'firstname' => $request->firstname,
             'middlename' => $request->middlename,
             'lastname' => $request->lastname,
-            'suffix' => $request->suffix
+            'suffix' => $request->suffix,
+            'details' => $details
         ]);
         return Redirect::back();
     }

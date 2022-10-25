@@ -6,6 +6,7 @@ use App\Models\Announcement;
 use App\Models\College;
 use App\Models\Course;
 use App\Models\Event;
+use App\Models\Graduate;
 use App\Models\Notification;
 use App\Models\User;
 use App\Models\Yearbook;
@@ -34,6 +35,7 @@ class AdministratorController extends Controller
         $user_search_key = $request->user_search_key ?? null;
         $notification_search_key = $request->notification_search_key ?? null;
         $year_search_key = $request->year_search_key ?? null;
+        $alumni_search_key = $request->alumni_search_key ?? null;
         if(Auth::user()->user_type =='admin'){
             return Inertia::render('Administrator/Index', [
                 'yearbooks' => Yearbook::when($year_search_key, function($query, $year_search_key) {
@@ -67,6 +69,15 @@ class AdministratorController extends Controller
                 })->with(['user' => function($query) {
                     $query->with('college')->with('course'); 
                 }])->where('is_processed', false)->get(),
+                'graduates' => Graduate::with('yearbook')->with(['course' => function($query) {
+                    $query->with('college');
+                }])->when($alumni_search_key, function($query, $alumni_search_key) {
+                    $query->where('firstname', 'like', "%{$alumni_search_key}%")
+                        ->orWhere('middlename', 'like', "%{$alumni_search_key}%")
+                        ->orWhere('lastname', 'like', "%{$alumni_search_key}%")
+                        ->orWhere('suffix', 'like', "%{$alumni_search_key}%");
+                })->orderBy('lastname', 'desc')->paginate(20),
+                'alumni_search_key'=> $alumni_search_key,
                 'filter_courses_id' => $filter_courses_id,
                 'announcement_search_key' => $announcement_search_key,
                 'event_search_key' => $event_search_key,
