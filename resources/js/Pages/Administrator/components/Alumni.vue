@@ -205,9 +205,9 @@ const remove_achievement= (key) => {
         </div>
         </div>
         
-            <div class="hidden overflow-x-auto relative">
-                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <div class=" overflow-x-auto relative">
+                <table class="w-full text-sm text-left text-gray-500">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
                         <tr>
                             <th scope="col" class="py-3 px-6">
                                 Product name
@@ -224,8 +224,8 @@ const remove_achievement= (key) => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                            <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <tr class="bg-white border-b ">
+                            <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
                                 Apple MacBook Pro 17"
                             </th>
                             <td class="py-4 px-6">
@@ -238,8 +238,8 @@ const remove_achievement= (key) => {
                                 $2999
                             </td>
                         </tr>
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                            <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <tr class="bg-white border-b ">
+                            <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
                                 Microsoft Surface Pro
                             </th>
                             <td class="py-4 px-6">
@@ -253,7 +253,7 @@ const remove_achievement= (key) => {
                             </td>
                         </tr>
                         <tr class="bg-white dark:bg-gray-800">
-                            <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
                                 Magic Mouse 2
                             </th>
                             <td class="py-4 px-6">

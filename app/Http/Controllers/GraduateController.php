@@ -32,10 +32,12 @@ class GraduateController extends Controller
             $yearbook_id = $request->yearbook_id ?? false;
             $course_id = $request->course_id ?? false;
             
-            $graduates = Graduate::when($yearbook_id, function($query, $yearbook_id) {
+            $graduates = Graduate::with('yearbook')->with(['course' => function($query) {
+                $query->with('college');
+            }])->when($yearbook_id, function($query, $yearbook_id) {
                 $query->where('yearbook_id', $yearbook_id);
             })->when($course_id, function($query, $course_id) {
-                $query->where('course_id', $course_id);
+                $query->with('college')->where('course_id', $course_id);
             })->orderBy('lastname', 'desc')->paginate(10);
         }
         return Inertia::render('Yearbook/Graduate', [

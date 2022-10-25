@@ -1,7 +1,6 @@
 <script setup>
 import { useForm, usePage } from '@inertiajs/inertia-vue3';
 import { computed, onMounted } from 'vue';
-
 const form_search = useForm({
     search: '',
     yearbook_id: null,
@@ -58,20 +57,32 @@ const filtered_course = computed(() => {
             
         </div>
         <div class="container grid grid-cols-4 gap-5 mx-auto">
-            <div v-for="graduate in $page.props.graduates.data" class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+            <div v-for="(graduate, key) in usePage().props.value.graduates.data" :key="key" class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md ">
                 <a href="#" class="flex justify-center py-5">
-                    <img class="rounded" width="300" src="https://scontent.fcgy1-1.fna.fbcdn.net/v/t1.6435-9/108026469_3149193648477703_9078657788133657642_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=174925&_nc_ohc=HMJrHF1WRsQAX9vuiIe&_nc_ht=scontent.fcgy1-1.fna&oh=00_AT9ZTJlU0pamzNp1CWfYsKpBAwAs57tMn0m1cF8q_jdTYw&oe=636C13E9" alt="" />
+                    <img class="rounded" width="300" height="200" :src="'/images/graduates/'+ graduate.details.profile_picture" alt="" />
                 </a>
                 <div class="p-5">
                     <a href="#">
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                            {{ graduate.firstname+' '+graduate.middlename+' '+graduate.lastname+''+graduate.suffix }}
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">
+                            <span>{{graduate.firstname }} </span>
+                            &nbsp;
+                            <span v-if="graduate.middlename != null">{{graduate.middlename }} </span>
+                            &nbsp;
+                            <span>{{graduate.lastname }} </span>
+                            &nbsp;
+                            <span v-if="graduate.suffix == null"></span>
+                            <span v-else>{{ graduate.suffix }}</span>
                         </h5>
                     </a>
-                    <p class="mb-0 font-normal text-gray-700 dark:text-gray-400">College of Engineering</p>
-                    <em class="mb-3 font-normal text-gray-700 dark:text-gray-400">2016-2020</em>
-                    <p class="mt-3 font-normal text-gray-700 dark:text-gray-400">BSIT - Bachelor of Science in Information Technology</p>
-                    <em class="mb-3 font-normal text-gray-700 dark:text-gray-400">Programmer of the year</em>
+                    <p class="mb-0 font-normal text-gray-700 dark:text-gray-400">{{ graduate.course.college.name}}</p>
+                    <em class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ graduate.yearbook.schoolyear_from }} to {{graduate.yearbook.schoolyear_to}}</em>
+                    <p class="mt-3 font-normal text-gray-700 dark:text-gray-400">{{graduate.course.abbreviation}} - {{graduate.course.name}}</p>
+                    <span class="mt-3 font-normal text-gray-700 dark:text-gray-400">Achievements: </span>
+                    <br>
+                    <span v-for="(achievements, achievement_key ) in graduate.details.achievements" :key="achievement_key">
+                        <em class="mb-3 font-normal text-gray-700 dark:text-gray-400" >{{ achievements }}</em><br>
+                    </span>
+                    <em class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ graduate.details.moto}}</em>
 
                 </div>
             </div>

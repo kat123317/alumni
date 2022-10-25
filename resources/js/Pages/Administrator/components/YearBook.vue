@@ -37,6 +37,8 @@ const add_yearbook= () => {
         alert('Please fill out all fields')
     }
     else{
+        yearbook_data.schoolyear_from = date_conversion(yearbook_data.schoolyear_from)
+        yearbook_data.schoolyear_to = date_conversion(yearbook_data.schoolyear_to)
         yearbook_data.post(route('yearbooks.store'),{
             preserveScroll:true,
                 onSuccess: () => {
