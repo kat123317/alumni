@@ -47,6 +47,16 @@ const add_yearbook= () => {
     }
 }
 
+const update_yearbook_data = useForm({
+    id:'',
+    from_date_update:'',
+    to_date_update:''
+})
+
+const delete_yearbook_data = useForm({
+    id:'',
+    
+})
 const function_search_year = () => {
     search_data.get(route('administrator', { trigger: trigger.value }), {
         preserveScroll: true,
@@ -55,14 +65,40 @@ const function_search_year = () => {
     })
 }
 
-const function_delete= () => {
-
+const function_open_delete_modal = (id) => {
+    delete_yearbook_data.id = id;
+    modal_delete.value = ! modal_delete.value
 }
 
-const function_open_update = () => {
-    
+const function_delete_yeabook= () => {
+    delete_yearbook_data.delete(route('yearbooks.delete', [delete_yearbook_data.id]), {
+        preserveScroll: true,
+        onSuccess: () => {
+            alert('Yearbook has been deleted')
+            modal_delete.value = ! modal_delete.value
+
+        }
+    })
 }
 
+const function_open_update = (id, from, to) => {
+    update_yearbook_data.id = id
+    update_yearbook_data.from_date_update = from
+    update_yearbook_data.to_date_update = to
+    modal_update.value = !modal_update.value
+}
+
+const function_update_yeabook= () => {
+    update_yearbook_data.put(route('yearbooks.update', [update_yearbook_data.id]), {
+        preserveScroll: true,
+        onSuccess: () => {
+            alert('Yearbook has been updated')
+            update_yearbook_data.reset()
+            modal_update.value = ! modal_update.value
+
+        }
+    })
+}
  provide('year_search_key', search_data.year_search_key)
 </script>
 <template>
@@ -145,8 +181,8 @@ const function_open_update = () => {
                                 <td class="py-4 px-6 text-center">
                                     <div class="pl-3">
                                         <div class="text-base font-semibold">
-                                            <a   href="#" class="font-medium text-blue-600 hover:underline">Edit</a>
-                                            <a  href="#" class="font-medium text-red-600 hover:underline">Delete</a>
+                                            <a @click="function_open_update(yearbooks.id, yearbooks.schoolyear_from, yearbooks.schoolyear_to)" href="#" class="font-medium text-blue-600 hover:underline">Edit</a>
+                                            <a @click="function_open_delete_modal(yearbooks.id)" href="#" class="font-medium text-red-600 hover:underline">Delete</a>
                                         </div>
                                     </div>  
                                 </td>
@@ -170,40 +206,26 @@ const function_open_update = () => {
                                     <div class="p-2 w-full">
                                         <div class="relative">
                                             <label for="name" class="leading-7 text-sm text-gray-600">From</label>
-                                            <input v-model="from_date_update" type="date" id="name" name="name" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                            <input v-model="update_yearbook_data.from_date_update" type="date" id="name" name="name" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                         </div>
                                     </div>
                                     <div class="p-2 w-full">
                                         <div class="relative">
                                             <label for="name" class="leading-7 text-sm text-gray-600">To</label>
-                                            <input v-model="to_date_update" type="date" id="name" name="name" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                            <input v-model="update_yearbook_data.to_date_update" type="date" id="name" name="name" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                         </div>
                                     </div>
-                                    <div class="p-2 w-full">
-                                        <div class="relative">
-                                            <label for="title" class="leading-7 text-sm text-gray-600">Title of Event</label>
-                                            <input v-model="update_event_data.title" type="text" id="title" name="title" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" required>
-                                        </div>
-                                    </div>
-                                    <div class="p-2 w-full">
-                                        <div class="relative">
-                                            
-                                                <label for="content" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Your content</label>
-                                                <textarea v-model="update_event_data.content" id="content" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Your content..." required></textarea>
-
-                                        </div>
-                                    </div>
-                            <button @click="function_open_update_modal()" type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-toggle="popup-modal">
+                            <button @click="function_open_update()" type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-toggle="popup-modal">
                                 <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                                 <span class="sr-only">Close modal</span>
                             </button>
                             <div class="p-6 text-center">
                                 <svg aria-hidden="true" class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to update this event?</h3>
-                                <button @click="function_update_event()" data-modal-toggle="popup-modal" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+                                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to update this yearbook?</h3>
+                                <button @click="function_update_yeabook()" data-modal-toggle="popup-modal" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
                                     Yes, I'm sure
                                 </button>
-                                <button @click="function_open_update_modal()" data-modal-toggle="popup-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10">No, cancel</button>
+                                <button @click="function_open_update()" data-modal-toggle="popup-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10">No, cancel</button>
                             </div>
                         </div>
                     </div>
@@ -219,8 +241,8 @@ const function_open_update = () => {
                             </button>
                             <div class="p-6 text-center">
                                 <svg aria-hidden="true" class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to delete this event?</h3>
-                                <button @click="function_delete_event()" data-modal-toggle="popup-modal" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+                                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to delete this yearbook?</h3>
+                                <button @click="function_delete_yeabook()" data-modal-toggle="popup-modal" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
                                     Yes, I'm sure
                                 </button>
                                 <button @click="function_open_delete_modal()" data-modal-toggle="popup-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10">No, cancel</button>
