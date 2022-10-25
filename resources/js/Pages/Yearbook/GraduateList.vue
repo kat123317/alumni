@@ -56,7 +56,7 @@ const filtered_course = computed(() => {
             </form>
             
         </div>
-        <div class="container grid grid-cols-4 gap-5 mx-auto">
+        <div class="container grid grid-cols-4 gap-5 mx-auto text-center">
             <div v-for="(graduate, key) in usePage().props.value.graduates.data" :key="key" class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md ">
                 <a href="#" class="flex justify-center py-5">
                     <img class="rounded" width="300" height="200" :src="'/images/graduates/'+ graduate.details.profile_picture" alt="" />
@@ -74,15 +74,15 @@ const filtered_course = computed(() => {
                             <span v-else>{{ graduate.suffix }}</span>
                         </h5>
                     </a>
-                    <p class="mb-0 font-normal text-gray-700 dark:text-gray-400">{{ graduate.course.college.name}}</p>
-                    <em class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ graduate.yearbook.schoolyear_from }} to {{graduate.yearbook.schoolyear_to}}</em>
-                    <p class="mt-3 font-normal text-gray-700 dark:text-gray-400">{{graduate.course.abbreviation}} - {{graduate.course.name}}</p>
+                    <p class="mb-0 font-normal text-gray-700 dark:text-gray-400">College of {{ graduate.course.college.name}}</p>
+                    <em class="mb-3 font-normal text-gray-700 dark:text-gray-400">Graduated: {{ graduate.yearbook.schoolyear_from }} to {{graduate.yearbook.schoolyear_to}}</em>
+                    <p class="mt-3 font-normal text-gray-700 dark:text-gray-400">Course: {{graduate.course.abbreviation}} - {{graduate.course.name}}</p>
                     <span class="mt-3 font-normal text-gray-700 dark:text-gray-400">Achievements: </span>
                     <br>
                     <span v-for="(achievements, achievement_key ) in graduate.details.achievements" :key="achievement_key">
                         <em class="mb-3 font-normal text-gray-700 dark:text-gray-400" >{{ achievements }}</em><br>
                     </span>
-                    <em class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ graduate.details.moto}}</em>
+                    <em class="mb-3 font-normal text-gray-700 dark:text-gray-400">Motto: {{ graduate.details.moto}}</em>
 
                 </div>
             </div>

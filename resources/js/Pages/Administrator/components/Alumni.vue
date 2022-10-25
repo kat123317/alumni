@@ -48,7 +48,7 @@ const openFile = () => {
     }
 
 const addAlumni = () => {
-    if(form_alumni.yearbook_id = null || form_alumni.firstname == '' || form_alumni.lastname == '' || form_alumni.details.moto == '' || form_alumni.college_id == null || form_alumni.course_id == null){
+    if(form_alumni.yearbook_id == null || form_alumni.firstname == '' || form_alumni.lastname == '' || form_alumni.details.moto == '' || form_alumni.college_id == null || form_alumni.course_id == null){
         alert('Please fill out all fields')
     }
     else{
@@ -91,7 +91,7 @@ const remove_achievement= (key) => {
             <div class="p-2 w-full">
                 <div class="relative">
                     <label for="email" class="leading-7 text-sm text-gray-600">School Year</label>
-                    <select v-model="form_alumni.yearbook_id" id="underline_select" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-nonefocus:outline-none focus:ring-0 focus:border-gray-200 peer">
+                    <select v-model="form_alumni.yearbook_id" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-nonefocus:outline-none focus:ring-0 focus:border-gray-200 peer">
                         <option :value="null" disabled>Select School Year</option>
                         <template v-for="(yearbook, key) in $page.props.yearbooks.data" :key="key">
                             <option :value="yearbook.id">{{ date_conversion(yearbook.schoolyear_from) + ' to '+ date_conversion(yearbook.schoolyear_to) }}</option>
