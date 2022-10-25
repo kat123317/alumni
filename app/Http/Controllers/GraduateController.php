@@ -121,10 +121,9 @@ class GraduateController extends Controller
     {
         $graduate = Graduate::find($id);
         if($request->hasfile('profile_data')){
-            $imageName = $graduate->profile_data->;
+            $imageName = time().'.'.$request->profile_data->extension();
             $request->profile_data->move(public_path().'/images/graduates/', $imageName); 
             $details['profile_picture'] = $imageName;
-
         }
         $graduate->update([
             'yearbook_id' => $request->yearbook_id,

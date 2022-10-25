@@ -1,9 +1,12 @@
 <script setup>
 import { useForm, usePage } from '@inertiajs/inertia-vue3';
-import { computed, ref } from 'vue';
+import { computed, ref, provide, inject} from 'vue';
 import moment from 'moment';
 import { findProp } from '@vue/compiler-core';
 import Pagination from '../../Pagination.vue';
+
+
+const trigger = inject('trigger')
 
 const modal_update = ref(false)
 
@@ -31,6 +34,11 @@ const form_alumni = useForm({
     course_id: null,
     profile_data: null
 });
+
+const search_data = useForm({
+    alumni_search_key:usePage().props.value.alumni_search_key? usePage().props.value.alumni_search_key:''
+})
+
 
 const courses = computed(() => {
     if (form_alumni.college_id == null) {
@@ -146,6 +154,16 @@ const openFileUpdate = () => {
         form_alumni_update.profile_data = file;
     };
     }
+
+ provide('alumni_search_key', search_data.alumni_search_key)
+
+ const function_search_alumni = () => {
+    search_data.get(route('administrator', { trigger: trigger.value }), {
+        preserveScroll: true,
+        onSuccess: () => {
+        }
+    })
+}
 </script>
 <template>
     <section  class="text-gray-600 body-font relative">
@@ -273,7 +291,16 @@ const openFileUpdate = () => {
             </div>
         </div>
         </div>
-        
+            <nav class="mb-10  flex justify-end" aria-label="Page navigation example">
+                    <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label>
+                    <div class="relative">
+                        <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                            <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        </div>
+                        <input v-model="search_data.alumni_search_key" type="search" id="default-search" class="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Mockups, Logos..." required>
+                        <button @click="function_search_alumni()" type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+                    </div>
+            </nav>
             <div class=" overflow-x-auto relative">
                 <table class="w-full text-sm text-left text-gray-500">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
