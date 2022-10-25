@@ -33,9 +33,13 @@ class AdministratorController extends Controller
         $event_search_key = $request->event_search_key ?? null;
         $user_search_key = $request->user_search_key ?? null;
         $notification_search_key = $request->notification_search_key ?? null;
+        $year_search_key = $request->year_search_key ?? null;
         if(Auth::user()->user_type =='admin'){
             return Inertia::render('Administrator/Index', [
-                'yearbooks' => Yearbook::paginate(10),
+                'yearbooks' => Yearbook::when($year_search_key, function($query, $year_search_key) {
+                    $query->where('schoolyear_from', 'like', "%{$year_search_key}%")
+                        ->orWhere('schoolyear_to', 'like', "%{$year_search_key}%");
+                })->paginate(10),
                 'colleges' => $colleges,
                 'from_request' => $request->from_date ?? Carbon::today()->format('Y-m-d'),
                 'to_request' => $request->to_date ?? Carbon::today()->format('Y-m-d'),
@@ -68,6 +72,7 @@ class AdministratorController extends Controller
                 'event_search_key' => $event_search_key,
                 'user_search_key' => $user_search_key,
                 'notification_search_key' => $notification_search_key,
+                'year_search_key' => $year_search_key,
             ]);
         }
         else{

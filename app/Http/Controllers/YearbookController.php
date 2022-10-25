@@ -78,11 +78,12 @@ class YearbookController extends Controller
      * @param  \App\Models\Yearbook  $yearbook
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Yearbook $yearbook)
+    public function update(Request $request, $id)
     {
+        $yearbook = Yearbook::find($id);
         $yearbook->update([
-            'schoolyear_from' => $request->schoolyear_from,
-            'schoolyear_to' => $request->schoolyear_to
+            'schoolyear_from' => $request->from_date_update,
+            'schoolyear_to' => $request->to_date_update
         ]);
         return Redirect::back();
     }
@@ -93,8 +94,10 @@ class YearbookController extends Controller
      * @param  \App\Models\Yearbook  $yearbook
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Yearbook $yearbook)
+    public function destroy(Request $request, $id)
     {
-        //
+        $yearbook = Yearbook::find($id);
+        $yearbook->delete();
+        return Redirect::back();
     }
 }

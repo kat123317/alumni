@@ -10,6 +10,7 @@ const filter_courses_id = inject('filter_courses_id');
 const user_search_key = inject('user_search_key');
 const announcement_search_key = inject('announcement_search_key');
 const event_search_key = inject('event_search_key');
+const year_search_key = inject('year_search_key');
 onMounted(() => {
     // search_variable.value += usePage().props.value.searched ? "&searchTxT=" + usePage().props.value.searched:'';
     if (trigger.value) {
@@ -26,6 +27,9 @@ onMounted(() => {
     }
     if (event_search_key) {
         search_variable.value += "&event_search_key=" + event_search_key;
+    }
+    if (year_search_key) {
+        search_variable.value += "&year_search_key=" + year_search_key;
     }
 })
 </script>
