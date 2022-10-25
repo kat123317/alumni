@@ -276,8 +276,10 @@ provide('user_search_key', search_data.user_search_key)
                                 </th>
                                 <td class="py-4 px-6">
                                     <div class="pl-3">
-                                        <div class="text-base font-semibold">{{ users.college.abbreviation }}</div>
-                                        <div class="font-normal text-gray-500">{{ users.course.abbreviation }}</div>
+                                       
+                                        <div class="text-base font-semibold"> {{users.college.abbreviation}}</div>
+                                        <div v-if="users.course" class="font-normal text-gray-500">{{ users.course.abbreviation }}</div>
+                                        <div v-else-if="!users.course" class="font-normal text-gray-500">No Course</div>
                                     </div>
                                 </td>
                                 <td class="py-4 px-6">
