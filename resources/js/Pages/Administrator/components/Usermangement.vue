@@ -82,7 +82,7 @@ const search_data = useForm({
 
 const deactivate_user = (id, type) => {
     if (id == usePage().props.value.user.id) {
-        alert('Cannot deactivate your account')
+        // alert('Cannot deactivate your account')
         onAlert('staffAccess', 'Cannot deactivate your account')
     }
     else if (usePage().props.value.user.user_type == 'staff_admin' && type == 'admin') {
