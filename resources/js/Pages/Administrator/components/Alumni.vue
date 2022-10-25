@@ -1,6 +1,15 @@
 <script setup>
 import { useForm, usePage } from '@inertiajs/inertia-vue3';
 import { computed, ref } from 'vue';
+import moment from 'moment';
+import { findProp } from '@vue/compiler-core';
+
+const date_conversion = (value) => {
+    if (value) {
+        return moment(value).format('YYYY')
+    }
+        }
+
 
 const image_name = ref('');
 const tmp_achievement = ref('');
@@ -39,17 +48,34 @@ const openFile = () => {
     }
 
 const addAlumni = () => {
-    form_alumni.post(route('graduates.store'),{
-        preserveScroll:true,
-        onSuccess: () => {
-            form_alumni.reset();
-        }
-    })
+    if(form_alumni.yearbook_id = null || form_alumni.firstname == '' || form_alumni.lastname == '' || form_alumni.details.moto == '' || form_alumni.college_id == null || form_alumni.course_id == null){
+        alert('Please fill out all fields')
+    }
+    else{
+        form_alumni.post(route('graduates.store'),{
+            preserveScroll:true,
+            onSuccess: () => {
+                alert('Alumni has been added in the year book')
+                form_alumni.reset();
+                image_name.value = ''
+            }
+        })
+    }
+   
 }
 
 const addAchievement = () => {
-    form_alumni.details.achievements.push(tmp_achievement.value);
-    tmp_achievement.value = '';
+    if(tmp_achievement.value == ''){
+        alert('Please add achievement first!');
+    }else{
+        form_alumni.details.achievements.push(tmp_achievement.value);
+        tmp_achievement.value = '';
+    }
+    
+}
+
+const remove_achievement= (key) => {
+    const temp_achievement = ref(form_alumni.details.achievements.splice(key,1));
 }
 </script>
 <template>
@@ -65,10 +91,10 @@ const addAchievement = () => {
             <div class="p-2 w-full">
                 <div class="relative">
                     <label for="email" class="leading-7 text-sm text-gray-600">School Year</label>
-                    <select v-model="form_alumni.yearbook_id" id="underline_select" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
+                    <select v-model="form_alumni.yearbook_id" id="underline_select" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-nonefocus:outline-none focus:ring-0 focus:border-gray-200 peer">
                         <option :value="null" disabled>Select School Year</option>
                         <template v-for="(yearbook, key) in $page.props.yearbooks.data" :key="key">
-                            <option :value="yearbook.id">{{ yearbook.schoolyear_from+'-'+yearbook.schoolyear_to }}</option>
+                            <option :value="yearbook.id">{{ date_conversion(yearbook.schoolyear_from) + ' to '+ date_conversion(yearbook.schoolyear_to) }}</option>
                         </template>
                     </select>
                 </div>
@@ -120,9 +146,9 @@ const addAchievement = () => {
                             <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                                 <svg class="w-6 h-6 text-green-900" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
                             </div>
-                            <input v-model="tmp_achievement" type="text" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="Achievement" required>
+                            <input v-model="tmp_achievement" type="text" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full pl-10 p-2.5" placeholder="Achievement" required>
                         </div>
-                        <button @click="addAchievement()" type="button" class="p-2.5 ml-2 text-sm font-medium text-white bg-green-700 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                        <button @click="addAchievement()" type="button" class="p-2.5 ml-2 text-sm font-medium text-white bg-green-700 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
                             <span class="sr-only">Add</span>
                         </button>
@@ -131,11 +157,12 @@ const addAchievement = () => {
             </div>
             <div class="p-2 w-1/2">
             <div class="relative">
-            <h2 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">Achievements</h2>
-            <ul class="space-y-1 max-w-md list-disc list-inside text-gray-500 dark:text-gray-400">
-                <template v-for="achivement in form_alumni.details.achievements">
+            <h2 class="mb-2 text-lg font-semibold text-gray-900">Achievements</h2>
+            <ul class="space-y-1 max-w-md list-disc list-inside">
+                <template v-for="(achivement, key) in form_alumni.details.achievements" :key="key">
                     <li>
-                        {{achivement}}
+                        {{achivement}} 
+                        <button type="button" @click="remove_achievement(key)" class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2">Remove</button>
                     </li>
                 </template>
             </ul>
@@ -144,7 +171,7 @@ const addAchievement = () => {
             <div class="p-2 w-1/2">
             <div class="relative">
                 <label for="name" class="leading-7 text-sm text-gray-600">College</label>
-                <select v-model="form_alumni.college_id" id="underline_select" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
+                <select v-model="form_alumni.college_id" id="underline_select" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none focus:outline-none focus:ring-0 focus:border-gray-200 peer">
                     <option :value="null" disabled>Select College</option>
                     <template v-for="college in $page.props.colleges">
                         <option :value="college.id">{{ college.name }}</option>
@@ -155,7 +182,7 @@ const addAchievement = () => {
             <div class="p-2 w-1/2">
                 <div class="relative">
                     <label for="email" class="leading-7 text-sm text-gray-600">Course</label>
-                    <select v-model="form_alumni.course_id" id="underline_select" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
+                    <select v-model="form_alumni.course_id" id="underline_select" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none focus:outline-none focus:ring-0 focus:border-gray-200 peer">
                         <option :value="null" disabled>Select Course</option>
                         <template v-for="course in courses">
                             <option :value="course.id">{{ course.name }}</option>

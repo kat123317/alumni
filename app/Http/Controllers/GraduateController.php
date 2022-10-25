@@ -63,9 +63,9 @@ class GraduateController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'profile_data' => 'required|image|mimes:png,jpg,jpeg|max:2048'
-        ]);
+        // $request->validate([
+        //     'profile_data' => 'required|image|mimes:png,jpg,jpeg|max:2048'
+        // ]);
         $details = $request->details;
         if($request->hasfile('profile_data')){
             $imageName = time().'.'.$request->profile_data->extension();
