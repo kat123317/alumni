@@ -7,31 +7,42 @@ import moment from 'moment';
 import Pagination from '../../Pagination.vue';
 import { Inertia } from '@inertiajs/inertia';
 
-const alertOn = ref(false)
-const alertOnUpdate = ref(false)
-const alertOnDelete = ref(false)
-const alertOnError = ref(false)
+const alertadminPromote = ref(false)
+const alertStaffPromote = ref(false)
+const alertadminDemote = ref(false)
+const alertStaffDemote = ref(false)
+const adminAcccess = ref(false)
+const adminAcccessMsg = ref('')
 
-const onAlert = (data) => {
-    if(data == 'Success'){
-        alertOn.value = true;
-    }else if(data == 'Update'){
-        alertOnUpdate.value = true
-    }else if(data == 'Delete'){
-        alertOnDelete.value = true
+
+const onAlert = (data, message) => {
+    if (data == 'adminPromote') {
+        alertadminPromote.value = true;
+    } else if (data == 'staffPromote') {
+        alertStaffPromote.value = true
+    }
+    else if (data == 'adminDemote') {
+        alertadminDemote.value = true
+    }
+    else if (data == 'staffDemote') {
+        alertStaffDemote.value = true
     }else{
-        alertOnError.value = true
+        adminAcccess.value = true
     }
 
     setTimeout(() => {
-        if(data == 'Success'){
-        alertOn.value = false;
-        }else if(data == 'Update'){
-            alertOnUpdate.value = false
-        }else if(data == 'Delete'){
-            alertOnDelete.value = false
+        if (data == 'adminPromote') {
+            alertadminPromote.value = false
+        } else if (data == 'staffPromote') {
+            alertStaffPromote.value = false
+        }
+        else if (data == 'adminDemote') {
+            alertadminDemote.value = false
+        }
+        else if (data == 'staffDemote') {
+            alertStaffDemote.value = false
         }else{
-            alertOnError.value = false
+        adminAcccess.value = false
         }
     }, 4000);
 }
@@ -72,9 +83,11 @@ const search_data = useForm({
 const deactivate_user = (id, type) => {
     if (id == usePage().props.value.user.id) {
         alert('Cannot deactivate your account')
+        onAlert('staffAccess', 'Cannot deactivate your account')
     }
     else if (usePage().props.value.user.user_type == 'staff_admin' && type == 'admin') {
-        alert('Only super admin have the previledge to deactivate and activate account')
+     
+         onAlert('staffAccess', 'Only super admin have the previledge to deactivate and activate account')
     }
     else {
         deactivate_data.id = id
@@ -82,7 +95,7 @@ const deactivate_user = (id, type) => {
             preserveScroll: true,
             onSuccess: () => {
                 // onAlert('Delete')
-                alert('Deactivated')
+                onAlert('staffDemote')
             }
         })
     }
@@ -95,7 +108,7 @@ const activate_user = (id) => {
         preserveScroll: true,
         onSuccess: () => {
             // onAlert('Delete')
-            alert('Activated')
+            onAlert('staffPromote')
         }
     })
 }
@@ -106,7 +119,7 @@ const function_assign_as_admin = (id) => {
         preserveScroll: true,
         onSuccess: () => {
             // onAlert('Delete')
-            alert('Assign as admin complete')
+            onAlert('adminPromote')
         }
     })
 }
@@ -117,7 +130,7 @@ const function_remove_as_admin = (id) => {
         preserveScroll: true,
         onSuccess: () => {
             // onAlert('Delete')
-            alert('Removed as admin complete')
+            onAlert('adminDemote')
         }
     })
 }
@@ -135,34 +148,56 @@ provide('user_search_key', search_data.user_search_key)
 <template>
 
     <section class="text-gray-600  body-font relative">
-        <div v-if="alertOn" class="bg-green-100 alertanim text-center py-4 lg:px-4">
-            <div class="p-2 bg-green-800 items-center text-green-100 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
-                <span class="flex rounded-full bg-green-500 uppercase px-2 py-1 text-xs font-bold mr-3">Success</span>
-                <span class="font-semibold mr-2 text-left flex-auto">User Successfully Promoted!</span>
-                <svg class="fill-current opacity-75 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z"/></svg>
-            </div>
-        </div>  
-        <div v-if="alertOnUpdate" class="bg-blue-100 alertanim text-center py-4 lg:px-4">
-            <div class="p-2 bg-blue-800 items-center text-blue-100 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
-                <span class="flex rounded-full bg-blue-500 uppercase px-2 py-1 text-xs font-bold mr-3">Success</span>
-                <span class="font-semibold mr-2 text-left flex-auto">User Successfully Demoted!</span>
-                <svg class="fill-current opacity-75 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z"/></svg>
+        <div v-if="alertadminPromote" class="bg-green-100 alertanim text-center py-4 lg:px-4">
+            <div class="p-2 bg-green-800 items-center text-green-100 leading-none lg:rounded-full flex lg:inline-flex"
+                role="alert">
+                <span class="flex rounded-full bg-green-500 uppercase px-2 py-1 text-xs font-bold mr-3">Notification</span>
+                <span class="font-semibold mr-2 text-left flex-auto">User Successfully Promoted to Admin!</span>
+                <svg class="fill-current opacity-75 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                    <path d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z" />
+                </svg>
             </div>
         </div>
-        <div v-if="alertOnDelete" class="bg-red-100 alertanim text-center py-4 lg:px-4">
-            <div class="p-2 bg-red-800 items-center text-red-100 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
-                <span class="flex rounded-full bg-red-500 uppercase px-2 py-1 text-xs font-bold mr-3">Success</span>
-                <span class="font-semibold mr-2 text-left flex-auto">College Successfully deleted</span>
-                <svg class="fill-current opacity-75 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z"/></svg>
+        <div v-if="alertStaffPromote" class="bg-green-100 alertanim text-center py-4 lg:px-4">
+            <div class="p-2 bg-green-800 items-center text-green-100 leading-none lg:rounded-full flex lg:inline-flex"
+                role="alert">
+                <span class="flex rounded-full bg-green-500 uppercase px-2 py-1 text-xs font-bold mr-3">Notification</span>
+                <span class="font-semibold mr-2 text-left flex-auto">User Successfully Promoted to Staff!</span>
+                <svg class="fill-current opacity-75 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                    <path d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z" />
+                </svg>
             </div>
-        </div>  
-        <div v-if="alertOnError" class="bg-gray-100 text-center py-4 lg:px-4">
-            <div class="p-2 bg-gray-800 items-center text-gray-100 alertanim leading-none lg:rounded-full flex lg:inline-flex" role="alert">
+        </div>
+        <div v-if="alertadminDemote" class="bg-gray-100 alertanim text-center py-4 lg:px-4">
+            <div class="p-2 bg-gray-800 items-center text-gray-100 leading-none lg:rounded-full flex lg:inline-flex"
+                role="alert">
+                <span class="flex rounded-full bg-gray-500 uppercase px-2 py-1 text-xs font-bold mr-3">Notification</span>
+                <span class="font-semibold mr-2 text-left flex-auto">Admin has been demoted!</span>
+                <svg class="fill-current opacity-75 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                    <path d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z" />
+                </svg>
+            </div>
+        </div>
+        <div v-if="alertStaffDemote" class="bg-gray-100 text-center py-4 lg:px-4">
+            <div class="p-2 bg-gray-800 items-center text-gray-100 alertanim leading-none lg:rounded-full flex lg:inline-flex"
+                role="alert">
                 <span class="flex rounded-full bg-gray-500 uppercase px-2 py-1 text-xs font-bold mr-3">Notice</span>
-                <span class="font-semibold mr-2 text-left flex-auto">Fill Empty fields</span>
-                <svg class="fill-current opacity-75 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z"/></svg>
+                <span class="font-semibold mr-2 text-left flex-auto">Staff has been demoted!</span>
+                <svg class="fill-current opacity-75 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                    <path d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z" />
+                </svg>
             </div>
-        </div> 
+        </div>
+        <div v-if="adminAccess" class="bg-gray-100 text-center py-4 lg:px-4">
+            <div class="p-2 bg-gray-800 items-center text-gray-100 alertanim leading-none lg:rounded-full flex lg:inline-flex"
+                role="alert">
+                <span class="flex rounded-full bg-gray-500 uppercase px-2 py-1 text-xs font-bold mr-3">Warning</span>
+                <span class="font-semibold mr-2 text-left flex-auto">{{adminAcccessMsg}}</span>
+                <svg class="fill-current opacity-75 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                    <path d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z" />
+                </svg>
+            </div>
+        </div>
 
         <div class="container px-5 py-24 mx-auto">
             <div class="flex flex-col text-center w-full mb-12">
@@ -295,36 +330,46 @@ provide('user_search_key', search_data.user_search_key)
                                 <td class="py-4 px-6 text-center">
                                     <div class="pl-3">
                                         <div class="text-base font-semibold">
-                                            <button type="button"  v-if="users.user_type == 'staff_admin'"
+                                            <button type="button" v-if="users.user_type == 'staff_admin'"
                                                 @click="function_remove_as_admin(users.id)"
                                                 class="text-white bg-red-700 mb-1 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
                                                 </svg>
 
                                             </button>
-                                            <button type="button"  v-else-if="users.user_type == 'alumni'"
+                                            <button type="button" v-else-if="users.user_type == 'alumni'"
                                                 @click="function_assign_as_admin(users.id)"
                                                 class="text-white bg-blue-700  mb-1  hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
                                                 </svg>
 
                                             </button>
                                         </div>
                                         <div class="text-base font-semibold">
-                                            <button type="button"  v-if="users.is_active == 1 && users.user_type !='admin'"
+                                            <button type="button"
+                                                v-if="users.is_active == 1 && users.user_type !='admin'"
                                                 @click="deactivate_user(users.id, users.user_type)"
                                                 class="text-white bg-red-700  mb-1 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 7.5L7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5" />
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M3 7.5L7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5" />
                                                 </svg>
                                             </button>
 
-                                            <button type="button" v-else-if="users.is_active == 0" @click="activate_user(users.id)"
+                                            <button type="button" v-else-if="users.is_active == 0"
+                                                @click="activate_user(users.id)"
                                                 class="text-white bg-blue-700  mb-1  hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 7.5L7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5" />
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M3 7.5L7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5" />
                                                 </svg>
                                             </button>
 
