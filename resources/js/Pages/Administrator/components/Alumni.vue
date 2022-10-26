@@ -1,50 +1,51 @@
 <script setup>
-import { useForm, usePage } from '@inertiajs/inertia-vue3';
-import { computed, ref, provide, inject} from 'vue';
-import moment from 'moment';
-import { findProp } from '@vue/compiler-core';
-import Pagination from '../../Pagination.vue';
+import { useForm, usePage } from "@inertiajs/inertia-vue3";
+import { computed, ref, provide, inject } from "vue";
+import moment from "moment";
+import { findProp } from "@vue/compiler-core";
+import Pagination from "../../Pagination.vue";
 
+const trigger = inject("trigger");
 
-const trigger = inject('trigger')
-
-const modal_update = ref(false)
+const modal_update = ref(false);
 
 const date_conversion = (value) => {
     if (value) {
-        return moment(value).format('YYYY')
+        return moment(value).format("YYYY");
     }
-        }
+};
 
-
-const image_name = ref('');
-const tmp_achievement = ref('');
+const image_name = ref("");
+const tmp_achievement = ref("");
 const form_alumni = useForm({
-    firstname: '',
-    middlename: '',
-    lastname: '',
-    suffix: '',
+    firstname: "",
+    middlename: "",
+    lastname: "",
+    suffix: "",
     details: {
         achievements: [],
-        moto: '',
-        profile_picture: ''
+        moto: "",
+        profile_picture: "",
     },
     yearbook_id: null,
     college_id: null,
     course_id: null,
-    profile_data: null
+    profile_data: null,
 });
 
 const search_data = useForm({
-    alumni_search_key:usePage().props.value.alumni_search_key? usePage().props.value.alumni_search_key:''
-})
-
+    alumni_search_key: usePage().props.value.alumni_search_key
+        ? usePage().props.value.alumni_search_key
+        : "",
+});
 
 const courses = computed(() => {
     if (form_alumni.college_id == null) {
         return [];
     } else {
-        return usePage().props.value.colleges.find(c => c.id == form_alumni.college_id).courses;
+        return usePage().props.value.colleges.find(
+            (c) => c.id == form_alumni.college_id
+        ).courses;
     }
 });
 
@@ -52,452 +53,1003 @@ const update_courses = computed(() => {
     if (form_alumni_update.college_id == null) {
         return [];
     } else {
-        return usePage().props.value.colleges.find(c => c.id == form_alumni_update.college_id).courses;
+        return usePage().props.value.colleges.find(
+            (c) => c.id == form_alumni_update.college_id
+        ).courses;
     }
 });
 
 const openFile = () => {
     let hidden = document.getElementById("alumni-hidden-input");
     hidden.click();
-    hidden.onchange = (e) => { 
-        let file = e.target.files[0]
+    hidden.onchange = (e) => {
+        let file = e.target.files[0];
         image_name.value = file.name;
         form_alumni.profile_data = file;
     };
-    }
+};
 
 const addAlumni = () => {
-    if(form_alumni.yearbook_id == null || form_alumni.firstname == '' || form_alumni.lastname == '' || form_alumni.details.moto == '' || form_alumni.college_id == null || form_alumni.course_id == null){
-        alert('Please fill out all fields')
-    }
-    else{
-        form_alumni.post(route('graduates.store'),{
-            preserveScroll:true,
+    if (
+        form_alumni.yearbook_id == null ||
+        form_alumni.firstname == "" ||
+        form_alumni.lastname == "" ||
+        form_alumni.details.moto == "" ||
+        form_alumni.college_id == null ||
+        form_alumni.course_id == null
+    ) {
+        alert("Please fill out all fields");
+    } else {
+        form_alumni.post(route("graduates.store"), {
+            preserveScroll: true,
             onSuccess: () => {
-                alert('Alumni has been added in the year book')
+                alert("Alumni has been added in the year book");
                 form_alumni.reset();
-                image_name.value = ''
-            }
-        })
+                image_name.value = "";
+            },
+        });
     }
-   
-}
+};
 
 const addAchievement = () => {
-    if(tmp_achievement.value == ''){
-        alert('Please add achievement first!');
-    }else{
+    if (tmp_achievement.value == "") {
+        alert("Please add achievement first!");
+    } else {
         form_alumni.details.achievements.push(tmp_achievement.value);
-        tmp_achievement.value = '';
+        tmp_achievement.value = "";
     }
-    
-}
+};
 
-const remove_achievement= (key) => {
-    const temp_achievement = ref(form_alumni.details.achievements.splice(key,1));
-}
+const remove_achievement = (key) => {
+    const temp_achievement = ref(
+        form_alumni.details.achievements.splice(key, 1)
+    );
+};
 
 const form_alumni_update = useForm({
-    id:'',
-    firstname: '',
-    middlename: '',
-    lastname: '',
-    suffix: '',
+    id: "",
+    firstname: "",
+    middlename: "",
+    lastname: "",
+    suffix: "",
     details: {
         achievements: [],
-        moto: '',
-        profile_picture: ''
+        moto: "",
+        profile_picture: "",
     },
     yearbook_id: null,
     college_id: null,
     course_id: null,
-    profile_data: null
+    profile_data: null,
 });
 
-const open_update_modal = (id,firstname, middle, lastname, suffix, yearbook_id, details_achievements, college_id, course_id, details_moto) => {
+const open_update_modal = (
+    id,
+    firstname,
+    middle,
+    lastname,
+    suffix,
+    yearbook_id,
+    details,
+    college_id,
+    course_id
+) => {
+    form_alumni_update.id = id;
     form_alumni_update.firstname = firstname;
     form_alumni_update.middlename = middle;
     form_alumni_update.lastname = lastname;
     form_alumni_update.suffix = suffix;
     form_alumni_update.yearbook_id = yearbook_id;
-    form_alumni_update.details.achievements = details_achievements;
+    form_alumni_update.details = details;
     form_alumni_update.course_id = course_id;
     form_alumni_update.college_id = college_id;
-    form_alumni_update.details.moto = details_moto;
 
-    modal_update.value = ! modal_update.value
-}
+    image_name.value = details.profile_picture;
+
+    modal_update.value = !modal_update.value;
+};
 const close_update_modal = () => {
-    image_name.value = '';
-    modal_update.value = ! modal_update.value
-}
+    image_name.value = "";
+    modal_update.value = !modal_update.value;
+};
 
 const addAchievementUpdate = () => {
-    if(tmp_achievement.value == ''){
-        alert('Please add achievement first!');
-    }else{
+    if (tmp_achievement.value == "") {
+        alert("Please add achievement first!");
+    } else {
         form_alumni_update.details.achievements.push(tmp_achievement.value);
-        tmp_achievement.value = '';
+        tmp_achievement.value = "";
     }
-    
-}
-const remove_achievement_update= (key) => {
-    const temp_achievement = ref(form_alumni_update.details.achievements.splice(key,1));
-}
+};
+const remove_achievement_update = (key) => {
+    form_alumni_update.details.achievements.splice(key, 1);
+};
 
 const openFileUpdate = () => {
     let hidden = document.getElementById("alumni-hidden-input_update");
     hidden.click();
-    hidden.onchange = (e) => { 
-        let file = e.target.files[0]
+    hidden.onchange = (e) => {
+        let file = e.target.files[0];
         image_name.value = file.name;
         form_alumni_update.profile_data = file;
     };
-    }
+};
 
- provide('alumni_search_key', search_data.alumni_search_key)
-
- const function_search_alumni = () => {
-    search_data.get(route('administrator', { trigger: trigger.value }), {
+const function_search_alumni = () => {
+    search_data.get(route("administrator", { trigger: trigger.value }), {
         preserveScroll: true,
-        onSuccess: () => {
+        onSuccess: () => {},
+    });
+};
+
+const function_update_alumni = (id) => {
+    form_alumni_update.post(
+        route("graduates.update", { id: form_alumni_update.id }),
+        {
+            preserveScroll: true,
+            onSuccess: () => {
+                alert("Alumni has been updated");
+                form_alumni_update.reset();
+                image_name.value = "";
+                close_update_modal();
+            },
         }
-    })
-}
+    );
+};
+
+provide("alumni_search_key", search_data.alumni_search_key);
 </script>
 <template>
-    <section  class="text-gray-600 body-font relative">
-    <div class="container px-5 py-24 mx-auto">
-        <div class="flex flex-col text-center w-full mb-12">
-        <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Add a Alumnus</h1>
-        <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Add Alumni Here</p>
-        </div>
-        <div class="lg:w-1/2 md:w-2/3 mx-auto">
-        <div class="flex flex-wrap -m-2">
-            
-            <div class="p-2 w-full">
-                <div class="relative">
-                    <label for="email" class="leading-7 text-sm text-gray-600">School Year</label>
-                    <select v-model="form_alumni.yearbook_id" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-nonefocus:outline-none focus:ring-0 focus:border-gray-200 peer">
-                        <option :value="null" disabled>Select School Year</option>
-                        <template v-for="(yearbook, key) in $page.props.yearbooks.data" :key="key">
-                            <option :value="yearbook.id">{{ date_conversion(yearbook.schoolyear_from) + ' to '+ date_conversion(yearbook.schoolyear_to) }}</option>
-                        </template>
-                    </select>
-                </div>
+    <section class="text-gray-600 body-font relative">
+        <div class="container px-5 py-24 mx-auto">
+            <div class="flex flex-col text-center w-full mb-12">
+                <h1
+                    class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900"
+                >
+                    Add a Alumnus
+                </h1>
+                <p class="lg:w-2/3 mx-auto leading-relaxed text-base">
+                    Add Alumni Here
+                </p>
             </div>
-            <div class="p-2 w-1/2">
-            <div class="relative">
-                <label for="name" class="leading-7 text-sm text-gray-600">First Name</label>
-                <input v-model="form_alumni.firstname" type="text" id="name" name="name" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-            </div>
-            </div>
-            <div class="p-2 w-1/2">
-                <div class="relative">
-                    <label for="name" class="leading-7 text-sm text-gray-600">Middle Name</label>
-                    <input v-model="form_alumni.middlename" type="text" id="name" name="name" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                </div>
-            </div>
-            <div class="p-2 w-1/2">
-                <div class="relative">
-                    <label for="name" class="leading-7 text-sm text-gray-600">Last Name</label>
-                    <input v-model="form_alumni.lastname" type="text" id="name" name="name" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                </div>
-            </div>
-            <div class="p-2 w-1/2">
-                <div class="relative">
-                    <label for="email" class="leading-7 text-sm text-gray-600">Suffix (Optional)</label>
-                    <input v-model="form_alumni.suffix" type="email" id="email" name="email" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                </div>
-            </div>
-            <div class="p-2 w-1/2">
-                <div class="relative">
-                    <label for="image" class="leading-7 text-sm text-gray-600">Image</label>
-                    <input v-model="image_name" type="text" id="image" name="image" readonly class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                </div>
-            </div>
-            <div class="p-2 w-1/2">
-                <div class="relative">
-                    <input id="alumni-hidden-input" type="file" class="hidden" accept="image/png, image/gif, image/jpeg"/>
-                    <button @click="openFile" class="mt-2 rounded-sm px-3 py-1 bg-gray-200 hover:bg-gray-300 focus:shadow-outline focus:outline-none">
-                        Select Image
-                    </button>
-                </div>
-                
-            </div>
-            <div class="p-2 w-1/2">
-                <div class="relative">
-                    <label for="email" class="leading-7 text-sm text-gray-600">Add Achievement</label>
-                    <div class="flex items-center">   
-                        <div class="relative w-full">
-                            <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                                <svg class="w-6 h-6 text-green-900" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
-                            </div>
-                            <input v-model="tmp_achievement" type="text" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full pl-10 p-2.5" placeholder="Achievement" required>
+            <div class="lg:w-1/2 md:w-2/3 mx-auto">
+                <div class="flex flex-wrap -m-2">
+                    <div class="p-2 w-full">
+                        <div class="relative">
+                            <label
+                                for="email"
+                                class="leading-7 text-sm text-gray-600"
+                                >School Year</label
+                            >
+                            <select
+                                v-model="form_alumni.yearbook_id"
+                                class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-nonefocus:outline-none focus:ring-0 focus:border-gray-200 peer"
+                            >
+                                <option :value="null" disabled>
+                                    Select School Year
+                                </option>
+                                <template
+                                    v-for="(yearbook, key) in $page.props
+                                        .yearbooks.data"
+                                    :key="key"
+                                >
+                                    <option :value="yearbook.id">
+                                        {{
+                                            date_conversion(
+                                                yearbook.schoolyear_from
+                                            ) +
+                                            " to " +
+                                            date_conversion(
+                                                yearbook.schoolyear_to
+                                            )
+                                        }}
+                                    </option>
+                                </template>
+                            </select>
                         </div>
-                        <button @click="addAchievement()" type="button" class="p-2.5 ml-2 text-sm font-medium text-white bg-green-700 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
-                            <span class="sr-only">Add</span>
+                    </div>
+                    <div class="p-2 w-1/2">
+                        <div class="relative">
+                            <label
+                                for="name"
+                                class="leading-7 text-sm text-gray-600"
+                                >First Name</label
+                            >
+                            <input
+                                v-model="form_alumni.firstname"
+                                type="text"
+                                id="name"
+                                name="name"
+                                class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                            />
+                        </div>
+                    </div>
+                    <div class="p-2 w-1/2">
+                        <div class="relative">
+                            <label
+                                for="name"
+                                class="leading-7 text-sm text-gray-600"
+                                >Middle Name</label
+                            >
+                            <input
+                                v-model="form_alumni.middlename"
+                                type="text"
+                                id="name"
+                                name="name"
+                                class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                            />
+                        </div>
+                    </div>
+                    <div class="p-2 w-1/2">
+                        <div class="relative">
+                            <label
+                                for="name"
+                                class="leading-7 text-sm text-gray-600"
+                                >Last Name</label
+                            >
+                            <input
+                                v-model="form_alumni.lastname"
+                                type="text"
+                                id="name"
+                                name="name"
+                                class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                            />
+                        </div>
+                    </div>
+                    <div class="p-2 w-1/2">
+                        <div class="relative">
+                            <label
+                                for="email"
+                                class="leading-7 text-sm text-gray-600"
+                                >Suffix (Optional)</label
+                            >
+                            <input
+                                v-model="form_alumni.suffix"
+                                type="email"
+                                id="email"
+                                name="email"
+                                class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                            />
+                        </div>
+                    </div>
+                    <div class="p-2 w-1/2">
+                        <div class="relative">
+                            <label
+                                for="image"
+                                class="leading-7 text-sm text-gray-600"
+                                >Image</label
+                            >
+                            <input
+                                v-model="image_name"
+                                type="text"
+                                id="image"
+                                name="image"
+                                readonly
+                                class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                            />
+                        </div>
+                    </div>
+                    <div class="p-2 w-1/2">
+                        <div class="relative">
+                            <input
+                                id="alumni-hidden-input"
+                                type="file"
+                                class="hidden"
+                                accept="image/png, image/gif, image/jpeg"
+                            />
+                            <button
+                                @click="openFile"
+                                class="mt-2 rounded-sm px-3 py-1 bg-gray-200 hover:bg-gray-300 focus:shadow-outline focus:outline-none"
+                            >
+                                Select Image
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-2 w-1/2">
+                        <div class="relative">
+                            <label
+                                for="email"
+                                class="leading-7 text-sm text-gray-600"
+                                >Add Achievement</label
+                            >
+                            <div class="flex items-center">
+                                <div class="relative w-full">
+                                    <div
+                                        class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
+                                    >
+                                        <svg
+                                            class="w-6 h-6 text-green-900"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
+                                            ></path>
+                                        </svg>
+                                    </div>
+                                    <input
+                                        v-model="tmp_achievement"
+                                        type="text"
+                                        id="simple-search"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full pl-10 p-2.5"
+                                        placeholder="Achievement"
+                                        required
+                                    />
+                                </div>
+                                <button
+                                    @click="addAchievement()"
+                                    type="button"
+                                    class="p-2.5 ml-2 text-sm font-medium text-white bg-green-700 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300"
+                                >
+                                    <svg
+                                        class="w-6 h-6 text-white"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                                        ></path>
+                                    </svg>
+                                    <span class="sr-only">Add</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-2 w-1/2">
+                        <div class="relative">
+                            <h2
+                                class="mb-2 text-lg font-semibold text-gray-900"
+                            >
+                                Achievements
+                            </h2>
+                            <ul
+                                class="space-y-1 max-w-md list-disc list-inside"
+                            >
+                                <template
+                                    v-for="(achivement, key) in form_alumni
+                                        .details.achievements"
+                                    :key="key"
+                                >
+                                    <li>
+                                        {{ achivement }}
+                                        <button
+                                            type="button"
+                                            @click="remove_achievement(key)"
+                                            class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2"
+                                        >
+                                            Remove
+                                        </button>
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="p-2 w-1/2">
+                        <div class="relative">
+                            <label
+                                for="name"
+                                class="leading-7 text-sm text-gray-600"
+                                >College</label
+                            >
+                            <select
+                                v-model="form_alumni.college_id"
+                                id="underline_select"
+                                class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none focus:outline-none focus:ring-0 focus:border-gray-200 peer"
+                            >
+                                <option :value="null" disabled>
+                                    Select College
+                                </option>
+                                <template
+                                    v-for="(college, key) in $page.props
+                                        .colleges"
+                                    :key="key"
+                                >
+                                    <option :value="college.id">
+                                        {{ college.name }}
+                                    </option>
+                                </template>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="p-2 w-1/2">
+                        <div class="relative">
+                            <label
+                                for="email"
+                                class="leading-7 text-sm text-gray-600"
+                                >Course</label
+                            >
+                            <select
+                                v-model="form_alumni.course_id"
+                                id="underline_select"
+                                class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none focus:outline-none focus:ring-0 focus:border-gray-200 peer"
+                            >
+                                <option :value="null" disabled>
+                                    Select Course
+                                </option>
+                                <template
+                                    v-for="(course, key) in courses"
+                                    :key="key"
+                                >
+                                    <option :value="course.id">
+                                        {{ course.name }}
+                                    </option>
+                                </template>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="p-2 w-full">
+                        <div class="relative">
+                            <label
+                                for="message"
+                                class="leading-7 text-sm text-gray-600"
+                                >Motto</label
+                            >
+                            <textarea
+                                v-model="form_alumni.details.moto"
+                                id="message"
+                                name="message"
+                                class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
+                            ></textarea>
+                        </div>
+                    </div>
+                    <div class="p-2 w-full">
+                        <button
+                            @click="addAlumni()"
+                            class="flex mx-auto text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg"
+                        >
+                            Submit
                         </button>
                     </div>
+                    <div
+                        class="p-2 w-full pt-8 mt-8 border-t border-gray-200 text-center"
+                    ></div>
                 </div>
             </div>
-            <div class="p-2 w-1/2">
-            <div class="relative">
-            <h2 class="mb-2 text-lg font-semibold text-gray-900">Achievements</h2>
-            <ul class="space-y-1 max-w-md list-disc list-inside">
-                <template v-for="(achivement, key) in form_alumni.details.achievements" :key="key">
-                    <li>
-                        {{achivement}} 
-                        <button type="button" @click="remove_achievement(key)" class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2">Remove</button>
-                    </li>
-                </template>
-            </ul>
-            </div>
-            </div>
-            <div class="p-2 w-1/2">
-            <div class="relative">
-                <label for="name" class="leading-7 text-sm text-gray-600">College</label>
-                <select v-model="form_alumni.college_id" id="underline_select" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none focus:outline-none focus:ring-0 focus:border-gray-200 peer">
-                    <option :value="null" disabled>Select College</option>
-                    <template v-for="(college, key) in $page.props.colleges" :key="key">
-                        <option :value="college.id">{{ college.name }}</option>
-                    </template>
-                </select>
-            </div>
-            </div>
-            <div class="p-2 w-1/2">
+            <nav
+                class="mb-10 flex justify-end"
+                aria-label="Page navigation example"
+            >
+                <label
+                    for="default-search"
+                    class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300"
+                    >Search</label
+                >
                 <div class="relative">
-                    <label for="email" class="leading-7 text-sm text-gray-600">Course</label>
-                    <select v-model="form_alumni.course_id" id="underline_select" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none focus:outline-none focus:ring-0 focus:border-gray-200 peer">
-                        <option :value="null" disabled>Select Course</option>
-                        <template v-for="(course, key) in courses" :key="key">
-                            <option :value="course.id">{{ course.name }}</option>
-                        </template>
-                    </select>
-                </div>
-            </div>
-            <div class="p-2 w-full">
-            <div class="relative">
-                <label for="message" class="leading-7 text-sm text-gray-600">Motto</label>
-                <textarea v-model="form_alumni.details.moto" id="message" name="message" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
-            </div>
-            </div>
-            <div class="p-2 w-full">
-            <button @click="addAlumni()" class="flex mx-auto text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">Submit</button>
-            </div>
-            <div class="p-2 w-full pt-8 mt-8 border-t border-gray-200 text-center">
-
-            </div>
-        </div>
-        </div>
-            <nav class="mb-10  flex justify-end" aria-label="Page navigation example">
-                    <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label>
-                    <div class="relative">
-                        <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                            <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                        </div>
-                        <input v-model="search_data.alumni_search_key" type="search" id="default-search" class="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Mockups, Logos..." required>
-                        <button @click="function_search_alumni()" type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+                    <div
+                        class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
+                    >
+                        <svg
+                            aria-hidden="true"
+                            class="w-5 h-5 text-gray-500 dark:text-gray-400"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                            ></path>
+                        </svg>
                     </div>
+                    <input
+                        v-model="search_data.alumni_search_key"
+                        type="search"
+                        id="default-search"
+                        class="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Search Mockups, Logos..."
+                        required
+                    />
+                    <button
+                        @click="function_search_alumni()"
+                        type="submit"
+                        class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    >
+                        Search
+                    </button>
+                </div>
             </nav>
-            <div class=" overflow-x-auto relative">
+            <div class="overflow-x-auto relative">
                 <table class="w-full text-sm text-left text-gray-500">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                         <tr>
-                            <th scope="col" class="py-3 px-6">
-                                Alumni name
-                            </th>
+                            <th scope="col" class="py-3 px-6">Alumni name</th>
                             <th scope="col" class="py-3 px-6">
                                 Scool Year Graduated
                             </th>
-                            <th scope="col" class="py-3 px-6">
-                                Achievements
-                            </th>
+                            <th scope="col" class="py-3 px-6">Achievements</th>
                             <th scope="col" class="py-3 px-6">
                                 College and course
                             </th>
-                            <th scope="col" class="py-3 px-6">
-                                Motto
-                            </th>
-                            <th scope="col" class="py-3 px-6">
-                                Action
-                            </th>
+                            <th scope="col" class="py-3 px-6">Motto</th>
+                            <th scope="col" class="py-3 px-6">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="bg-white border-b " v-for="(graduate, index) in usePage().props.value.graduates.data" :key="index">
-                            <th scope="row" class="py-4 px-6 font-medium text-gray-900">
+                        <tr
+                            class="bg-white border-b"
+                            v-for="(graduate, index) in usePage().props.value
+                                .graduates.data"
+                            :key="index"
+                        >
+                            <th
+                                scope="row"
+                                class="py-4 px-6 font-medium text-gray-900"
+                            >
                                 <div class="pl-3">
-                                    <img class="w-20 h-20 rounded-full"  :src="'/images/graduates/'+ graduate.details.profile_picture" alt="" />
+                                    <img
+                                        class="w-20 h-20 rounded-full"
+                                        :src="
+                                            '/images/graduates/' +
+                                            graduate.details.profile_picture
+                                        "
+                                        alt=""
+                                    />
                                     <div class="text-base font-semibold">
-                                        <span>{{graduate.firstname }} </span>
+                                        <span>{{ graduate.firstname }} </span>
                                         &nbsp;
-                                        <span v-if="graduate.middlename != null">{{graduate.middlename }} </span>
+                                        <span v-if="graduate.middlename != null"
+                                            >{{ graduate.middlename }}
+                                        </span>
                                         &nbsp;
-                                        <span>{{graduate.lastname }} </span>
+                                        <span>{{ graduate.lastname }} </span>
                                         &nbsp;
-                                        <span v-if="graduate.suffix == null"></span>
-                                        <span v-else>{{ graduate.suffix }}</span>
+                                        <span
+                                            v-if="graduate.suffix == null"
+                                        ></span>
+                                        <span v-else>{{
+                                            graduate.suffix
+                                        }}</span>
                                     </div>
                                 </div>
                             </th>
                             <td class="py-4 px-6">
-                                <div class="text-base font-semibold">{{ graduate.yearbook.schoolyear_from }} to {{graduate.yearbook.schoolyear_to}}</div>
+                                <div class="text-base font-semibold">
+                                    {{ graduate.yearbook.schoolyear_from }} to
+                                    {{ graduate.yearbook.schoolyear_to }}
+                                </div>
                             </td>
                             <td class="py-4 px-6">
-                                <span v-for="(achievements, achievement_key ) in graduate.details.achievements" :key="achievement_key">
-                                    <em class="mb-3 font-normal text-gray-700 dark:text-gray-400" >{{ achievements }}</em><br>
+                                <span
+                                    v-for="(
+                                        achievements, achievement_key
+                                    ) in graduate.details.achievements"
+                                    :key="achievement_key"
+                                >
+                                    <em
+                                        class="mb-3 font-normal text-gray-700 dark:text-gray-400"
+                                        >{{ achievements }}</em
+                                    ><br />
                                 </span>
                             </td>
                             <td class="py-4 px-6">
-                                <div class="font-normal text-gray-500"> College of {{ graduate.course.college.name}}</div>
-                                <div class="font-normal text-gray-500"> {{graduate.course.abbreviation}} - {{graduate.course.name}}</div>
+                                <div class="font-normal text-gray-500">
+                                    College of
+                                    {{ graduate.course.college.name }}
+                                </div>
+                                <div class="font-normal text-gray-500">
+                                    {{ graduate.course.abbreviation }} -
+                                    {{ graduate.course.name }}
+                                </div>
                             </td>
                             <td class="py-4 px-6">
-                                <div class="font-normal text-gray-500"> {{ graduate.details.moto}}</div>
+                                <div class="font-normal text-gray-500">
+                                    {{ graduate.details.moto }}
+                                </div>
                             </td>
                             <td class="py-4 px-6">
-                                <a href="#" @click="open_update_modal(graduate.id, graduate.firstname, graduate.middlename, graduate.lastname, graduate.suffix, graduate.yearbook.id, graduate.details.achievements, graduate.course.college.id, graduate.course.id, graduate.details.moto)" class="text-white bg-blue-700  mb-1  hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Edit</a>
+                                <a
+                                    href="#"
+                                    @click="
+                                        open_update_modal(
+                                            graduate.id,
+                                            graduate.firstname,
+                                            graduate.middlename,
+                                            graduate.lastname,
+                                            graduate.suffix,
+                                            graduate.yearbook.id,
+                                            graduate.details,
+                                            graduate.course.college.id,
+                                            graduate.course.id
+                                        )
+                                    "
+                                    class="text-white bg-blue-700 mb-1 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                    >Edit</a
+                                >
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                <div class="px-4 w-100 py-3 flex items-center justify-center border-gray-200 sm:px-6">
-                    <Pagination v-bind:links="$page.props.events.links"/>
+                <div
+                    class="px-4 w-100 py-3 flex items-center justify-center border-gray-200 sm:px-6"
+                >
+                    <Pagination v-bind:links="$page.props.events.links" />
                 </div>
             </div>
 
-
-
-
             <div v-if="modal_update" class=" ">
-                <div id="popup-modal" tabindex="-1" class="overflow-y-auto  flex fixed justify-center w-full backdrop-blur-sm overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full">
-                    <div class="relative p-4 w-full animate mt-10 max-w-md h-full md:h-auto">
+                <div
+                    id="popup-modal"
+                    tabindex="-1"
+                    class="overflow-y-auto flex fixed justify-center w-full backdrop-blur-sm overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full"
+                >
+                    <div
+                        class="relative p-4 w-full animate mt-10 max-w-md h-full md:h-auto"
+                    >
                         <div class="relative bg-white rounded-lg shadow">
-                                    <div class="p-2 w-full">
-                                        <div class="relative">
-                                            <label for="email" class="leading-7 text-sm text-gray-600">School Year</label>
-                                            <select v-model="form_alumni_update.yearbook_id" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-nonefocus:outline-none focus:ring-0 focus:border-gray-200 peer">
-                                                <option :value="null" disabled>Select School Year</option>
-                                                <template v-for="(yearbook, key) in $page.props.yearbooks.data" :key="key">
-                                                    <option :value="yearbook.id">{{ date_conversion(yearbook.schoolyear_from) + ' to '+ date_conversion(yearbook.schoolyear_to) }}</option>
-                                                </template>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="p-2 w-full">
-                                        <div class="relative">
-                                            <label for="name" class="leading-7 text-sm text-gray-600">First Name</label>
-                                            <input v-model="form_alumni_update.firstname" type="text" id="name" name="name" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                        </div>
-                                    </div>
-                                    <div class="p-2 w-full">
-                                        <div class="relative">
-                                            <label for="name" class="leading-7 text-sm text-gray-600">Middle Name</label>
-                                            <input v-model="form_alumni_update.middlename" type="text" id="name" name="name" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                        </div>
-                                    </div>
-                                    <div class="p-2 w-full">
-                                        <div class="relative">
-                                            <label for="name" class="leading-7 text-sm text-gray-600">Last Name</label>
-                                            <input v-model="form_alumni_update.lastname" type="text" id="name" name="name" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                        </div>
-                                    </div>
-                                    <div class="p-2 w-full">
-                                        <div class="relative">
-                                            <label for="email" class="leading-7 text-sm text-gray-600">Suffix (Optional)</label>
-                                            <input v-model="form_alumni_update.suffix" type="email" id="email" name="email" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                        </div>
-                                    </div><div class="p-2 w-full">
-                                        <div class="relative">
-                                            <label for="image" class="leading-7 text-sm text-gray-600">Image</label>
-                                            <input v-model="image_name" type="text" id="image" name="image" readonly class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                        </div>
-                                    </div>
-                                    <div class="p-2 w-full">
-                                        <div class="relative">
-                                            <input id="alumni-hidden-input_update" type="file" class="hidden" accept="image/png, image/gif, image/jpeg"/>
-                                            <button @click="openFile" class="mt-2 rounded-sm px-3 py-1 bg-gray-200 hover:bg-gray-300 focus:shadow-outline focus:outline-none">
-                                                Select Image
-                                            </button>
-                                        </div>
-                                        
-                                    </div>
-                                    <div class="p-2 w-full">
-                                        <div class="relative">
-                                            <label for="email" class="leading-7 text-sm text-gray-600">Add Achievement</label>
-                                            <div class="flex items-center">   
-                                                <div class="relative w-full">
-                                                    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                                                        <svg class="w-6 h-6 text-green-900" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
-                                                    </div>
-                                                    <input v-model="tmp_achievement" type="text" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full pl-10 p-2.5" placeholder="Achievement" required>
-                                                </div>
-                                                <button @click="addAchievementUpdate()" type="button" class="p-2.5 ml-2 text-sm font-medium text-white bg-green-700 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300">
-                                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
-                                                    <span class="sr-only">Add</span>
-                                                </button>
+                            <div class="p-2 w-full">
+                                <div class="relative">
+                                    <label
+                                        for="email"
+                                        class="leading-7 text-sm text-gray-600"
+                                        >School Year</label
+                                    >
+                                    <select
+                                        v-model="form_alumni_update.yearbook_id"
+                                        class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-nonefocus:outline-none focus:ring-0 focus:border-gray-200 peer"
+                                    >
+                                        <option :value="null" disabled>
+                                            Select School Year
+                                        </option>
+                                        <template
+                                            v-for="(yearbook, key) in $page
+                                                .props.yearbooks.data"
+                                            :key="key"
+                                        >
+                                            <option :value="yearbook.id">
+                                                {{
+                                                    date_conversion(
+                                                        yearbook.schoolyear_from
+                                                    ) +
+                                                    " to " +
+                                                    date_conversion(
+                                                        yearbook.schoolyear_to
+                                                    )
+                                                }}
+                                            </option>
+                                        </template>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="p-2 w-full">
+                                <div class="relative">
+                                    <label
+                                        for="name"
+                                        class="leading-7 text-sm text-gray-600"
+                                        >First Name</label
+                                    >
+                                    <input
+                                        v-model="form_alumni_update.firstname"
+                                        type="text"
+                                        id="name"
+                                        name="name"
+                                        class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                    />
+                                </div>
+                            </div>
+                            <div class="p-2 w-full">
+                                <div class="relative">
+                                    <label
+                                        for="name"
+                                        class="leading-7 text-sm text-gray-600"
+                                        >Middle Name</label
+                                    >
+                                    <input
+                                        v-model="form_alumni_update.middlename"
+                                        type="text"
+                                        id="name"
+                                        name="name"
+                                        class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                    />
+                                </div>
+                            </div>
+                            <div class="p-2 w-full">
+                                <div class="relative">
+                                    <label
+                                        for="name"
+                                        class="leading-7 text-sm text-gray-600"
+                                        >Last Name</label
+                                    >
+                                    <input
+                                        v-model="form_alumni_update.lastname"
+                                        type="text"
+                                        id="name"
+                                        name="name"
+                                        class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                    />
+                                </div>
+                            </div>
+                            <div class="p-2 w-full">
+                                <div class="relative">
+                                    <label
+                                        for="email"
+                                        class="leading-7 text-sm text-gray-600"
+                                        >Suffix (Optional)</label
+                                    >
+                                    <input
+                                        v-model="form_alumni_update.suffix"
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                    />
+                                </div>
+                            </div>
+                            <div class="p-2 w-full">
+                                <div class="relative">
+                                    <label
+                                        for="image"
+                                        class="leading-7 text-sm text-gray-600"
+                                        >Image</label
+                                    >
+                                    <input
+                                        v-model="image_name"
+                                        type="text"
+                                        id="image"
+                                        name="image"
+                                        readonly
+                                        class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                    />
+                                </div>
+                            </div>
+                            <div class="p-2 w-full">
+                                <div class="relative">
+                                    <input
+                                        id="alumni-hidden-input_update"
+                                        type="file"
+                                        class="hidden"
+                                        accept="image/png, image/gif, image/jpeg"
+                                    />
+                                    <button
+                                        @click="openFileUpdate"
+                                        class="mt-2 rounded-sm px-3 py-1 bg-gray-200 hover:bg-gray-300 focus:shadow-outline focus:outline-none"
+                                    >
+                                        Select Image
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="p-2 w-full">
+                                <div class="relative">
+                                    <label
+                                        for="email"
+                                        class="leading-7 text-sm text-gray-600"
+                                        >Add Achievement</label
+                                    >
+                                    <div class="flex items-center">
+                                        <div class="relative w-full">
+                                            <div
+                                                class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
+                                            >
+                                                <svg
+                                                    class="w-6 h-6 text-green-900"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    viewBox="0 0 24 24"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                    <path
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
+                                                    ></path>
+                                                </svg>
                                             </div>
+                                            <input
+                                                v-model="tmp_achievement"
+                                                type="text"
+                                                id="simple-search"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full pl-10 p-2.5"
+                                                placeholder="Achievement"
+                                                required
+                                            />
                                         </div>
+                                        <button
+                                            @click="addAchievementUpdate()"
+                                            type="button"
+                                            class="p-2.5 ml-2 text-sm font-medium text-white bg-green-700 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300"
+                                        >
+                                            <svg
+                                                class="w-6 h-6 text-white"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                                <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    stroke-width="2"
+                                                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                                                ></path>
+                                            </svg>
+                                            <span class="sr-only">Add</span>
+                                        </button>
                                     </div>
-                                    <div class="p-2 w-full">
-                                    <div class="relative">
-                                    <h2 class="mb-2 text-lg font-semibold text-gray-900">Achievements</h2>
-                                    <ul class="space-y-1 max-w-md list-disc list-inside">
-                                        <template v-for="(achivement, key) in form_alumni_update.details.achievements" :key="key">
+                                </div>
+                            </div>
+                            <div class="p-2 w-full">
+                                <div class="relative">
+                                    <h2
+                                        class="mb-2 text-lg font-semibold text-gray-900"
+                                    >
+                                        Achievements
+                                    </h2>
+                                    <ul
+                                        class="space-y-1 max-w-md list-disc list-inside"
+                                    >
+                                        <template
+                                            v-for="(
+                                                achivement, key
+                                            ) in form_alumni_update.details
+                                                .achievements"
+                                            :key="key"
+                                        >
                                             <li>
-                                                {{achivement}} 
-                                                <button type="button" @click="remove_achievement_update(key)" class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2">Remove</button>
+                                                {{ achivement }}
+                                                <button
+                                                    type="button"
+                                                    @click="
+                                                        remove_achievement_update(
+                                                            key
+                                                        )
+                                                    "
+                                                    class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2"
+                                                >
+                                                    Remove
+                                                </button>
                                             </li>
                                         </template>
                                     </ul>
-                                    </div>
-                                    </div>
-                                    <div class="p-2 w-full">
-                                    <div class="relative">
-                                        <label for="name" class="leading-7 text-sm text-gray-600">College</label>
-                                        <select v-model="form_alumni_update.college_id" id="underline_select" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none focus:outline-none focus:ring-0 focus:border-gray-200 peer">
-                                            <option :value="null" disabled>Select College</option>
-                                            <template v-for="(college, key) in $page.props.colleges" :key="key">
-                                                <option :value="college.id">{{ college.name }}</option>
-                                            </template>
-                                        </select>
-                                    </div>
-                                    </div>
-                                    <div class="p-2 w-full">
-                                        <div class="relative">
-                                            <label for="email" class="leading-7 text-sm text-gray-600">Course</label>
-                                            <select v-model="form_alumni_update.course_id" id="underline_select" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none focus:outline-none focus:ring-0 focus:border-gray-200 peer">
-                                                <option :value="null" disabled>Select Course</option>
-                                                <template v-for="(course, key) in update_courses" :key="key">
-                                                    <option :value="course.id">{{ course.name }}</option>
-                                                </template>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="p-2 w-full">
-                                        <div class="relative">
-                                            <label for="message" class="leading-7 text-sm text-gray-600">Motto</label>
-                                            <textarea v-model="form_alumni_update.details.moto" id="message" name="message" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
-                                        </div>
-                                    </div>
-                            <button @click="close_update_modal()" type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-toggle="popup-modal">
-                                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                </div>
+                            </div>
+                            <div class="p-2 w-full">
+                                <div class="relative">
+                                    <label
+                                        for="name"
+                                        class="leading-7 text-sm text-gray-600"
+                                        >College</label
+                                    >
+                                    <select
+                                        v-model="form_alumni_update.college_id"
+                                        id="underline_select"
+                                        class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none focus:outline-none focus:ring-0 focus:border-gray-200 peer"
+                                    >
+                                        <option :value="null" disabled>
+                                            Select College
+                                        </option>
+                                        <template
+                                            v-for="(college, key) in $page.props
+                                                .colleges"
+                                            :key="key"
+                                        >
+                                            <option :value="college.id">
+                                                {{ college.name }}
+                                            </option>
+                                        </template>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="p-2 w-full">
+                                <div class="relative">
+                                    <label
+                                        for="email"
+                                        class="leading-7 text-sm text-gray-600"
+                                        >Course</label
+                                    >
+                                    <select
+                                        v-model="form_alumni_update.course_id"
+                                        id="underline_select"
+                                        class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none focus:outline-none focus:ring-0 focus:border-gray-200 peer"
+                                    >
+                                        <option :value="null" disabled>
+                                            Select Course
+                                        </option>
+                                        <template
+                                            v-for="(
+                                                course, key
+                                            ) in update_courses"
+                                            :key="key"
+                                        >
+                                            <option :value="course.id">
+                                                {{ course.name }}
+                                            </option>
+                                        </template>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="p-2 w-full">
+                                <div class="relative">
+                                    <label
+                                        for="message"
+                                        class="leading-7 text-sm text-gray-600"
+                                        >Motto</label
+                                    >
+                                    <textarea
+                                        v-model="
+                                            form_alumni_update.details.moto
+                                        "
+                                        id="message"
+                                        name="message"
+                                        class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
+                                    ></textarea>
+                                </div>
+                            </div>
+                            <button
+                                @click="close_update_modal()"
+                                type="button"
+                                class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+                                data-modal-toggle="popup-modal"
+                            >
+                                <svg
+                                    aria-hidden="true"
+                                    class="w-5 h-5"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"
+                                    ></path>
+                                </svg>
                                 <span class="sr-only">Close modal</span>
                             </button>
                             <div class="p-6 text-center">
-                                <svg aria-hidden="true" class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to update this Alumni?</h3>
-                                <button @click="function_update_event()" data-modal-toggle="popup-modal" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+                                <svg
+                                    aria-hidden="true"
+                                    class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                    ></path>
+                                </svg>
+                                <h3
+                                    class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400"
+                                >
+                                    Are you sure you want to update this Alumni?
+                                </h3>
+                                <button
+                                    @click="function_update_alumni()"
+                                    data-modal-toggle="popup-modal"
+                                    type="button"
+                                    class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"
+                                >
                                     Yes, I'm sure
                                 </button>
-                                <button @click="close_update_modal()" data-modal-toggle="popup-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10">No, cancel</button>
+                                <button
+                                    @click="close_update_modal()"
+                                    data-modal-toggle="popup-modal"
+                                    type="button"
+                                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10"
+                                >
+                                    No, cancel
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-</section>
+    </section>
 </template>

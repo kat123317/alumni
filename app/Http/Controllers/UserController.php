@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\RegisterMail;
 use App\Actions\Fortify\PasswordValidationRules;
 use App\Models\User;
 use App\Models\Notification;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Jetstream\Jetstream;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -195,11 +196,13 @@ class UserController extends Controller
                 case 'admin':
                     $user->update([
                         'status' => 'approved',
-                        'details->admin_approved_by' => Auth::user()->name
+                        'details->admin_approved_by' => Auth::user()->name,
+                        'is_active' => true
                     ]);
                     $notification->update([
                         'is_processed' => true
                     ]);
+                    Mail::to($user->email)->send(new RegisterMail($user->email));
                     break;
                 case 'staff_admin':
                     $user->update([
@@ -214,13 +217,13 @@ class UserController extends Controller
                     dd('Something went wrong');
                     break;
             }
+            dd("sent");
         } else { //rejected
             $user->update([
                 'status' => 'rejected',
                 'details->rejected_by' => Auth::user()->name
             ]);
         }
-
         return Redirect::back();
     }
 }

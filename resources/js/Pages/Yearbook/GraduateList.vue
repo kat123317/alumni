@@ -1,92 +1,198 @@
 <script setup>
-import { useForm, usePage } from '@inertiajs/inertia-vue3';
-import { computed, onMounted } from 'vue';
+import { Inertia } from "@inertiajs/inertia";
+import { useForm, usePage } from "@inertiajs/inertia-vue3";
+import { computed, onMounted } from "vue";
+
 const form_search = useForm({
-    search: '',
-    yearbook_id: null,
-    college_id: null,
-    course_id: null
+    search: usePage().props.value.search,
+    yearbook_id: usePage().props.value.yearbook_id,
+    college_id: usePage().props.value.college_id,
+    course_id: usePage().props.value.course_id,
 });
 
 onMounted(() => {
     // console.log(usePage().props.value.courses);
 });
 
-const filtered_course = computed(() => {
-    if (form_search.college_id != null) {
-        return usePage().props.value.courses.filter(course => course.college_id == form_search.college_id);
-    } else {
-        return usePage().props.value.courses;
+const searchAlumni = (filter = false) => {
+    if (filter) {
+        form_search.search = "";
     }
-});
+    form_search.get(route("graduates.index"), {
+        preserveScroll: true,
+        onSuccess: () => {},
+    });
+};
 </script>
 
 <template>
     <div class="m-6">
-        <div class="mb-5 flex">
-        
-            <select v-model="form_search.college_id" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block ml-2 w-75 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <option selected>Choose a College</option>
-            <option value="1">Engineering</option>
-            <option value="2">Forestry</option>
-            <option value="3">Veterenary Medicine</option>
+        <div class="w-full mb-5 flex">
+            <select
+                @change="searchAlumni(true)"
+                v-model="form_search.college_id"
+                id="countries"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block ml-2 w-75 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            >
+                <option :value="null">Choose a College</option>
+                <option value="1">Engineering</option>
+                <option value="2">Forestry</option>
+                <option value="3">Veterenary Medicine</option>
             </select>
 
-            <select v-model="form_search.course_id" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block ml-2 w-75 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <option selected>Choose a Course</option>
-            <template v-for="course in filtered_course">
-                <option :value="course.id">{{course.name}}</option>
-            </template>
+            <select
+                @change="searchAlumni(true)"
+                v-model="form_search.course_id"
+                id="countries"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block ml-2 w-75 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            >
+                <option :value="null">Choose a Course</option>
+                <template v-for="course in $page.props.courses">
+                    <option :value="course.id">{{ course.name }}</option>
+                </template>
             </select>
 
-            <input type="text" placeholder="School Year" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block ml-2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <select
+                @change="searchAlumni(true)"
+                v-model="form_search.yearbook_id"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block ml-2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            >
+                <option :value="null">Choose School Year</option>
+                <template v-for="yearbook in $page.props.yearbooks">
+                    <option :value="yearbook.id">
+                        {{
+                            yearbook.schoolyear_from +
+                            "-" +
+                            yearbook.schoolyear_to
+                        }}
+                    </option>
+                </template>
+            </select>
 
-            <form class="flex ml-2 items-center">   
+            <div class="flex ml-2 items-center">
                 <label for="simple-search" class="sr-only">Search</label>
                 <div class="relative w-full">
-                    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                        <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
+                    <div
+                        class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
+                    >
+                        <svg
+                            aria-hidden="true"
+                            class="w-5 h-5 text-gray-500 dark:text-gray-400"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                fill-rule="evenodd"
+                                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                clip-rule="evenodd"
+                            ></path>
+                        </svg>
                     </div>
-                    <input v-model="form_search.search" type="text" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search" required>
+                    <input
+                        v-model="form_search.search"
+                        type="text"
+                        id="simple-search"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Search"
+                        required
+                    />
                 </div>
-                <button type="submit" class="p-2.5 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                <button
+                    @click="searchAlumni()"
+                    type="button"
+                    class="p-2.5 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
+                    <svg
+                        class="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                        ></path>
+                    </svg>
                     <span class="sr-only">Search</span>
                 </button>
-            </form>
-            
+            </div>
         </div>
         <div class="container grid grid-cols-4 gap-5 mx-auto text-center">
-            <div v-for="(graduate, key) in usePage().props.value.graduates.data" :key="key" class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md ">
+            <div
+                v-for="(graduate, key) in usePage().props.value.graduates.data"
+                :key="key"
+                class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md"
+            >
                 <a href="#" class="flex justify-center py-5">
-                    <img class="rounded" width="300" height="200" :src="'/images/graduates/'+ graduate.details.profile_picture" alt="" />
+                    <img
+                        class="rounded"
+                        width="300"
+                        height="200"
+                        :src="
+                            '/images/graduates/' +
+                            graduate.details.profile_picture
+                        "
+                        alt=""
+                    />
                 </a>
                 <div class="p-5">
                     <a href="#">
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">
-                            <span>{{graduate.firstname }} </span>
+                        <h5
+                            class="mb-2 text-2xl font-bold tracking-tight text-gray-900"
+                        >
+                            <span>{{ graduate.firstname }} </span>
                             &nbsp;
-                            <span v-if="graduate.middlename != null">{{graduate.middlename }} </span>
+                            <span v-if="graduate.middlename != null"
+                                >{{ graduate.middlename }}
+                            </span>
                             &nbsp;
-                            <span>{{graduate.lastname }} </span>
+                            <span>{{ graduate.lastname }} </span>
                             &nbsp;
                             <span v-if="graduate.suffix == null"></span>
                             <span v-else>{{ graduate.suffix }}</span>
                         </h5>
                     </a>
-                    <p class="mb-0 font-normal text-gray-700 dark:text-gray-400">College of {{ graduate.course.college.name}}</p>
-                    <em class="mb-3 font-normal text-gray-700 dark:text-gray-400">Graduated: {{ graduate.yearbook.schoolyear_from }} to {{graduate.yearbook.schoolyear_to}}</em>
-                    <p class="mt-3 font-normal text-gray-700 dark:text-gray-400">Course: {{graduate.course.abbreviation}} - {{graduate.course.name}}</p>
-                    <span class="mt-3 font-normal text-gray-700 dark:text-gray-400">Achievements: </span>
-                    <br>
-                    <span v-for="(achievements, achievement_key ) in graduate.details.achievements" :key="achievement_key">
-                        <em class="mb-3 font-normal text-gray-700 dark:text-gray-400" >{{ achievements }}</em><br>
+                    <p
+                        class="mb-0 font-normal text-gray-700 dark:text-gray-400"
+                    >
+                        College of {{ graduate.course.college.name }}
+                    </p>
+                    <em
+                        class="mb-3 font-normal text-gray-700 dark:text-gray-400"
+                        >Graduated: {{ graduate.yearbook.schoolyear_from }} to
+                        {{ graduate.yearbook.schoolyear_to }}</em
+                    >
+                    <p
+                        class="mt-3 font-normal text-gray-700 dark:text-gray-400"
+                    >
+                        Course: {{ graduate.course.abbreviation }} -
+                        {{ graduate.course.name }}
+                    </p>
+                    <span
+                        class="mt-3 font-normal text-gray-700 dark:text-gray-400"
+                        >Achievements:
                     </span>
-                    <em class="mb-3 font-normal text-gray-700 dark:text-gray-400">Motto: {{ graduate.details.moto}}</em>
-
+                    <br />
+                    <span
+                        v-for="(achievements, achievement_key) in graduate
+                            .details.achievements"
+                        :key="achievement_key"
+                    >
+                        <em
+                            class="mb-3 font-normal text-gray-700 dark:text-gray-400"
+                            >{{ achievements }}</em
+                        ><br />
+                    </span>
+                    <em
+                        class="mb-3 font-normal text-gray-700 dark:text-gray-400"
+                        >Motto: {{ graduate.details.moto }}</em
+                    >
                 </div>
             </div>
         </div>
-
     </div>
 </template>
