@@ -24,7 +24,7 @@ const date_conversion_day_text = (value) => {
 };
 const date_conversion_day_num = (value) => {
     if (value) {
-        return moment(value).format("od");
+        return moment(value).format("Od");
     }
 };
 const date_conversion_day_mon = (value) => {
@@ -72,10 +72,10 @@ defineProps({
 
         <div class="w-full bg-white">
             <div class="flex justify-between bg-green-900">
-                <div class="text-yellow-600 custom-font ml-4 text-[4vmin]">
+                <div class="text-yellow-600 font-mono ml-4 text-[4vmin]">
                     {{ datetimeNow }}
                 </div>
-                <div class="text-yellow-600 custom-font text-[4vmin] mr-4">
+                <div class="text-yellow-600 font-mono text-[4vmin] mr-4">
                     Central Mindanao University
                 </div>
             </div>
@@ -305,7 +305,7 @@ defineProps({
                 </div>
             </section>
             <div class="bg-yellow-600 h-[1vmin]"></div>
-            <div class="custom-font bg-green-900 mb-4">
+            <div class="font-mono bg-green-900 mb-4">
                 <h2
                     class="mb-2 text-[3rem] font-extrabold text-start ml-4 text-yellow-600 flex"
                 >
@@ -348,7 +348,7 @@ defineProps({
             </section>
 
             <div class="bg-yellow-600 h-[1vmin]"></div>
-            <div class="custom-font bg-green-900">
+            <div class="font-mono bg-green-900">
                 <h2
                     class="text-[3rem] font-extrabold text-start ml-4 text-yellow-600 flex"
                 >
@@ -463,7 +463,7 @@ defineProps({
             </section>
 
             <div class="bg-yellow-600 h-[1vmin]"></div>
-            <div class="custom-font bg-green-900">
+            <div class="font-mono bg-green-900">
                 <h2
                     class="text-[3rem] font-extrabold text-start ml-4 text-yellow-600 flex"
                 >
@@ -532,8 +532,9 @@ defineProps({
                                     class="mt-2 grid grid-cols-1 lg:grid-cols-2 sm:grid-cols-1"
                                 >
                                     <div
-                                        class="bg-green-900 mr-2 p-0 custom-font rounded-lg text-center text-yellow-500 font-bold"
+                                        class="bg-green-900 mr-0 lg:mr-2 p-0 font-mono rounded-lg text-center text-yellow-500 font-bold"
                                     >
+                                        <span>From</span> <br />
                                         <span class="text-[6rem]"
                                             >{{
                                                 date_conversion_day_num(
@@ -549,8 +550,9 @@ defineProps({
                                         }}</em>
                                     </div>
                                     <div
-                                        class="bg-yellow-500 mr-2 p-0 mt-1 lg:mt-0 custom-font rounded-lg text-center text-green-800 font-bold"
+                                        class="bg-yellow-500 mr-0 p-0 mt-1 lg:mt-0 font-mono rounded-lg text-center text-green-800 font-bold"
                                     >
+                                        <span>Until</span> <br />
                                         <span class="text-[6rem]"
                                             >{{
                                                 date_conversion_day_num(
@@ -587,8 +589,6 @@ defineProps({
 </template>
 
 <style scoped>
-@import url("http://fonts.cdnfonts.com/css/onramp");
-
 .bg-cmu {
     background-image: url("https://devops.cmu.edu.ph/formlinks/assets/dist/assets/img/backgrounds/main_gate.jpg");
     background-repeat: no-repeat;
@@ -599,15 +599,12 @@ defineProps({
 #vertical_date {
     text-orientation: upright;
     writing-mode: vertical-lr;
-    font-size: 6rem;
+    font-size: 4rem;
     font-weight: bolder;
-    outline-width: 1vmin !important;
-    font-family: "ONRAMP", sans-serif;
+    text-indent: -20px;
+    letter-spacing: -20px;
+    text-transform: uppercase;
     text-shadow: 2px 2px 2px lightgray;
-}
-
-.custom-font {
-    font-family: "ONRAMP", sans-serif;
 }
 
 .bg-pattern {
