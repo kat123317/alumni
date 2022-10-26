@@ -8,6 +8,7 @@ import Department from "./components/Department.vue";
 import Course from "./components/Course.vue";
 import Events from "./components/Events.vue";
 import YearBook from "./components/YearBook.vue";
+import Notification from "./components/Notification.vue";
 
 const trigger = ref(usePage().props.value.trigger);
 
@@ -99,7 +100,7 @@ provide("filter_courses_id", usePage().props.value.filter_courses_id);
                         Events
                     </button>
                     <button
-                        @click="trigger = 7"
+                        @click="trigger = 9"
                         class="mr-5 text-white hover:text-gray-200"
                     >
                         Notification
@@ -132,6 +133,7 @@ provide("filter_courses_id", usePage().props.value.filter_courses_id);
         <Course v-if="trigger == 6" />
         <Events v-if="trigger == 7" />
         <YearBook v-if="trigger == 8" />
+        <Notification v-if="trigger == 9" />
     </div>
 </template>
 
