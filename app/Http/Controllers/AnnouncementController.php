@@ -24,6 +24,15 @@ class AnnouncementController extends Controller
     {
         //
         $search_text = $request->search_text;
+        $between = false;
+        if ($request->from != null && $request->to != null) {
+            $yearbook_temp_1 =Yearbook::find($request->from);
+            $yearbook_temp_2 = Yearbook::find($request->to);
+            $between = true;
+        } else {
+            $yearbook_temp_1 = null;
+            $yearbook_temp_2 = null;
+        }
 
         $notifications = Notification::with('user')->orderBy('id','desc')->get();
         $users = User::where('status','approved')->get();
@@ -34,7 +43,9 @@ class AnnouncementController extends Controller
         //     $query->where('title', 'like', "%{$search_text}%");
         // })->orderBy('id', 'desc')->get();
         $courses = Course::all();
-        $graduates = Yearbook::withCount('graduates')->orderBy('schoolyear_to', 'desc' )->limit(10)->get();
+        $graduates = Yearbook::withCount('graduates')->when($between, function($query, $between) use ($yearbook_temp_1, $yearbook_temp_2) {
+            $query->whereBetween('schoolyear_from', [(int)$yearbook_temp_1->schoolyear_from, (int)$yearbook_temp_2->schoolyear_from]);
+        })->orderBy('schoolyear_from', 'desc' )->limit(10)->get();
 
         return Inertia::render('Dashboard', [
             'notifications' => $notifications,
@@ -43,7 +54,10 @@ class AnnouncementController extends Controller
             // 'announcements' => $announcements,
             'courses' => $courses,
             'search_text' => $search_text,
-            'yearbook' => $graduates
+            'yearbook' => $graduates,
+            'yearbooks' => Yearbook::orderBy('schoolyear_from')->get(),
+            'from' => $request->from,
+            'to' => $request->to
         ]);
     }
 
