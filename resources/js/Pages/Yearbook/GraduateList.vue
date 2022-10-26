@@ -2,6 +2,7 @@
 import { Inertia } from "@inertiajs/inertia";
 import { useForm, usePage } from "@inertiajs/inertia-vue3";
 import { computed, onMounted } from "vue";
+import Pagination from "./Pagination.vue";
 
 const form_search = useForm({
     search: usePage().props.value.search,
@@ -35,7 +36,13 @@ const searchAlumni = (filter = false) => {
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block ml-2 w-75 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
                 <option :value="null">Choose a College</option>
-                <option v-for="(colleges, key) in usePage().props.value.colleges" :key="key" :value=colleges.id> {{ colleges.name}} </option>
+                <option
+                    v-for="(colleges, key) in usePage().props.value.colleges"
+                    :key="key"
+                    :value="colleges.id"
+                >
+                    {{ colleges.name }}
+                </option>
             </select>
 
             <select
@@ -192,5 +199,6 @@ const searchAlumni = (filter = false) => {
                 </div>
             </div>
         </div>
+        <Pagination v-bind:links="$page.props.graduates.links" />
     </div>
 </template>

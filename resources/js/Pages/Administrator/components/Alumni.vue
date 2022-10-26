@@ -3,7 +3,7 @@ import { useForm, usePage } from "@inertiajs/inertia-vue3";
 import { computed, ref, provide, inject } from "vue";
 import moment from "moment";
 import { findProp } from "@vue/compiler-core";
-import Pagination from "../../Pagination.vue";
+import Pagination from "./Pagination.vue";
 
 const trigger = inject("trigger");
 
