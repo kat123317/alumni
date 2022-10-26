@@ -36,7 +36,7 @@ class AdministratorController extends Controller
         $notification_search_key = $request->notification_search_key ?? null;
         $year_search_key = $request->year_search_key ?? null;
         $alumni_search_key = $request->alumni_search_key ?? null;
-        if(Auth::user()->user_type =='admin'){
+        if(Auth::user()->user_type =='admin' || Auth::user()->user_type =='staff_admin'){
             return Inertia::render('Administrator/Index', [
                 'yearbooks' => Yearbook::when($year_search_key, function($query, $year_search_key) {
                     $query->where('schoolyear_from', 'like', "%{$year_search_key}%")

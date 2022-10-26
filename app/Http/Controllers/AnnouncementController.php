@@ -7,6 +7,7 @@ use App\Models\College;
 use App\Models\Course;
 use App\Models\Notification;
 use App\Models\User;
+use App\Models\Yearbook;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -29,18 +30,20 @@ class AnnouncementController extends Controller
         $colleges = College::with('users')->withCount('users')->with(['courses' => function($query) {
             $query->with('users');
         }])->get();
-        $announcements = Announcement::with('user')->when($search_text, function($query, $search_text) {
-            $query->where('title', 'like', "%{$search_text}%");
-        })->orderBy('id', 'desc')->get();
+        // $announcements = Announcement::with('user')->when($search_text, function($query, $search_text) {
+        //     $query->where('title', 'like', "%{$search_text}%");
+        // })->orderBy('id', 'desc')->get();
         $courses = Course::all();
+        $graduates = Yearbook::withCount('graduates')->orderBy('schoolyear_to', 'desc' )->limit(10)->get();
 
         return Inertia::render('Dashboard', [
             'notifications' => $notifications,
             'colleges' => $colleges,
             'users' => $users,
-            'announcements' => $announcements,
+            // 'announcements' => $announcements,
             'courses' => $courses,
-            'search_text' => $search_text
+            'search_text' => $search_text,
+            'yearbook' => $graduates
         ]);
     }
 

@@ -53,6 +53,14 @@ const chart_colleges_array = computed(() => {
     return chart_array
 })
 
+const chart_graduates_bar = computed(() => {
+    let chart_array = [];
+    for (let i = 0; i < usePage().props.value.yearbook.length; i++) {
+        chart_array.push([usePage().props.value.yearbook[i].schoolyear_from + ' - ' + usePage().props.value.yearbook[i].schoolyear_to , usePage().props.value.yearbook[i].graduates_count])
+    }
+    return chart_array
+})
+
 onMounted(() => {
     // const ramUsage = window.performance.memory;
 
@@ -309,7 +317,7 @@ const total_users = () => {
                 </div>
                 
                     <div class="flex justify-left w-auto bg-gray-50">
-                        <column-chart :data="[['1997', 32], ['1998', 46], ['1999', 28], ['2000', 28], ['2001', 28], ['2002', 28], ['2003', 28], ['2004', 100]]"></column-chart>
+                        <column-chart :data="chart_graduates_bar"></column-chart>
                     </div>
             </div>
         </div>
