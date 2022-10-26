@@ -362,13 +362,14 @@ defineProps({
 
                                     <div
                                         class="bg-green-900 mr-0 lg:mr-2 p-0  font-mono rounded-lg text-center text-yellow-500 font-bold">
-
+                                        <span>From</span> <br>
                                         <span class="text-[6rem]">{{ date_conversion_day_num(events.from) }} <br>
                                         </span>
                                         <em>{{ date_conversion_day_text(events.from) }}</em>
                                     </div>
                                     <div
                                         class="bg-yellow-500 mr-0  p-0 mt-1 lg:mt-0 font-mono rounded-lg text-center text-green-800 font-bold">
+                                        <span>Until</span> <br>
                                         <span class="text-[6rem]">{{ date_conversion_day_num(events.to) }} <br> </span>
                                         <em>{{ date_conversion_day_text(events.to) }}</em>
                                     </div>
