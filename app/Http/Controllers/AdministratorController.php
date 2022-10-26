@@ -70,10 +70,7 @@ class AdministratorController extends Controller
                 })->with(['user' => function($query) {
                     $query->with('college')->with('course'); 
                 }])->when($notification_search_key, function($query, $notification_search_key) {
-                    $query->where('firstname', 'like', "%{$notification_search_key}%")
-                        ->orWhere('middlename', 'like', "%{$notification_search_key}%")
-                        ->orWhere('lastname', 'like', "%{$notification_search_key}%")
-                        ->orWhere('suffix', 'like', "%{$notification_search_key}%");
+                    $query->where('content', 'like', "%{$notification_search_key}%");
                 })->where('is_processed', false)->paginate(10),
                 'graduates' => Graduate::with('yearbook')->with(['course' => function($query) {
                     $query->with('college');

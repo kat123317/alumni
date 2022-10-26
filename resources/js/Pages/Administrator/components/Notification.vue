@@ -20,8 +20,8 @@ const date_conversion_from_now = (value) => {
 };
 
 const search_data = useForm({
-    user_search_key: usePage().props.value.user_search_key
-        ? usePage().props.value.user_search_key
+    notification_search_key: usePage().props.value.notification_search_key
+        ? usePage().props.value.notification_search_key
         : "",
 });
 
@@ -56,7 +56,10 @@ const function_reject_user_staff_admin = (action, notification_id, user_id) => {
         },
     });
 };
-provide("user_search_key", search_data.user_search_key);
+const search_user = () => {
+    search_data.get(route("administrator", { trigger: trigger.value }));
+};
+provide("notification_search_key", search_data.notification_search_key);
 </script>
 <template>
     <section class="text-gray-600 body-font relative">
@@ -227,14 +230,14 @@ provide("user_search_key", search_data.user_search_key);
                             </svg>
                         </div>
                         <input
-                            v-model="search_data.user_search_key"
+                            v-model="search_data.notification_search_key"
                             type="search"
                             id="default-search"
                             class="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-green-500 focus:border-green-500"
                             placeholder="Search"
                         />
                         <button
-                            @click="function_search_user()"
+                            @click="search_user()"
                             type="submit"
                             class="text-white absolute right-2.5 bottom-2.5 bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2"
                         >
