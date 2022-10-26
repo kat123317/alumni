@@ -36,6 +36,7 @@ class AdministratorController extends Controller
         $notification_search_key = $request->notification_search_key ?? null;
         $year_search_key = $request->year_search_key ?? null;
         $alumni_search_key = $request->alumni_search_key ?? null;
+        $notification_search_key = $request->notification_search_key ?? null;
         if(Auth::user()->user_type =='admin' || Auth::user()->user_type =='staff_admin'){
             return Inertia::render('Administrator/Index', [
                 'yearbooks' => Yearbook::when($year_search_key, function($query, $year_search_key) {
@@ -68,7 +69,12 @@ class AdministratorController extends Controller
                     }
                 })->with(['user' => function($query) {
                     $query->with('college')->with('course'); 
-                }])->where('is_processed', false)->get(),
+                }])->when($notification_search_key, function($query, $notification_search_key) {
+                    $query->where('firstname', 'like', "%{$notification_search_key}%")
+                        ->orWhere('middlename', 'like', "%{$notification_search_key}%")
+                        ->orWhere('lastname', 'like', "%{$notification_search_key}%")
+                        ->orWhere('suffix', 'like', "%{$notification_search_key}%");
+                })->where('is_processed', false)->paginate(10),
                 'graduates' => Graduate::with('yearbook')->with(['course' => function($query) {
                     $query->with('college');
                 }])->when($alumni_search_key, function($query, $alumni_search_key) {
@@ -77,6 +83,7 @@ class AdministratorController extends Controller
                         ->orWhere('lastname', 'like', "%{$alumni_search_key}%")
                         ->orWhere('suffix', 'like', "%{$alumni_search_key}%");
                 })->orderBy('lastname', 'desc')->paginate(20),
+                'notification_search_key' => $notification_search_key,
                 'alumni_search_key'=> $alumni_search_key,
                 'filter_courses_id' => $filter_courses_id,
                 'announcement_search_key' => $announcement_search_key,

@@ -7,41 +7,6 @@ import moment from "moment";
 import Pagination from "./Pagination.vue";
 import { Inertia } from "@inertiajs/inertia";
 
-const alertadminPromote = ref(false);
-const alertStaffPromote = ref(false);
-const alertadminDemote = ref(false);
-const alertStaffDemote = ref(false);
-const adminAcccess = ref(false);
-const adminAcccessMsg = ref("");
-
-const onAlert = (data, message) => {
-    if (data == "adminPromote") {
-        alertadminPromote.value = true;
-    } else if (data == "staffPromote") {
-        alertStaffPromote.value = true;
-    } else if (data == "adminDemote") {
-        alertadminDemote.value = true;
-    } else if (data == "staffDemote") {
-        alertStaffDemote.value = true;
-    } else {
-        adminAcccess.value = true;
-    }
-
-    setTimeout(() => {
-        if (data == "adminPromote") {
-            alertadminPromote.value = false;
-        } else if (data == "staffPromote") {
-            alertStaffPromote.value = false;
-        } else if (data == "adminDemote") {
-            alertadminDemote.value = false;
-        } else if (data == "staffDemote") {
-            alertStaffDemote.value = false;
-        } else {
-            adminAcccess.value = false;
-        }
-    }, 4000);
-};
-
 const trigger = inject("trigger");
 const date_conversion = (value) => {
     if (value) {
@@ -54,103 +19,48 @@ const date_conversion_from_now = (value) => {
     }
 };
 
-const deactivate_data = useForm({
-    id: "",
-});
-
-const add_staff_admin_data = useForm({
-    id: "",
-});
-
-const remove_staff_admin_data = useForm({
-    id: "",
-});
-
-const activate_data = useForm({
-    id: "",
-});
-
 const search_data = useForm({
     user_search_key: usePage().props.value.user_search_key
         ? usePage().props.value.user_search_key
         : "",
 });
 
-const deactivate_user = (id, type) => {
-    if (id == usePage().props.value.user.id) {
-        // alert('Cannot deactivate your account')
-        onAlert("staffAccess", "Cannot deactivate your account");
-    } else if (
-        usePage().props.value.user.user_type == "staff_admin" &&
-        type == "admin"
-    ) {
-        onAlert(
-            "staffAccess",
-            "Only super admin have the previledge to deactivate and activate account"
-        );
-    } else {
-        deactivate_data.id = id;
-        deactivate_data.put(route("deactivate_user", [deactivate_data.id]), {
-            preserveScroll: true,
-            onSuccess: () => {
-                // onAlert('Delete')
-                onAlert("staffDemote");
-            },
-        });
-    }
-};
+const action_data = useForm({
+    action: "",
+    notification_id: 0,
+    user_id: 0,
+});
 
-const activate_user = (id) => {
-    activate_data.id = id;
-    activate_data.put(route("activate_user", [activate_data.id]), {
+const function_accept_user_staff_admin = (action, notification_id, user_id) => {
+    action_data.action = action;
+    action_data.notification_id = notification_id;
+    action_data.user_id = user_id;
+    action_data.post(route("register_action"), {
         preserveScroll: true,
         onSuccess: () => {
-            // onAlert('Delete')
-            onAlert("staffPromote");
+            action_data.reset();
+            alert("Successfully accepted user");
         },
     });
 };
 
-const function_assign_as_admin = (id) => {
-    add_staff_admin_data.id = id;
-    add_staff_admin_data.put(
-        route("assign_as_admin", [add_staff_admin_data.id]),
-        {
-            preserveScroll: true,
-            onSuccess: () => {
-                // onAlert('Delete')
-                onAlert("adminPromote");
-            },
-        }
-    );
-};
-
-const function_remove_as_admin = (id) => {
-    remove_staff_admin_data.id = id;
-    remove_staff_admin_data.put(
-        route("remove_as_admin", [remove_staff_admin_data.id]),
-        {
-            preserveScroll: true,
-            onSuccess: () => {
-                // onAlert('Delete')
-                onAlert("adminDemote");
-            },
-        }
-    );
-};
-
-const function_search_user = () => {
-    search_data.get(route("administrator", { trigger: trigger.value }), {
+const function_reject_user_staff_admin = (action, notification_id, user_id) => {
+    action_data.action = action;
+    action_data.notification_id = notification_id;
+    action_data.user_id = user_id;
+    action_data.post(route("register_action"), {
         preserveScroll: true,
-        onSuccess: () => {},
+        onSuccess: () => {
+            action_data.reset();
+            alert("Successfully rejected user");
+        },
     });
 };
-
 provide("user_search_key", search_data.user_search_key);
 </script>
 <template>
     <section class="text-gray-600 body-font relative">
-        <div
+        <!-- <div
             v-if="alertadminPromote"
             class="bg-green-100 alertanim text-center py-4 lg:px-4"
         >
@@ -276,14 +186,14 @@ provide("user_search_key", search_data.user_search_key);
                     />
                 </svg>
             </div>
-        </div>
+        </div> -->
 
         <div class="container px-5 py-24 mx-auto">
             <div class="flex flex-col text-center w-full mb-12">
                 <h1
                     class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900"
                 >
-                    User Management
+                    Confirmation List
                 </h1>
             </div>
             <div class="lg:w-full md:w-2/3 mx-auto">
@@ -371,8 +281,8 @@ provide("user_search_key", search_data.user_search_key);
                         </thead>
                         <tbody>
                             <tr
-                                v-for="(users, index) in usePage().props.value
-                                    .users.data"
+                                v-for="(notifications, index) in usePage().props
+                                    .value.notifications.data"
                                 :key="index"
                                 class="bg-white border-b"
                             >
@@ -381,32 +291,35 @@ provide("user_search_key", search_data.user_search_key);
                                     class="py-4 px-6 font-medium text-gray-900"
                                 >
                                     <div class="pl-3">
-                                        <img
-                                            class="w-10 h-10 rounded-full"
-                                            :src="users.profile_photo_url"
-                                            alt="Jese image"
-                                        />
                                         <div class="text-base font-semibold">
-                                            {{ users.name }}
+                                            {{ notifications.user.name }}
                                         </div>
                                         <div class="font-normal text-gray-500">
-                                            {{ users.email }}
+                                            {{ notifications.user.email }}
                                         </div>
                                     </div>
                                 </th>
                                 <td class="py-4 px-6">
                                     <div class="pl-3">
                                         <div class="text-base font-semibold">
-                                            {{ users.college.abbreviation }}
+                                            {{
+                                                notifications.user.college
+                                                    .abbreviation
+                                            }}
                                         </div>
                                         <div
-                                            v-if="users.course"
+                                            v-if="notifications.user.course"
                                             class="font-normal text-gray-500"
                                         >
-                                            {{ users.course.abbreviation }}
+                                            {{
+                                                notifications.user.course
+                                                    .abbreviation
+                                            }}
                                         </div>
                                         <div
-                                            v-else-if="!users.course"
+                                            v-else-if="
+                                                !notifications.user.course
+                                            "
                                             class="font-normal text-gray-500"
                                         >
                                             No Course
@@ -414,28 +327,28 @@ provide("user_search_key", search_data.user_search_key);
                                     </div>
                                 </td>
                                 <td class="py-4 px-6">
-                                    {{ users.details.address }}
+                                    {{ notifications.user.details.address }}
                                 </td>
                                 <td class="py-4 px-6">
                                     <div class="pl-3">
                                         <div class="text-base font-semibold">
                                             <span
                                                 v-if="
-                                                    users.details
+                                                    notifications.user.details
                                                         .civil_status == 1
                                                 "
                                                 >Single</span
                                             >
                                             <span
                                                 v-else-if="
-                                                    users.details
+                                                    notifications.user.details
                                                         .civil_status == 2
                                                 "
                                                 >Married</span
                                             >
                                             <span
                                                 v-else-if="
-                                                    users.details
+                                                    notifications.user.details
                                                         .civil_status == 3
                                                 "
                                                 >Divorce</span
@@ -443,12 +356,16 @@ provide("user_search_key", search_data.user_search_key);
                                         </div>
                                         <div class="font-normal text-gray-500">
                                             <span
-                                                v-if="users.details.gender == 1"
+                                                v-if="
+                                                    notifications.user.details
+                                                        .gender == 1
+                                                "
                                                 >Male</span
                                             >
                                             <span
                                                 v-else-if="
-                                                    users.details.gender == 2
+                                                    notifications.user.details
+                                                        .gender == 2
                                                 "
                                                 >Female</span
                                             >
@@ -456,33 +373,47 @@ provide("user_search_key", search_data.user_search_key);
                                     </div>
                                 </td>
                                 <td class="py-4 px-6">
-                                    {{ users.details.current_work }}
+                                    {{
+                                        notifications.user.details.current_work
+                                    }}
                                 </td>
                                 <td class="py-4 px-6">
-                                    {{ users.details.phone_number }}
+                                    {{
+                                        notifications.user.details.phone_number
+                                    }}
                                 </td>
                                 <td class="py-4 px-6">
-                                    {{ users.details.religion }}
+                                    {{ notifications.user.details.religion }}
                                 </td>
                                 <td class="py-4 px-6">
-                                    {{ users.details.year_graduated }}
+                                    {{
+                                        notifications.user.details
+                                            .year_graduated
+                                    }}
                                 </td>
 
                                 <td class="py-4 px-6">
                                     <span
-                                        v-if="users.user_type == 'alumni'"
+                                        v-if="
+                                            notifications.user.user_type ==
+                                            'alumni'
+                                        "
                                         class="bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded"
                                         >Alumni</span
                                     >
                                     <span
                                         v-else-if="
-                                            users.user_type == 'staff_admin'
+                                            notifications.user.user_type ==
+                                            'staff_admin'
                                         "
                                         class="bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded"
                                         >Staff Administrator</span
                                     >
                                     <span
-                                        v-else-if="users.user_type == 'admin'"
+                                        v-else-if="
+                                            notifications.user.user_type ==
+                                            'admin'
+                                        "
                                         class="bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded"
                                         >Super Administrator</span
                                     >
@@ -492,14 +423,16 @@ provide("user_search_key", search_data.user_search_key);
                                         <div class="text-base font-semibold">
                                             {{
                                                 date_conversion(
-                                                    users.created_at
+                                                    notifications.user
+                                                        .created_at
                                                 )
                                             }}
                                         </div>
                                         <div class="font-normal text-gray-500">
                                             {{
                                                 date_conversion_from_now(
-                                                    users.created_at
+                                                    notifications.user
+                                                        .created_at
                                                 )
                                             }}
                                         </div>
@@ -510,16 +443,15 @@ provide("user_search_key", search_data.user_search_key);
                                         <div class="text-base font-semibold">
                                             <button
                                                 type="button"
-                                                v-if="
-                                                    users.user_type ==
-                                                    'staff_admin'
-                                                "
                                                 @click="
-                                                    function_remove_as_admin(
-                                                        users.id
+                                                    function_accept_user_staff_admin(
+                                                        'reject',
+                                                        notifications.id,
+                                                        notifications.user.id
                                                     )
                                                 "
-                                                class="text-white bg-red-700 mb-1 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+                                                class="text-white bg-red-700 mb-1 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2"
+                                                title="Reject this user"
                                             >
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -538,15 +470,15 @@ provide("user_search_key", search_data.user_search_key);
                                             </button>
                                             <button
                                                 type="button"
-                                                v-else-if="
-                                                    users.user_type == 'alumni'
-                                                "
                                                 @click="
-                                                    function_assign_as_admin(
-                                                        users.id
+                                                    function_accept_user_staff_admin(
+                                                        'approve',
+                                                        notifications.id,
+                                                        notifications.user.id
                                                     )
                                                 "
-                                                class="text-white bg-blue-700 mb-1 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                                class="text-white bg-green-700 mb-1 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2"
+                                                title="Accept this user"
                                             >
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -560,59 +492,6 @@ provide("user_search_key", search_data.user_search_key);
                                                         stroke-linecap="round"
                                                         stroke-linejoin="round"
                                                         d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
-                                                    />
-                                                </svg>
-                                            </button>
-                                        </div>
-                                        <div class="text-base font-semibold">
-                                            <button
-                                                type="button"
-                                                v-if="
-                                                    users.is_active == 1 &&
-                                                    users.user_type != 'admin'
-                                                "
-                                                @click="
-                                                    deactivate_user(
-                                                        users.id,
-                                                        users.user_type
-                                                    )
-                                                "
-                                                class="text-white bg-red-700 mb-1 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
-                                            >
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                    stroke-width="1.5"
-                                                    stroke="currentColor"
-                                                    class="w-6 h-6"
-                                                >
-                                                    <path
-                                                        stroke-linecap="round"
-                                                        stroke-linejoin="round"
-                                                        d="M3 7.5L7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5"
-                                                    />
-                                                </svg>
-                                            </button>
-
-                                            <button
-                                                type="button"
-                                                v-else-if="users.is_active == 0"
-                                                @click="activate_user(users.id)"
-                                                class="text-white bg-blue-700 mb-1 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                                            >
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                    stroke-width="1.5"
-                                                    stroke="currentColor"
-                                                    class="w-6 h-6"
-                                                >
-                                                    <path
-                                                        stroke-linecap="round"
-                                                        stroke-linejoin="round"
-                                                        d="M3 7.5L7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5"
                                                     />
                                                 </svg>
                                             </button>

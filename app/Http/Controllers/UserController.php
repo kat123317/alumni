@@ -217,11 +217,13 @@ class UserController extends Controller
                     dd('Something went wrong');
                     break;
             }
-            dd("sent");
         } else { //rejected
             $user->update([
                 'status' => 'rejected',
                 'details->rejected_by' => Auth::user()->name
+            ]);
+            $notification->update([
+                'is_processed' => true
             ]);
         }
         return Redirect::back();
