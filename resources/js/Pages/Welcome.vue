@@ -10,9 +10,9 @@ const date_conversion = (value) => {
         return moment(value).format('MMMM DD YYYY')
     }
 }
-const dateRealtime = () =>{
+const dateRealtime = () => {
     setInterval(() => {
-        datetimeNow.value =  moment(Date.now()).format('MMMM Do YYYY, h:mm:ss a');
+        datetimeNow.value = moment(Date.now()).format('MMMM Do YYYY, h:mm:ss a');
     }, 1000);
 }
 const date_conversion_day_text = (value) => {
@@ -22,7 +22,7 @@ const date_conversion_day_text = (value) => {
 }
 const date_conversion_day_num = (value) => {
     if (value) {
-        return moment(value).format('od')
+        return moment(value).format('Od')
     }
 }
 const date_conversion_day_mon = (value) => {
@@ -38,8 +38,8 @@ const date_conversion_complete = (value) => {
 const date_conversion_complete_rt = (value) => {
 
     if (value) {
-            return moment(value).format('MMMM Do YYYY, h:mm:ss a');
-    
+        return moment(value).format('MMMM Do YYYY, h:mm:ss a');
+
     }
 }
 onMounted(() => {
@@ -72,9 +72,9 @@ defineProps({
 
         <div class=" w-full bg-white  ">
             <div class="flex justify-between bg-green-900">
-                <div class="text-yellow-600 custom-font ml-4 text-[4vmin]">{{ datetimeNow }}
+                <div class="text-yellow-600 font-mono  ml-4 text-[4vmin]">{{ datetimeNow }}
                 </div>
-                <div class="text-yellow-600 custom-font  text-[4vmin] mr-4">Central Mindanao University</div>
+                <div class="text-yellow-600 font-mono  text-[4vmin] mr-4">Central Mindanao University</div>
             </div>
             <header>
                 <nav class="bg-white border-gray-200 px-4 lg:px-6 py-2.5 ">
@@ -220,17 +220,20 @@ defineProps({
 
                 </div>
             </section>
-            <div class=" bg-yellow-600  h-[1vmin]">  
+            <div class=" bg-yellow-600  h-[1vmin]">
             </div>
-            <div class=" custom-font  bg-green-900  mb-4">
-                        <h2 class="mb-2 text-[3rem] font-extrabold text-start ml-4 text-yellow-600 flex">Colleges <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"  class="w-12 mt-2 ml-2 h-12">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5" />
-</svg>
- </h2>
-                        <!-- <p class="text-gray-500 sm:text-xl dark:text-gray-400">Here at Flowbite we focus on markets where technology, innovation, and capital can unlock long-term value and drive economic growth.</p> -->
+            <div class=" font-mono  bg-green-900  mb-4">
+                <h2 class="mb-2 text-[3rem] font-extrabold text-start ml-4 text-yellow-600 flex">Colleges <svg
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-12 mt-2 ml-2 h-12">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5" />
+                    </svg>
+                </h2>
+                <!-- <p class="text-gray-500 sm:text-xl dark:text-gray-400">Here at Flowbite we focus on markets where technology, innovation, and capital can unlock long-term value and drive economic growth.</p> -->
             </div>
             <section class="bg-gray-50 px-5 ">
-                
+
                 <div class="py-8 px-4 mx-auto sm:py-16 lg:px-6">
 
 
@@ -245,14 +248,17 @@ defineProps({
                 </div>
             </section>
 
-            <div class=" bg-yellow-600  h-[1vmin]">  
+            <div class=" bg-yellow-600  h-[1vmin]">
             </div>
-            <div class=" custom-font  bg-green-900  ">
-                        <h2 class=" text-[3rem] font-extrabold text-start ml-4 text-yellow-600 flex">Announcements <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 mt-2 ml-2 h-12">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 110-9h.75c.704 0 1.402-.03 2.09-.09m0 9.18c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38c-.551.318-1.26.117-1.527-.461a20.845 20.845 0 01-1.44-4.282m3.102.069a18.03 18.03 0 01-.59-4.59c0-1.586.205-3.124.59-4.59m0 9.18a23.848 23.848 0 018.835 2.535M10.34 6.66a23.847 23.847 0 008.835-2.535m0 0A23.74 23.74 0 0018.795 3m.38 1.125a23.91 23.91 0 011.014 5.395m-1.014 8.855c-.118.38-.245.754-.38 1.125m.38-1.125a23.91 23.91 0 001.014-5.395m0-3.46c.495.413.811 1.035.811 1.73 0 .695-.316 1.317-.811 1.73m0-3.46a24.347 24.347 0 010 3.46" />
-</svg>
-</h2>
-                        <!-- <p class="text-gray-500 sm:text-xl dark:text-gray-400">Here at Flowbite we focus on markets where technology, innovation, and capital can unlock long-term value and drive economic growth.</p> -->
+            <div class=" font-mono  bg-green-900  ">
+                <h2 class=" text-[3rem] font-extrabold text-start ml-4 text-yellow-600 flex">Announcements <svg
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-12 mt-2 ml-2 h-12">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 110-9h.75c.704 0 1.402-.03 2.09-.09m0 9.18c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38c-.551.318-1.26.117-1.527-.461a20.845 20.845 0 01-1.44-4.282m3.102.069a18.03 18.03 0 01-.59-4.59c0-1.586.205-3.124.59-4.59m0 9.18a23.848 23.848 0 018.835 2.535M10.34 6.66a23.847 23.847 0 008.835-2.535m0 0A23.74 23.74 0 0018.795 3m.38 1.125a23.91 23.91 0 011.014 5.395m-1.014 8.855c-.118.38-.245.754-.38 1.125m.38-1.125a23.91 23.91 0 001.014-5.395m0-3.46c.495.413.811 1.035.811 1.73 0 .695-.316 1.317-.811 1.73m0-3.46a24.347 24.347 0 010 3.46" />
+                    </svg>
+                </h2>
+                <!-- <p class="text-gray-500 sm:text-xl dark:text-gray-400">Here at Flowbite we focus on markets where technology, innovation, and capital can unlock long-term value and drive economic growth.</p> -->
             </div>
             <section class="px-10 bg-gray-200">
                 <div class="py-8 px-4 mx-auto sm:py-16 lg:px-6">
@@ -310,14 +316,17 @@ defineProps({
                 </div>
             </section>
 
-            <div class=" bg-yellow-600  h-[1vmin]">  
+            <div class=" bg-yellow-600  h-[1vmin]">
             </div>
-            <div class=" custom-font  bg-green-900 ">
-                        <h2 class=" text-[3rem] font-extrabold text-start ml-4 text-yellow-600 flex">Events <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 mt-3 ml-2 h-12">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-</svg>
- </h2>
-                        <!-- <p class="text-gray-500 sm:text-xl dark:text-gray-400">Here at Flowbite we focus on markets where technology, innovation, and capital can unlock long-term value and drive economic growth.</p> -->
+            <div class=" font-mono  bg-green-900 ">
+                <h2 class=" text-[3rem] font-extrabold text-start ml-4 text-yellow-600 flex">Events <svg
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-12 mt-3 ml-2 h-12">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                    </svg>
+                </h2>
+                <!-- <p class="text-gray-500 sm:text-xl dark:text-gray-400">Here at Flowbite we focus on markets where technology, innovation, and capital can unlock long-term value and drive economic growth.</p> -->
             </div>
             <section class="px-10 bg-gray-200">
                 <div class="py-8 px-4 mx-auto">
@@ -352,14 +361,14 @@ defineProps({
                                 <div class=" mt-2 grid grid-cols-1 lg:grid-cols-2  sm:grid-cols-1">
 
                                     <div
-                                        class="bg-green-900 mr-2 p-0  custom-font rounded-lg text-center text-yellow-500 font-bold">
+                                        class="bg-green-900 mr-0 lg:mr-2 p-0  font-mono rounded-lg text-center text-yellow-500 font-bold">
 
                                         <span class="text-[6rem]">{{ date_conversion_day_num(events.from) }} <br>
                                         </span>
                                         <em>{{ date_conversion_day_text(events.from) }}</em>
                                     </div>
                                     <div
-                                        class="bg-yellow-500 mr-2 p-0 mt-1 lg:mt-0 custom-font rounded-lg text-center text-green-800 font-bold">
+                                        class="bg-yellow-500 mr-0  p-0 mt-1 lg:mt-0 font-mono rounded-lg text-center text-green-800 font-bold">
                                         <span class="text-[6rem]">{{ date_conversion_day_num(events.to) }} <br> </span>
                                         <em>{{ date_conversion_day_text(events.to) }}</em>
                                     </div>
@@ -391,8 +400,6 @@ defineProps({
 </template>
 
 <style scoped>
-@import url('http://fonts.cdnfonts.com/css/onramp');
-
 .bg-cmu {
     background-image: url('https://devops.cmu.edu.ph/formlinks/assets/dist/assets/img/backgrounds/main_gate.jpg');
     background-repeat: no-repeat;
@@ -403,18 +410,15 @@ defineProps({
 #vertical_date {
     text-orientation: upright;
     writing-mode: vertical-lr;
-    font-size: 6rem;
+    font-size: 4rem;
     font-weight: bolder;
-    outline-width: 1vmin !important;
-    font-family: 'ONRAMP', sans-serif;
+    text-indent: -20px;
+    letter-spacing: -20px;
+    text-transform: uppercase;
     text-shadow: 2px 2px 2px lightgray;
 
 }
 
-.custom-font {
-    font-family: 'ONRAMP', sans-serif;
-    
-}
 
 .bg-pattern {
 
