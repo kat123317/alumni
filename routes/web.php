@@ -67,14 +67,13 @@ Route::middleware([
     // })->name("administrator");
 
     Route::get('/dashboard', [AnnouncementController::class, 'index'])->name('dashboard');
+    Route::get('/chart', [AnnouncementController::class, 'charts'])->name('charts');
 
     Route::prefix('yearbooks')->name('yearbooks.')->group(function () {
         Route::get('/', [YearbookController::class, 'index'])->name('index');
         Route::post('/store', [YearbookController::class, 'store'])->name('store');
         Route::put('/update/{id}', [YearbookController::class, 'update'])->name('update');
         Route::delete('/delete/{id}', [YearbookController::class, 'destroy'])->name('delete');
-
-        
     });
     
     Route::prefix('alumni')->name('graduates.')->group(function () {
