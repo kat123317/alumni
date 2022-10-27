@@ -1,4 +1,5 @@
 <script setup>
+import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { Head, Link, useForm, usePage } from "@inertiajs/inertia-vue3";
 import { ref, onMounted, computed, inject, provide } from "vue";
 import route from "../../../../../vendor/tightenco/ziggy/src/js";

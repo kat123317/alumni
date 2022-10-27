@@ -9,17 +9,17 @@ const search_url = computed(() =>
         : ""
 );
 const search_variable = ref("");
-const trigger = inject("trigger");
+/* const trigger = inject("trigger");
 const filter_courses_id = inject("filter_courses_id");
 const user_search_key = inject("user_search_key");
 const announcement_search_key = inject("announcement_search_key");
 const event_search_key = inject("event_search_key");
 const year_search_key = inject("year_search_key");
 const alumni_search_key = inject("alumni_search_key");
-const notification_search_key = inject("notification_search_key");
+const notification_search_key = inject("notification_search_key"); */
 onMounted(() => {
     // search_variable.value += usePage().props.value.searched ? "&searchTxT=" + usePage().props.value.searched:'';
-    if (trigger.value) {
+    /* if (trigger.value) {
         search_variable.value += "&trigger=" + trigger.value;
     }
     if (filter_courses_id) {
@@ -44,7 +44,7 @@ onMounted(() => {
     if (notification_search_key) {
         search_variable.value +=
             "&notification_search_key=" + notification_search_key;
-    }
+    } */
 });
 </script>
 

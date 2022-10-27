@@ -47,8 +47,18 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/administrator', [AdministratorController::class, 'index'])->name('administrator');
-   
+    // Route::get('/administrator', [AdministratorController::class, 'index'])->name('administrator');
+
+    Route::prefix('administrator')->name('administrator.')->group(function () {
+        Route::get('/', [AdministratorController::class, 'announcement'])->name('announcement');
+        Route::get('/yearbook', [AdministratorController::class, 'yearbook'])->name('yearbook');
+        Route::get('/alumni', [AdministratorController::class, 'alumni'])->name('alumni'); 
+        Route::get('/user_management', [AdministratorController::class, 'user_management'])->name('user_management'); 
+        Route::get('/department', [AdministratorController::class, 'department'])->name('department'); 
+        Route::get('/course', [AdministratorController::class, 'course'])->name('course'); 
+        Route::get('/event', [AdministratorController::class, 'event'])->name('event'); 
+        Route::get('/notification', [AdministratorController::class, 'notification'])->name('notification'); 
+    });
 
     // Route::get('/administrator', function () {
     //     Route::get('/', [AnnouncementController::class, 'index'])->name('index');
@@ -117,7 +127,7 @@ Route::middleware([
         Route::post('/store', [SurveyController::class, 'store'])->name('store');
         Route::put('/update/{id}', [SurveyController::class, 'update'])->name('update');
         Route::delete('/delete/{id}', [SurveyController::class, 'destroy'])->name('delete');
-        
+
         Route::prefix('questions/{survey_id}')->name('questions.')->group(function () {
             Route::get('/', [QuestionController::class, 'index'])->name('index');
             Route::post('/store', [QuestionController::class, 'store'])->name('store');
