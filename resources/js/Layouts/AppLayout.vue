@@ -91,7 +91,10 @@ const form_announcement = useForm({
                             <div
                                 class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"
                             >
-                                <NavLink :href="route('charts')">
+                                <NavLink
+                                    :href="route('charts')"
+                                    :active="route().current('charts')"
+                                >
                                     Charts
                                 </NavLink>
                             </div>
@@ -374,7 +377,27 @@ const form_announcement = useForm({
                             :href="route('dashboard')"
                             :active="route().current('dashboard')"
                         >
-                            Announcements
+                            Timeline
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            :href="route('graduates.index')"
+                            :active="route().current('graduates.index')"
+                        >
+                            Yearbook
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            :href="route('administrator.announcement')"
+                            :active="
+                                route().current('administrator.announcement')
+                            "
+                        >
+                            Administrator
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            :href="route('charts')"
+                            :active="route().current('charts')"
+                        >
+                            Charts
                         </ResponsiveNavLink>
                     </div>
 
