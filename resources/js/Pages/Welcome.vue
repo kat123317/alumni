@@ -24,7 +24,7 @@ const date_conversion_day_text = (value) => {
 };
 const date_conversion_day_num = (value) => {
     if (value) {
-        return moment(value).format("Od");
+        return moment(value).format("Do");
     }
 };
 const date_conversion_day_mon = (value) => {
@@ -511,12 +511,6 @@ defineProps({
                             :key="key"
                             class="flex"
                         >
-                            <p
-                                id="vertical_date"
-                                class="bg-gray-300 rounded-lg lg:bg-transparent text-green-900 pt-3"
-                            >
-                                {{ date_conversion_day_mon(events.from) }}
-                            </p>
                             <div class="w-full">
                                 <div
                                     class="bg-green-900 rounded-lg text-center text-yellow-500 font-bold"
@@ -531,11 +525,19 @@ defineProps({
                                 <div
                                     class="mt-2 grid grid-cols-1 lg:grid-cols-2 sm:grid-cols-1"
                                 >
+                                    <p
+                                        id="vertical_date"
+                                        class="bg-gray-300 rounded-lg lg:bg-transparent text-green-900 pt-1 text-center"
+                                    >
+                                        {{
+                                            date_conversion_day_mon(events.from)
+                                        }}
+                                    </p>
                                     <div
-                                        class="bg-green-900 mr-0 lg:mr-2 p-0 font-mono rounded-lg text-center text-yellow-500 font-bold"
+                                        class="bg-green-900 mr-0 lg:mr-2 p-0 font-mono rounded-lg text-center text-yellow-500 font-bold mt-2"
                                     >
                                         <span>From</span> <br />
-                                        <span class="text-[6rem]"
+                                        <span class="text-[4rem]"
                                             >{{
                                                 date_conversion_day_num(
                                                     events.from
@@ -553,7 +555,7 @@ defineProps({
                                         class="bg-yellow-500 mr-0 p-0 mt-1 lg:mt-0 font-mono rounded-lg text-center text-green-800 font-bold"
                                     >
                                         <span>Until</span> <br />
-                                        <span class="text-[6rem]"
+                                        <span class="text-[4rem]"
                                             >{{
                                                 date_conversion_day_num(
                                                     events.to
@@ -565,6 +567,12 @@ defineProps({
                                             date_conversion_day_text(events.to)
                                         }}</em>
                                     </div>
+                                    <p
+                                        id="vertical_date"
+                                        class="bg-gray-300 rounded-lg lg:bg-transparent text-green-900 pt-3 ml-6"
+                                    >
+                                        {{ date_conversion_day_mon(events.to) }}
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -575,11 +583,14 @@ defineProps({
             <footer class="p-4 bg-gray-50 sm:p-6">
                 <div class="mx-auto">
                     <hr class="my-6 border-gray-200 sm:mx-auto lg:my-8" />
-                    <div class="sm:flex sm:items-center sm:justify-between">
+                    <div
+                        class="sm:flex sm:items-center sm:justify-between text-center"
+                    >
                         <span class="text-sm text-gray-500 sm:text-center"
                             >© 2022
-                            <a href="#" class="hover:underline">Allan MArk</a>.
-                            All Rights Reserved.
+                            <a href="#" class="hover:underline"
+                                >Central Mindanao University</a
+                            >. All Rights Reserved.
                         </span>
                     </div>
                 </div>
