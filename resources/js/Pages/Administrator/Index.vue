@@ -101,9 +101,35 @@ provide("filter_courses_id", usePage().props.value.filter_courses_id);
                     </button>
                     <button
                         @click="trigger = 9"
-                        class="mr-5 text-white hover:text-gray-200"
+                        class="mr-8 text-white hover:text-gray-200"
                     >
                         Notification
+                        <span
+                            class="w-10 h-4 ml-[-16px] mt-[-16px] text-[1.5vmin] absolute custom_notification_count"
+                        >
+                            <!-- <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
+                            <path
+                                d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"
+                            ></path>
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
+                            ></path> -->
+                            <p
+                                class="bg-orange-600 rounded-lg"
+                                v-if="
+                                    usePage().props.value.notifications.data
+                                        .length != 0
+                                "
+                            >
+                                {{
+                                    usePage().props.value.notifications.data
+                                        .length
+                                }}
+                            </p>
+                        </span>
                     </button>
                 </nav>
                 <a
@@ -154,5 +180,15 @@ provide("filter_courses_id", usePage().props.value.filter_courses_id);
     z-index: -1;
     /* -webkit-filter: grayscale(1); 
       filter: grayscale(1); */
+}
+
+@media only screen and (max-width: 600px) {
+    .custom_notification_count {
+        font-size: 2.5vmin;
+        width: 1.5rem;
+        height: 1rem;
+        margin-top: -6px;
+        margin-left: 0px;
+    }
 }
 </style>
