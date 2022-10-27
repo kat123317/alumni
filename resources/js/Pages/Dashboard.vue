@@ -13,10 +13,7 @@ const date_conversion = (value) => {
 };
 const option_view = ref(true);
 
-onMounted(() => {
-    // const ramUsage = window.performance.memory;
-    // console.log("=-----------RAM----------= ", ramUsage)
-});
+onMounted(() => {});
 </script>
 
 <template>
