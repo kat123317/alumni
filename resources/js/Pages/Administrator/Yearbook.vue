@@ -90,8 +90,8 @@ const function_delete_yeabook = () => {
 
 const function_open_update = (id, from, to) => {
     update_yearbook_data.id = id;
-    update_yearbook_data.from_date_update = from;
-    update_yearbook_data.to_date_update = to;
+    update_yearbook_data.from_date_update = from + "-01";
+    update_yearbook_data.to_date_update = to + "-01";
     modal_update.value = !modal_update.value;
 };
 
@@ -129,7 +129,7 @@ const function_update_yeabook = () => {
                             >
                             <input
                                 v-model="yearbook_data.schoolyear_from"
-                                type="date"
+                                type="month"
                                 id="name"
                                 name="name"
                                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
@@ -145,7 +145,7 @@ const function_update_yeabook = () => {
                             >
                             <input
                                 v-model="yearbook_data.schoolyear_to"
-                                type="date"
+                                type="month"
                                 id="name"
                                 name="name"
                                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
@@ -361,7 +361,7 @@ const function_update_yeabook = () => {
                                             v-model="
                                                 update_yearbook_data.from_date_update
                                             "
-                                            type="date"
+                                            type="month"
                                             id="name"
                                             name="name"
                                             class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
@@ -379,7 +379,7 @@ const function_update_yeabook = () => {
                                             v-model="
                                                 update_yearbook_data.to_date_update
                                             "
-                                            type="date"
+                                            type="month"
                                             id="name"
                                             name="name"
                                             class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"

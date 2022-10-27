@@ -78,6 +78,7 @@ class AdministratorController extends Controller
         
         $search = $request->search ?? null;
         return Inertia::render('Administrator/Alumni', [
+            'colleges' => College::with('courses')->get(),
             'graduates' => Graduate::with('yearbook')->with(['course' => function($query) {
                 $query->with('college');
             }])->when($search, function($query, $search) {

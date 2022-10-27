@@ -82,8 +82,8 @@ class YearbookController extends Controller
     {
         $yearbook = Yearbook::find($id);
         $yearbook->update([
-            'schoolyear_from' => $request->from_date_update,
-            'schoolyear_to' => $request->to_date_update
+            'schoolyear_from' => explode('-',$request->from_date_update)[0],
+            'schoolyear_to' => explode('-',$request->to_date_update)[0]
         ]);
         return Redirect::back();
     }
