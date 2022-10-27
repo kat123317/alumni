@@ -513,7 +513,7 @@ defineProps({
                         >
                             <div class="w-full">
                                 <div
-                                    class="bg-green-900 rounded-lg text-center text-yellow-500 font-bold"
+                                    class="bg-green-900 rounded-lg text-center text-yellow-500 font-bold text-[5vmin]"
                                 >
                                     {{ events.title }}
                                 </div>
@@ -569,7 +569,7 @@ defineProps({
                                     </div>
                                     <p
                                         id="vertical_date"
-                                        class="bg-gray-300 rounded-lg lg:bg-transparent text-green-900 pt-3 ml-6"
+                                        class="bg-gray-300 rounded-lg lg:bg-transparent text-green-900 pt-1"
                                     >
                                         {{ date_conversion_day_mon(events.to) }}
                                     </p>

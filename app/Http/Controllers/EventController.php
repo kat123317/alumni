@@ -29,7 +29,7 @@ class EventController extends Controller
     }
 
     public function welcome(){
-        $events = Event::with('updated_by')->get();
+        $events = Event::with('updated_by')->orderBy('from', 'asc')->get();
         $colleges = College::get();
         $announcements = Announcement::with('updated_by')->limit(6)->get();
         return Inertia::render('Welcome', [
