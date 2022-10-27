@@ -117,13 +117,13 @@ Route::middleware([
         Route::post('/store', [SurveyController::class, 'store'])->name('store');
         Route::put('/update/{id}', [SurveyController::class, 'update'])->name('update');
         Route::delete('/delete/{id}', [SurveyController::class, 'destroy'])->name('delete');
-    });
-
-    Route::prefix('questions')->name('questions.')->group(function () {
-        Route::get('/', [QuestionController::class, 'index'])->name('index');
-        Route::post('/store', [QuestionController::class, 'store'])->name('store');
-        Route::put('/update/{id}', [QuestionController::class, 'update'])->name('update');
-        Route::delete('/delete/{id}', [QuestionController::class, 'destroy'])->name('delete');
+        
+        Route::prefix('questions/{survey_id}')->name('questions.')->group(function () {
+            Route::get('/', [QuestionController::class, 'index'])->name('index');
+            Route::post('/store', [QuestionController::class, 'store'])->name('store');
+            Route::put('/update/{id}', [QuestionController::class, 'update'])->name('update');
+            Route::delete('/delete/{id}', [QuestionController::class, 'destroy'])->name('delete');
+        });
     });
 });
 

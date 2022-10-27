@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Survey;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class SurveyController extends Controller
@@ -41,7 +42,13 @@ class SurveyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Survey::create([
+            'user_id' => Auth::user()->id,
+            'status' => 'draft',
+            'name' => $request->name,
+            'setup' => []
+        ]);
+        return Redirect::back();
     }
 
     /**
@@ -73,9 +80,15 @@ class SurveyController extends Controller
      * @param  \App\Models\Survey  $survey
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Survey $survey)
+    public function update(Request $request, $id)
     {
-        //
+        $survey = Survey::find($id);
+        $survey->update([
+            'status' => $request->status,
+            'name' => $request->name,
+            'setup' => $request->setup
+        ]);
+        return Redirect::back();
     }
 
     /**
@@ -84,8 +97,11 @@ class SurveyController extends Controller
      * @param  \App\Models\Survey  $survey
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Survey $survey)
+    public function destroy($id)
     {
-        //
+        $survey = Survey::find($id);
+ 
+        $survey->delete();
+        return Redirect::back();
     }
 }
