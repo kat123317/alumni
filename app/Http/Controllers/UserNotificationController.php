@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\UserNotification;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class UserNotificationController extends Controller
 {
@@ -15,6 +16,11 @@ class UserNotificationController extends Controller
     public function index()
     {
         //
+        $notifications = UserNotification::all();
+
+        return Inertia::render('Socialmedia/Components/Notification', [
+            'notifications' => $notifications
+        ]);
     }
 
     /**
