@@ -56,6 +56,7 @@ Route::middleware([
         Route::get('/user_management', [AdministratorController::class, 'user_management'])->name('user_management'); 
         Route::get('/department', [AdministratorController::class, 'department'])->name('department'); 
         Route::get('/course', [AdministratorController::class, 'course'])->name('course'); 
+        Route::get('/survey', [AdministratorController::class, 'survey'])->name('survey'); 
         Route::get('/event', [AdministratorController::class, 'event'])->name('event'); 
         Route::get('/notification', [AdministratorController::class, 'notification'])->name('notification'); 
     });

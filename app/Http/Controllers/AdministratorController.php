@@ -8,6 +8,7 @@ use App\Models\Course;
 use App\Models\Event;
 use App\Models\Graduate;
 use App\Models\Notification;
+use App\Models\Survey;
 use App\Models\User;
 use App\Models\Yearbook;
 use Carbon\Carbon;
@@ -175,6 +176,32 @@ class AdministratorController extends Controller
             })->with(['user' => function($query) {
                 $query->with('college')->with('course'); 
             }])->where('is_processed', false)->paginate(10)
+        ]);
+            
+    }
+
+    public function survey(Request $request) {
+        if(Auth::user()->user_type !='admin' && Auth::user()->user_type != 'staff_admin'){
+            return Redirect::route('dashboard');
+        }
+
+        $search = $request->search ?? null;
+
+        return Inertia::render('Administrator/Survey/Index', [
+            'surveys' => Survey::when($search, function($query, $search) {
+                $query->where('name', 'like', "%{$search}%");
+            })->orderBY('id','desc')->paginate(10),
+            'search' => $search,
+            'colleges' => College::all(),
+            'courses' => Course::all(),
+            'users' => User::whereIsActive(1)->whereStatus('approved')->whereUserType('alumni')->get(),
+            'notifications' => Notification::whereHas('user', function (Builder $query) {
+                if (Auth::user()->user_type == 'admin') {
+                    $query->where('status', 'pre_approved');
+                } else {
+                    $query->where('status', 'pending');
+                }
+            })->where('is_processed', false)->paginate(10)
         ]);
             
     }

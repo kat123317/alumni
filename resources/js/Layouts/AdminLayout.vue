@@ -1,8 +1,5 @@
 <script setup>
-import { useForm, usePage, Link } from "@inertiajs/inertia-vue3";
-import { ref, onMounted, inject } from "vue";
-
-//const trigger = inject("trigger");
+import { usePage, Link } from "@inertiajs/inertia-vue3";
 </script>
 <template>
     <div class="bg-cmu">
@@ -65,21 +62,17 @@ import { ref, onMounted, inject } from "vue";
                             Course
                         </Link>
                     </button>
-                    <button
-                        @click="trigger = 6"
-                        class="mr-5 text-white hover:text-gray-200"
-                    >
-                        Survey
+                    <button class="mr-5 text-white hover:text-gray-200">
+                        <Link :href="route('administrator.survey')">
+                            Survey
+                        </Link>
                     </button>
                     <button class="mr-5 text-white hover:text-gray-200">
                         <Link :href="route('administrator.event')">
                             Events
                         </Link>
                     </button>
-                    <button
-                        @click="trigger = 9"
-                        class="mr-8 text-white hover:text-gray-200"
-                    >
+                    <button class="mr-8 text-white hover:text-gray-200">
                         <Link :href="route('administrator.notification')">
                             Notification
                             <span
