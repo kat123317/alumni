@@ -13,664 +13,257 @@ const date_conversion = (value) => {
 };
 const option_view = ref(true);
 
-onMounted(() => {});
+onMounted(() => { });
 </script>
 
 <template>
     <AppLayout title="Dashboard">
-        <!-- component -->
-        <aside
-            class="ml-[-100%] fixed z-10 top-0 pb-3 px-6 w-full flex flex-col justify-between h-screen border-r bg-white transition duration-300 md:w-4/12 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%]"
-        >
-            <div>
-                <div class="-mx-6 px-6 py-4">
-                    <a href="#" title="home">
-                        <img
-                            src="https://tailus.io/sources/blocks/stats-cards/preview/images/logo.svg"
-                            class="w-32"
-                            alt="tailus logo"
-                        />
-                    </a>
-                </div>
+        <section>
+            <nav class="z-0   w-full rounded-lg  ">
+                <div class="relative z-10  bg-green-800 shadow">
+                    <div class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
+                        <div class="relative flex items-center justify-between h-16">
+                            <div class="flex items-center px-2 lg:px-0">
+                                <a class="flex-shrink-0" href="#">
+                                    <img class="block lg:hidden h-12 w-16"
+                                        src="https://cdn1.iconfinder.com/data/icons/logotypes/32/circle-facebook_-512.png"
+                                        alt="Logo">
+                                    <img class="hidden lg:block h-12 w-auto"
+                                        src="https://cdn1.iconfinder.com/data/icons/logotypes/32/circle-facebook_-512.png"
+                                        alt="Logo">
+                                </a>
+                                <div class="hidden lg:block lg:ml-2">
+                                    <div class="flex ">
 
-                <div class="mt-8 text-center">
-                    <img
-                        src="https://tailus.io/sources/blocks/stats-cards/preview/images/second_user.webp"
-                        alt=""
-                        class="w-10 h-10 m-auto rounded-full object-cover lg:w-28 lg:h-28"
-                    />
-                    <h5
-                        class="hidden mt-4 text-xl font-semibold text-gray-600 lg:block"
-                    >
-                        REGEI
-                    </h5>
-                    <span class="hidden text-gray-400 lg:block">Admin</span>
-                </div>
-
-                <ul class="space-y-2 tracking-wide mt-8">
-                    <li>
-                        <a
-                            href="#"
-                            aria-label="dashboard"
-                            class="relative px-4 py-3 flex items-center space-x-4 rounded-xl text-white bg-gradient-to-r from-sky-600 to-cyan-400"
-                        >
-                            <svg
-                                class="-ml-1 h-6 w-6"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                            >
-                                <path
-                                    d="M6 8a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V8ZM6 15a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-1Z"
-                                    class="fill-current text-cyan-400 dark:fill-slate-600"
-                                ></path>
-                                <path
-                                    d="M13 8a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2V8Z"
-                                    class="fill-current text-cyan-200 group-hover:text-cyan-300"
-                                ></path>
-                                <path
-                                    d="M13 15a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-1Z"
-                                    class="fill-current group-hover:text-sky-300"
-                                ></path>
-                            </svg>
-                            <span class="-mr-1 font-medium">Dashboard</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href="#"
-                            class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-5 w-5"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                            >
-                                <path
-                                    class="fill-current text-gray-300 group-hover:text-cyan-300"
-                                    fill-rule="evenodd"
-                                    d="M2 6a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1H8a3 3 0 00-3 3v1.5a1.5 1.5 0 01-3 0V6z"
-                                    clip-rule="evenodd"
-                                />
-                                <path
-                                    class="fill-current text-gray-600 group-hover:text-cyan-600"
-                                    d="M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z"
-                                />
-                            </svg>
-                            <span class="group-hover:text-gray-700"
-                                >Categories</span
-                            >
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href="#"
-                            class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-5 w-5"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                            >
-                                <path
-                                    class="fill-current text-gray-600 group-hover:text-cyan-600"
-                                    fill-rule="evenodd"
-                                    d="M2 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 002 2H4a2 2 0 01-2-2V5zm3 1h6v4H5V6zm6 6H5v2h6v-2z"
-                                    clip-rule="evenodd"
-                                />
-                                <path
-                                    class="fill-current text-gray-300 group-hover:text-cyan-300"
-                                    d="M15 7h1a2 2 0 012 2v5.5a1.5 1.5 0 01-3 0V7z"
-                                />
-                            </svg>
-                            <span class="group-hover:text-gray-700"
-                                >Reports</span
-                            >
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href="#"
-                            class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-5 w-5"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                            >
-                                <path
-                                    class="fill-current text-gray-600 group-hover:text-cyan-600"
-                                    d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"
-                                />
-                                <path
-                                    class="fill-current text-gray-300 group-hover:text-cyan-300"
-                                    d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"
-                                />
-                            </svg>
-                            <span class="group-hover:text-gray-700"
-                                >Other data</span
-                            >
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href="#"
-                            class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-5 w-5"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                            >
-                                <path
-                                    class="fill-current text-gray-300 group-hover:text-cyan-300"
-                                    d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"
-                                />
-                                <path
-                                    class="fill-current text-gray-600 group-hover:text-cyan-600"
-                                    fill-rule="evenodd"
-                                    d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z"
-                                    clip-rule="evenodd"
-                                />
-                            </svg>
-                            <span class="group-hover:text-gray-700"
-                                >Finance</span
-                            >
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
-            <div
-                class="px-6 -mx-6 pt-4 flex justify-between items-center border-t"
-            >
-                <button
-                    class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-6 w-6"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-                        />
-                    </svg>
-                    <span class="group-hover:text-gray-700">Logout</span>
-                </button>
-            </div>
-        </aside>
-        <div class="ml-auto mb-6 lg:w-[75%] xl:w-[80%] 2xl:w-[85%]">
-            <div class="sticky z-10 top-0 h-16 border-b bg-white lg:py-2.5">
-                <div
-                    class="px-6 flex items-center justify-between space-x-4 2xl:container"
-                >
-                    <h5
-                        hidden
-                        class="text-2xl text-gray-600 font-medium lg:block"
-                    >
-                        Dashboard
-                    </h5>
-                    <button class="w-12 h-16 -mr-2 border-r lg:hidden">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="h-6 w-6 my-auto"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M4 6h16M4 12h16M4 18h16"
-                            />
-                        </svg>
-                    </button>
-                    <div class="flex space-x-4">
-                        <!--search bar -->
-                        <div hidden class="md:block">
-                            <div
-                                class="relative flex items-center text-gray-400 focus-within:text-cyan-400"
-                            >
-                                <span
-                                    class="absolute left-4 h-6 flex items-center pr-3 border-r border-gray-300"
-                                >
-                                    <svg
-                                        xmlns="http://ww50w3.org/2000/svg"
-                                        class="w-4 fill-current"
-                                        viewBox="0 0 35.997 36.004"
-                                    >
-                                        <path
-                                            id="Icon_awesome-search"
-                                            data-name="search"
-                                            d="M35.508,31.127l-7.01-7.01a1.686,1.686,0,0,0-1.2-.492H26.156a14.618,14.618,0,1,0-2.531,2.531V27.3a1.686,1.686,0,0,0,.492,1.2l7.01,7.01a1.681,1.681,0,0,0,2.384,0l1.99-1.99a1.7,1.7,0,0,0,.007-2.391Zm-20.883-7.5a9,9,0,1,1,9-9A8.995,8.995,0,0,1,14.625,23.625Z"
-                                        ></path>
+                                        <a href="#"
+                                            class="ml-4 px-3 py-2 text-white  rounded-md text-sm leading-5 font-medium  font-semibold hover:bg-yellow-500 hover:text-white transition duration-150 ease-in-out cursor-pointer focus:outline-none focus:text-white focus:bg-gray-700 ">
+                                            Profie </a>
+                                        <a href="#"
+                                            class="ml-4 px-3 py-2 text-white  rounded-md text-sm leading-5 font-medium  font-semibold hover:bg-yellow-500 hover:text-white transition duration-150 ease-in-out cursor-pointer focus:outline-none focus:text-white focus:bg-gray-700 ">
+                                            Notification </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-1 flex justify-center px-2 lg:ml-6 lg:justify-end">
+                                <div class="max-w-lg w-full lg:max-w-xs">
+                                    <label for="search" class="sr-only">Search </label>
+                                    <form methode="get" action="#" class="relative z-50">
+                                        <button type="submit" id="searchsubmit"
+                                            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd"
+                                                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                                    clip-rule="evenodd"></path>
+                                            </svg>
+                                        </button>
+                                        <input type="text" name="s" id="s"
+                                            class="block w-full pl-10 pr-3 py-2 border border-transparent rounded-md leading-5 bg-yellow-200 text-gray-300 placeholder-gray-400 focus:outline-none focus:bg-white focus:text-gray-900 sm:text-sm transition duration-150 ease-in-out"
+                                            placeholder="Search">
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="flex lg:hidden">
+                                <button @click="menu = !menu"
+                                    class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-white transition duration-150 ease-in-out"
+                                    aria-label="Main menu" aria-expanded="false">
+                                    <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M4 6h16M4 12h16M4 18h16"></path>
                                     </svg>
-                                </span>
-                                <input
-                                    type="search"
-                                    name="leadingIcon"
-                                    id="leadingIcon"
-                                    placeholder="Search here"
-                                    class="w-full pl-14 pr-4 py-2.5 rounded-xl text-sm text-gray-600 outline-none border border-gray-300 focus:border-cyan-300 transition"
-                                />
-                            </div>
-                        </div>
-                        <!--/search bar -->
-                        <button
-                            aria-label="search"
-                            class="w-10 h-10 rounded-xl border bg-gray-100 focus:bg-gray-100 active:bg-gray-200 md:hidden"
-                        >
-                            <svg
-                                xmlns="http://ww50w3.org/2000/svg"
-                                class="w-4 mx-auto fill-current text-gray-600"
-                                viewBox="0 0 35.997 36.004"
-                            >
-                                <path
-                                    id="Icon_awesome-search"
-                                    data-name="search"
-                                    d="M35.508,31.127l-7.01-7.01a1.686,1.686,0,0,0-1.2-.492H26.156a14.618,14.618,0,1,0-2.531,2.531V27.3a1.686,1.686,0,0,0,.492,1.2l7.01,7.01a1.681,1.681,0,0,0,2.384,0l1.99-1.99a1.7,1.7,0,0,0,.007-2.391Zm-20.883-7.5a9,9,0,1,1,9-9A8.995,8.995,0,0,1,14.625,23.625Z"
-                                ></path>
-                            </svg>
-                        </button>
-                        <button
-                            aria-label="chat"
-                            class="w-10 h-10 rounded-xl border bg-gray-100 focus:bg-gray-100 active:bg-gray-200"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-5 w-5 m-auto text-gray-600"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
-                                />
-                            </svg>
-                        </button>
-                        <button
-                            aria-label="notification"
-                            class="w-10 h-10 rounded-xl border bg-gray-100 focus:bg-gray-100 active:bg-gray-200"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-5 w-5 m-auto text-gray-600"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                            >
-                                <path
-                                    d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"
-                                />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div>
-                <!-- component -->
-                <!-- This is an example component -->
-                <div class="max-w-screen-md ml-5 mb-4">
-                    <h2
-                        class="mb-2 text-4xl flex font-extrabold text-gray-900 dark:text-white"
-                    >
-                        Social Media
-                        <svg
-                            class="w-10 h-10 ml-4"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                            ></path>
-                        </svg>
-                    </h2>
-                    <!-- <p class="text-gray-500 sm:text-xl dark:text-gray-400">Here at Flowbite we focus on markets where technology, innovation, and capital can unlock long-term value and drive economic growth.</p> -->
-                </div>
-                <div
-                    v-for="(items, key) in 10"
-                    :key="key"
-                    class="flex items-center py-6 bg-white justify-center"
-                >
-                    <div
-                        class="rounded-xl border p-5 shadow-md w-9/12 bg-white"
-                    >
-                        <div
-                            class="flex w-full items-center justify-between border-b pb-3"
-                        >
-                            <div class="flex items-center space-x-3">
-                                <div
-                                    class="h-8 w-8 rounded-full bg-slate-400 bg-[url('https://i.pravatar.cc/32')]"
-                                ></div>
-                                <div class="text-lg font-bold text-slate-700">
-                                    Joe Smith
-                                </div>
-                            </div>
-                            <div class="flex items-center space-x-8">
-                                <button
-                                    class="rounded-2xl border bg-neutral-100 px-3 py-1 text-xs font-semibold"
-                                >
-                                    Category
+                                    <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
                                 </button>
-                                <div class="text-xs text-neutral-500">
-                                    2 hours ago
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mt-4 mb-6">
-                            <div class="mb-3 text-xl font-bold">
-                                Nulla sed leo tempus, feugiat velit vel, rhoncus
-                                neque?
-                            </div>
-                            <div class="text-sm text-neutral-600">
-                                Aliquam a tristique sapien, nec bibendum urna.
-                                Maecenas convallis dignissim turpis, non
-                                suscipit mauris interdum at. Morbi sed gravida
-                                nisl, a pharetra nulla. Etiam tincidunt turpis
-                                leo, ut mollis ipsum consectetur quis. Etiam
-                                faucibus est risus, ac condimentum mauris
-                                consequat nec. Curabitur eget feugiat massa
-                            </div>
-                        </div>
-
-                        <div>
-                            <div
-                                class="flex items-center justify-between text-slate-500"
-                            >
-                                <div class="flex space-x-4 md:space-x-8">
-                                    <div
-                                        class="flex cursor-pointer items-center transition hover:text-slate-600"
-                                    >
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            class="mr-1.5 h-5 w-5"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
-                                            stroke-width="2"
-                                        >
-                                            <path
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
-                                            />
-                                        </svg>
-                                        <span>125</span>
-                                    </div>
-                                    <div
-                                        class="flex cursor-pointer items-center transition hover:text-slate-600"
-                                    >
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            class="mr-1.5 h-5 w-5"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
-                                            stroke-width="2"
-                                        >
-                                            <path
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
-                                            />
-                                        </svg>
-                                        <span>4</span>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
+                    <div  class="block md:hidden">
+                        <div class="px-2 pt-2 pb-3">
+
+                            <a href="#"
+                                class="mt-1 block px-3 py-2 rounded-md text-white font-semibold font-medium hover:bg-yellow-500 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Profile
+                            </a>
+                            <a href="#"
+                                class="mt-1 block px-3 py-2 rounded-md text-white font-semibold font-medium hover:bg-yellow-500 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Notification
+                            </a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <!-- <div class="py-12">
-            <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
-            <nav class="flex mb-5" aria-label="Breadcrumb">
-                <ol class="inline-flex items-center space-x-1 md:space-x-3">
-                    <li class="inline-flex items-center">
-                    <a href="#" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900">
-                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
-                        Announcements
-                    </a>
-                    </li>
-                   
-                </ol>
             </nav>
-
-                <div class="bg-white p-5 overflow-hidden shadow-xl sm:rounded-lg">
-                  
-                    
-                    <div class="grid grid-flow-row-dense grid-cols-1 sm:grid-cols-3  grid-rows-1 ...">   
-                    <div class="lg:mr-5 mb-10">
-                        <div class="bg-green-600 rounded-t-lg  p-3">
-                            <time class="text-lg text-white font-semibold">Notifications</time>
-                        </div>
-                        <div class="p-2  border shadow-md sm:p-8">
-                            <ol class="mt-3 divide-y max-h-[40vmin] overflow-hidden overflow-y-auto divider-gray-200">
-                                <li v-for="(notifications, key) in usePage().props.value.notifications" :key="key">
-                                    <a href="#" class="block items-center p-3 sm:flex hover:bg-gray-100">
-                                        <img class="mr-3 mb-3 w-12 h-12 rounded-full sm:mb-0" src="https://th.bing.com/th/id/R.b4d35e6241b2840e8d62ae852f42ff38?rik=TqLvw0YR%2bKrNlw&riu=http%3a%2f%2fmattingly.design%2farticles%2fwp-content%2fuploads%2f2019%2f10%2fpied-piper-3.gif&ehk=r6%2ftXJgnQShtzu6PZbpJGRTVdXca%2fvgy5CN2NugQRuw%3d&risl=&pid=ImgRaw&r=0" alt="Jese Leos image">
-                                        <div class="text-gray-600">
-                                            <div class="text-base font-normal"><span class="font-medium text-gray-900">{{ notifications.title }}</span>
-                                                <span class="inline-flex items-center ml-2 text-xs font-normal text-gray-500">
-                                                <svg aria-hidden="true" class="mr-1 w-3 h-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.083 9h1.946c.089-1.546.383-2.97.837-4.118A6.004 6.004 0 004.083 9zM10 2a8 8 0 100 16 8 8 0 000-16zm0 2c-.076 0-.232.032-.465.262-.238.234-.497.623-.737 1.182-.389.907-.673 2.142-.766 3.556h3.936c-.093-1.414-.377-2.649-.766-3.556-.24-.56-.5-.948-.737-1.182C10.232 4.032 10.076 4 10 4zm3.971 5c-.089-1.546-.383-2.97-.837-4.118A6.004 6.004 0 0115.917 9h-1.946zm-2.003 2H8.032c.093 1.414.377 2.649.766 3.556.24.56.5.948.737 1.182.233.23.389.262.465.262.076 0 .232-.032.465-.262.238-.234.498-.623.737-1.182.389-.907.673-2.142.766-3.556zm1.166 4.118c.454-1.147.748-2.572.837-4.118h1.946a6.004 6.004 0 01-2.783 4.118zm-6.268 0C6.412 13.97 6.118 12.546 6.03 11H4.083a6.004 6.004 0 002.783 4.118z" clip-rule="evenodd"></path></svg>
-                                                {{ (notifications.user_type == 1) ? 'Public':'Staff' }}
-                                            </span> 
-                                         </div>
-                                        <em class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ notifications.user.name }}</em>
-                                         <div class="text-sm font-normal truncate">"{{ notifications.content }}"</div>
-                                         <button type="button" class="text-white  text-xs bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Show More</button>
-                                        </div>
-                                    </a>
-                                </li>
-                            </ol>
-                            
-                     
-                        </div>
-                        <div class="bg-green-600 mt-10 rounded-t-lg  p-3">
-                            <time class="text-lg text-white font-semibold">Colleges</time>
-                        </div>
-                        <div class="p-4   bg-white rounded-lg border shadow-md sm:p-8">
-    
-                                <div class="flow-root">
-                                    <ul role="list" class="divide-y divide-gray-200">
-                                        <li v-for="(colleges, key) in usePage().props.value.colleges" :key="key" class="py-3 sm:py-4">
-                                            <div class="flex items-center space-x-4">
-                                                <div class="flex-shrink-0">
-                                                    <img class="w-8 h-8 rounded-full" src="https://th.bing.com/th/id/R.b4d35e6241b2840e8d62ae852f42ff38?rik=TqLvw0YR%2bKrNlw&riu=http%3a%2f%2fmattingly.design%2farticles%2fwp-content%2fuploads%2f2019%2f10%2fpied-piper-3.gif&ehk=r6%2ftXJgnQShtzu6PZbpJGRTVdXca%2fvgy5CN2NugQRuw%3d&risl=&pid=ImgRaw&r=0" alt="Neil image">
-                                                </div>
-                                                <div class="flex-1 min-w-0">
-                                                    <p class="text-sm font-medium text-gray-900 truncate" :title="colleges.name">
-                                                        College of {{ colleges.name }}
-                                                    </p>
-                                                    <p class="text-sm text-gray-500 truncate ">
-                                                        {{ colleges.abbreviation }}
-                                                    </p>
-                                                </div>
-                                                <div class="inline-flex items-center text-base font-semibold text-gray-900 ">
-
-                                                </div>
-                                            </div>
-                                        </li>
-                                    
-                                    </ul>
+            <div class="bg-gray-100">
+                <div class="container mx-auto my-5 p-5">
+                    <div class="md:flex  md:-mx-2 ">
+                        <!-- Left Side -->
+                        <div class="w-full md:w-3/12 md:mx-2">
+                            <!-- Profile Card -->
+                            <div class="bg-white p-3 border-t-4 border-green-400">
+                                <div class="image overflow-hidden">
+                                    <img class="h-auto w-full mx-auto"
+                                        src="https://lavinephotography.com.au/wp-content/uploads/2017/01/PROFILE-Photography-112.jpg"
+                                        alt="">
+                                </div>
+                                <h1 class="text-gray-900 font-bold text-xl leading-8 my-1">Jane Doe</h1>
+                                <h3 class="text-gray-600 font-lg text-semibold leading-6">Owner at Her Company Inc.</h3>
+                                <p class="text-sm text-gray-500 hover:text-gray-600 leading-6">Lorem ipsum dolor sit
+                                    amet
+                                    consectetur adipisicing elit.
+                                    Reprehenderit, eligendi dolorum sequi illum qui unde aspernatur non deserunt</p>
+                                <ul
+                                    class="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
+                                    <li class="flex items-center py-3">
+                                        <span>Status</span>
+                                        <span class="ml-auto"><span
+                                                class="bg-green-500 py-1 px-2 rounded text-white text-sm">Active</span></span>
+                                    </li>
+                                    <li class="flex items-center py-3">
+                                        <span>Member since</span>
+                                        <span class="ml-auto">Nov 07, 2016</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- End of profile card -->
+                            <div class="my-4"></div>
+                            <!-- Friends card -->
+                            <div class="bg-white p-3 hover:shadow">
+                                <div class="flex items-center space-x-3 font-semibold text-gray-900 text-xl leading-8">
+                                    <span class="text-green-500">
+                                        <svg class="h-5 fill-current" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                        </svg>
+                                    </span>
+                                    <span>Online</span>
+                                </div>
+                                <div class="grid grid-cols-3">
+                                    <div class="text-center my-2">
+                                        <img class="h-16 w-16 rounded-full mx-auto"
+                                            src="https://cdn.australianageingagenda.com.au/wp-content/uploads/2015/06/28085920/Phil-Beckett-2-e1435107243361.jpg"
+                                            alt="">
+                                        <a href="#" class="text-main-color">Kojstantin</a>
+                                    </div>
+                                    <div class="text-center my-2">
+                                        <img class="h-16 w-16 rounded-full mx-auto"
+                                            src="https://avatars2.githubusercontent.com/u/24622175?s=60&amp;v=4" alt="">
+                                        <a href="#" class="text-main-color">James</a>
+                                    </div>
+           
+                                    <div class="text-center my-2">
+                                        <img class="h-16 w-16 rounded-full mx-auto"
+                                            src="https://bucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com/public/images/f04b52da-12f2-449f-b90c-5e4d5e2b1469_361x361.png"
+                                            alt="">
+                                        <a href="#" class="text-main-color">Casey</a>
+                                    </div>
                                 </div>
                             </div>
+                            <!-- End of friends card -->
                         </div>
-                       
-       
-                            <div class="col-span-2 w-full rounded-lg border shadow-md sm:p-8 px-10">
-                                
-                                <div class="flex-none w-2/3 max-w-full px-3">
-                                                <div>
-                                                    <p class="mb-0 font-sans font-semibold leading-normal uppercase text-lg">Categorized registered users population by courses</p>
-                                                </div>
-                                            </div>
-                                <div class="container mb-5 p-5 grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mx-auto">
-                                    
-                                    <div  v-for="(colleges, key) in usePage().props.value.colleges" :key="key">
-                                        
-                                        <div class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
-                                                <div class="bg-green-600 rounded-t-lg  p-2">
-                                                <div class="flex justify-between">
-                                                <h1 class="mb-0 font-sans text-white font-semibold leading-normal uppercase text-lg">{{ colleges.abbreviation }}</h1>
-                                                <h5 class="mb-2 font-bold text-white text-md"># of Courses: <span class="mb-2 font-bold text-sm">{{ colleges.courses.length }}</span></h5>
-                                                </div>   
-                                             </div>
-                                            <div class="flex-auto p-4">
-                                                <div class="flex flex-row -mx-3">
-                                                    
-                                 
-                                                </div>
-                                                <div class="flex justify-center w-auto bg-gray-50">
-                                                    <pie-chart  :data="chart_colleges_array[colleges.abbreviation]" legend="left" :donut="false"></pie-chart>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                        <!-- Right Side -->
+                        <div class="w-full  mx-2 ">
+                            <!-- Profile tab -->
+                            <!-- About Section -->
+                            <div class="bg-white p-3 shadow-sm rounded-sm">
+                                <div class="w-full h-16 flex items-center flex justify-between px-5">
+                                    <img class=" rounded-full w-10 h-10 mr-3"
+                                        src="https://scontent.fmnl25-4.fna.fbcdn.net/v/t39.30808-1/263319349_447542383644148_1687301738999888976_n.jpg?stp=dst-jpg_p200x200&_nc_cat=1&ccb=1-7&_nc_sid=c6021c&_nc_eui2=AeHRTyWXz-_3AxPRUiwWh8awl8hrSYTXnPWXyGtJhNec9Y-S8tT3ujsJJWZSymcMBCQg3bQghiO8IuGy5HvvZ7lN&_nc_ohc=co2qDQr2ueEAX9_HYV8&_nc_ht=scontent.fmnl25-4.fna&oh=00_AfAaU3s6WB0_AMniF9I6vVHHbV8VjVEgbHvMhy_W6spt4w&oe=636108D7"
+                                        alt="">
+                                    <input type="text" class=" w-full rounded-full h-10 bg-gray-200 px-5"
+                                        placeholder="What's on your mind?">
 
-                                    
                                 </div>
-                                <select class="mb-2 ml-5 block p-2 px-[4vmin] text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-lg focus:ring-green-500 focus:border-green-500" v-model="total_users_model" @change="total_users(total_users_model)">
-                                    <option value="0" disabled>Select Charts</option>
-                                    <option value="1">Pie Chart</option>
-                                    <option value="2">Line Chart</option>
-                                </select>
-                                <div v-if="total_users_pie" class="container mb-5 p-5">
-                                    <div class="relative flex flex-col min-w-0 break-words bg-white shadow-xl rounded-2xl bg-clip-border">
-                                        <div class="flex-auto p-4">
-                                           
-                                            <div class="flex flex-row -mx-3">
-                                            <div class="flex-none w-2/3 max-w-full px-3">
-                                                <div>
-                                                    <p class="mb-0 font-sans font-semibold leading-normal uppercase text-lg">TOTAL Users by colleges:  <span class="mb-2 font-bold text-md">{{ usePage().props.value.users.length }}</span> user/users</p>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="px-3 text-right basis-1/3">
-                                                <div class="inline-block w-12 h-12   rounded-circle bg-gradient-to-tl from-green-500 to-green-500">
-                                                    <svg class="w-6 h-6  m-auto my-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                                                </div>
-                                            </div>
-                                            </div>
-                                         
-                                                <div class="flex justify-left w-auto bg-gray-50">
-                                                    <pie-chart :data="chart_total_array" legend="bottom" :donut="false"></pie-chart>
-                                                </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div v-if="total_users_line" class="container mb-5 p-5">
-                                    <div class="relative flex flex-col min-w-0 break-words bg-white shadow-xl rounded-2xl bg-clip-border">
-                                        <div class="flex-auto p-4">
-                                           
-                                            <div class="flex flex-row -mx-3">
-                                            <div class="flex-none w-2/3 max-w-full px-3">
-                                                <div>
-                                                    <p class="mb-0 font-sans font-semibold leading-normal uppercase text-lg">Users in line graph: <span class="mb-2 font-bold text-md">{{ usePage().props.value.users.length }}</span> user/users</p>
-                                                </div>
-                                            </div>
-                                          
-                                            <div class="px-3 text-right basis-1/3">
-                                                <div class="inline-block w-12 h-12   rounded-circle bg-gradient-to-tl from-green-500 to-green-500">
-                                                    <svg class="w-6 h-6  m-auto my-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                                                </div>
-                                            </div>
-                                            </div>
-                                           
-                                                <div class="flex justify-left w-auto bg-gray-50">
-                                                    <line-chart :data="chart_total_array" legend="bottom" :donut="false"></line-chart>
-                                                </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="container mb-5 p-5">
-                                    <div class="relative flex flex-col min-w-0 break-words bg-white shadow-xl rounded-2xl bg-clip-border">
-                                        <div class="flex-auto p-4">
-                                           
-                                            <div class="flex flex-row -mx-3">
-                                            <div class="flex-none w-2/3 max-w-full px-3">
-                                                <div>
-                                                    <p class="mb-0 font-sans font-semibold leading-normal uppercase text-lg">Graduates</p>
-                                                </div>
-                                             
-                                                <div class="flex  my-5">        
-                                                    <input class="bg-gray-50 mr-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block  pl-10 p-2.5" type="date">
-                                                    <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block  pl-10 p-2.5" type="date">
-                                                </div>
-                                            </div>
-                                           
-                                          
-                                            <div class="px-3 text-right basis-1/3">
-                                                <div class="inline-block w-12 h-12   rounded-circle bg-gradient-to-tl from-green-500 to-green-500">
-                                                    <svg class="w-6 h-6 m-auto my-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 14l9-5-9-5-9 5 9 5z"></path><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"></path></svg>
-                                                </div>
-                                            </div>
-                                            </div>
-                                         
-                                                <div class="flex justify-left w-auto bg-gray-50">
-                                                    <column-chart :data="[['1997', 32], ['1998', 46], ['1999', 28], ['2000', 28], ['2001', 28], ['2002', 28], ['2003', 28], ['2004', 100]]"></column-chart>
-                                                </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <time class="text-lg font-semibold  text-gray-900 ">Announcements</time>
-                        
-                                <div class="flex mt-mb-10 items-center">   
-                                    <label for="simple-search" class="sr-only">Search</label>
-                                    <div class="relative w-full">
-                                        <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                                            <svg aria-hidden="true" class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
-                                        </div>
-                                        <input v-model="form_announcement.search_text" type="text" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full pl-10 p-2.5" placeholder="Search" required>
-                                    </div>
-                                    <button  @click="search_announcement()" class="p-2.5 ml-2 text-sm font-medium text-white bg-green-700 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                                        <span class="sr-only">Search</span>
+                                <div class="w-full h-10 flex justify-between mt-4 px-3 md:px-10 lg:px-24 xl:px-5">
+                                    <button class=" flex h-full  items-center">
+                                        <svg class="h-12  text-green-500 stroke-current"
+                                            xmlns="http://www.w3.org/2000/svg" width="27" height="27"
+                                            viewBox="0 0 24 24" fill="none" stroke="#b0b0b0" stroke-width="2"
+                                            stroke-linecap="square" stroke-linejoin="round">
+                                            <rect x="3" y="3" width="18" height="18" rx="2" />
+                                            <circle cx="8.5" cy="8.5" r="1.5" />
+                                            <path d="M20.4 14.5L16 10 4 20" />
+                                        </svg>
+                                        <span class="text-xs lg:text-md mx-2 font-semibold text-gray-500">Upload Photo
+                                        </span>
                                     </button>
+                                    <button type="button" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                                            Post
+                                            <svg aria-hidden="true" class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                        </button>
                                 </div>
-                                
+   
+                            </div>
+                            <!-- End of about section -->
 
 
-                                <ol class="border-l-2 mt-10 border-green-600">
-                                    <li  v-for="(announcements, key) in usePage().props.value.announcements" :key="key" >
-                                        <div class="flex flex-start items-center">
-                                        <div class="bg-green-600 w-4 h-4 flex items-center justify-center rounded-full -ml-2 mr-3 -mt-2"></div>
-                                        <img width="35" class="mr-2" src="https://th.bing.com/th/id/R.b4d35e6241b2840e8d62ae852f42ff38?rik=TqLvw0YR%2bKrNlw&riu=http%3a%2f%2fmattingly.design%2farticles%2fwp-content%2fuploads%2f2019%2f10%2fpied-piper-3.gif&ehk=r6%2ftXJgnQShtzu6PZbpJGRTVdXca%2fvgy5CN2NugQRuw%3d&risl=&pid=ImgRaw&r=0" alt="">
-                                        <h4 class="text-gray-800 font-semibold text-xl -mt-2">{{ announcements.user.name }} - {{ announcements.title }}</h4>
+                            <div class="my-4"></div>
+
+                            <article v-for="iitems in 1 "
+                                class="mb-4 break-insider w-full  p-6 rounded-xl bg-white dark:bg-slate-800 flex flex-col bg-clip-border  ">
+                                <div class="flex pb-6 items-cente justify-between">
+                                    <div class="flex">
+                                        <a class="inline-block mr-4" href="#">
+                                            <img class="rounded-full max-w-none w-12 h-12"
+                                                src="https://scontent.fmnl25-4.fna.fbcdn.net/v/t39.30808-1/263319349_447542383644148_1687301738999888976_n.jpg?stp=dst-jpg_p200x200&_nc_cat=1&ccb=1-7&_nc_sid=c6021c&_nc_eui2=AeHRTyWXz-_3AxPRUiwWh8awl8hrSYTXnPWXyGtJhNec9Y-S8tT3ujsJJWZSymcMBCQg3bQghiO8IuGy5HvvZ7lN&_nc_ohc=co2qDQr2ueEAX9_HYV8&_nc_ht=scontent.fmnl25-4.fna&oh=00_AfAaU3s6WB0_AMniF9I6vVHHbV8VjVEgbHvMhy_W6spt4w&oe=636108D7" />
+                                        </a>
+                                        <div class="flex flex-col">
+                                            <div>
+                                                <a class="inline-block text-lg font-bold dark:text-white" href="#">Regei
+                                                    Cabug-os</a>
+                                            </div>
+                                            <div class="text-slate-500 dark:text-slate-300 dark:text-slate-400">
+                                                July 17, 2018
+                                            </div>
                                         </div>
-                                        <div class="ml-6 mb-6 pb-6">
-                                        <a href="#!" class="text-green-600 hover:text-green-700 focus:text-green-800 duration-300 transition ease-in-out text-sm">{{ date_conversion(announcements.created_at) }}</a>
-                                        <p class="text-gray-700 mt-5">{{ announcements.content }}</p>
-                                       
-                                        </div>
-                                    </li>
-                                 </ol>
-                         </div>
+                                    </div>
+                                </div>
+                                <h2 class="text-3xl font-extrabold dark:text-white">
+                                    Web Design templates Selection
+                                </h2>
+                                <div class="py-4">
+                                    <div class="grid grid-flow-row-dense grid-cols-2 grid-rows-1 ... ">
+                                        <a v-for="items in 4" class="flex" href="#">
+                                            <img class="w-auto "
+                                                src="https://images.pexels.com/photos/92866/pexels-photo-92866.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" />
+
+                                        </a>
+                                    </div>
+
+                                </div>
+                                <p class="dark:text-slate-200">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                    eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                </p>
+                                <div class="py-4">
+                                    <a class="inline-flex items-center" href="#">
+                                        <span class="mr-2">
+                                            <svg class="fill-rose-600 dark:fill-rose-400"
+                                                style="width: 24px; height: 24px;" viewBox="0 0 24 24">
+                                                <path
+                                                    d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z">
+                                                </path>
+                                            </svg> 
+                                        </span>
+                                        <span class="text-lg font-bold">34</span>
+                                    </a>
+                                </div>
+                                <div class="w-full">
+                                    <a  :href="route('socialmedia.comments')"
+                                        class="py-3 px-4 w-full block bg-slate-100 dark:bg-slate-700 text-center rounded-lg font-medium hover:bg-slate-200 dark:hover:bg-slate-600 transition ease-in-out delay-75">Show
+                                        more comments</a>
+                                </div>
+                              
+
+                            </article>
+
+                        </div>
                     </div>
-              
                 </div>
             </div>
-        </div> -->
+
+
+        </section>
     </AppLayout>
 </template>
 
