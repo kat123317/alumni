@@ -413,7 +413,7 @@ const function_search_user = () => {
                                             <div
                                                 class="text-base font-semibold"
                                             >
-                                                {{ users.college.abbreviation }}
+                                                <!-- {{ users.college.abbreviation }} -->
                                             </div>
                                             <div
                                                 v-if="users.course"

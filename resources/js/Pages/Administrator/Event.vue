@@ -247,7 +247,7 @@ const searchEvents = () => {
                     </svg>
                 </div>
             </div>
-            <div class="container px-5 max-w-7xl py-2 mx-auto">
+            <div class="container  max-w-7xl  px-5 mt-[12vmin] py-2 mx-auto">
                 <div class="flex flex-col text-center w-full mb-12">
                     <h1
                         class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900"
@@ -371,14 +371,14 @@ const searchEvents = () => {
                                             v-model="event_search.search"
                                             type="search"
                                             id="default-search"
-                                            class="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            placeholder="Search Mockups, Logos..."
+                                            class="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
+                                            placeholder="Search "
                                             required
                                         />
                                         <button
                                             @click="searchEvents()"
                                             type="submit"
-                                            class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                            class="text-white absolute right-2.5 bottom-2.5 bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
                                         >
                                             Search
                                         </button>
@@ -750,65 +750,3 @@ const searchEvents = () => {
     </AdminLayout>
 </template>
 
-<style>
-.animate {
-    animation: myAnim 0.5s ease 0s 1 normal forwards;
-}
-.alertanim {
-    animation: Bounce 0.5s ease 0s 1 normal forwards;
-}
-
-@keyframes myAnim {
-    0% {
-        transform: scale(0);
-    }
-
-    100% {
-        transform: scale(1);
-    }
-}
-
-@keyframes Bounce {
-    0% {
-        animation-timing-function: ease-in;
-        opacity: 0;
-        transform: translateY(-250px);
-    }
-
-    38% {
-        animation-timing-function: ease-out;
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    55% {
-        animation-timing-function: ease-in;
-        transform: translateY(-65px);
-    }
-
-    72% {
-        animation-timing-function: ease-out;
-        transform: translateY(0);
-    }
-
-    81% {
-        animation-timing-function: ease-in;
-        transform: translateY(-28px);
-    }
-
-    90% {
-        animation-timing-function: ease-out;
-        transform: translateY(0);
-    }
-
-    95% {
-        animation-timing-function: ease-in;
-        transform: translateY(-8px);
-    }
-
-    100% {
-        animation-timing-function: ease-out;
-        transform: translateY(0);
-    }
-}
-</style>

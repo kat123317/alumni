@@ -152,4 +152,7 @@ import { ref, onMounted, inject } from "vue";
         margin-left: 0px;
     }
 }
+
+
+
 </style>
