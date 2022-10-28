@@ -23,4 +23,12 @@ class SocialMediaController extends Controller
             return Redirect::route('dashboard');
         }
     }
+
+    public function comments()
+    {
+        //
+        return Inertia::render('Socialmedia/Components/Comments', [
+            // 'colleges' => College::all()
+        ]);
+    }
 }

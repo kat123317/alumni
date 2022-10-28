@@ -23,15 +23,7 @@ class UserNotificationController extends Controller
         ]);
     }
 
-    public function comments()
-    {
-        //
-        $notifications = UserNotification::all();
-
-        return Inertia::render('Socialmedia/Components/Comments', [
-            'notifications' => $notifications
-        ]);
-    }
+    
     /**
      * Show the form for creating a new resource.
      *
