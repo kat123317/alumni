@@ -145,4 +145,7 @@ import { usePage, Link } from "@inertiajs/inertia-vue3";
         margin-left: 0px;
     }
 }
+
+
+
 </style>
