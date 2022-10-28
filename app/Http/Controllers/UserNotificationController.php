@@ -18,7 +18,7 @@ class UserNotificationController extends Controller
         //
         $notifications = UserNotification::all();
 
-        return Inertia::render('Socialmedia/Components/Notification', [
+        return Inertia::render('Socialmedia/Components/Comments', [
             'notifications' => $notifications
         ]);
     }
