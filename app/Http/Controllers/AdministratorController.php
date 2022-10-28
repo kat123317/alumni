@@ -194,7 +194,8 @@ class AdministratorController extends Controller
             'search' => $search,
             'colleges' => College::all(),
             'courses' => Course::all(),
-            'users' => User::whereIsActive(1)->whereStatus('approved')->whereUserType('alumni')->get(),
+            // 'users' => User::whereIsActive(1)->whereStatus('approved')->whereUserType('alumni')->get(),
+            'users' => User::whereIsActive(1)->whereStatus('approved')->get(),
             'notifications' => Notification::whereHas('user', function (Builder $query) {
                 if (Auth::user()->user_type == 'admin') {
                     $query->where('status', 'pre_approved');

@@ -69,7 +69,6 @@ const foreignIDs = computed(() => {
                     >
                         Add Survey
                     </h1>
-                    `
                     <div class="grid grid-cols-6 gap-3">
                         <div class="col-span-3">
                             <label class="leading-7 text-sm text-gray-600"
@@ -125,6 +124,7 @@ const foreignIDs = computed(() => {
                         Add
                     </button>
                 </div>
+                <div>hello</div>
             </div>
         </section>
     </AdminLayout>

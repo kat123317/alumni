@@ -113,7 +113,15 @@ Route::middleware([
     Route::put('/assign_as_admin/{id}', [UserController::class, 'assign_as_admin'])->name('assign_as_admin');
     Route::put('/remove_as_admin/{id}', [UserController::class, 'remove_as_admin'])->name('remove_as_admin');
 
-    Route::get('/socialmedia', [SocialMediaController::class, 'index'])->name('socialmedia');
+    Route::prefix('socialmedia')->name('socialmedia.')->group(function () {
+        Route::get('/socialmedia', [SocialMediaController::class, 'index'])->name('index');
+        Route::post('/store', [SocialMediaController::class, 'store'])->name('store');
+        Route::put('/update/{id}', [SocialMediaController::class, 'update'])->name('update');
+        Route::delete('/delete/{id}', [SocialMediaController::class, 'destroy'])->name('delete');
+
+        Route::get('/comments', [SocialMediaController::class, 'comments'])->name('comments');
+
+    });
 
     Route::prefix('events')->name('events.')->group(function () {
         Route::get('/', [EventController::class, 'index'])->name('index');
