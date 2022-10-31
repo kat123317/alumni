@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('user_post_timeline', function (Blueprint $table) {
+        Schema::create('user_posts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
             $table->longText('content');
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_post_timeline');
+        Schema::dropIfExists('user_posts');
     }
 };

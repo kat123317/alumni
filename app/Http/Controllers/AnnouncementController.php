@@ -7,6 +7,7 @@ use App\Models\College;
 use App\Models\Course;
 use App\Models\Notification;
 use App\Models\User;
+use App\Models\UserPosts;
 use App\Models\Yearbook;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -39,14 +40,13 @@ class AnnouncementController extends Controller
         $colleges = College::with('users')->withCount('users')->with(['courses' => function($query) {
             $query->with('users');
         }])->get();
-        // $announcements = Announcement::with('user')->when($search_text, function($query, $search_text) {
-        //     $query->where('title', 'like', "%{$search_text}%");
-        // })->orderBy('id', 'desc')->get();
         $courses = Course::all();
         $graduates = Yearbook::withCount('graduates')->when($between, function($query, $between) use ($yearbook_temp_1, $yearbook_temp_2) {
             $query->whereBetween('schoolyear_from', [(int)$yearbook_temp_1->schoolyear_from, (int)$yearbook_temp_2->schoolyear_from]);
         })->orderBy('schoolyear_from', 'desc' )->limit(10)->get();
-
+        $posts = UserPosts::with('user')->with(['comments' => function($query) {
+            $query->with('user')->limit(1);
+        }])->get();
         return Inertia::render('Dashboard', [
             'notifications' => $notifications,
             'colleges' => $colleges,
@@ -57,7 +57,9 @@ class AnnouncementController extends Controller
             'yearbook' => $graduates,
             'yearbooks' => Yearbook::orderBy('schoolyear_from')->get(),
             'from' => $request->from,
-            'to' => $request->to
+            'to' => $request->to,
+            'posts'=>$posts
+            
         ]);
     }
 

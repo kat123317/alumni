@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Models\UserPosts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -13,22 +13,19 @@ class SocialMediaController extends Controller
 {
     public function index(Request $request)
     {
-        // dd($request->user_type);
-        if(Auth::user()->user_type =='admin'){
-            return Inertia::render('Socialmedia/index', [
-                // 'colleges' => College::all()
-            ]);
-        }
-        else{
-            return Redirect::route('dashboard');
-        }
+        return Inertia::render('Socialmedia/index', [
+            // 'posts'=>UserPosts::all()
+
+        ]);
     }
 
-    public function comments()
-    {
-        //
+    public function comments(Request $request, $id)
+    {   
+        $post= UserPosts::find($id);
         return Inertia::render('Socialmedia/Components/Comments', [
-            // 'colleges' => College::all()
+            'post'=>$post->with('user')->with(['comments' => function($query) {
+                $query->with('user');
+            }])->get()
         ]);
     }
 }
