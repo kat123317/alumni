@@ -27,5 +27,8 @@ class UserPosts extends Model
         return $this->hasMany(UserPostComment::class, 'post_id', 'id');
     }
 
+    public function comments_custom(){
+        return $this->hasOne(UserPostComment::class, 'post_id', 'id');
+    }
     
 }

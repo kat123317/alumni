@@ -44,7 +44,7 @@ class AnnouncementController extends Controller
         $graduates = Yearbook::withCount('graduates')->when($between, function($query, $between) use ($yearbook_temp_1, $yearbook_temp_2) {
             $query->whereBetween('schoolyear_from', [(int)$yearbook_temp_1->schoolyear_from, (int)$yearbook_temp_2->schoolyear_from]);
         })->orderBy('schoolyear_from', 'desc' )->limit(10)->get();
-        $posts = UserPosts::with('user')->with(['comments' => function($query) {
+        $posts = UserPosts::with('user')->with(['comments_custom' => function($query) {
             $query->with('user')->orderBy('created_at', 'desc');
         }])->get();
         return Inertia::render('Dashboard', [

@@ -528,10 +528,7 @@ onMounted(() => {});
                                         </span>
                                     </a>
                                 </div>
-                                <div
-                                    v-for="(comments, key) in posts.comments"
-                                    :key="key"
-                                >
+                                <div>
                                     <div class="pt-6">
                                         <div class="media flex pb-4">
                                             <a
@@ -541,7 +538,8 @@ onMounted(() => {});
                                                 <img
                                                     class="rounded-full max-w-none w-12 h-12"
                                                     :src="
-                                                        comments.user
+                                                        posts.comments_custom
+                                                            .user
                                                             .profile_photo_url
                                                     "
                                                 />
@@ -552,21 +550,26 @@ onMounted(() => {});
                                                         class="inline-block text-base font-bold mr-2"
                                                         href="#"
                                                         >{{
-                                                            comments.user.name
+                                                            posts
+                                                                .comments_custom
+                                                                .user.name
                                                         }}</a
                                                     >
                                                     <span
                                                         class="text-slate-500"
                                                         >{{
                                                             date_conversion_from_now(
-                                                                comments.created_at
+                                                                posts
+                                                                    .comments_custom
+                                                                    .created_at
                                                             )
                                                         }}</span
                                                     >
                                                 </div>
                                                 <p>
                                                     <i>{{
-                                                        comments.content
+                                                        posts.comments_custom
+                                                            .content
                                                     }}</i>
                                                 </p>
                                                 <div
