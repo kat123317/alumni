@@ -529,63 +529,76 @@ onMounted(() => {});
                                     </a>
                                 </div>
                                 <div
-                                    class="p-5 mb-4 bg-gray-50 rounded-lg border border-gray-100"
                                     v-for="(comments, key) in posts.comments"
                                     :key="key"
                                 >
-                                    <time
-                                        class="text-lg font-semibold text-gray-900"
-                                        >{{
-                                            date_conversion(comments.created_at)
-                                        }}</time
-                                    >
-                                    <ol class="mt-3 divide-y divider-gray-200">
-                                        <li>
+                                    <div class="pt-6">
+                                        <div class="media flex pb-4">
                                             <a
+                                                class="inline-block mr-4"
                                                 href="#"
-                                                class="block items-center p-3 sm:flex hover:bg-gray-100"
                                             >
                                                 <img
-                                                    class="mr-3 mb-3 w-12 h-12 rounded-full sm:mb-0"
+                                                    class="rounded-full max-w-none w-12 h-12"
                                                     :src="
                                                         comments.user
                                                             .profile_photo_url
                                                     "
                                                 />
-                                                <div class="text-gray-600">
-                                                    <div
-                                                        class="text-base font-normal"
+                                            </a>
+                                            <div class="media-body">
+                                                <div>
+                                                    <a
+                                                        class="inline-block text-base font-bold mr-2"
+                                                        href="#"
+                                                        >{{
+                                                            comments.user.name
+                                                        }}</a
                                                     >
-                                                        <span
-                                                            class="font-medium text-gray-900"
-                                                            >{{
-                                                                comments.user
-                                                                    .name
-                                                            }}</span
-                                                        >
-                                                    </div>
-                                                    <div
-                                                        class="text-sm font-normal ml-8"
-                                                    >
-                                                        <i>
-                                                            {{
-                                                                comments.content
-                                                            }}
-                                                        </i>
-                                                    </div>
                                                     <span
-                                                        class="inline-flex items-center text-xs font-normal text-gray-500"
-                                                    >
-                                                        {{
+                                                        class="text-slate-500"
+                                                        >{{
                                                             date_conversion_from_now(
                                                                 comments.created_at
                                                             )
-                                                        }}
-                                                    </span>
+                                                        }}</span
+                                                    >
                                                 </div>
-                                            </a>
-                                        </li>
-                                    </ol>
+                                                <p>
+                                                    <i>{{
+                                                        comments.content
+                                                    }}</i>
+                                                </p>
+                                                <div
+                                                    class="mt-2 flex items-center"
+                                                >
+                                                    <a
+                                                        class="inline-flex items-center py-2 mr-3"
+                                                        href="#"
+                                                    >
+                                                        <span class="mr-2">
+                                                            <svg
+                                                                class="fill-rose-600"
+                                                                style="
+                                                                    width: 22px;
+                                                                    height: 22px;
+                                                                "
+                                                                viewBox="0 0 24 24"
+                                                            >
+                                                                <path
+                                                                    d="M12.1 18.55L12 18.65L11.89 18.55C7.14 14.24 4 11.39 4 8.5C4 6.5 5.5 5 7.5 5C9.04 5 10.54 6 11.07 7.36H12.93C13.46 6 14.96 5 16.5 5C18.5 5 20 6.5 20 8.5C20 11.39 16.86 14.24 12.1 18.55M16.5 3C14.76 3 13.09 3.81 12 5.08C10.91 3.81 9.24 3 7.5 3C4.42 3 2 5.41 2 8.5C2 12.27 5.4 15.36 10.55 20.03L12 21.35L13.45 20.03C18.6 15.36 22 12.27 22 8.5C22 5.41 19.58 3 16.5 3Z"
+                                                                ></path>
+                                                            </svg>
+                                                        </span>
+                                                        <span
+                                                            class="text-base font-bold"
+                                                            >0</span
+                                                        >
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="w-full">

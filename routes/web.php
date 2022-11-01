@@ -120,6 +120,7 @@ Route::middleware([
         Route::delete('/delete/{id}', [SocialMediaController::class, 'destroy'])->name('delete');
 
         Route::get('/comments/{id}', [SocialMediaController::class, 'comments'])->name('comments');
+        Route::post('/add_comment', [SocialMediaController::class, 'add_comment'])->name('add_comment');
 
     });
 

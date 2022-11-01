@@ -45,7 +45,7 @@ class AnnouncementController extends Controller
             $query->whereBetween('schoolyear_from', [(int)$yearbook_temp_1->schoolyear_from, (int)$yearbook_temp_2->schoolyear_from]);
         })->orderBy('schoolyear_from', 'desc' )->limit(10)->get();
         $posts = UserPosts::with('user')->with(['comments' => function($query) {
-            $query->with('user')->limit(1);
+            $query->with('user')->orderBy('created_at', 'desc');
         }])->get();
         return Inertia::render('Dashboard', [
             'notifications' => $notifications,

@@ -10,14 +10,35 @@ const date_conversion = (value) => {
         return moment(value).format("MMMM Do YYYY, h:mm:ss a");
     }
 };
+
+const date_conversion_from_now = (value) => {
+    if (value) {
+        return moment(value).fromNow();
+    }
+};
 const option_view = ref(true);
 
 onMounted(() => {});
+
+const comment_data = useForm({
+    comment: "",
+    post_id: usePage().props.value.post[0].id,
+});
+
+const function_comment = () => {
+    // alert(comment_data.post_id);
+    comment_data.post(route("socialmedia.add_comment"), {
+        preserveScroll: true,
+        onSuccess: () => {
+            comment_data.reset();
+        },
+    });
+};
 </script>
 
 <template>
     <AppLayout title="Comments">
-        <div class="bg-gray-200 dark:bg-gray-800">
+        <div class="bg-gray-200">
             <div
                 class="container flex items-center px-6 py-4 mx-auto overflow-y-auto whitespace-nowrap"
             >
@@ -53,7 +74,7 @@ onMounted(() => {});
 
                 <a
                     href="#"
-                    class="flex items-center text-gray-600 -px-2 dark:text-gray-200 hover:underline"
+                    class="flex items-center text-gray-600 -px-2 hover:underline"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -76,8 +97,8 @@ onMounted(() => {});
         </div>
         <section class="flex justify-center mt-10">
             <article
-                class="mb-4 max-w-7xl break-insider w-full p-6 rounded-xl bg-white dark:bg-slate-800 flex flex-col bg-clip-border"
-                v-for="(posts, key) in usePage().props.value.post"
+                class="mb-4 max-w-7xl break-insider w-full p-6 rounded-xl bg-white flex flex-col bg-clip-border"
+                v-for="(post, key) in usePage().props.value.post"
                 :key="key"
             >
                 <div>
@@ -90,50 +111,49 @@ onMounted(() => {});
                         <a class="inline-block mr-4" href="#">
                             <img
                                 class="rounded-full max-w-none w-12 h-12"
-                                src="https://scontent.fmnl25-4.fna.fbcdn.net/v/t39.30808-1/263319349_447542383644148_1687301738999888976_n.jpg?stp=dst-jpg_p200x200&_nc_cat=1&ccb=1-7&_nc_sid=c6021c&_nc_eui2=AeHRTyWXz-_3AxPRUiwWh8awl8hrSYTXnPWXyGtJhNec9Y-S8tT3ujsJJWZSymcMBCQg3bQghiO8IuGy5HvvZ7lN&_nc_ohc=co2qDQr2ueEAX9_HYV8&_nc_ht=scontent.fmnl25-4.fna&oh=00_AfAaU3s6WB0_AMniF9I6vVHHbV8VjVEgbHvMhy_W6spt4w&oe=636108D7"
+                                :src="post.user.profile_photo_url"
                             />
                         </a>
                         <div class="flex flex-col">
                             <div>
                                 <a
-                                    class="inline-block text-lg font-bold dark:text-white"
+                                    class="inline-block text-lg font-bold"
                                     href="#"
-                                    >Regei Cabug-os</a
+                                    >{{ post.user.name }}</a
                                 >
                             </div>
-                            <div
-                                class="text-slate-500 dark:text-slate-300 dark:text-slate-400"
-                            >
-                                July 17, 2018
+                            <div class="text-slate-500">
+                                {{ date_conversion(post.created_at) }}
+                            </div>
+                            <div class="text-slate-500">
+                                {{ date_conversion_from_now(post.created_at) }}
                             </div>
                         </div>
                     </div>
                 </div>
-                <h2 class="text-3xl font-extrabold dark:text-white">
-                    Web Design templates Selection
-                </h2>
+                <p class="">
+                    {{ post.content }}
+                </p>
                 <div class="py-4">
                     <div
                         class="grid grid-flow-row-dense grid-cols-2 grid-rows-1 ..."
                     >
-                        <a v-for="items in 4" class="flex" href="#">
-                            <img
-                                class="w-auto"
-                                src="https://images.pexels.com/photos/92866/pexels-photo-92866.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                            />
+                        <a
+                            v-for="(photos, key) in post.photo"
+                            :key="key"
+                            class="flex"
+                            href="#"
+                        >
+                            <img class="w-auto" :src="photos" />
                         </a>
                     </div>
                 </div>
-                <p class="dark:text-slate-200">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua.
-                </p>
+
                 <div class="py-4">
                     <a class="inline-flex items-center" href="#">
                         <span class="mr-2">
                             <svg
-                                class="fill-rose-600 dark:fill-rose-400"
+                                class="fill-rose-600"
                                 style="width: 24px; height: 24px"
                                 viewBox="0 0 24 24"
                             >
@@ -147,12 +167,14 @@ onMounted(() => {});
                 </div>
                 <div class="relative">
                     <input
-                        class="pt-2 pb-2 pl-3 w-full h-11 bg-slate-100 dark:bg-slate-600 rounded-lg placeholder:text-slate-600 dark:placeholder:text-slate-300 font-medium pr-20"
+                        v-model="comment_data.comment"
+                        class="pt-2 pb-2 pl-3 w-full h-11 bg-slate-100 rounded-lg placeholder:text-slate-600 font-medium pr-20"
                         type="text"
                         placeholder="Write a comment"
                     />
-                    <span
+                    <button
                         class="flex absolute right-3 top-2/4 -mt-3 items-center"
+                        @click="function_comment()"
                     >
                         <svg
                             class="mr-2"
@@ -165,56 +187,102 @@ onMounted(() => {});
                             ></path>
                         </svg>
                         <svg
-                            class="fill-blue-500 dark:fill-slate-50"
+                            class="fill-blue-500"
                             style="width: 24px; height: 24px"
                             viewBox="0 0 24 24"
                         >
                             <path d="M2,21L23,12L2,3V10L17,12L2,14V21Z"></path>
                         </svg>
-                    </span>
+                    </button>
                 </div>
 
-                <div class="pt-6">
-                    <div class="media flex pb-4">
-                        <a class="inline-block mr-4" href="#">
-                            <img
-                                class="rounded-full max-w-none w-12 h-12"
-                                src="https://randomuser.me/api/portraits/women/76.jpg"
-                            />
-                        </a>
-                        <div class="media-body">
-                            <div>
-                                <a
-                                    class="inline-block text-base font-bold mr-2"
-                                    href="#"
-                                    >Tina Mills</a
-                                >
-                                <span class="text-slate-500 dark:text-slate-300"
-                                    >3 minutes ago</span
-                                >
-                            </div>
-                            <p>
-                                Dolor sit ameteiusmod consectetur adipiscing
-                                elit.
-                            </p>
-                            <div class="mt-2 flex items-center">
-                                <a
-                                    class="inline-flex items-center py-2 mr-3"
-                                    href="#"
-                                >
-                                    <span class="mr-2">
+                <div v-for="(comments, key) in post.comments" :key="key">
+                    <div class="pt-6">
+                        <div class="media flex pb-4">
+                            <a class="inline-block mr-4" href="#">
+                                <img
+                                    class="rounded-full max-w-none w-12 h-12"
+                                    :src="comments.user.profile_photo_url"
+                                />
+                            </a>
+                            <div class="media-body">
+                                <div>
+                                    <a
+                                        class="inline-block text-base font-bold mr-2"
+                                        href="#"
+                                        >{{ comments.user.name }}</a
+                                    >
+                                    <span class="text-slate-500">{{
+                                        date_conversion_from_now(
+                                            comments.created_at
+                                        )
+                                    }}</span>
+                                    <button
+                                        v-if="
+                                            comments.user.id ==
+                                            usePage().props.value.user.id
+                                        "
+                                        class="inline-block ml-6"
+                                    >
                                         <svg
-                                            class="fill-rose-600 dark:fill-rose-400"
-                                            style="width: 22px; height: 22px"
-                                            viewBox="0 0 24 24"
+                                            version="1.1"
+                                            id="Capa_1"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                                            x="0px"
+                                            y="0px"
+                                            width="20px"
+                                            height="20px"
+                                            viewBox="0 0 420.827 420.827"
+                                            style="
+                                                enable-background: new 0 0
+                                                    420.827 420.827;
+                                            "
+                                            xml:space="preserve"
                                         >
                                             <path
-                                                d="M12.1 18.55L12 18.65L11.89 18.55C7.14 14.24 4 11.39 4 8.5C4 6.5 5.5 5 7.5 5C9.04 5 10.54 6 11.07 7.36H12.93C13.46 6 14.96 5 16.5 5C18.5 5 20 6.5 20 8.5C20 11.39 16.86 14.24 12.1 18.55M16.5 3C14.76 3 13.09 3.81 12 5.08C10.91 3.81 9.24 3 7.5 3C4.42 3 2 5.41 2 8.5C2 12.27 5.4 15.36 10.55 20.03L12 21.35L13.45 20.03C18.6 15.36 22 12.27 22 8.5C22 5.41 19.58 3 16.5 3Z"
-                                            ></path>
+                                                d="M210.29,0C156,0,104.43,20.693,65.077,58.269C25.859,95.715,2.794,146.022,0.134,199.921
+			c-0.135,2.734,0.857,5.404,2.744,7.388c1.889,1.983,4.507,3.105,7.244,3.105h45.211c5.275,0,9.644-4.098,9.979-9.362
+			c4.871-76.214,68.553-135.914,144.979-135.914c80.105,0,145.275,65.171,145.275,145.276c0,80.105-65.17,145.276-145.275,145.276
+			c-18.109,0-35.772-3.287-52.501-9.771l17.366-15.425c2.686-2.354,3.912-5.964,3.217-9.468c-0.696-3.506-3.209-6.371-6.592-7.521
+			l-113-32.552c-3.387-1.149-7.122-0.407-9.81,1.948c-2.686,2.354-3.913,5.963-3.218,9.467L69.71,403.157
+			c0.696,3.505,3.209,6.372,6.591,7.521c3.383,1.147,7.122,0.408,9.81-1.946l18.599-16.298
+			c31.946,18.574,68.456,28.394,105.581,28.394c116.021,0,210.414-94.392,210.414-210.414C420.705,94.391,326.312,0,210.29,0z"
+                                            />
+                                            <path
+                                                d="M195.112,237.9h118.5c2.757,0,5-2.242,5-5v-30c0-2.757-2.243-5-5-5h-83.5v-91c0-2.757-2.243-5-5-5h-30
+			c-2.757,0-5,2.243-5,5v126C190.112,235.658,192.355,237.9,195.112,237.9z"
+                                            />
                                         </svg>
-                                    </span>
-                                    <span class="text-base font-bold">0</span>
-                                </a>
+                                    </button>
+                                </div>
+                                <p>
+                                    {{ comments.content }}
+                                </p>
+                                <div class="mt-2 flex items-center">
+                                    <a
+                                        class="inline-flex items-center py-2 mr-3"
+                                        href="#"
+                                    >
+                                        <span class="mr-2">
+                                            <svg
+                                                class="fill-rose-600"
+                                                style="
+                                                    width: 22px;
+                                                    height: 22px;
+                                                "
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path
+                                                    d="M12.1 18.55L12 18.65L11.89 18.55C7.14 14.24 4 11.39 4 8.5C4 6.5 5.5 5 7.5 5C9.04 5 10.54 6 11.07 7.36H12.93C13.46 6 14.96 5 16.5 5C18.5 5 20 6.5 20 8.5C20 11.39 16.86 14.24 12.1 18.55M16.5 3C14.76 3 13.09 3.81 12 5.08C10.91 3.81 9.24 3 7.5 3C4.42 3 2 5.41 2 8.5C2 12.27 5.4 15.36 10.55 20.03L12 21.35L13.45 20.03C18.6 15.36 22 12.27 22 8.5C22 5.41 19.58 3 16.5 3Z"
+                                                ></path>
+                                            </svg>
+                                        </span>
+                                        <span class="text-base font-bold"
+                                            >0</span
+                                        >
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
