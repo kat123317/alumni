@@ -46,9 +46,11 @@ class AnnouncementController extends Controller
         })->orderBy('schoolyear_from', 'desc' )->limit(10)->get();
         $posts = UserPosts::with(['user' => function($query){
             $query->where('is_active', '1');
-        }])->with(['comments_custom' => function($query) {
-            $query->with('user')->orderBy('created_at', 'desc');
-        }])->get();
+        }])->when(['comments_custom' => function($query) {
+            $query->with(['user' => function($query){
+                $query->where('is_active', '1');
+            }])->orderBy('created_at', 'desc');
+        }])->orderBy('created_at', 'desc')->get();
         return Inertia::render('Dashboard', [
             'notifications' => $notifications,
             'colleges' => $colleges,

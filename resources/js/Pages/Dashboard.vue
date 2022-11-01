@@ -21,6 +21,24 @@ const date_conversion_from_now = (value) => {
 const option_view = ref(true);
 
 onMounted(() => {});
+
+const post_data = useForm({
+    content: "",
+});
+
+const function_add_post = () => {
+    if (post_data.content == "") {
+        alert("System will not allow empty post, Sorry");
+    } else {
+        post_data.post(route("socialmedia.store"), {
+            preserveScroll: true,
+            onSuccess: () => {
+                post_data.reset();
+                alert("Your content has been posted");
+            },
+        });
+    }
+};
 </script>
 
 <template>
@@ -338,10 +356,14 @@ onMounted(() => {});
                                 >
                                     <img
                                         class="rounded-full w-10 h-10 mr-3"
-                                        src="https://scontent.fmnl25-4.fna.fbcdn.net/v/t39.30808-1/263319349_447542383644148_1687301738999888976_n.jpg?stp=dst-jpg_p200x200&_nc_cat=1&ccb=1-7&_nc_sid=c6021c&_nc_eui2=AeHRTyWXz-_3AxPRUiwWh8awl8hrSYTXnPWXyGtJhNec9Y-S8tT3ujsJJWZSymcMBCQg3bQghiO8IuGy5HvvZ7lN&_nc_ohc=co2qDQr2ueEAX9_HYV8&_nc_ht=scontent.fmnl25-4.fna&oh=00_AfAaU3s6WB0_AMniF9I6vVHHbV8VjVEgbHvMhy_W6spt4w&oe=636108D7"
+                                        :src="
+                                            usePage().props.value.user
+                                                .profile_photo_url
+                                        "
                                         alt=""
                                     />
                                     <input
+                                        v-model="post_data.content"
                                         type="text"
                                         class="w-full rounded-full h-10 bg-gray-200 px-5"
                                         placeholder="What's on your mind?"
@@ -379,6 +401,7 @@ onMounted(() => {});
                                         </span>
                                     </button>
                                     <button
+                                        @click="function_add_post()"
                                         type="button"
                                         class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
                                     >
@@ -532,8 +555,12 @@ onMounted(() => {});
                                                     class="rounded-full max-w-none w-12 h-12"
                                                     :src="
                                                         posts.comments_custom
-                                                            .user
-                                                            .profile_photo_url
+                                                            .user == null
+                                                            ? posts
+                                                                  .comments_custom
+                                                                  .user
+                                                                  .profile_photo_url
+                                                            : 'http://devops.cmu.edu.ph/formlinks/assets/dist/assets/img/logos/CMU-LOGO.png'
                                                     "
                                                 />
                                             </a>

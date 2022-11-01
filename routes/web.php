@@ -116,8 +116,6 @@ Route::middleware([
     Route::prefix('socialmedia')->name('socialmedia.')->group(function () {
         Route::get('/socialmedia', [SocialMediaController::class, 'index'])->name('index');
         Route::post('/store', [SocialMediaController::class, 'store'])->name('store');
-        Route::put('/update/{id}', [SocialMediaController::class, 'update'])->name('update');
-        Route::delete('/delete/{id}', [SocialMediaController::class, 'destroy'])->name('delete');
 
         Route::get('/comments/{id}', [SocialMediaController::class, 'comments'])->name('comments');
         Route::post('/add_comment', [SocialMediaController::class, 'add_comment'])->name('add_comment');

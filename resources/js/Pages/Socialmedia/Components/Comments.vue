@@ -56,16 +56,20 @@ const function_open_delete_post_modal = () => {
 };
 
 const function_update_post = () => {
-    post_update_data.post(
-        route("socialmedia.update_post", [post_update_data.id]),
-        {
-            preserveScroll: true,
-            onSuccess: () => {
-                post_update_data.reset();
-                modal_update_post.value = !modal_update_post.value;
-            },
-        }
-    );
+    if (post_update_data.content == "") {
+        alert("System will not allow empty posts");
+    } else {
+        post_update_data.post(
+            route("socialmedia.update_post", [post_update_data.id]),
+            {
+                preserveScroll: true,
+                onSuccess: () => {
+                    post_update_data.reset();
+                    modal_update_post.value = !modal_update_post.value;
+                },
+            }
+        );
+    }
 };
 
 const function_delete_post = () => {

@@ -41,6 +41,15 @@ class SocialMediaController extends Controller
         return Redirect::back();
     }
 
+    public function store(Request $request)
+    {   
+        UserPosts::create([
+            'user_id'=>Auth::user()->id,
+            'content' => $request->content
+        ]);
+        return Redirect::back();
+    }
+
     public function update_post(Request $request, $id)
     {   
         $update = UserPosts::find($id);
