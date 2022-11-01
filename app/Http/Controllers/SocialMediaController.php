@@ -41,6 +41,15 @@ class SocialMediaController extends Controller
         return Redirect::back();
     }
 
+    public function update_post(Request $request, $id)
+    {   
+        $update = UserPosts::find($id);
+        $update->update([
+            'content' => $request->content
+        ]);
+        return Redirect::back();
+    }
+
     public function update_comment(Request $request, $id)
     {   
         $update = UserPostComment::find($id);
@@ -55,5 +64,12 @@ class SocialMediaController extends Controller
         $delete = UserPostComment::find($id);
         $delete->delete();
         return Redirect::back();
+    }
+
+    public function delete_post($id)
+    {   
+        $delete = UserPosts::find($id);
+        $delete->delete();
+        return Redirect::route('dashboard');
     }
 }

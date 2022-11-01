@@ -5,8 +5,10 @@ import { ref, onMounted, computed } from "vue";
 
 import moment from "moment";
 
-const modal_update = ref(false);
-const modal_delete = ref(false);
+const modal_update_comment = ref(false);
+const modal_update_post = ref(false);
+const modal_delete_comment = ref(false);
+const modal_delete_post = ref(false);
 const date_conversion = (value) => {
     if (value) {
         return moment(value).format("MMMM Do YYYY, h:mm:ss a");
@@ -27,6 +29,15 @@ const comment_data = useForm({
     post_id: usePage().props.value.post[0].id,
 });
 
+const post_update_data = useForm({
+    content: usePage().props.value.post[0].content,
+    id: usePage().props.value.post[0].id,
+});
+
+const comment_delete_post_data = useForm({
+    id: usePage().props.value.post[0].id,
+});
+
 const comment_update_data = useForm({
     comment: "",
     id: "",
@@ -35,6 +46,37 @@ const comment_update_data = useForm({
 const comment_delete_data = useForm({
     id: "",
 });
+
+const function_open_update_post_modal = () => {
+    modal_update_post.value = !modal_update_post.value;
+};
+
+const function_open_delete_post_modal = () => {
+    modal_delete_post.value = !modal_delete_post.value;
+};
+
+const function_update_post = () => {
+    post_update_data.post(
+        route("socialmedia.update_post", [post_update_data.id]),
+        {
+            preserveScroll: true,
+            onSuccess: () => {
+                post_update_data.reset();
+                modal_update_post.value = !modal_update_post.value;
+            },
+        }
+    );
+};
+
+const function_delete_post = () => {
+    comment_delete_post_data.delete(
+        route("socialmedia.delete_post", [comment_delete_post_data.id]),
+        {
+            preserveScroll: true,
+            onSuccess: () => {},
+        }
+    );
+};
 
 const function_comment = () => {
     if (comment_data.comment == "") {
@@ -52,7 +94,7 @@ const function_comment = () => {
 const function_open_update_modal = (id, content) => {
     comment_update_data.id = id;
     comment_update_data.comment = content;
-    modal_update.value = !modal_update.value;
+    modal_update_comment.value = !modal_update_comment.value;
 };
 
 const function_update_comment = () => {
@@ -62,7 +104,7 @@ const function_update_comment = () => {
             preserveScroll: true,
             onSuccess: () => {
                 comment_update_data.reset();
-                modal_update.value = !modal_update.value;
+                modal_update_comment.value = !modal_update_comment.value;
             },
         }
     );
@@ -70,7 +112,7 @@ const function_update_comment = () => {
 
 const function_open_delete_modal = (id) => {
     comment_delete_data.id = id;
-    modal_delete.value = !modal_delete.value;
+    modal_delete_comment.value = !modal_delete_comment.value;
 };
 
 const function_delete_comment = () => {
@@ -80,7 +122,7 @@ const function_delete_comment = () => {
             preserveScroll: true,
             onSuccess: () => {
                 comment_delete_data.reset();
-                modal_delete.value = !modal_delete.value;
+                modal_delete_comment.value = !modal_delete_comment.value;
             },
         }
     );
@@ -153,8 +195,19 @@ const function_delete_comment = () => {
                 :key="key"
             >
                 <div>
-                    <a class="text-lg font-bold float-right relative" href="#"
+                    <a
+                        v-if="post.user.id == usePage().props.value.user.id"
+                        @click="function_open_update_post_modal()"
+                        class="text-lg font-bold float-right relative"
+                        href="#"
                         >Edit</a
+                    >
+                    <a
+                        v-if="post.user.id == usePage().props.value.user.id"
+                        @click="function_open_delete_post_modal()"
+                        class="text-lg font-bold float-right relative mr-4"
+                        href="#"
+                        >Delete</a
                     >
                 </div>
                 <div class="flex pb-6 items-cente justify-between">
@@ -400,7 +453,97 @@ const function_delete_comment = () => {
                     </div>
                 </div>
             </article>
-            <div v-if="modal_update" class=" ">
+            <div v-if="modal_update_post" class=" ">
+                <div
+                    id="popup-modal"
+                    tabindex="-1"
+                    class="overflow-y-auto flex fixed justify-center w-full backdrop-blur-sm overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full"
+                >
+                    <div
+                        class="relative p-4 w-full animate mt-10 max-w-md h-full md:h-auto"
+                    >
+                        <div class="relative bg-white rounded-lg shadow">
+                            <div class="p-2 w-full">
+                                <div class="relative">
+                                    <label
+                                        for="post"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+                                        >Your content</label
+                                    >
+                                    <textarea
+                                        v-model="post_update_data.content"
+                                        id="post"
+                                        rows="4"
+                                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                        placeholder="Your content..."
+                                        required
+                                    ></textarea>
+                                </div>
+                            </div>
+                            <button
+                                @click="function_open_update_post_modal()"
+                                type="button"
+                                class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+                                data-modal-toggle="popup-modal"
+                            >
+                                <svg
+                                    aria-hidden="true"
+                                    class="w-5 h-5"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"
+                                    ></path>
+                                </svg>
+                                <span class="sr-only">Close modal</span>
+                            </button>
+                            <div class="p-6 text-center">
+                                <svg
+                                    aria-hidden="true"
+                                    class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                    ></path>
+                                </svg>
+                                <h3
+                                    class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400"
+                                >
+                                    Are you sure you want to update your post?
+                                </h3>
+                                <button
+                                    @click="function_update_post()"
+                                    data-modal-toggle="popup-modal"
+                                    type="button"
+                                    class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"
+                                >
+                                    Yes, I'm sure
+                                </button>
+                                <button
+                                    @click="function_open_update_post_modal()"
+                                    data-modal-toggle="popup-modal"
+                                    type="button"
+                                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10"
+                                >
+                                    No, cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div v-if="modal_update_comment" class=" ">
                 <div
                     id="popup-modal"
                     tabindex="-1"
@@ -491,7 +634,7 @@ const function_delete_comment = () => {
                     </div>
                 </div>
             </div>
-            <div v-if="modal_delete">
+            <div v-if="modal_delete_comment">
                 <div
                     id="popup-modal"
                     tabindex="-1"
@@ -554,6 +697,79 @@ const function_delete_comment = () => {
                                 </button>
                                 <button
                                     @click="function_open_delete_modal()"
+                                    data-modal-toggle="popup-modal"
+                                    type="button"
+                                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10"
+                                >
+                                    No, cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div v-if="modal_delete_post">
+                <div
+                    id="popup-modal"
+                    tabindex="-1"
+                    class="overflow-y-auto flex justify-center backdrop-blur-sm overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full"
+                >
+                    <div
+                        class="relative p-4 animate w-full max-w-md h-full mt-[20vmin] transition ease-in-out md:h-auto"
+                    >
+                        <div class="relative bg-white rounded-lg shadow">
+                            <button
+                                @click="function_open_delete_post_modal()"
+                                type="button"
+                                class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+                                data-modal-toggle="popup-modal"
+                            >
+                                <svg
+                                    aria-hidden="true"
+                                    class="w-5 h-5"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"
+                                    ></path>
+                                </svg>
+                                <span class="sr-only">Close modal</span>
+                            </button>
+                            <div class="p-6 text-center">
+                                <svg
+                                    aria-hidden="true"
+                                    class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                    ></path>
+                                </svg>
+                                <h3
+                                    class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400"
+                                >
+                                    Are you sure you want to delete this post?
+                                </h3>
+                                <button
+                                    @click="function_delete_post()"
+                                    data-modal-toggle="popup-modal"
+                                    type="button"
+                                    class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"
+                                >
+                                    Yes, I'm sure
+                                </button>
+                                <button
+                                    @click="function_open_delete_post_modal()"
                                     data-modal-toggle="popup-modal"
                                     type="button"
                                     class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10"

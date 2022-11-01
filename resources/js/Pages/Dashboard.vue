@@ -409,13 +409,6 @@ onMounted(() => {});
                                 :key="key"
                                 class="mb-4 break-insider w-full p-6 rounded-xl bg-white flex flex-col bg-clip-border"
                             >
-                                <div>
-                                    <a
-                                        class="text-lg font-bold float-right relative"
-                                        href="#"
-                                        >Edit</a
-                                    >
-                                </div>
                                 <div
                                     class="flex pb-6 items-center justify-between"
                                 >

@@ -121,6 +121,8 @@ Route::middleware([
 
         Route::get('/comments/{id}', [SocialMediaController::class, 'comments'])->name('comments');
         Route::post('/add_comment', [SocialMediaController::class, 'add_comment'])->name('add_comment');
+        Route::post('/update_post/{id}', [SocialMediaController::class, 'update_post'])->name('update_post');
+        Route::delete('/delete_post/{id}', [SocialMediaController::class, 'delete_post'])->name('delete_post');
         Route::post('/update_comment/{id}', [SocialMediaController::class, 'update_comment'])->name('update_comment');
         Route::delete('/delete_comment/{id}', [SocialMediaController::class, 'delete_comment'])->name('delete_comment');
 
