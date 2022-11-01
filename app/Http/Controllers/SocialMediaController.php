@@ -40,4 +40,20 @@ class SocialMediaController extends Controller
         ]);
         return Redirect::back();
     }
+
+    public function update_comment(Request $request, $id)
+    {   
+        $update = UserPostComment::find($id);
+        $update->update([
+            'content' => $request->comment
+        ]);
+        return Redirect::back();
+    }
+
+    public function delete_comment($id)
+    {   
+        $delete = UserPostComment::find($id);
+        $delete->delete();
+        return Redirect::back();
+    }
 }
