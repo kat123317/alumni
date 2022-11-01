@@ -200,6 +200,7 @@ const function_delete_comment = () => {
                         @click="function_open_update_post_modal()"
                         class="text-lg font-bold float-right relative"
                         href="#"
+                        title="Update your post"
                         >Edit</a
                     >
                     <a
@@ -207,6 +208,7 @@ const function_delete_comment = () => {
                         @click="function_open_delete_post_modal()"
                         class="text-lg font-bold float-right relative mr-4"
                         href="#"
+                        title="Delete your post"
                         >Delete</a
                     >
                 </div>
