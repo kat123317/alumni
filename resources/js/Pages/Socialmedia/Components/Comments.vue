@@ -22,7 +22,7 @@ const date_conversion_from_now = (value) => {
 };
 const option_view = ref(true);
 
-onMounted(() => {});
+onMounted(() => { });
 
 const comment_data = useForm({
     comment: "",
@@ -77,7 +77,7 @@ const function_delete_post = () => {
         route("socialmedia.delete_post", [comment_delete_post_data.id]),
         {
             preserveScroll: true,
-            onSuccess: () => {},
+            onSuccess: () => { },
         }
     );
 };
@@ -136,56 +136,27 @@ const function_delete_comment = () => {
 <template>
     <AppLayout title="Comments">
         <div class="bg-gray-200">
-            <div
-                class="container flex items-center px-6 py-4 mx-auto overflow-y-auto whitespace-nowrap"
-            >
+            <div class="container flex items-center px-6 py-4 mx-auto overflow-y-auto whitespace-nowrap">
                 <a href="#" class="text-gray-600 dark:text-gray-200">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="w-5 h-5"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                    >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
                         <path
-                            d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"
-                        />
+                            d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
                     </svg>
                 </a>
 
-                <span
-                    class="mx-5 text-gray-500 dark:text-gray-300 rtl:-scale-x-100"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="w-5 h-5"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                    >
-                        <path
-                            fill-rule="evenodd"
+                <span class="mx-5 text-gray-500 dark:text-gray-300 rtl:-scale-x-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
                             d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                            clip-rule="evenodd"
-                        />
+                            clip-rule="evenodd" />
                     </svg>
                 </span>
 
-                <a
-                    href="#"
-                    class="flex items-center text-gray-600 -px-2 hover:underline"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        class="w-6 h-6"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"
-                        />
+                <a href="#" class="flex items-center text-gray-600 -px-2 hover:underline">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
                     </svg>
 
                     <span class="mx-2">Comments</span>
@@ -193,44 +164,35 @@ const function_delete_comment = () => {
             </div>
         </div>
         <section class="flex justify-center mt-10">
-            <article
-                class="mb-4 max-w-7xl break-insider w-full p-6 rounded-xl bg-white flex flex-col bg-clip-border"
-                v-for="(post, key) in usePage().props.value.post"
-                :key="key"
-            >
+            <article class="mb-4 max-w-7xl break-insider w-full p-6 rounded-xl bg-white flex flex-col bg-clip-border"
+                v-for="(post, key) in usePage().props.value.post" :key="key">
                 <div>
-                    <a
-                        v-if="post.user.id == usePage().props.value.user.id"
-                        @click="function_open_update_post_modal()"
-                        class="text-lg font-bold float-right relative"
-                        href="#"
-                        title="Update your post"
-                        >Edit</a
-                    >
-                    <a
-                        v-if="post.user.id == usePage().props.value.user.id"
-                        @click="function_open_delete_post_modal()"
-                        class="text-lg font-bold float-right relative mr-4"
-                        href="#"
-                        title="Delete your post"
-                        >Delete</a
-                    >
+                    <a v-if="post.user.id == usePage().props.value.user.id" @click="function_open_update_post_modal()"
+                        class="text-lg flex font-bold float-right relative" href="#" title="Update your post"><svg
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                        </svg>
+                        Edit</a>
+
+                    <a v-if="post.user.id == usePage().props.value.user.id" @click="function_open_delete_post_modal()"
+                        class="text-lg font-bold float-right relative flex mr-4" href="#" title="Delete your post"><svg
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                        </svg>
+                        Delete</a>
                 </div>
                 <div class="flex pb-6 items-cente justify-between">
                     <div class="flex">
                         <a class="inline-block mr-4" href="#">
-                            <img
-                                class="rounded-full max-w-none w-12 h-12"
-                                :src="post.user.profile_photo_url"
-                            />
+                            <img class="rounded-full max-w-none w-12 h-12" :src="post.user.profile_photo_url" />
                         </a>
                         <div class="flex flex-col">
                             <div>
-                                <a
-                                    class="inline-block text-lg font-bold"
-                                    href="#"
-                                    >{{ post.user.name }}</a
-                                >
+                                <a class="inline-block text-lg font-bold" href="#">{{ post.user.name }}</a>
                             </div>
                             <div class="text-slate-500">
                                 {{ date_conversion(post.created_at) }}
@@ -245,15 +207,8 @@ const function_delete_comment = () => {
                     {{ post.content }}
                 </p>
                 <div class="py-4">
-                    <div
-                        class="grid grid-flow-row-dense grid-cols-2 grid-rows-1 ..."
-                    >
-                        <a
-                            v-for="(photos, key) in post.photo"
-                            :key="key"
-                            class="flex"
-                            href="#"
-                        >
+                    <div class="grid grid-flow-row-dense grid-cols-2 grid-rows-1 ...">
+                        <a v-for="(photos, key) in post.photo" :key="key" class="flex" href="#">
                             <img class="w-auto" :src="photos" />
                         </a>
                     </div>
@@ -261,47 +216,29 @@ const function_delete_comment = () => {
 
                 <div class="py-4">
                     <a class="inline-flex items-center" href="#">
-                        <span class="mr-2">
-                            <svg
-                                class="fill-rose-600"
-                                style="width: 24px; height: 24px"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z"
-                                ></path>
+                        <button type="button"
+                            class="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M6.633 10.5c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 012.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 00.322-1.672V3a.75.75 0 01.75-.75A2.25 2.25 0 0116.5 4.5c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 01-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 00-1.423-.23H5.904M14.25 9h2.25M5.904 18.75c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 01-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 10.203 4.167 9.75 5 9.75h1.053c.472 0 .745.556.5.96a8.958 8.958 0 00-1.302 4.665c0 1.194.232 2.333.654 3.375z" />
                             </svg>
-                        </span>
-                        <span class="text-lg font-bold">34</span>
+
+                            120
+                        </button>
                     </a>
                 </div>
                 <div class="relative">
-                    <input
-                        v-model="comment_data.comment"
+                    <input v-model="comment_data.comment"
                         class="pt-2 pb-2 pl-3 w-full h-11 bg-slate-100 rounded-lg placeholder:text-slate-600 font-medium pr-20"
-                        type="text"
-                        placeholder="Write a comment"
-                        required
-                    />
-                    <button
-                        class="flex absolute right-3 top-2/4 -mt-3 items-center"
-                        @click="function_comment()"
-                    >
-                        <svg
-                            class="mr-2"
-                            style="width: 26px; height: 26px"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                fill="currentColor"
-                                d="M20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12M22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12M10,9.5C10,10.3 9.3,11 8.5,11C7.7,11 7,10.3 7,9.5C7,8.7 7.7,8 8.5,8C9.3,8 10,8.7 10,9.5M17,9.5C17,10.3 16.3,11 15.5,11C14.7,11 14,10.3 14,9.5C14,8.7 14.7,8 15.5,8C16.3,8 17,8.7 17,9.5M12,17.23C10.25,17.23 8.71,16.5 7.81,15.42L9.23,14C9.68,14.72 10.75,15.23 12,15.23C13.25,15.23 14.32,14.72 14.77,14L16.19,15.42C15.29,16.5 13.75,17.23 12,17.23Z"
-                            ></path>
+                        type="text" placeholder="Write a comment" required />
+                    <button class="flex absolute right-3 top-2/4 -mt-3 items-center" @click="function_comment()">
+                        <svg class="mr-2" style="width: 26px; height: 26px" viewBox="0 0 24 24">
+                            <path fill="currentColor"
+                                d="M20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12M22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12M10,9.5C10,10.3 9.3,11 8.5,11C7.7,11 7,10.3 7,9.5C7,8.7 7.7,8 8.5,8C9.3,8 10,8.7 10,9.5M17,9.5C17,10.3 16.3,11 15.5,11C14.7,11 14,10.3 14,9.5C14,8.7 14.7,8 15.5,8C16.3,8 17,8.7 17,9.5M12,17.23C10.25,17.23 8.71,16.5 7.81,15.42L9.23,14C9.68,14.72 10.75,15.23 12,15.23C13.25,15.23 14.32,14.72 14.77,14L16.19,15.42C15.29,16.5 13.75,17.23 12,17.23Z">
+                            </path>
                         </svg>
-                        <svg
-                            class="fill-blue-500"
-                            style="width: 24px; height: 24px"
-                            viewBox="0 0 24 24"
-                        >
+                        <svg class="fill-blue-500" style="width: 24px; height: 24px" viewBox="0 0 24 24">
                             <path d="M2,21L23,12L2,3V10L17,12L2,14V21Z"></path>
                         </svg>
                     </button>
@@ -311,53 +248,32 @@ const function_delete_comment = () => {
                     <div class="pt-6">
                         <div class="media flex pb-4">
                             <a class="inline-block mr-4" href="#">
-                                <img
-                                    class="rounded-full max-w-none w-12 h-12"
-                                    :src="comments.user.profile_photo_url"
-                                />
+                                <img class="rounded-full max-w-none w-12 h-12" :src="comments.user.profile_photo_url" />
                             </a>
                             <div class="media-body">
                                 <div>
-                                    <a
-                                        class="inline-block text-base font-bold mr-2"
-                                        href="#"
-                                        >{{ comments.user.name }}</a
-                                    >
+                                    <a class="inline-block text-base font-bold mr-2" href="#">{{ comments.user.name
+                                    }}</a>
                                     <span class="text-slate-500">{{
-                                        date_conversion_from_now(
-                                            comments.created_at
-                                        )
-                                    }}</span>
-                                    <button
-                                        v-if="
-                                            comments.user.id ==
-                                            usePage().props.value.user.id
-                                        "
-                                        @click="
-                                            function_open_update_modal(
-                                                comments.id,
-                                                comments.content
+                                            date_conversion_from_now(
+                                                comments.created_at
                                             )
-                                        "
-                                        class="inline-block ml-6"
-                                        title="Update your comment"
-                                    >
-                                        <svg
-                                            version="1.1"
-                                            id="Capa_1"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                                            x="0px"
-                                            y="0px"
-                                            width="20px"
-                                            height="20px"
-                                            viewBox="0 0 420.827 420.827"
-                                            style="
+                                    }}</span>
+                                    <button v-if="
+                                        comments.user.id ==
+                                        usePage().props.value.user.id
+                                    " @click="
+    function_open_update_modal(
+        comments.id,
+        comments.content
+    )
+" class="inline-block ml-6" title="Update your comment">
+                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px"
+                                            height="20px" viewBox="0 0 420.827 420.827" style="
                                                 enable-background: new 0 0
                                                     420.827 420.827;
-                                            "
-                                            xml:space="preserve"
-                                        >
+                                            " xml:space="preserve">
                                             <path
                                                 d="M210.29,0C156,0,104.43,20.693,65.077,58.269C25.859,95.715,2.794,146.022,0.134,199.921
 			c-0.135,2.734,0.857,5.404,2.744,7.388c1.889,1.983,4.507,3.105,7.244,3.105h45.211c5.275,0,9.644-4.098,9.979-9.362
@@ -365,65 +281,39 @@ const function_delete_comment = () => {
 			c-18.109,0-35.772-3.287-52.501-9.771l17.366-15.425c2.686-2.354,3.912-5.964,3.217-9.468c-0.696-3.506-3.209-6.371-6.592-7.521
 			l-113-32.552c-3.387-1.149-7.122-0.407-9.81,1.948c-2.686,2.354-3.913,5.963-3.218,9.467L69.71,403.157
 			c0.696,3.505,3.209,6.372,6.591,7.521c3.383,1.147,7.122,0.408,9.81-1.946l18.599-16.298
-			c31.946,18.574,68.456,28.394,105.581,28.394c116.021,0,210.414-94.392,210.414-210.414C420.705,94.391,326.312,0,210.29,0z"
-                                            />
-                                            <path
-                                                d="M195.112,237.9h118.5c2.757,0,5-2.242,5-5v-30c0-2.757-2.243-5-5-5h-83.5v-91c0-2.757-2.243-5-5-5h-30
-			c-2.757,0-5,2.243-5,5v126C190.112,235.658,192.355,237.9,195.112,237.9z"
-                                            />
+			c31.946,18.574,68.456,28.394,105.581,28.394c116.021,0,210.414-94.392,210.414-210.414C420.705,94.391,326.312,0,210.29,0z" />
+                                            <path d="M195.112,237.9h118.5c2.757,0,5-2.242,5-5v-30c0-2.757-2.243-5-5-5h-83.5v-91c0-2.757-2.243-5-5-5h-30
+			c-2.757,0-5,2.243-5,5v126C190.112,235.658,192.355,237.9,195.112,237.9z" />
                                         </svg>
                                     </button>
-                                    <button
-                                        v-if="
-                                            comments.user.id ==
-                                            usePage().props.value.user.id
-                                        "
-                                        @click="
-                                            function_open_delete_modal(
-                                                comments.id
-                                            )
-                                        "
-                                        class="inline-block ml-2"
-                                        title="Delete your comment"
-                                    >
-                                        <svg
-                                            version="1.1"
-                                            id="Capa_1"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                                            x="0px"
-                                            y="0px"
-                                            width="20px"
-                                            height="20px"
-                                            viewBox="0 0 482.428 482.429"
-                                            style="
+                                    <button v-if="
+                                        comments.user.id ==
+                                        usePage().props.value.user.id
+                                    " @click="
+    function_open_delete_modal(
+        comments.id
+    )
+" class="inline-block ml-2" title="Delete your comment">
+                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px"
+                                            height="20px" viewBox="0 0 482.428 482.429" style="
                                                 enable-background: new 0 0
                                                     482.428 482.429;
-                                            "
-                                            xml:space="preserve"
-                                        >
-                                            <path
-                                                d="M381.163,57.799h-75.094C302.323,25.316,274.686,0,241.214,0c-33.471,0-61.104,25.315-64.85,57.799h-75.098
+                                            " xml:space="preserve">
+                                            <path d="M381.163,57.799h-75.094C302.323,25.316,274.686,0,241.214,0c-33.471,0-61.104,25.315-64.85,57.799h-75.098
 			c-30.39,0-55.111,24.728-55.111,55.117v2.828c0,23.223,14.46,43.1,34.83,51.199v260.369c0,30.39,24.724,55.117,55.112,55.117
 			h210.236c30.389,0,55.111-24.729,55.111-55.117V166.944c20.369-8.1,34.83-27.977,34.83-51.199v-2.828
 			C436.274,82.527,411.551,57.799,381.163,57.799z M241.214,26.139c19.037,0,34.927,13.645,38.443,31.66h-76.879
 			C206.293,39.783,222.184,26.139,241.214,26.139z M375.305,427.312c0,15.978-13,28.979-28.973,28.979H136.096
 			c-15.973,0-28.973-13.002-28.973-28.979V170.861h268.182V427.312z M410.135,115.744c0,15.978-13,28.979-28.973,28.979H101.266
 			c-15.973,0-28.973-13.001-28.973-28.979v-2.828c0-15.978,13-28.979,28.973-28.979h279.897c15.973,0,28.973,13.001,28.973,28.979
-			V115.744z"
-                                            />
-                                            <path
-                                                d="M171.144,422.863c7.218,0,13.069-5.853,13.069-13.068V262.641c0-7.216-5.852-13.07-13.069-13.07
-			c-7.217,0-13.069,5.854-13.069,13.07v147.154C158.074,417.012,163.926,422.863,171.144,422.863z"
-                                            />
-                                            <path
-                                                d="M241.214,422.863c7.218,0,13.07-5.853,13.07-13.068V262.641c0-7.216-5.854-13.07-13.07-13.07
-			c-7.217,0-13.069,5.854-13.069,13.07v147.154C228.145,417.012,233.996,422.863,241.214,422.863z"
-                                            />
-                                            <path
-                                                d="M311.284,422.863c7.217,0,13.068-5.853,13.068-13.068V262.641c0-7.216-5.852-13.07-13.068-13.07
-			c-7.219,0-13.07,5.854-13.07,13.07v147.154C298.213,417.012,304.067,422.863,311.284,422.863z"
-                                            />
+			V115.744z" />
+                                            <path d="M171.144,422.863c7.218,0,13.069-5.853,13.069-13.068V262.641c0-7.216-5.852-13.07-13.069-13.07
+			c-7.217,0-13.069,5.854-13.069,13.07v147.154C158.074,417.012,163.926,422.863,171.144,422.863z" />
+                                            <path d="M241.214,422.863c7.218,0,13.07-5.853,13.07-13.068V262.641c0-7.216-5.854-13.07-13.07-13.07
+			c-7.217,0-13.069,5.854-13.069,13.07v147.154C228.145,417.012,233.996,422.863,241.214,422.863z" />
+                                            <path d="M311.284,422.863c7.217,0,13.068-5.853,13.068-13.068V262.641c0-7.216-5.852-13.07-13.068-13.07
+			c-7.219,0-13.07,5.854-13.07,13.07v147.154C298.213,417.012,304.067,422.863,311.284,422.863z" />
                                         </svg>
                                     </button>
                                 </div>
@@ -431,27 +321,17 @@ const function_delete_comment = () => {
                                     {{ comments.content }}
                                 </p>
                                 <div class="mt-2 flex items-center">
-                                    <a
-                                        class="inline-flex items-center py-2 mr-3"
-                                        href="#"
-                                    >
-                                        <span class="mr-2">
-                                            <svg
-                                                class="fill-rose-600"
-                                                style="
-                                                    width: 22px;
-                                                    height: 22px;
-                                                "
-                                                viewBox="0 0 24 24"
-                                            >
-                                                <path
-                                                    d="M12.1 18.55L12 18.65L11.89 18.55C7.14 14.24 4 11.39 4 8.5C4 6.5 5.5 5 7.5 5C9.04 5 10.54 6 11.07 7.36H12.93C13.46 6 14.96 5 16.5 5C18.5 5 20 6.5 20 8.5C20 11.39 16.86 14.24 12.1 18.55M16.5 3C14.76 3 13.09 3.81 12 5.08C10.91 3.81 9.24 3 7.5 3C4.42 3 2 5.41 2 8.5C2 12.27 5.4 15.36 10.55 20.03L12 21.35L13.45 20.03C18.6 15.36 22 12.27 22 8.5C22 5.41 19.58 3 16.5 3Z"
-                                                ></path>
+                                    <a class="inline-flex items-center" href="#">
+                                        <button type="button"
+                                            class="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M6.633 10.5c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 012.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 00.322-1.672V3a.75.75 0 01.75-.75A2.25 2.25 0 0116.5 4.5c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 01-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 00-1.423-.23H5.904M14.25 9h2.25M5.904 18.75c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 01-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 10.203 4.167 9.75 5 9.75h1.053c.472 0 .745.556.5.96a8.958 8.958 0 00-1.302 4.665c0 1.194.232 2.333.654 3.375z" />
                                             </svg>
-                                        </span>
-                                        <span class="text-base font-bold"
-                                            >0</span
-                                        >
+
+                                            {{ 0 }}
+                                        </button>
                                     </a>
                                 </div>
                             </div>
@@ -460,88 +340,48 @@ const function_delete_comment = () => {
                 </div>
             </article>
             <div v-if="modal_update_post" class=" ">
-                <div
-                    id="popup-modal"
-                    tabindex="-1"
-                    class="overflow-y-auto flex fixed justify-center w-full backdrop-blur-sm overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full"
-                >
-                    <div
-                        class="relative p-4 w-full animate mt-10 max-w-md h-full md:h-auto"
-                    >
+                <div id="popup-modal" tabindex="-1"
+                    class="overflow-y-auto flex fixed justify-center w-full backdrop-blur-sm overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full">
+                    <div class="relative p-4 w-full animate mt-10 max-w-md h-full md:h-auto">
                         <div class="relative bg-white rounded-lg shadow">
                             <div class="p-2 w-full">
                                 <div class="relative">
-                                    <label
-                                        for="post"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
-                                        >Your content</label
-                                    >
-                                    <textarea
-                                        v-model="post_update_data.content"
-                                        id="post"
-                                        rows="4"
+                                    <label for="post"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Your
+                                        content</label>
+                                    <textarea v-model="post_update_data.content" id="post" rows="4"
                                         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                                        placeholder="Your content..."
-                                        required
-                                    ></textarea>
+                                        placeholder="Your content..." required></textarea>
                                 </div>
                             </div>
-                            <button
-                                @click="function_open_update_post_modal()"
-                                type="button"
+                            <button @click="function_open_update_post_modal()" type="button"
                                 class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
-                                data-modal-toggle="popup-modal"
-                            >
-                                <svg
-                                    aria-hidden="true"
-                                    class="w-5 h-5"
-                                    fill="currentColor"
-                                    viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        fill-rule="evenodd"
+                                data-modal-toggle="popup-modal">
+                                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
                                         d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                        clip-rule="evenodd"
-                                    ></path>
+                                        clip-rule="evenodd"></path>
                                 </svg>
                                 <span class="sr-only">Close modal</span>
                             </button>
                             <div class="p-6 text-center">
-                                <svg
-                                    aria-hidden="true"
-                                    class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                    ></path>
+                                <svg aria-hidden="true" class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
-                                <h3
-                                    class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400"
-                                >
+                                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
                                     Are you sure you want to update your post?
                                 </h3>
-                                <button
-                                    @click="function_update_post()"
-                                    data-modal-toggle="popup-modal"
-                                    type="button"
-                                    class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"
-                                >
+                                <button @click="function_update_post()" data-modal-toggle="popup-modal" type="button"
+                                    class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
                                     Yes, I'm sure
                                 </button>
-                                <button
-                                    @click="function_open_update_post_modal()"
-                                    data-modal-toggle="popup-modal"
+                                <button @click="function_open_update_post_modal()" data-modal-toggle="popup-modal"
                                     type="button"
-                                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10"
-                                >
+                                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10">
                                     No, cancel
                                 </button>
                             </div>
@@ -550,89 +390,49 @@ const function_delete_comment = () => {
                 </div>
             </div>
             <div v-if="modal_update_comment" class=" ">
-                <div
-                    id="popup-modal"
-                    tabindex="-1"
-                    class="overflow-y-auto flex fixed justify-center w-full backdrop-blur-sm overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full"
-                >
-                    <div
-                        class="relative p-4 w-full animate mt-10 max-w-md h-full md:h-auto"
-                    >
+                <div id="popup-modal" tabindex="-1"
+                    class="overflow-y-auto flex fixed justify-center w-full backdrop-blur-sm overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full">
+                    <div class="relative p-4 w-full animate mt-10 max-w-md h-full md:h-auto">
                         <div class="relative bg-white rounded-lg shadow">
                             <div class="p-2 w-full">
                                 <div class="relative">
-                                    <label
-                                        for="content"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
-                                        >Your content</label
-                                    >
-                                    <textarea
-                                        v-model="comment_update_data.comment"
-                                        id="content"
-                                        rows="4"
+                                    <label for="content"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Your
+                                        content</label>
+                                    <textarea v-model="comment_update_data.comment" id="content" rows="4"
                                         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                                        placeholder="Your content..."
-                                        required
-                                    ></textarea>
+                                        placeholder="Your content..." required></textarea>
                                 </div>
                             </div>
-                            <button
-                                @click="function_open_update_modal()"
-                                type="button"
+                            <button @click="function_open_update_modal()" type="button"
                                 class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
-                                data-modal-toggle="popup-modal"
-                            >
-                                <svg
-                                    aria-hidden="true"
-                                    class="w-5 h-5"
-                                    fill="currentColor"
-                                    viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        fill-rule="evenodd"
+                                data-modal-toggle="popup-modal">
+                                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
                                         d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                        clip-rule="evenodd"
-                                    ></path>
+                                        clip-rule="evenodd"></path>
                                 </svg>
                                 <span class="sr-only">Close modal</span>
                             </button>
                             <div class="p-6 text-center">
-                                <svg
-                                    aria-hidden="true"
-                                    class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                    ></path>
+                                <svg aria-hidden="true" class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
-                                <h3
-                                    class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400"
-                                >
+                                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
                                     Are you sure you want to update your
                                     comment?
                                 </h3>
-                                <button
-                                    @click="function_update_comment()"
-                                    data-modal-toggle="popup-modal"
-                                    type="button"
-                                    class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"
-                                >
+                                <button @click="function_update_comment()" data-modal-toggle="popup-modal" type="button"
+                                    class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
                                     Yes, I'm sure
                                 </button>
-                                <button
-                                    @click="function_open_update_modal()"
-                                    data-modal-toggle="popup-modal"
+                                <button @click="function_open_update_modal()" data-modal-toggle="popup-modal"
                                     type="button"
-                                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10"
-                                >
+                                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10">
                                     No, cancel
                                 </button>
                             </div>
@@ -641,72 +441,40 @@ const function_delete_comment = () => {
                 </div>
             </div>
             <div v-if="modal_delete_comment">
-                <div
-                    id="popup-modal"
-                    tabindex="-1"
-                    class="overflow-y-auto flex justify-center backdrop-blur-sm overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full"
-                >
+                <div id="popup-modal" tabindex="-1"
+                    class="overflow-y-auto flex justify-center backdrop-blur-sm overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full">
                     <div
-                        class="relative p-4 animate w-full max-w-md h-full mt-[20vmin] transition ease-in-out md:h-auto"
-                    >
+                        class="relative p-4 animate w-full max-w-md h-full mt-[20vmin] transition ease-in-out md:h-auto">
                         <div class="relative bg-white rounded-lg shadow">
-                            <button
-                                @click="function_open_delete_modal()"
-                                type="button"
+                            <button @click="function_open_delete_modal()" type="button"
                                 class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
-                                data-modal-toggle="popup-modal"
-                            >
-                                <svg
-                                    aria-hidden="true"
-                                    class="w-5 h-5"
-                                    fill="currentColor"
-                                    viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        fill-rule="evenodd"
+                                data-modal-toggle="popup-modal">
+                                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
                                         d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                        clip-rule="evenodd"
-                                    ></path>
+                                        clip-rule="evenodd"></path>
                                 </svg>
                                 <span class="sr-only">Close modal</span>
                             </button>
                             <div class="p-6 text-center">
-                                <svg
-                                    aria-hidden="true"
-                                    class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                    ></path>
+                                <svg aria-hidden="true" class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
-                                <h3
-                                    class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400"
-                                >
+                                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
                                     Are you sure you want to delete this
                                     comment?
                                 </h3>
-                                <button
-                                    @click="function_delete_comment()"
-                                    data-modal-toggle="popup-modal"
-                                    type="button"
-                                    class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"
-                                >
+                                <button @click="function_delete_comment()" data-modal-toggle="popup-modal" type="button"
+                                    class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
                                     Yes, I'm sure
                                 </button>
-                                <button
-                                    @click="function_open_delete_modal()"
-                                    data-modal-toggle="popup-modal"
+                                <button @click="function_open_delete_modal()" data-modal-toggle="popup-modal"
                                     type="button"
-                                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10"
-                                >
+                                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10">
                                     No, cancel
                                 </button>
                             </div>
@@ -715,71 +483,39 @@ const function_delete_comment = () => {
                 </div>
             </div>
             <div v-if="modal_delete_post">
-                <div
-                    id="popup-modal"
-                    tabindex="-1"
-                    class="overflow-y-auto flex justify-center backdrop-blur-sm overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full"
-                >
+                <div id="popup-modal" tabindex="-1"
+                    class="overflow-y-auto flex justify-center backdrop-blur-sm overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full">
                     <div
-                        class="relative p-4 animate w-full max-w-md h-full mt-[20vmin] transition ease-in-out md:h-auto"
-                    >
+                        class="relative p-4 animate w-full max-w-md h-full mt-[20vmin] transition ease-in-out md:h-auto">
                         <div class="relative bg-white rounded-lg shadow">
-                            <button
-                                @click="function_open_delete_post_modal()"
-                                type="button"
+                            <button @click="function_open_delete_post_modal()" type="button"
                                 class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
-                                data-modal-toggle="popup-modal"
-                            >
-                                <svg
-                                    aria-hidden="true"
-                                    class="w-5 h-5"
-                                    fill="currentColor"
-                                    viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        fill-rule="evenodd"
+                                data-modal-toggle="popup-modal">
+                                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
                                         d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                        clip-rule="evenodd"
-                                    ></path>
+                                        clip-rule="evenodd"></path>
                                 </svg>
                                 <span class="sr-only">Close modal</span>
                             </button>
                             <div class="p-6 text-center">
-                                <svg
-                                    aria-hidden="true"
-                                    class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                    ></path>
+                                <svg aria-hidden="true" class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
-                                <h3
-                                    class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400"
-                                >
+                                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
                                     Are you sure you want to delete this post?
                                 </h3>
-                                <button
-                                    @click="function_delete_post()"
-                                    data-modal-toggle="popup-modal"
-                                    type="button"
-                                    class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"
-                                >
+                                <button @click="function_delete_post()" data-modal-toggle="popup-modal" type="button"
+                                    class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
                                     Yes, I'm sure
                                 </button>
-                                <button
-                                    @click="function_open_delete_post_modal()"
-                                    data-modal-toggle="popup-modal"
+                                <button @click="function_open_delete_post_modal()" data-modal-toggle="popup-modal"
                                     type="button"
-                                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10"
-                                >
+                                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10">
                                     No, cancel
                                 </button>
                             </div>
