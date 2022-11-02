@@ -435,14 +435,22 @@ const function_add_post = () => {
                                 <div
                                     class="w-full h-16 flex items-center flex justify-between px-5"
                                 >
-                                    <img
-                                        class="rounded-full w-10 h-10 mr-3"
-                                        :src="
-                                            usePage().props.value.user
-                                                .profile_photo_url
+                                    <a
+                                        :href="
+                                            route('socialmedia.user_profile', [
+                                                usePage().props.value.user.id,
+                                            ])
                                         "
-                                        alt=""
-                                    />
+                                    >
+                                        <img
+                                            class="rounded-full w-10 h-10 mr-3"
+                                            :src="
+                                                usePage().props.value.user
+                                                    .profile_photo_url
+                                            "
+                                            alt=""
+                                        />
+                                    </a>
                                     <input
                                         v-model="post_data.content"
                                         type="text"
@@ -517,7 +525,15 @@ const function_add_post = () => {
                                     class="flex pb-6 items-center justify-between"
                                 >
                                     <div class="flex">
-                                        <a class="inline-block mr-4" href="#">
+                                        <a
+                                            class="inline-block mr-4"
+                                            :href="
+                                                route(
+                                                    'socialmedia.user_profile',
+                                                    [posts.id]
+                                                )
+                                            "
+                                        >
                                             <img
                                                 class="rounded-full max-w-none w-12 h-12"
                                                 :src="
@@ -529,7 +545,12 @@ const function_add_post = () => {
                                             <div>
                                                 <a
                                                     class="inline-block text-lg font-bold"
-                                                    href="#"
+                                                    :href="
+                                                        route(
+                                                            'socialmedia.user_profile',
+                                                            [posts.id]
+                                                        )
+                                                    "
                                                     >{{ posts.user.name }}</a
                                                 >
                                             </div>
