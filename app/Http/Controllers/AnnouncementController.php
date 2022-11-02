@@ -7,6 +7,7 @@ use App\Models\College;
 use App\Models\Course;
 use App\Models\Notification;
 use App\Models\User;
+use App\Models\UserNotification;
 use App\Models\UserPosts;
 use App\Models\Yearbook;
 use Illuminate\Http\Request;
@@ -51,6 +52,7 @@ class AnnouncementController extends Controller
                 $query->where('is_active', '1');
             }])->orderBy('created_at', 'desc');
         }])->orderBy('created_at', 'desc')->get();
+        $user_notification = UserNotification::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
         return Inertia::render('Dashboard', [
             'notifications' => $notifications,
             'colleges' => $colleges,
@@ -62,8 +64,8 @@ class AnnouncementController extends Controller
             'yearbooks' => Yearbook::orderBy('schoolyear_from')->get(),
             'from' => $request->from,
             'to' => $request->to,
-            'posts'=>$posts
-            
+            'posts'=>$posts,
+            'user_notification' => $user_notification
         ]);
     }
 

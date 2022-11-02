@@ -11,4 +11,10 @@ class UserNotification extends Model
     use HasFactory, SoftDeletes;
 
     protected $guarded = [];
+
+    protected $casts = [
+        'details' => 'json'
+
+    ];
+
 }
