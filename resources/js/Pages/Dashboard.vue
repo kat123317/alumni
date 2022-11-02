@@ -264,7 +264,16 @@ const function_add_post = () => {
                                             class="divide-y max-h-[70vmin] lg:max-h-[20vmin] overflow-hidden overflow-y-auto divide-gray-100"
                                         >
                                             <a
-                                                href="#"
+                                                :href="
+                                                    route(
+                                                        'socialmedia.comments',
+                                                        [
+                                                            user_notification
+                                                                .details
+                                                                .post_id,
+                                                        ]
+                                                    )
+                                                "
                                                 v-for="(
                                                     user_notification, key
                                                 ) in usePage().props.value
