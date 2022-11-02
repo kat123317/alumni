@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\UserNotification;
 use App\Models\UserPostComment;
 use App\Models\UserPosts;
 use Illuminate\Http\Request;
@@ -27,6 +28,15 @@ class SocialMediaController extends Controller
                 $query->with('user')->orderBy('created_at', 'desc');
             }])->get()
         ]);
+    }
+
+    public function open_notif(Request $request, $id)
+    {   
+        $update = UserNotification::find($id);
+        $update->update([
+            'is_read' => $request->is_read
+        ]);
+        return Redirect::route("socialmedia.comments", [$request->id]);
     }
 
     public function comments(Request $request, $id)

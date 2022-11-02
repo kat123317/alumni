@@ -45,6 +45,11 @@ const post_data = useForm({
     content: "",
 });
 
+const open_notif_data = useForm({
+    id: "",
+    is_read: 1,
+});
+
 const function_add_post = () => {
     if (post_data.content == "") {
         errorAlert("System will not allow empty post, Sorry");
@@ -57,6 +62,16 @@ const function_add_post = () => {
             },
         });
     }
+};
+
+const function_open_notif = (id, notif_id) => {
+    open_notif_data.id = id;
+    open_notif_data.post(route("socialmedia.open_notif", [notif_id]), {
+        preserveScroll: true,
+        onSuccess: () => {
+            open_notif_data.reset();
+        },
+    });
 };
 </script>
 
@@ -264,14 +279,11 @@ const function_add_post = () => {
                                             class="divide-y max-h-[70vmin] lg:max-h-[20vmin] overflow-hidden overflow-y-auto divide-gray-100"
                                         >
                                             <a
-                                                :href="
-                                                    route(
-                                                        'socialmedia.comments',
-                                                        [
-                                                            user_notification
-                                                                .details
-                                                                .post_id,
-                                                        ]
+                                                @click="
+                                                    function_open_notif(
+                                                        user_notification
+                                                            .details.post_id,
+                                                        user_notification.id
                                                     )
                                                 "
                                                 v-for="(

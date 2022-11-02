@@ -116,6 +116,7 @@ Route::middleware([
     Route::prefix('socialmedia')->name('socialmedia.')->group(function () {
         Route::get('/socialmedia', [SocialMediaController::class, 'index'])->name('index');
         Route::post('/store', [SocialMediaController::class, 'store'])->name('store');
+        Route::post('/open_notif/{id}', [SocialMediaController::class, 'open_notif'])->name('open_notif');
 
         Route::get('/user_profile/{id}', [SocialMediaController::class, 'user_profile'])->name('user_profile');
         Route::get('/comments/{id}', [SocialMediaController::class, 'comments'])->name('comments');
