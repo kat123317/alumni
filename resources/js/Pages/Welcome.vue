@@ -346,18 +346,18 @@ defineProps({
                         </div> -->
                         <div v-for="(events, key) in usePage().props.value
                         .events" :key="key" class="flex">
-                       
+
                             <div class="w-full">
                                 <div class="bg-green-900 rounded-lg text-center text-yellow-500 font-bold text-[2rem]">
-                                    
+
                                     {{ events.title }}
                                 </div>
                                 <div class="bg-yellow-500 mt-1 rounded-lg text-center text-green-800 font-bold">
                                     {{ events.content }}
                                 </div>
 
-                                <div class="mt-2 grid grid-cols-1 lg:grid-cols-2 sm:grid-cols-1">
-                                    
+                                <div class="mt-2 grid grid-cols-1 lg:grid-cols-1 sm:grid-cols-1">
+
                                     <div
                                         class=" flex mr-0 lg:mr-2 p-0 font-mono rounded-lg text-center text-yellow-500 font-bold ">
                                         <div>
@@ -368,27 +368,26 @@ defineProps({
                                                 }}
                                             </p>
                                         </div>
-                                        <div class="bg-green-900 rounded-lg p-2">
+                                        <div class="bg-green-900 w-full rounded-lg p-2">
 
-                                            
-                                        <span>From</span> <br />
-                                        <span class="text-[4rem]">{{
-                                                date_conversion_day_num(
-                                                    events.from
-                                                )
-                                        }}
-                                            <br />
-                                        </span>
-                                        <em>{{
-                                                date_conversion_day_text(
-                                                    events.from
-                                                )
-                                        }}</em>
+
+                                            <span>From</span> <br />
+                                            <span class="text-[4rem]">{{
+                                                    date_conversion_day_num(
+                                                        events.from
+                                                    )
+                                            }}
+                                                <br />
+                                            </span>
+                                            <em>{{
+                                                    date_conversion_day_text(
+                                                        events.from
+                                                    )
+                                            }}</em>
                                         </div>
                                     </div>
-                                    <div
-                                        class=" flex mr-0 lg:mr-1 p-0 font-mono rounded-lg text-center text-green-800 font-bold ">
-                                        <div>
+                                    <div class=" flex mt-5 p-0 font-mono rounded-lg text-center text-green-800 font-bold ">
+                                        <div >
                                             <p id="vertical_date"
                                                 class="rounded-lg lg:bg-transparent text-yellow-600 mt-3 pt-1 text-center">
                                                 {{
@@ -396,28 +395,28 @@ defineProps({
                                                 }}
                                            </p>
                                         </div>
-                                        <div class="bg-yellow-500 rounded-lg p-2">
+                                        <div class="bg-yellow-500 w-full mr-2  rounded-lg p-2">
 
-                                            
-                                        <span>to</span> <br />
-                                        <span class="text-[4rem]">{{
-                                                date_conversion_day_num(
-                                                    events.to
-                                                )
-                                        }}
-                                            <br />
-                                        </span>
-                                        <em>{{
-                                                date_conversion_day_text(
-                                                    events.to
-                                                )
-                                        }}</em>
+
+                                            <span>to</span> <br />
+                                            <span class="text-[4rem]">{{
+                                                    date_conversion_day_num(
+                                                        events.to
+                                                    )
+                                            }}
+                                                <br />
+                                            </span>
+                                            <em>{{
+                                                    date_conversion_day_text(
+                                                        events.to
+                                                    )
+                                            }}</em>
                                         </div>
                                     </div>
 
                                 </div>
                             </div>
-                   
+
                         </div>
                     </div>
                 </div>
