@@ -171,7 +171,7 @@ const function_add_post = () => {
                                                             : "Deactivated"
                                                 }}</span></span>
                                     </li>
-                                    <li @click="notificationTrigger = ! notificationTrigger"
+                                    <li @click="notificationTrigger = !notificationTrigger"
                                         class="flex hover:bg-blue-800 hover:text-white p-2 cursor-pointer rounded  items-center py-3">
                                         <span>Notifications</span>
                                         <span class="ml-auto"><span
@@ -179,30 +179,30 @@ const function_add_post = () => {
                                     </li>
 
 
-                                    <div v-if="notificationTrigger" class="z-20 relative w-full max-w-sm bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-800 dark:divide-gray-700"
+                                    <div v-if="notificationTrigger"
+                                        class="z-20 relative w-full max-w-sm bg-white rounded divide-y divide-gray-100 shadow "
                                         aria-labelledby="dropdownNotificationButton" data-popper-reference-hidden=""
                                         data-popper-escaped="" data-popper-placement="bottom">
-                                        <div
-                                            class="block py-2 px-4 font-medium text-center text-gray-700 bg-gray-50 dark:bg-gray-800 dark:text-white">
+                                        <div class="block py-2 px-4 font-medium text-center text-gray-700 bg-gray-50 ">
                                             Notifications
                                         </div>
-                                        <div class="divide-y max-h-[20vmin] overflow-hidden overflow-y-auto divide-gray-100 dark:divide-gray-700">
-                                            <a href="#" v-for="items in 5" class="flex py-3 px-4 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                        <div
+                                            class="divide-y max-h-[70vmin] lg:max-h-[20vmin]  overflow-hidden overflow-y-auto divide-gray-100 ">
+                                            <a href="#" v-for="items in 5" class="flex py-3 px-4 hover:bg-gray-100 ">
                                                 <div class="flex-shrink-0">
                                                     <img class="w-11 h-11 rounded-full" :src="
                                                         usePage().props.value.user
                                                             .profile_photo_url
                                                     " alt="Jese image">
-                       
+
                                                 </div>
                                                 <div class="pl-3 w-full">
-                                                    <div class="text-gray-500 text-sm mb-1.5 dark:text-gray-400">New
+                                                    <div class="text-gray-500 text-sm mb-1.5 ">New
                                                         message
-                                                        from <span
-                                                            class="font-semibold text-gray-900 dark:text-white">Jese
+                                                        from <span class="font-semibold text-gray-900 ">Jese
                                                             Leos</span>: "Hey, what's up? All set for the presentation?"
                                                     </div>
-                                                    <div class="text-xs text-blue-600 dark:text-blue-500">a few moments
+                                                    <div class="text-xs text-blue-600 ">a few moments
                                                         ago
                                                     </div>
                                                 </div>
@@ -211,15 +211,13 @@ const function_add_post = () => {
                                         <a href="#"
                                             class="block py-2 text-sm font-medium text-center text-gray-900 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white">
                                             <div class="inline-flex items-center ">
-                                                <svg class="mr-2 w-4 h-4 text-gray-500 dark:text-gray-400"
-                                                    aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
-                                                    <path fill-rule="evenodd"
-                                                        d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
-                                                        clip-rule="evenodd"></path>
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
                                                 </svg>
-                                                View all
+
+                                                Hide Notification
                                             </div>
                                         </a>
                                     </div>
