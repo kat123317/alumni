@@ -117,6 +117,7 @@ Route::middleware([
         Route::get('/socialmedia', [SocialMediaController::class, 'index'])->name('index');
         Route::post('/store', [SocialMediaController::class, 'store'])->name('store');
 
+        Route::get('/user_profile', [SocialMediaController::class, 'user_profile'])->name('user_profile');
         Route::get('/comments/{id}', [SocialMediaController::class, 'comments'])->name('comments');
         Route::post('/add_comment', [SocialMediaController::class, 'add_comment'])->name('add_comment');
         Route::post('/update_post/{id}', [SocialMediaController::class, 'update_post'])->name('update_post');
