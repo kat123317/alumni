@@ -285,8 +285,8 @@ const function_add_post = () => {
                                                     <img
                                                         class="w-11 h-11 rounded-full"
                                                         :src="
-                                                            usePage().props
-                                                                .value.user
+                                                            user_notification
+                                                                .user
                                                                 .profile_photo_url
                                                         "
                                                         alt="Jese image"
@@ -299,7 +299,10 @@ const function_add_post = () => {
                                                         New message from
                                                         <span
                                                             class="font-semibold text-gray-900"
-                                                            >Jese Leos</span
+                                                            >{{
+                                                                user_notification
+                                                                    .user.name
+                                                            }}</span
                                                         >: "{{
                                                             user_notification.title
                                                         }}"

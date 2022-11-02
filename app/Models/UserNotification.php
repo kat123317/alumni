@@ -16,5 +16,7 @@ class UserNotification extends Model
         'details' => 'json'
 
     ];
-
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

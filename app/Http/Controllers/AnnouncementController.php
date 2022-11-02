@@ -52,7 +52,7 @@ class AnnouncementController extends Controller
                 $query->where('is_active', '1');
             }])->orderBy('created_at', 'desc');
         }])->orderBy('created_at', 'desc')->get();
-        $user_notification = UserNotification::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
+        $user_notification = UserNotification::with('user')->where('notification_owner', Auth::user()->id)->where('is_read', 0)->orderBy('created_at', 'desc')->get();
         return Inertia::render('Dashboard', [
             'notifications' => $notifications,
             'colleges' => $colleges,
