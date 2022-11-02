@@ -63,7 +63,7 @@ const form_announcement = useForm({
                                     :href="route('dashboard')"
                                     :active="route().current('dashboard')"
                                 >
-                                    Dashboard
+                                    Timeline
                                 </NavLink>
                             </div>
 
@@ -558,5 +558,4 @@ body::-webkit-scrollbar-thumb {
     background-color: darkgrey;
     outline: 1px solid slategrey;
 }
-
 </style>
