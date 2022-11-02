@@ -20,10 +20,10 @@ class SocialMediaController extends Controller
         ]);
     }
 
-    public function user_profile()
+    public function user_profile($id)
     {   
         return Inertia::render('Socialmedia/Components/UserProfile', [
-            'user_posts'=>UserPosts::where('user_id', Auth::user()->id)->with(['comments' => function($query) {
+            'user_posts'=>UserPosts::where('user_id', $id)->with(['comments' => function($query) {
                 $query->with('user')->orderBy('created_at', 'desc');
             }])->get()
         ]);
