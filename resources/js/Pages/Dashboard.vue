@@ -257,7 +257,11 @@ const function_open_notif = (id, notif_id) => {
                                         <span class="ml-auto"
                                             ><span
                                                 class="bg-blue-500 animate-pulse py-1 px-2 rounded-full text-white text-sm"
-                                                >12</span
+                                                >{{
+                                                    usePage().props.value
+                                                        .user_notification
+                                                        .length
+                                                }}</span
                                             ></span
                                         >
                                     </li>
