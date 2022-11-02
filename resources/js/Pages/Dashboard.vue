@@ -544,7 +544,7 @@ const function_add_post = () => {
                                         </span>
                                     </a>
                                 </div>
-                                <div>
+                                <!-- <div>
                                     <div class="pt-6">
                                         <div class="media flex pb-4">
                                             <a
@@ -622,7 +622,7 @@ const function_add_post = () => {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
 
                                 <div class="w-full">
                                     <a
