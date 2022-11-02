@@ -42,11 +42,14 @@ class SurveyController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => ['required']
+        ]);
         Survey::create([
             'user_id' => Auth::user()->id,
             'status' => 'draft',
             'name' => $request->name,
-            'setup' => []
+            'setup' => $request->setup
         ]);
         return Redirect::back();
     }

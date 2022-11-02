@@ -237,7 +237,6 @@ const submit = () => {
                                 v-model="form.year_graduated"
                                 type="number"
                                 class="mt-1 block w-full"
-                                required
                             />
                             <InputError class="mt-2" :message="form.errors.year_graduated" />
                         </div>
