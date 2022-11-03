@@ -3,7 +3,7 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import Welcome from "@/Components/Welcome.vue";
 import { Head, Link, useForm, usePage } from "@inertiajs/inertia-vue3";
 import { ref, onMounted, computed } from "vue";
-
+import NoPostsYet from './Socialmedia/Components/emptypost.vue';
 import moment from "moment";
 
 // Alert Function
@@ -527,7 +527,7 @@ const function_open_notif = (id, notif_id) => {
                                 </div>
                             </div>
                             <!-- End of about section -->
-
+                            <NoPostsYet v-if="usePage().props.value.posts.length == 0"  />
                             <div class="my-4"></div>
 
                             <article
@@ -637,7 +637,28 @@ const function_open_notif = (id, notif_id) => {
                                         </button>
                                     </a>
                                 </div>
+                                <!-- <h2 class="mt-4 border-t font-bold">Comments</h2>
+                                <div v-for="(commentsData, key2) in posts.comments" :key="key2"
+                                    class="flex bg-white  rounded-lg mx-4 md:mx-auto max-w-md md:max-w-2xl ">
+                                    
+                                    <div class="flex items-start px-4 py-6">
+                                        <img class="w-12 h-12 rounded-full object-cover mr-4 shadow"
+                                            :src="commentsData.user.profile_photo_url" alt="avatar">
+                                        <div class="">
+                                            <div class="flex items-center justify-between">
+                                                <h2 class="text-lg font-semibold text-gray-900 -mt-1">{{ commentsData.user.name }}</h2>
+                                                <small class=" ml-2 text-sm text-gray-700">{{
+                                                        date_conversion(commentsData.created_at)
+                                                }}</small>
+                                            </div>
+                                            <p class="text-gray-700">Joined {{ date_conversion(commentsData.updated_at) }} </p>
+                                            <p class="mt-3 text-gray-700 text-sm">
+                                                {{ commentsData.content }}
+                                            </p>
 
+                                        </div>
+                                    </div>
+                                </div> -->
                                 <div class="w-full">
                                     <a
                                         :href="
@@ -650,6 +671,7 @@ const function_open_notif = (id, notif_id) => {
                                     >
                                 </div>
                             </article>
+                            <div class="flex justify-center"><small>End of Posts</small></div>
                         </div>
                     </div>
                 </div>

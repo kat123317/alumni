@@ -15,6 +15,18 @@ const date_conversion = (value) => {
     }
 };
 
+const postAlert = ref("");
+const notificationTrigger = ref(false);
+
+const errorAlert = (data) => {
+    if (data) {
+        postAlert.value = data;
+        setTimeout(() => {
+            postAlert.value = "";
+        }, 3000);
+    }
+};
+
 const date_conversion_from_now = (value) => {
     if (value) {
         return moment(value).fromNow();
@@ -57,7 +69,7 @@ const function_open_delete_post_modal = () => {
 
 const function_update_post = () => {
     if (post_update_data.content == "") {
-        alert("System will not allow empty posts");
+        errorAlert("System will not allow empty posts");
     } else {
         post_update_data.post(
             route("socialmedia.update_post", [post_update_data.id]),
@@ -84,7 +96,7 @@ const function_delete_post = () => {
 
 const function_comment = () => {
     if (comment_data.comment == "") {
-        alert("System will not allow empty comment, Thank you");
+        errorAlert("System will not allow empty comment, Thank you");
     } else {
         comment_data.post(route("socialmedia.add_comment"), {
             preserveScroll: true,
@@ -163,28 +175,36 @@ const function_delete_comment = () => {
                 </a>
             </div>
         </div>
-        <section class="flex justify-center mt-10">
+        <div v-if="postAlert" class="p-4 mb-4 border border-blue-300 rounded-lg bg-blue-50 dark:bg-blue-300"
+            role="alert">
+            <div class="flex justify-center items-center">
+                <svg aria-hidden="true" class="w-5 h-5 mr-2 text-blue-900" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                        clip-rule="evenodd"></path>
+                </svg>
+                <span class="sr-only">Notification</span>
+                <h3 class="text-lg font-medium text-blue-900">
+                    Notification
+                </h3>
+            </div>
+            <div class="mt-2 text-center mb-4 text-sm text-blue-900">
+                {{ postAlert }}
+            </div>
+            <div class="flex justify-center">
+                <button type="button" @click="postAlert = ''"
+                    class="text-blue-900 bg-transparent border border-blue-900 hover:bg-blue-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:border-blue-800 dark:text-blue-800 dark:hover:text-white"
+                    data-dismiss-target="#alert-additional-content-1" aria-label="Close">
+                    Dismiss
+                </button>
+            </div>
+        </div>
+        <section class="flex justify-center px-5 mt-10">
+
             <article class="mb-4 max-w-7xl break-insider w-full p-6 rounded-xl bg-white flex flex-col bg-clip-border"
                 v-for="(post, key) in usePage().props.value.post" :key="key">
-                <div>
-                    <a v-if="post.user.id == usePage().props.value.user.id" @click="function_open_update_post_modal()"
-                        class="text-lg flex font-bold float-right relative" href="#" title="Update your post"><svg
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                        </svg>
-                        Edit</a>
 
-                    <a v-if="post.user.id == usePage().props.value.user.id" @click="function_open_delete_post_modal()"
-                        class="text-lg font-bold float-right relative flex mr-4" href="#" title="Delete your post"><svg
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                        </svg>
-                        Delete</a>
-                </div>
                 <div class="flex pb-6 items-cente justify-between">
                     <div class="flex">
                         <a class="inline-block mr-4" href="#">
@@ -201,6 +221,27 @@ const function_delete_comment = () => {
                                 {{ date_conversion_from_now(post.created_at) }}
                             </div>
                         </div>
+                    </div>
+                    <div class="flex justify-end">
+                        <a v-if="post.user.id == usePage().props.value.user.id"
+                            @click="function_open_update_post_modal()"
+                            class="text-lg flex font-bold float-right relative" href="#" title="Update your post"><svg
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" class="text-blue-800" stroke-linejoin="round"
+                                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                            </svg>
+                        </a>
+
+                        <a v-if="post.user.id == usePage().props.value.user.id"
+                            @click="function_open_delete_post_modal()"
+                            class="text-lg  font-bold float-right relative flex mr-4" href="#"
+                            title="Delete your post"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" class="text-red-500"
+                                    d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                            </svg>
+                        </a>
                     </div>
                 </div>
                 <p class="">
@@ -268,23 +309,11 @@ const function_delete_comment = () => {
         comments.content
     )
 " class="inline-block ml-6" title="Update your comment">
-                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
-                                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px"
-                                            height="20px" viewBox="0 0 420.827 420.827" style="
-                                                enable-background: new 0 0
-                                                    420.827 420.827;
-                                            " xml:space="preserve">
-                                            <path
-                                                d="M210.29,0C156,0,104.43,20.693,65.077,58.269C25.859,95.715,2.794,146.022,0.134,199.921
-			c-0.135,2.734,0.857,5.404,2.744,7.388c1.889,1.983,4.507,3.105,7.244,3.105h45.211c5.275,0,9.644-4.098,9.979-9.362
-			c4.871-76.214,68.553-135.914,144.979-135.914c80.105,0,145.275,65.171,145.275,145.276c0,80.105-65.17,145.276-145.275,145.276
-			c-18.109,0-35.772-3.287-52.501-9.771l17.366-15.425c2.686-2.354,3.912-5.964,3.217-9.468c-0.696-3.506-3.209-6.371-6.592-7.521
-			l-113-32.552c-3.387-1.149-7.122-0.407-9.81,1.948c-2.686,2.354-3.913,5.963-3.218,9.467L69.71,403.157
-			c0.696,3.505,3.209,6.372,6.591,7.521c3.383,1.147,7.122,0.408,9.81-1.946l18.599-16.298
-			c31.946,18.574,68.456,28.394,105.581,28.394c116.021,0,210.414-94.392,210.414-210.414C420.705,94.391,326.312,0,210.29,0z" />
-                                            <path d="M195.112,237.9h118.5c2.757,0,5-2.242,5-5v-30c0-2.757-2.243-5-5-5h-83.5v-91c0-2.757-2.243-5-5-5h-30
-			c-2.757,0-5,2.243-5,5v126C190.112,235.658,192.355,237.9,195.112,237.9z" />
-                                        </svg>
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" class="text-blue-800" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+</svg>
+
+
                                     </button>
                                     <button v-if="
                                         comments.user.id ==
@@ -293,28 +322,13 @@ const function_delete_comment = () => {
     function_open_delete_modal(
         comments.id
     )
-" class="inline-block ml-2" title="Delete your comment">
-                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
-                                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px"
-                                            height="20px" viewBox="0 0 482.428 482.429" style="
-                                                enable-background: new 0 0
-                                                    482.428 482.429;
-                                            " xml:space="preserve">
-                                            <path d="M381.163,57.799h-75.094C302.323,25.316,274.686,0,241.214,0c-33.471,0-61.104,25.315-64.85,57.799h-75.098
-			c-30.39,0-55.111,24.728-55.111,55.117v2.828c0,23.223,14.46,43.1,34.83,51.199v260.369c0,30.39,24.724,55.117,55.112,55.117
-			h210.236c30.389,0,55.111-24.729,55.111-55.117V166.944c20.369-8.1,34.83-27.977,34.83-51.199v-2.828
-			C436.274,82.527,411.551,57.799,381.163,57.799z M241.214,26.139c19.037,0,34.927,13.645,38.443,31.66h-76.879
-			C206.293,39.783,222.184,26.139,241.214,26.139z M375.305,427.312c0,15.978-13,28.979-28.973,28.979H136.096
-			c-15.973,0-28.973-13.002-28.973-28.979V170.861h268.182V427.312z M410.135,115.744c0,15.978-13,28.979-28.973,28.979H101.266
-			c-15.973,0-28.973-13.001-28.973-28.979v-2.828c0-15.978,13-28.979,28.973-28.979h279.897c15.973,0,28.973,13.001,28.973,28.979
-			V115.744z" />
-                                            <path d="M171.144,422.863c7.218,0,13.069-5.853,13.069-13.068V262.641c0-7.216-5.852-13.07-13.069-13.07
-			c-7.217,0-13.069,5.854-13.069,13.07v147.154C158.074,417.012,163.926,422.863,171.144,422.863z" />
-                                            <path d="M241.214,422.863c7.218,0,13.07-5.853,13.07-13.068V262.641c0-7.216-5.854-13.07-13.07-13.07
-			c-7.217,0-13.069,5.854-13.069,13.07v147.154C228.145,417.012,233.996,422.863,241.214,422.863z" />
-                                            <path d="M311.284,422.863c7.217,0,13.068-5.853,13.068-13.068V262.641c0-7.216-5.852-13.07-13.068-13.07
-			c-7.219,0-13.07,5.854-13.07,13.07v147.154C298.213,417.012,304.067,422.863,311.284,422.863z" />
+" class="inline-block  ml-2" title="Delete your comment">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="1.5" stroke="currentColor" class="w-6  h-6">
+                                            <path class="text-red-500" stroke-linecap="round" stroke-linejoin="round"
+                                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                         </svg>
+
                                     </button>
                                 </div>
                                 <p>
