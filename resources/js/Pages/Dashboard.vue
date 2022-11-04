@@ -3,7 +3,7 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import Welcome from "@/Components/Welcome.vue";
 import { Head, Link, useForm, usePage } from "@inertiajs/inertia-vue3";
 import { ref, onMounted, computed } from "vue";
-import NoPostsYet from './Socialmedia/Components/emptypost.vue';
+import NoPostsYet from "./Socialmedia/Components/emptypost.vue";
 import moment from "moment";
 
 // Alert Function
@@ -527,7 +527,9 @@ const function_open_notif = (id, notif_id) => {
                                 </div>
                             </div>
                             <!-- End of about section -->
-                            <NoPostsYet v-if="usePage().props.value.posts.length == 0"  />
+                            <NoPostsYet
+                                v-if="usePage().props.value.posts.length == 0"
+                            />
                             <div class="my-4"></div>
 
                             <article
@@ -545,7 +547,7 @@ const function_open_notif = (id, notif_id) => {
                                             :href="
                                                 route(
                                                     'socialmedia.user_profile',
-                                                    [posts.id]
+                                                    [posts.user.id]
                                                 )
                                             "
                                         >
@@ -563,7 +565,7 @@ const function_open_notif = (id, notif_id) => {
                                                     :href="
                                                         route(
                                                             'socialmedia.user_profile',
-                                                            [posts.id]
+                                                            [posts.user.id]
                                                         )
                                                     "
                                                     >{{ posts.user.name }}</a
@@ -671,7 +673,9 @@ const function_open_notif = (id, notif_id) => {
                                     >
                                 </div>
                             </article>
-                            <div class="flex justify-center"><small>End of Posts</small></div>
+                            <div class="flex justify-center">
+                                <small>End of Posts</small>
+                            </div>
                         </div>
                     </div>
                 </div>

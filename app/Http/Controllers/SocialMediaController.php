@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\UserNotification;
 use App\Models\UserPostComment;
 use App\Models\UserPosts;
@@ -26,6 +27,11 @@ class SocialMediaController extends Controller
         return Inertia::render('Socialmedia/Components/UserProfile', [
             'user_posts'=>UserPosts::where('user_id', $id)->with(['comments' => function($query) {
                 $query->with('user')->orderBy('created_at', 'desc');
+            }])->with('user')->get(),
+            'user_profile' => User::where('id', $id)->with(['posts' => function($query){
+                $query->with('user')->orderBy('created_at', 'desc')->with(['comments' => function($query) {
+                    $query->with('user')->orderBy('created_at', 'desc');
+                }]);
             }])->get()
         ]);
     }
