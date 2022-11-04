@@ -73,23 +73,10 @@ const function_open_notif = (id, notif_id) => {
         },
     });
 };
-
-const like_data = useForm({
-    post_id: null,
-});
-const function_like_post = (posts_id) => {
-    like_data.post_id = posts_id;
-    like_data.post(route("socialmedia.like_post", [posts_id]), {
-        preserveScroll: true,
-        onSuccess: () => {
-            like_data.reset();
-        },
-    });
-};
 </script>
 
 <template>
-    <AppLayout title="Dashboard">
+    <AppLayout title="Job Posts">
         <section>
             <div class="bg-gray-200 dark:bg-gray-800">
                 <div
@@ -626,14 +613,12 @@ const function_like_post = (posts_id) => {
                                 </div>
                                 <div class="py-4">
                                     <a
-                                        @click="function_like_post(posts.id)"
                                         class="inline-flex items-center"
                                         href="#"
                                     >
                                         <button
                                             type="button"
-                                            class="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2"
-                                            :title="posts.details.heart"
+                                            class="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800"
                                         >
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
@@ -650,65 +635,32 @@ const function_like_post = (posts_id) => {
                                                 />
                                             </svg>
 
-                                            {{ posts.details.like.length }}
+                                            120
                                         </button>
                                     </a>
                                 </div>
-                                <h2 class="mt-4 border-t font-bold">
-                                    Comments
-                                </h2>
-                                <div
-                                    v-for="(
-                                        commentsData, key2
-                                    ) in posts.comments_custom"
-                                    :key="key2"
-                                    class="flex bg-white rounded-lg mx-4 md:mx-auto max-w-md md:max-w-2xl"
-                                >
+                                <!-- <h2 class="mt-4 border-t font-bold">Comments</h2>
+                                <div v-for="(commentsData, key2) in posts.comments" :key="key2"
+                                    class="flex bg-white  rounded-lg mx-4 md:mx-auto max-w-md md:max-w-2xl ">
+                                    
                                     <div class="flex items-start px-4 py-6">
-                                        <img
-                                            class="w-12 h-12 rounded-full object-cover mr-4 shadow"
-                                            :src="
-                                                commentsData.user
-                                                    .profile_photo_url
-                                            "
-                                            alt="avatar"
-                                        />
+                                        <img class="w-12 h-12 rounded-full object-cover mr-4 shadow"
+                                            :src="commentsData.user.profile_photo_url" alt="avatar">
                                         <div class="">
-                                            <div
-                                                class="flex items-center justify-between"
-                                            >
-                                                <h2
-                                                    class="text-lg font-semibold text-gray-900 -mt-1"
-                                                >
-                                                    {{ commentsData.user.name }}
-                                                </h2>
-                                                <small
-                                                    class="ml-2 text-sm text-gray-700"
-                                                    >{{
-                                                        date_conversion(
-                                                            commentsData.created_at
-                                                        )
-                                                    }}</small
-                                                >
+                                            <div class="flex items-center justify-between">
+                                                <h2 class="text-lg font-semibold text-gray-900 -mt-1">{{ commentsData.user.name }}</h2>
+                                                <small class=" ml-2 text-sm text-gray-700">{{
+                                                        date_conversion(commentsData.created_at)
+                                                }}</small>
                                             </div>
-                                            <p class="text-gray-700">
-                                                <small>
-                                                    Updated
-                                                    {{
-                                                        date_conversion(
-                                                            commentsData.updated_at
-                                                        )
-                                                    }}
-                                                </small>
-                                            </p>
-                                            <p
-                                                class="mt-3 text-gray-700 text-sm"
-                                            >
+                                            <p class="text-gray-700">Joined {{ date_conversion(commentsData.updated_at) }} </p>
+                                            <p class="mt-3 text-gray-700 text-sm">
                                                 {{ commentsData.content }}
                                             </p>
+
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="w-full">
                                     <a
                                         :href="

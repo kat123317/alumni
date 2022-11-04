@@ -54,6 +54,7 @@ class SocialMediaController extends Controller
 
     public function add_comment(Request $request)
     {   
+        
         UserPostComment::create([
             'user_id'=>Auth::user()->id,
             'post_id' => $request->post_id,
@@ -77,14 +78,29 @@ class SocialMediaController extends Controller
 
     public function store(Request $request)
     {   
+        $post_details = array(
+            'heart'=>[],
+            'like'=>[],
+            'sad'=>[],
+        );
         UserPosts::create([
             'user_id'=>Auth::user()->id,
-            'content' => $request->content
+            'content' => $request->content,
+            'details' => $post_details
         ]);
         return Redirect::back();
     }
 
     public function update_post(Request $request, $id)
+    {   
+        $update = UserPosts::find($id);
+        $update->update([
+            'content' => $request->content
+        ]);
+        return Redirect::back();
+    }
+
+    public function like_post(Request $request, $id)
     {   
         $update = UserPosts::find($id);
         $update->update([

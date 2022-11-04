@@ -71,6 +71,17 @@ const form_announcement = useForm({
                                 class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"
                             >
                                 <NavLink
+                                    :href="route('job_posts')"
+                                    :active="route().current('job_posts')"
+                                >
+                                    Job Posts
+                                </NavLink>
+                            </div>
+
+                            <div
+                                class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"
+                            >
+                                <NavLink
                                     :href="route('graduates.index')"
                                     :active="route().current('graduates.index')"
                                 >
@@ -378,6 +389,12 @@ const form_announcement = useForm({
                             :active="route().current('dashboard')"
                         >
                             Timeline
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            :href="route('job_posts')"
+                            :active="route().current('job_posts')"
+                        >
+                            Job Posts
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
                             :href="route('graduates.index')"

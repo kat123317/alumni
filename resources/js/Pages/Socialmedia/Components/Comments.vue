@@ -236,7 +236,7 @@ const function_delete_comment = () => {
                 <button
                     type="button"
                     @click="postAlert = ''"
-                    class="text-blue-900 bg-transparent border border-blue-900 hover:bg-blue-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:border-blue-800 dark:text-blue-800 dark:hover:text-white"
+                    class="text-blue-900 bg-transparent border border-blue-900 hover:bg-blue-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 text-center"
                     data-dismiss-target="#alert-additional-content-1"
                     aria-label="Close"
                 >
@@ -252,7 +252,14 @@ const function_delete_comment = () => {
             >
                 <div class="flex pb-6 items-cente justify-between">
                     <div class="flex">
-                        <a class="inline-block mr-4" href="#">
+                        <a
+                            class="inline-block mr-4"
+                            :href="
+                                route('socialmedia.user_profile', [
+                                    usePage().props.value.post[0].user.id,
+                                ])
+                            "
+                        >
                             <img
                                 class="rounded-full max-w-none w-12 h-12"
                                 :src="post.user.profile_photo_url"
@@ -262,7 +269,12 @@ const function_delete_comment = () => {
                             <div>
                                 <a
                                     class="inline-block text-lg font-bold"
-                                    href="#"
+                                    :href="
+                                        route('socialmedia.user_profile', [
+                                            usePage().props.value.post[0].user
+                                                .id,
+                                        ])
+                                    "
                                     >{{ post.user.name }}</a
                                 >
                             </div>
@@ -344,7 +356,7 @@ const function_delete_comment = () => {
                     <a class="inline-flex items-center" href="#">
                         <button
                             type="button"
-                            class="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800"
+                            class="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:border-blue-500"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -488,7 +500,7 @@ const function_delete_comment = () => {
                                     >
                                         <button
                                             type="button"
-                                            class="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800"
+                                            class="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2"
                                         >
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"

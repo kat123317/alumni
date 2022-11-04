@@ -68,6 +68,7 @@ Route::middleware([
     // })->name("administrator");
 
     Route::get('/dashboard', [AnnouncementController::class, 'index'])->name('dashboard');
+    Route::get('/job_posts', [AnnouncementController::class, 'job_posts'])->name('job_posts');
     Route::get('/chart', [AnnouncementController::class, 'charts'])->name('charts');
 
     Route::prefix('yearbooks')->name('yearbooks.')->group(function () {
@@ -116,6 +117,8 @@ Route::middleware([
     Route::prefix('socialmedia')->name('socialmedia.')->group(function () {
         Route::get('/socialmedia', [SocialMediaController::class, 'index'])->name('index');
         Route::post('/store', [SocialMediaController::class, 'store'])->name('store');
+        Route::post('/like_post/{id}', [SocialMediaController::class, 'like_post'])->name('like_post');
+
         Route::post('/open_notif/{id}', [SocialMediaController::class, 'open_notif'])->name('open_notif');
 
         Route::get('/user_profile/{id}', [SocialMediaController::class, 'user_profile'])->name('user_profile');
