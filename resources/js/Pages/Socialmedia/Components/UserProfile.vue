@@ -166,10 +166,11 @@ const date_conversion2 = (value) => {
                 role="presentation"
             ></span>
         </h2>
-        <NoPostsYet v-if="usePage().props.value.user_posts[0].length == 0" />
+        <NoPostsYet v-if="usePage().props.value.user_profile[0].length == 0" />
         <div class="w-full px-2 lg:px-10 grid grid-cols-1 lg:grid-cols-3 gap-3">
             <article
-                v-for="(posts, key) in usePage().props.value.user_posts"
+                v-for="(posts, key) in usePage().props.value.user_profile[0]
+                    .posts"
                 :key="key"
                 class="mb-4 w-full break-inside p-6 rounded-xl bg-white"
             >
