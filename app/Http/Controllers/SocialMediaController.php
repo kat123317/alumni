@@ -60,6 +60,18 @@ class SocialMediaController extends Controller
             'content' => $request->comment,
             'details' => []
         ]);
+        $details =array(
+            'post_id'=>  $request->post_id,
+        );
+        UserNotification::create([
+            'user_id'=>Auth::user()->id,
+            'notification_type'=>'comment',
+            'notification_owner'=>$request->post_owner,
+            'is_read'=>false,
+            'title'=>'Commented',
+            'content'=> $request->comment,
+            'details'=>$details
+        ]);
         return Redirect::back();
     }
 
@@ -86,6 +98,19 @@ class SocialMediaController extends Controller
         $update = UserPostComment::find($id);
         $update->update([
             'content' => $request->comment
+        ]);
+
+        $details =array(
+            'post_id'=>  $request->post_id,
+        );
+        UserNotification::create([
+            'user_id'=>Auth::user()->id,
+            'notification_type'=>'comment',
+            'notification_owner'=>$request->post_owner,
+            'is_read'=>false,
+            'title'=>'Update comment',
+            'content'=> $request->comment,
+            'details'=>$details
         ]);
         return Redirect::back();
     }
