@@ -1,0 +1,138 @@
+<script setup>
+import JetDialogModal from "@/Components/DialogModal.vue";
+import JetInputLabel from "@/Components/InputLabel.vue";
+import InputToggle from "@/Components/InputToggle.vue";
+import JetInputError from "@/Components/InputError.vue";
+import { useForm, usePage } from "@inertiajs/inertia-vue3";
+import { inject, ref } from "vue";
+
+const modals = inject('modals');
+const alertOnMessage = inject('alertOnMessage');
+const onAlert = inject('onAlert');
+
+const new_choice = ref('');
+
+const form_add_edit = useForm({
+    instruction: '',
+    type: 'descriptive',
+    setup: {
+        dropdown: false,
+        multiple_select: false,
+        choices: []
+    }
+});
+
+const addChoice = () => {
+    form_add_edit.setup.choices.push({
+        label: new_choice.value,
+        value: form_add_edit.setup.choices.length + 1
+    });
+    new_choice.value = '';
+}
+
+const removeChoice = (index) => {
+    form_add_edit.setup.choices.splice(index, 1);
+}
+
+const addEditQuestion = () => {
+    if (modals.add_edit.details.method == 'add') {
+        form_add_edit.post(
+            route("surveys.questions.store", {survey_id: usePage().props.value.survey.id}),
+            {
+                preserveScroll: true,
+                onSuccess: () => {
+                    alertOnMessage.value = 'Question Added';
+                    onAlert("Success");
+                    form_add_edit.reset();
+                    modals.add_edit.show = false;
+                },
+                onError: (err) => {
+
+                }
+            }
+        );
+    } else {
+        form_add_edit.put(
+            route("surveys.questions.update", {survey_id: usePage().props.value.survey.id, id: modals.add_edit.details.id}),
+            {
+                preserveScroll: true,
+                onSuccess: () => {
+                    alertOnMessage.value = 'Question Successfully updated';
+                    onAlert("Update");
+                    form_add_edit.reset();
+                    modals.add_edit.show = false;
+                },
+                onError: (err) => {
+
+                }
+            }
+        );
+    }
+}
+</script>
+<template>
+    <JetDialogModal :show="modals.add_edit.show" maxWidth="3xl">
+        <template #title>{{ modals.add_edit.details.title }}</template>
+        <template #content>
+            <div class="grid grid-cols-6 gap-1">
+                <div class="col-span-6">
+                    <JetInputLabel>Instruction</JetInputLabel>
+                    <textarea v-model="form_add_edit.instruction" rows="5" class="w-full w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"></textarea>
+                    <JetInputError :message="form_add_edit.errors.instruction"></JetInputError>
+                </div>
+                <div class="col-span-4">
+                    <JetInputLabel>Choices</JetInputLabel>
+                    <template v-for="(choice, index) in form_add_edit.setup.choices">
+                        <div class="flex gap-1 mb-1">
+                            <input
+                                v-model="choice.label"
+                                type="text"
+                                class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                            />
+                            <button
+                                @click="removeChoice(index)"
+                                class="flex text-white bg-red-500 border-0 py-2 px-8 focus:outline-none hover:bg-red-600 rounded text-lg"
+                            >
+                                Delete
+                            </button>
+                        </div>
+                    </template>
+                    <div class="flex gap-1 mt-2">
+                        <input
+                            v-model="new_choice"
+                            type="text"
+                            placeholder="New Choice"
+                            class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                        />
+                        <button
+                            @click="addChoice()"
+                            class="flex text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg"
+                        >
+                            Add
+                        </button>
+                    </div>
+                </div>
+                <div class="col-span-2">
+                    <div class="mt-5 mb-2">  
+                        <InputToggle v-model:checked="form_add_edit.setup.dropdown">Dropdown</InputToggle>       
+                        <InputToggle class="py-1" v-model:checked="form_add_edit.setup.multiple_select">Multiple Select</InputToggle>           
+                    </div>
+                </div>
+            </div>
+        </template>
+        <template #footer>
+            <button
+                @click="modals.add_edit.show = false"
+                    class="flex mr-2 text-white bg-gray-500 border-0 py-2 px-8 focus:outline-none hover:bg-gray-600 rounded text-lg"
+                >
+                    Cancel
+                </button>
+            <button
+            @click="addEditQuestion()"
+                class="flex text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg"
+            >
+                Submit
+            </button>
+        </template>
+    </JetDialogModal>
+</template>

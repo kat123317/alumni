@@ -188,7 +188,7 @@ class AdministratorController extends Controller
         $search = $request->search ?? null;
 
         return Inertia::render('Administrator/Survey/Index', [
-            'surveys' => Survey::when($search, function($query, $search) {
+            'surveys' => Survey::with('user')->when($search, function($query, $search) {
                 $query->where('name', 'like', "%{$search}%");
             })->orderBY('id','desc')->paginate(10),
             'search' => $search,

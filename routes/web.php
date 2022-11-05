@@ -50,7 +50,7 @@ Route::middleware([
     // Route::get('/administrator', [AdministratorController::class, 'index'])->name('administrator');
 
     Route::prefix('administrator')->name('administrator.')->group(function () {
-        Route::get('/', [AdministratorController::class, 'announcement'])->name('announcement');
+        Route::get('/announcement', [AdministratorController::class, 'announcement'])->name('announcement');
         Route::get('/yearbook', [AdministratorController::class, 'yearbook'])->name('yearbook');
         Route::get('/alumni', [AdministratorController::class, 'alumni'])->name('alumni'); 
         Route::get('/user_management', [AdministratorController::class, 'user_management'])->name('user_management'); 

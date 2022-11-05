@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Question;
 use App\Models\Survey;
+use App\Models\Notification;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Builder;
 use Inertia\Inertia;
 
 class QuestionController extends Controller
@@ -17,10 +21,17 @@ class QuestionController extends Controller
      */
     public function index(Request $request, $survey_id)
     {
-        $survey = Survey::with('questions')->first($survey_id);
+        $survey = Survey::with('questions')->where('id', $survey_id)->first();
 
-        return Inertia::render('Question/Index', [
-            'survey' => $survey
+        return Inertia::render('Administrator/Survey/Question/Index', [
+            'survey' => $survey,
+            'notifications' => Notification::whereHas('user', function (Builder $query) {
+                if (Auth::user()->user_type == 'admin') {
+                    $query->where('status', 'pre_approved');
+                } else {
+                    $query->where('status', 'pending');
+                }
+            })->where('is_processed', false)->paginate(10)
         ]);
     }
 
@@ -43,6 +54,10 @@ class QuestionController extends Controller
     public function store(Request $request, $survey_id)
     {
         $survey = Survey::find($survey_id);
+
+        $request->validate([
+            'instruction' => ['required']
+        ]);
 
         $question_count = Question::whereSurveyId($survey_id)->count();
         Question::create([

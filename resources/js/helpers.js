@@ -5,6 +5,7 @@ export default function helpers() {
     const alertOnUpdate = ref(false);
     const alertOnDelete = ref(false);
     const alertOnError = ref(false);
+    const alertOnMessage = ref('');
 
     const onAlert = (data) => {
         if (data == "Success") {
@@ -35,6 +36,7 @@ export default function helpers() {
         alertOnUpdate,
         alertOnDelete,
         alertOnError,
+        alertOnMessage,
         onAlert
     }
 }

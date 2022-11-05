@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Survey;
+use App\Models\User;
+use App\Models\UserNotification;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -85,9 +88,11 @@ class SurveyController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'name' => ['required']
+        ]);
         $survey = Survey::find($id);
         $survey->update([
-            'status' => $request->status,
             'name' => $request->name,
             'setup' => $request->setup
         ]);
@@ -105,6 +110,44 @@ class SurveyController extends Controller
         $survey = Survey::find($id);
  
         $survey->delete();
+        return Redirect::back();
+    }
+
+    public function sendSurveyInvitation(Request $request, $id)
+    {
+        $survey = Survey::find($id);
+        $survey->update([
+            'status' => 'live',
+            'setup' => $request->setup
+        ]);
+        
+        switch ($survey->setup['shown_only']) {
+            case 'college':
+                $users = User::whereIn('college_id', $survey->setup['foreign_ids'])->get();
+                break;
+            case 'courses':
+                $users = User::whereIn('course_id', $survey->setup['foreign_ids'])->get();
+                break;
+            case 'users':
+                $users = User::whereIn('id', $survey->setup['foreign_ids'])->get();
+                break;
+            default:
+                $users = User::whereIsActive(1)->whereStatus('approved')->whereUserType('alumni')->get();
+                break;
+        }
+        foreach ($users as $user) {
+            UserNotification::create([
+                'user_id' => Auth::user()->id,
+                'notification_owner' => $user->id,
+                'notification_type' => 'survey',
+                'is_read' => false,
+                'title' => 'Alumni Survey',
+                'content' => 'You are invited to alumni survey',
+                'details' => array(
+                    'link' => 'https://bla-bla.com'
+                )
+            ]);
+        }
         return Redirect::back();
     }
 }

@@ -1,17 +1,18 @@
 <script setup>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { useForm, usePage } from "@inertiajs/inertia-vue3";
-import { computed, ref, provide, inject, reactive, watch } from "vue";
-import Pagination from "./../components/Pagination.vue";
+import { computed, ref, provide, inject, reactive, watch, onMounted, nextTick } from "vue";
 import JetCheckbox from "@/Components/Checkbox.vue";
 import JetInputLabel from "@/Components/InputLabel.vue";
-import JetInputError from "@/Components/InputLabel.vue";
+import JetInputError from "@/Components/InputError.vue";
 import JetDialogModal from "@/Components/DialogModal.vue";
 import SurveyList from './SurveyList.vue';
 import helpers from '@/helpers.js'
+import { Inertia } from "@inertiajs/inertia";
     
-const { alertOn, onAlert } = helpers()
+const { alertOn, alertOnDelete, alertOnUpdate, alertOnMessage, onAlert } = helpers();
 
+const search = ref(usePage().props.value.search);
 const form_add_edit = useForm({
     name: "",
     setup: {
@@ -28,15 +29,92 @@ const modal = reactive({
     details: ref({})
 })
 
+const modals = reactive({
+    add_edit: {
+        show: false,
+        details: {
+            title: 'Add Survey',
+            id: 0,
+            method: 'add',
+            btn_submit: 'Submit'
+        }
+    },
+    delete: {
+        show: false,
+        details: {
+            title: 'Delete Survey',
+            id: 0,
+            content: ''
+        }
+    }
+})
+
+onMounted(() => {
+    resetForeignList(false);
+});
+
 const addEditSurvey = () => {
-    form_add_edit.post(
-        route("surveys.store"),
+    if (modals.add_edit.details.method == 'add') {
+        form_add_edit.post(
+            route("surveys.store"),
+            {
+                preserveScroll: true,
+                onSuccess: () => {
+                    alertOnMessage.value = 'Survey Added';
+                    onAlert("Success");
+                    form_add_edit.reset();
+                    modals.add_edit.show = false;
+                },
+                onError: (err) => {
+
+                }
+            }
+        );
+    } else if(modals.add_edit.details.method == 'edit') {
+        form_add_edit.put(
+            route("surveys.update", {id: modals.add_edit.details.id}),
+            {
+                preserveScroll: true,
+                onSuccess: () => {
+                    alertOnMessage.value = 'Survey Successfully updated';
+                    onAlert("Update");
+                    form_add_edit.reset();
+                    modals.add_edit.show = false;
+                },
+                onError: (err) => {
+
+                }
+            }
+        );
+    } else {
+        form_add_edit.put(
+            route("surveys.update", {id: modals.add_edit.details.id}),
+            {
+                preserveScroll: true,
+                onSuccess: () => {
+                    alertOnMessage.value = 'Survey Invitaion Successfully sent';
+                    onAlert("Update");
+                    form_add_edit.reset();
+                    modals.add_edit.show = false;
+                },
+                onError: (err) => {
+
+                }
+            }
+        );
+    }
+    
+};
+
+const deleteSurvey = () => {
+    Inertia.delete(
+        route("surveys.delete",{id: modals.delete.details.id}),
         {
             preserveScroll: true,
             onSuccess: () => {
-                onAlert("Success");
-                form_add_edit.reset();
-                modal.show = false;
+                alertOnMessage.value = 'Survey Deleted';
+                onAlert("Delete");
+                modals.delete.show = false;
             },
             onError: (err) => {
 
@@ -46,7 +124,7 @@ const addEditSurvey = () => {
 };
 
 const resetForeignList = (checked) => {
-    // nextTick();
+    nextTick();
     let ids = [];
     switch (form_add_edit.setup.shown_only) {
         case "college":
@@ -56,7 +134,7 @@ const resetForeignList = (checked) => {
                 index++
             ) {
                 ids.push({
-                    is_checked: checked,
+                    is_checked: checked != null ? checked: form_add_edit.setup.foreign_ids.includes(usePage().props.value.colleges[index].id),
                     name: usePage().props.value.colleges[index].name,
                     id: usePage().props.value.colleges[index].id
                 });
@@ -69,7 +147,7 @@ const resetForeignList = (checked) => {
                 index++
             ) {
                 ids.push({
-                    is_checked: checked,
+                    is_checked: checked != null ? checked: form_add_edit.setup.foreign_ids.includes(usePage().props.value.courses[index].id),
                     name: usePage().props.value.courses[index].name,
                     id: usePage().props.value.courses[index].id
                 });
@@ -82,7 +160,7 @@ const resetForeignList = (checked) => {
                 index++
             ) {
                 ids.push({
-                    is_checked: checked,
+                    is_checked: checked != null ? checked: form_add_edit.setup.foreign_ids.includes(usePage().props.value.users[index].id),
                     name: usePage().props.value.users[index].name,
                     id: usePage().props.value.users[index].id
                 });
@@ -122,6 +200,10 @@ const checkSelectAll = () => {
     }
 };
 
+const searchSurvey = () => {
+    Inertia.get(route('administrator.survey', {search: search.value}))
+}
+
 watch(
   () => foreign_list.value,
   (newValue, oldValue) => {
@@ -135,49 +217,81 @@ watch(
   },
   { deep: true }
 );
+
+watch(
+  () => modals.add_edit.show,
+  (newValue, oldValue) => {
+    if (modals.add_edit.details.method == 'edit') {
+        resetForeignList(null)
+    }    
+  },
+  { deep: true }
+);
+
+provide('modals', modals);
+provide('search', search);
+provide('form_add_edit', form_add_edit);
 </script>
 <template>
-    <AdminLayout>
-        <section class="text-gray-600 body-font relative">
-            <div
-            v-if="alertOn"
-                class="bg-green-100 alertanim text-center py-4 lg:px-4"
-            >
-                <div
-                    class="p-2 bg-green-800 items-center text-green-100 leading-none lg:rounded-full flex lg:inline-flex"
-                    role="alert"
+    <AdminLayout :alertOn="alertOn" :alertOnDelete="alertOnDelete" :alertOnUpdate="alertOnUpdate" :alertOnMessage="alertOnMessage">
+        <div class="container p-3 shadow-lg rounded-lg bg-white mt-10 mx-auto">
+            <div class="flex justify-between p-2">
+                <button
+                    @click="modals.add_edit.show = true; modals.add_edit.details.method = 'add'; form_add_edit.name = ''"
+                    class="flex text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg"
                 >
-                    <span
-                        class="flex rounded-full bg-green-500 uppercase px-2 py-1 text-xs font-bold mr-3"
-                        >Success</span
+                Add Survey
+                </button>
+                <nav
+                    class="flex justify-end"
+                    aria-label="Page navigation example"
+                >
+                    <label
+                        for="default-search"
+                        class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300"
+                        >Search</label
                     >
-                    <span class="font-semibold mr-2 text-left flex-auto"
-                        >Survey Added</span
-                    >
-                    <svg
-                        class="fill-current opacity-75 h-4 w-4"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                    >
-                        <path
-                            d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z"
+                    <div class="relative">
+                        <div
+                            class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
+                        >
+                            <svg
+                                aria-hidden="true"
+                                class="w-5 h-5 text-gray-500 dark:text-gray-400"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                ></path>
+                            </svg>
+                        </div>
+                        <input
+                            @keydown.enter="searchSurvey()"
+                            type="search"
+                            v-model="search"
+                            id="default-search"
+                            class="block pr-4 pl-10 py-3 w-[300px] text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-green-500 focus:border-green-500"
+                            placeholder="Search Survey"
                         />
-                    </svg>
-                </div>
+                        <button
+                            @click="searchSurvey()"
+                            type="button"
+                            class="text-white absolute right-2 bottom-1 bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2"
+                        >
+                            Search
+                        </button>
+                    </div>
+                </nav>
             </div>
-            <div class="container p-3 shadow-lg rounded-lg bg-white mt-10 mx-auto">
-                <div class="flex p-2">
-                    <button
-                        @click="modal.show = true"
-                        class="flex text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg"
-                    >
-                        Add Survey
-                    </button>
-                </div>
-                <SurveyList />
-            </div>
-        </section>
-        <JetDialogModal :show="modal.show">
+            <SurveyList />
+        </div>
+        <JetDialogModal :show="modals.add_edit.show">
             <template #title>Add Survey</template>
             <template #content>
                 <div class="grid grid-cols-6 gap-3">
@@ -187,10 +301,11 @@ watch(
                             >
                             <input
                                 v-model="form_add_edit.name"
+                                :disabled="modals.add_edit.details.method == 'invite'"
                                 type="text"
                                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                             />
-                            <JetInputError>{{form_add_edit.errors.name}}</JetInputError>
+                            <JetInputError :message="form_add_edit.errors.name"></JetInputError>
                         </div>
                         <div class="col-span-3">
                             <label
@@ -234,8 +349,8 @@ watch(
             </template>
             <template #footer>
                 <button
-                    @click="modal.show = false"
-                        class="flex mr-2 text-white bg-gray-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg"
+                    @click="modals.add_edit.show = false"
+                        class="flex mr-2 text-white bg-gray-500 border-0 py-2 px-8 focus:outline-none hover:bg-gray-600 rounded text-lg"
                     >
                         Cancel
                     </button>
@@ -243,7 +358,28 @@ watch(
                     @click="addEditSurvey()"
                         class="flex text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg"
                     >
-                        Submit
+                        {{ modals.add_edit.details.btn_submit }}
+                    </button>
+            </template>
+        </JetDialogModal>
+        
+        <JetDialogModal :show="modals.delete.show">
+            <template #title>{{ modals.delete.details.title }}</template>
+            <template #content>
+                {{ modals.delete.details.content }}
+            </template>
+            <template #footer>
+                <button
+                    @click="modals.delete.show = false"
+                        class="flex mr-2 text-white bg-gray-500 border-0 py-2 px-8 focus:outline-none hover:bg-gray-600 rounded text-lg"
+                    >
+                        Cancel
+                    </button>
+                <button
+                    @click="deleteSurvey()"
+                        class="flex text-white bg-red-500 border-0 py-2 px-8 focus:outline-none hover:bg-red-600 rounded text-lg"
+                    >
+                        Delete
                     </button>
             </template>
         </JetDialogModal>
