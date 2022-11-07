@@ -104,7 +104,7 @@ class SocialMediaController extends Controller
     {   
         $update = UserPosts::find($id);
         $details = $update->details;
-        $details['like'][] = Auth::user()->name;
+        $details['like'][] = ['id'=>Auth::user()->id, 'name'=>Auth::user()->name];
         $update->update([
             'details' => $details
         ]);
