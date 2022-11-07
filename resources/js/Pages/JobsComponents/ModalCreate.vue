@@ -64,6 +64,13 @@ const dataToSend = ref({
                                 <input type="text" name="Salary" id="Salary" placeholder="Salary" v-model="dataToSend.salary"
                                     class="block w-full px-4 py-3 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
                             </label>
+
+                                   
+                            <label class="block mt-3" for="Salary">
+                                <input type="text" name="Salary" id="Salary" placeholder="Company" v-model="dataToSend.company"
+                                    class="block w-full px-4 py-3 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
+                            </label>
+                            
                             <div  class="mt-4 sm:flex sm:items-center sm:-mx-2">
                                 <button type="button" @click="$emit('closeModal')"
                                     class="w-full px-4 py-2 text-sm font-medium tracking-wide text-gray-700 capitalize transition-colors duration-300 transform border border-gray-200 rounded-md sm:w-1/2 sm:mx-2 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800 hover:bg-gray-100 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-40">

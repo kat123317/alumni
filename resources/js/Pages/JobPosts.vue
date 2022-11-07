@@ -6,6 +6,7 @@ import { ref, onMounted, computed } from "vue";
 import NoPostsYet from "./Socialmedia/Components/emptypost.vue";
 import modalCreateJob from "./JobsComponents/ModalCreate.vue";
 import modalViewJob from "./JobsComponents/modalView.vue";
+import DynamicAlert from "./GlobalComponents/DynamicAlert.vue"
 import moment from "moment";
 
 // Alert Function
@@ -13,6 +14,29 @@ const postAlert = ref("");
 const titleModal = ref(false);
 const showJob = ref(false);
 const notificationTrigger = ref(false);
+
+
+// Dynamic Trigger
+const alertTrigger = ref(false)
+const configDataq = ref({
+ "title": '',
+ "desc": '',
+ "color": '',
+ "txtcolor": ''
+})
+const globalAlertTrigger = (title,desc,color,txtcolor, timer) =>{ 
+    alertTrigger.value = false
+    configDataq.value.title = title
+    configDataq.value.desc = desc
+    configDataq.value.color = color
+    configDataq.value.txtcolor = txtcolor
+    console.log(configDataq.value);
+    alertTrigger.value = true
+    setTimeout(() => {
+        alertTrigger.value = false
+    }, timer);
+} 
+// End of Dynamic Trigger
 
 
 const errorAlert = (data) => {
@@ -72,7 +96,9 @@ const date_conversion_from_now = (value) => {
 
 const option_view = ref(true);
 
-onMounted(() => { });
+onMounted(() => {
+    // globalAlertTrigger('Updated','dsadasdasdasdasds!', 'bg-blue-600','text-blue-600', 4000 )
+ });
 
 const post_data = useForm({
     content: "",
@@ -116,6 +142,7 @@ const showData = (data) =>{
 
 <template>
     <AppLayout title="Job Posts">
+        <DynamicAlert :showHideAlert = "alertTrigger" :dynamicAlertConfig="configDataq" />
         <modalViewJob :jobData="datatoView"  @closeModalView="showJob = false" :showHideView="showJob" />
         <modalCreateJob :showHide="titleModal" @closeModal="titleModal = false" @sumbitData="alert(sumbitData)" />
         <section>
