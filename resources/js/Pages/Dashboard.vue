@@ -640,10 +640,10 @@ const function_like_post = (index) => {
                                         @click="function_like_post(key)"
                                         class="inline-flex items-center"
                                     >
-                                        <button
+                                        <button 
                                             type="button"
                                             :class="
-                                                !posts.details.like.includes(
+                                                !posts.details.like.map(res=>res.id).includes(
                                                     usePage().props.value.user
                                                         .id
                                                 )
