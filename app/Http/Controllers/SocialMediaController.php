@@ -103,8 +103,23 @@ class SocialMediaController extends Controller
     public function like_post(Request $request, $id)
     {   
         $update = UserPosts::find($id);
+        $details = $update->details;
+        $details['like'][] = Auth::user()->name;
         $update->update([
-            'content' => $request->content
+            'details' => $details
+        ]);
+        return Redirect::back();
+    }
+
+    public function unlike_post(Request $request, $id)
+    {   
+        $update = UserPosts::find($id);
+        $details = $update->details;
+        $key = array_search(Auth::user()->name, $details['like']);
+        unset($details['like'][$key]);
+        $details['like'] = array_values($details['like']);
+        $update->update([
+            'details' => $details
         ]);
         return Redirect::back();
     }

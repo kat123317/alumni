@@ -77,14 +77,25 @@ const function_open_notif = (id, notif_id) => {
 const like_data = useForm({
     post_id: null,
 });
-const function_like_post = (posts_id) => {
-    like_data.post_id = posts_id;
-    like_data.post(route("socialmedia.like_post", [posts_id]), {
-        preserveScroll: true,
-        onSuccess: () => {
-            like_data.reset();
-        },
-    });
+const function_like_post = (index) => {
+    let post = usePage().props.value.posts[index];
+    let pkey = post.details.like.indexOf(usePage().props.value.user.name);
+    like_data.post_id = post.id;
+    if (pkey == -1) {
+        like_data.post(route("socialmedia.like_post", [post.id]), {
+            preserveScroll: true,
+            onSuccess: () => {
+                like_data.reset();
+            },
+        });
+    } else {
+        like_data.post(route("socialmedia.unlike_post", [post.id]), {
+            preserveScroll: true,
+            onSuccess: () => {
+                like_data.reset();
+            },
+        });
+    }
 };
 </script>
 
@@ -625,15 +636,14 @@ const function_like_post = (posts_id) => {
                                     </div>
                                 </div>
                                 <div class="py-4">
-                                    <a
-                                        @click="function_like_post(posts.id)"
+                                    <div
+                                        @click="function_like_post(key)"
                                         class="inline-flex items-center"
-                                        href="#"
                                     >
                                         <button
                                             type="button"
                                             class="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2"
-                                            :title="posts.details.heart"
+                                            :title="posts.details.like"
                                         >
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
@@ -652,7 +662,7 @@ const function_like_post = (posts_id) => {
 
                                             {{ posts.details.like.length }}
                                         </button>
-                                    </a>
+                                    </div>
                                 </div>
                                 <h2 class="mt-4 border-t font-bold">
                                     Comments
