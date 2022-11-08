@@ -380,8 +380,8 @@ const function_like_post = (post_id, is_like) => {
                     <div
                         @click="
                             function_like_post(
-                                posts.id,
-                                posts.details.like
+                                post.id,
+                                post.details.like
                                     .map((res) => res.id)
                                     .includes(usePage().props.value.user.id)
                             )
