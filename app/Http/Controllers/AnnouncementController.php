@@ -72,15 +72,20 @@ class AnnouncementController extends Controller
 
     public function job_posts(Request $request)
     {
+        $search = $request->search_text ?? null;
+
         $users = User::where('status','approved')->get();
         $job_posts = JobPost::with(['user' => function($query){
             $query->where('is_active', '1');
-        }])->orderBy('updated_at', 'desc')->get();
+        }])->when($search, function($query, $search){
+            $query -> where('job_title','like',"%{$search}%");
+        })->orderBy('updated_at', 'desc')->get();
         $user_notification = UserNotification::with('user')->where('notification_owner', Auth::user()->id)->where('is_read', 0)->orderBy('created_at', 'desc')->get();
         return Inertia::render('JobPosts', [
             'users' => $users,
             'posts'=>$job_posts,
-            'user_notification' => $user_notification
+            'user_notification' => $user_notification,
+            'search_text' => $search
         ]);
     }
 

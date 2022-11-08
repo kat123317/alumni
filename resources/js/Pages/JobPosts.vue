@@ -108,6 +108,10 @@ const update_modal_data = useForm({
     job_company: "",
 });
 
+const search_data = useForm({
+    search_text: usePage().props.value.search_text,
+});
+
 const function_open_delete_post_modal = (id) => {
     delete_modal_data.id = id;
     modal_delete_post.value = !modal_delete_post.value;
@@ -162,6 +166,13 @@ const function_update_post = () => {
         );
     }
 };
+
+const function_search = () => {
+    search_data.get(route("job_posts"), {
+        preserveScroll: true,
+        onSuccess: () => {},
+    });
+};
 </script>
 
 <template>
@@ -181,11 +192,11 @@ const function_update_post = () => {
             @sumbitData="alert(sumbitData)"
         />
         <section>
-            <div class="bg-gray-200 ">
+            <div class="bg-gray-200">
                 <div
                     class="container flex items-center px-6 py-4 mx-auto overflow-y-auto whitespace-nowrap"
                 >
-                    <a href="#" class="text-gray-600 ">
+                    <a href="#" class="text-gray-600">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             class="w-5 h-5"
@@ -198,9 +209,7 @@ const function_update_post = () => {
                         </svg>
                     </a>
 
-                    <span
-                        class="mx-5 text-gray-500  rtl:-scale-x-100"
-                    >
+                    <span class="mx-5 text-gray-500 rtl:-scale-x-100">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             class="w-5 h-5"
@@ -217,7 +226,7 @@ const function_update_post = () => {
 
                     <a
                         href="#"
-                        class="flex items-center text-gray-600 -px-2  hover:underline"
+                        class="flex items-center text-gray-600 -px-2 hover:underline"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -241,7 +250,7 @@ const function_update_post = () => {
 
             <div
                 v-if="postAlert"
-                class="p-4 mb-4 border border-blue-300 rounded-lg bg-blue-50 "
+                class="p-4 mb-4 border border-blue-300 rounded-lg bg-blue-50"
                 role="alert"
             >
                 <div class="flex justify-center items-center">
@@ -270,7 +279,7 @@ const function_update_post = () => {
                     <button
                         type="button"
                         @click="postAlert = ''"
-                        class="text-blue-900 bg-transparent border border-blue-900 hover:bg-blue-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 text-center "
+                        class="text-blue-900 bg-transparent border border-blue-900 hover:bg-blue-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 text-center"
                         data-dismiss-target="#alert-additional-content-1"
                         aria-label="Close"
                     >
@@ -445,7 +454,7 @@ const function_update_post = () => {
                                         </div>
                                         <a
                                             href="#"
-                                            class="block py-2 text-sm font-medium text-center text-gray-900 bg-gray-50 hover:bg-gray-100 "
+                                            class="block py-2 text-sm font-medium text-center text-gray-900 bg-gray-50 hover:bg-gray-100"
                                         >
                                             <div
                                                 class="inline-flex items-center"
@@ -553,15 +562,15 @@ const function_update_post = () => {
                                 class="flex flex-col mx-auto overflow-hidden bg-white rounded-lg shadow-lg md:flex-row md:h-48"
                             >
                                 <div
-                                    class="md:flex md:items-center md:justify-center md:w-1/2 md:bg-gray-700 "
+                                    class="md:flex md:items-center md:justify-center md:w-1/2 md:bg-gray-700"
                                 >
                                     <div class="px-6 py-6 md:px-8 md:py-0">
                                         <h2
-                                            class="text-lg font-bold text-gray-700  md:text-gray-100"
+                                            class="text-lg font-bold text-gray-700 md:text-gray-100"
                                         >
                                             Post and look for
                                             <span
-                                                class="text-blue-600  md:text-blue-300"
+                                                class="text-blue-600 md:text-blue-300"
                                                 >Jobs</span
                                             >
                                             that fits your skills
@@ -576,16 +585,20 @@ const function_update_post = () => {
                                         </p>
                                         <label class="block mt-3" for="email">
                                             <input
+                                                v-model="
+                                                    search_data.search_text
+                                                "
                                                 type="text"
                                                 name="searchJob"
                                                 id="searchJob"
                                                 placeholder="Search Job"
-                                                class="block w-full px-4 py-3 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 "
+                                                class="block w-full px-4 py-3 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"
                                             />
                                         </label>
                                         <button
+                                            @click="function_search()"
                                             type="button"
-                                            class="text-white bg-green-700 mt-2 float-right hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center "
+                                            class="text-white bg-green-700 mt-2 float-right hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
                                         >
                                             Search
                                         </button>
@@ -598,7 +611,7 @@ const function_update_post = () => {
                                     <button
                                         type="button"
                                         @click="titleModal = true"
-                                        class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2  inline-flex items-center "
+                                        class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2 inline-flex items-center"
                                     >
                                         Create/Post a Job
                                         <svg
@@ -627,11 +640,11 @@ const function_update_post = () => {
                                 v-for="(posts, key) in usePage().props.value
                                     .posts"
                                 :key="key"
-                                class="bounce-in-top mt-5 px-8 py-4 bg-white rounded-lg shadow-md "
+                                class="bounce-in-top mt-5 px-8 py-4 bg-white rounded-lg shadow-md"
                             >
                                 <div class="flex items-center justify-between">
                                     <span
-                                        class="text-sm font-light text-gray-600 "
+                                        class="text-sm font-light text-gray-600"
                                         >{{
                                             only_date_conversion(
                                                 posts.created_at
@@ -649,14 +662,12 @@ const function_update_post = () => {
                                 <div class="mt-2">
                                     <a
                                         href="#"
-                                        class="text-2xl font-bold text-gray-700 hover:text-gray-600  hover:underline"
+                                        class="text-2xl font-bold text-gray-700 hover:text-gray-600 hover:underline"
                                         tabindex="0"
                                         role="link"
                                         >{{ posts.job_title }}</a
                                     >
-                                    <p
-                                        class="mt-2 text-gray-600 "
-                                    >
+                                    <p class="mt-2 text-gray-600">
                                         {{ posts.job_description }}
                                     </p>
                                 </div>
@@ -666,7 +677,7 @@ const function_update_post = () => {
                                 >
                                     <a
                                         @click="showData(posts)"
-                                        class="text-blue-600 cursor-pointer  hover:underline"
+                                        class="text-blue-600 cursor-pointer hover:underline"
                                         tabindex="0"
                                         role="link"
                                         >Show more</a
@@ -679,7 +690,7 @@ const function_update_post = () => {
                                             alt="avatar"
                                         />
                                         <a
-                                            class="font-bold text-gray-700 cursor-pointer "
+                                            class="font-bold text-gray-700 cursor-pointer"
                                             tabindex="0"
                                             role="link"
                                             >{{ posts.user.name }}</a
