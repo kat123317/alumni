@@ -10,6 +10,8 @@ import moment from "moment";
 const postAlert = ref("");
 const notificationTrigger = ref(false);
 
+
+
 const errorAlert = (data) => {
     if (data) {
         postAlert.value = data;
@@ -97,6 +99,15 @@ const function_like_post = (post_id, is_like) => {
         });
     }
 };
+
+
+const commentsSliced = computed((data) => {
+    // for arrays
+    return data.slice(0,3)
+
+    // for objects/proxies such as reactive, refs, other computed
+    // return yourObject.value.slice(0,5)
+})
 </script>
 
 <template>
@@ -496,7 +507,7 @@ const function_like_post = (post_id, is_like) => {
                                 <div class="w-full rounded-lg mx-4 md:mx-auto">
                                     <div v-for="(
                                             commentsData, key2
-                                        ) in posts.comments_custom" :key="key2" class="flex items-start px-4 py-6">
+                                        ) in posts.comments_custom.slice(0,3)" :key="key2" class="flex items-start px-4 py-6">
                                         <img class="w-12 h-12 rounded-full object-cover mr-4 shadow" :src="
                                             commentsData.user
                                                 .profile_photo_url
@@ -528,6 +539,7 @@ const function_like_post = (post_id, is_like) => {
                                         </div>
                                     </div>
                                 </div>
+                                <small v-if="posts.comments_custom != null && posts.comments_custom.length >= 3" class="text-center my-2 font-bold text-gray-800">{{posts.comments_custom.length}} more comments  </small>
                                 <div class="w-full">
                                     <a :href="
                                         route('socialmedia.comments', [
