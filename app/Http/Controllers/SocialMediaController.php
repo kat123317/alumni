@@ -90,12 +90,21 @@ class SocialMediaController extends Controller
 
     public function store(Request $request)
     {   
+        $images = array();
+        if($request->hasfile('photos')){
+            foreach($request->file('photos') as $photo){
+                $imageName = time().'.'.$photo->extension();
+                $photo->move(public_path().'/images/posts/', $imageName); 
+                array_push($images, $imageName);
+            }
+        }
         $post_details = array(
             'like'=>[]
         );
         UserPosts::create([
             'user_id'=>Auth::user()->id,
             'content' => $request->content,
+            'photo' => $images,
             'details' => $post_details
         ]);
         return Redirect::back();

@@ -43,6 +43,7 @@ onMounted(() => {});
 
 const post_data = useForm({
     content: "",
+    photos: [],
 });
 
 const open_notif_data = useForm({
@@ -115,6 +116,25 @@ const function_search = () => {
         preserveScroll: true,
         onSuccess: () => {},
     });
+};
+
+const post_images = ref([]);
+const openFile = () => {
+    let hidden = document.getElementById("post_image");
+    hidden.click();
+    hidden.onchange = (e) => {
+        if (post_images.value.length + e.target.files.length > 4) {
+            alert("Only 4 images can be selected");
+            return;
+        } else {
+            for (let index = 0; index < e.target.files.length; index++) {
+                post_images.value.push(
+                    window.URL.createObjectURL(e.target.files[index])
+                );
+                post_data.photos.push(e.target.files[index]);
+            }
+        }
+    };
 };
 </script>
 
@@ -517,7 +537,10 @@ const function_search = () => {
                                 <div
                                     class="w-full h-10 flex justify-between mt-4 px-3 md:px-10 lg:px-24 xl:px-5"
                                 >
-                                    <button class="flex h-full items-center">
+                                    <button
+                                        @click="openFile()"
+                                        class="flex h-full items-center"
+                                    >
                                         <svg
                                             class="h-12 text-green-500 stroke-current"
                                             xmlns="http://www.w3.org/2000/svg"
@@ -545,6 +568,17 @@ const function_search = () => {
                                             >Upload Photo
                                         </span>
                                     </button>
+                                    <input
+                                        id="post_image"
+                                        type="file"
+                                        class="hidden"
+                                        accept="image/png, image/gif, image/jpeg"
+                                        multiple
+                                    />
+                                    <template v-for="image in post_images">
+                                        <img class="h-auto" :src="image" />
+                                    </template>
+
                                     <button
                                         @click="function_add_post()"
                                         type="button"
@@ -660,7 +694,12 @@ const function_search = () => {
                                             v-for="(photos, key) in posts.photo"
                                             :key="key"
                                         >
-                                            <img class="w-auto" :src="photos" />
+                                            <img
+                                                class="w-auto"
+                                                :src="
+                                                    './images/posts/' + photos
+                                                "
+                                            />
                                         </a>
                                     </div>
                                     <div
@@ -673,7 +712,12 @@ const function_search = () => {
                                             v-for="(photos, key) in posts.photo"
                                             :key="key"
                                         >
-                                            <img class="w-auto" :src="photos" />
+                                            <img
+                                                class="w-auto"
+                                                :src="
+                                                    './images/posts/' + photos
+                                                "
+                                            />
                                         </a>
                                     </div>
                                 </div>
