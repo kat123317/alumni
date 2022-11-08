@@ -52,7 +52,9 @@ class AnnouncementController extends Controller
             $query->with(['user' => function($query){
                 $query->where('is_active', '1');
             }])->orderBy('updated_at', 'desc');
-        }])->orderBy('updated_at', 'desc')->get();
+        }])->when($search_text, function($query, $search_text){
+            $query -> where('content','like',"%{$search_text}%");
+        })->orderBy('updated_at', 'desc')->get();
         $user_notification = UserNotification::with('user')->where('notification_owner', Auth::user()->id)->where('is_read', 0)->orderBy('created_at', 'desc')->get();
         return Inertia::render('Dashboard', [
             'notifications' => $notifications,
@@ -66,7 +68,8 @@ class AnnouncementController extends Controller
             'from' => $request->from,
             'to' => $request->to,
             'posts'=>$posts,
-            'user_notification' => $user_notification
+            'user_notification' => $user_notification,
+            'search_text' => $search_text
         ]);
     }
 
