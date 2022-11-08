@@ -125,6 +125,11 @@ provide("alertOnMessage", alertOnMessage);
         :alertOnMessage="alertOnMessage"
     >
         <div class="container p-3 shadow-lg rounded-lg bg-white mt-10 mx-auto">
+            <h1
+                class="sm:text-3xl text-2xl font-medium title-font mb-4 text-center text-gray-900"
+            >
+                {{ $page.props.survey.name }}
+            </h1>
             <div class="flex justify-between p-2">
                 <button
                     class="flex text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg"

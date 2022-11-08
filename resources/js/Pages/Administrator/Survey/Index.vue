@@ -1,16 +1,26 @@
 <script setup>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { useForm, usePage } from "@inertiajs/inertia-vue3";
-import { computed, ref, provide, inject, reactive, watch, onMounted, nextTick } from "vue";
+import {
+    computed,
+    ref,
+    provide,
+    inject,
+    reactive,
+    watch,
+    onMounted,
+    nextTick,
+} from "vue";
 import JetCheckbox from "@/Components/Checkbox.vue";
 import JetInputLabel from "@/Components/InputLabel.vue";
 import JetInputError from "@/Components/InputError.vue";
 import JetDialogModal from "@/Components/DialogModal.vue";
-import SurveyList from './SurveyList.vue';
-import helpers from '@/helpers.js'
+import SurveyList from "./SurveyList.vue";
+import helpers from "@/helpers.js";
 import { Inertia } from "@inertiajs/inertia";
-    
-const { alertOn, alertOnDelete, alertOnUpdate, alertOnMessage, onAlert } = helpers();
+
+const { alertOn, alertOnDelete, alertOnUpdate, alertOnMessage, onAlert } =
+    helpers();
 
 const search = ref(usePage().props.value.search);
 const form_add_edit = useForm({
@@ -26,101 +36,86 @@ const foreign_list = ref([]);
 
 const modal = reactive({
     show: false,
-    details: ref({})
-})
+    details: ref({}),
+});
 
 const modals = reactive({
     add_edit: {
         show: false,
         details: {
-            title: 'Add Survey',
+            title: "Add Survey",
             id: 0,
-            method: 'add',
-            btn_submit: 'Submit'
-        }
+            method: "add",
+            btn_submit: "Submit",
+        },
     },
     delete: {
         show: false,
         details: {
-            title: 'Delete Survey',
+            title: "Delete Survey",
             id: 0,
-            content: ''
-        }
-    }
-})
+            content: "",
+        },
+    },
+});
 
 onMounted(() => {
     resetForeignList(false);
 });
 
 const addEditSurvey = () => {
-    if (modals.add_edit.details.method == 'add') {
-        form_add_edit.post(
-            route("surveys.store"),
-            {
-                preserveScroll: true,
-                onSuccess: () => {
-                    alertOnMessage.value = 'Survey Added';
-                    onAlert("Success");
-                    form_add_edit.reset();
-                    modals.add_edit.show = false;
-                },
-                onError: (err) => {
-
-                }
-            }
-        );
-    } else if(modals.add_edit.details.method == 'edit') {
+    if (modals.add_edit.details.method == "add") {
+        form_add_edit.post(route("surveys.store"), {
+            preserveScroll: true,
+            onSuccess: () => {
+                alertOnMessage.value = "Survey Added";
+                onAlert("Success");
+                form_add_edit.reset();
+                modals.add_edit.show = false;
+            },
+            onError: (err) => {},
+        });
+    } else if (modals.add_edit.details.method == "edit") {
         form_add_edit.put(
-            route("surveys.update", {id: modals.add_edit.details.id}),
+            route("surveys.update", { id: modals.add_edit.details.id }),
             {
                 preserveScroll: true,
                 onSuccess: () => {
-                    alertOnMessage.value = 'Survey Successfully updated';
+                    alertOnMessage.value = "Survey Successfully updated";
                     onAlert("Update");
                     form_add_edit.reset();
                     modals.add_edit.show = false;
                 },
-                onError: (err) => {
-
-                }
+                onError: (err) => {},
             }
         );
     } else {
         form_add_edit.put(
-            route("surveys.update", {id: modals.add_edit.details.id}),
+            route("surveys.update", { id: modals.add_edit.details.id }),
             {
                 preserveScroll: true,
                 onSuccess: () => {
-                    alertOnMessage.value = 'Survey Invitaion Successfully sent';
+                    alertOnMessage.value = "Survey Invitaion Successfully sent";
                     onAlert("Update");
                     form_add_edit.reset();
                     modals.add_edit.show = false;
                 },
-                onError: (err) => {
-
-                }
+                onError: (err) => {},
             }
         );
     }
-    
 };
 
 const deleteSurvey = () => {
-    Inertia.delete(
-        route("surveys.delete",{id: modals.delete.details.id}),
-        {
-            preserveScroll: true,
-            onSuccess: () => {
-                alertOnMessage.value = 'Survey Deleted';
-                onAlert("Delete");
-                modals.delete.show = false;
-            },
-            onError: (err) => {
-
-            }
-        }
-    );
+    Inertia.delete(route("surveys.delete", { id: modals.delete.details.id }), {
+        preserveScroll: true,
+        onSuccess: () => {
+            alertOnMessage.value = "Survey Deleted";
+            onAlert("Delete");
+            modals.delete.show = false;
+        },
+        onError: (err) => {},
+    });
 };
 
 const resetForeignList = (checked) => {
@@ -134,9 +129,14 @@ const resetForeignList = (checked) => {
                 index++
             ) {
                 ids.push({
-                    is_checked: checked != null ? checked: form_add_edit.setup.foreign_ids.includes(usePage().props.value.colleges[index].id),
+                    is_checked:
+                        checked != null
+                            ? checked
+                            : form_add_edit.setup.foreign_ids.includes(
+                                  usePage().props.value.colleges[index].id
+                              ),
                     name: usePage().props.value.colleges[index].name,
-                    id: usePage().props.value.colleges[index].id
+                    id: usePage().props.value.colleges[index].id,
                 });
             }
             break;
@@ -147,9 +147,14 @@ const resetForeignList = (checked) => {
                 index++
             ) {
                 ids.push({
-                    is_checked: checked != null ? checked: form_add_edit.setup.foreign_ids.includes(usePage().props.value.courses[index].id),
+                    is_checked:
+                        checked != null
+                            ? checked
+                            : form_add_edit.setup.foreign_ids.includes(
+                                  usePage().props.value.courses[index].id
+                              ),
                     name: usePage().props.value.courses[index].name,
-                    id: usePage().props.value.courses[index].id
+                    id: usePage().props.value.courses[index].id,
                 });
             }
             break;
@@ -160,9 +165,14 @@ const resetForeignList = (checked) => {
                 index++
             ) {
                 ids.push({
-                    is_checked: checked != null ? checked: form_add_edit.setup.foreign_ids.includes(usePage().props.value.users[index].id),
+                    is_checked:
+                        checked != null
+                            ? checked
+                            : form_add_edit.setup.foreign_ids.includes(
+                                  usePage().props.value.users[index].id
+                              ),
                     name: usePage().props.value.users[index].name,
-                    id: usePage().props.value.users[index].id
+                    id: usePage().props.value.users[index].id,
                 });
             }
             break;
@@ -175,23 +185,32 @@ const resetForeignList = (checked) => {
 const checkSelectAll = () => {
     switch (form_add_edit.setup.shown_only) {
         case "college":
-            if (form_add_edit.setup.foreign_ids.length == usePage().props.value.colleges.length) {
+            if (
+                form_add_edit.setup.foreign_ids.length ==
+                usePage().props.value.colleges.length
+            ) {
                 form_add_edit.setup.select_all = true;
-            }else {
+            } else {
                 form_add_edit.setup.select_all = false;
             }
             break;
         case "course":
-        if (form_add_edit.setup.foreign_ids.length == usePage().props.value.courses.length) {
+            if (
+                form_add_edit.setup.foreign_ids.length ==
+                usePage().props.value.courses.length
+            ) {
                 form_add_edit.setup.select_all = true;
-            }else {
+            } else {
                 form_add_edit.setup.select_all = false;
             }
             break;
         case "user":
-        if (form_add_edit.setup.foreign_ids.length == usePage().props.value.users.length) {
+            if (
+                form_add_edit.setup.foreign_ids.length ==
+                usePage().props.value.users.length
+            ) {
                 form_add_edit.setup.select_all = true;
-            }else {
+            } else {
                 form_add_edit.setup.select_all = false;
             }
             break;
@@ -201,46 +220,55 @@ const checkSelectAll = () => {
 };
 
 const searchSurvey = () => {
-    Inertia.get(route('administrator.survey', {search: search.value}))
-}
+    Inertia.get(route("administrator.survey", { search: search.value }));
+};
 
 watch(
-  () => foreign_list.value,
-  (newValue, oldValue) => {
-    form_add_edit.setup.foreign_ids = [];
-    newValue.forEach(element => {
-        if (element.is_checked) {
-            form_add_edit.setup.foreign_ids.push(element.id)
+    () => foreign_list.value,
+    (newValue, oldValue) => {
+        form_add_edit.setup.foreign_ids = [];
+        newValue.forEach((element) => {
+            if (element.is_checked) {
+                form_add_edit.setup.foreign_ids.push(element.id);
+            }
+        });
+        checkSelectAll();
+    },
+    { deep: true }
+);
+
+watch(
+    () => modals.add_edit.show,
+    (newValue, oldValue) => {
+        if (modals.add_edit.details.method == "edit") {
+            resetForeignList(null);
         }
-    });
-    checkSelectAll()
-  },
-  { deep: true }
+    },
+    { deep: true }
 );
 
-watch(
-  () => modals.add_edit.show,
-  (newValue, oldValue) => {
-    if (modals.add_edit.details.method == 'edit') {
-        resetForeignList(null)
-    }    
-  },
-  { deep: true }
-);
-
-provide('modals', modals);
-provide('search', search);
-provide('form_add_edit', form_add_edit);
+provide("modals", modals);
+provide("search", search);
+provide("form_add_edit", form_add_edit);
 </script>
 <template>
-    <AdminLayout :alertOn="alertOn" :alertOnDelete="alertOnDelete" :alertOnUpdate="alertOnUpdate" :alertOnMessage="alertOnMessage">
+    <AdminLayout
+        :alertOn="alertOn"
+        :alertOnDelete="alertOnDelete"
+        :alertOnUpdate="alertOnUpdate"
+        :alertOnMessage="alertOnMessage"
+    >
         <div class="container p-3 shadow-lg rounded-lg bg-white mt-10 mx-auto">
             <div class="flex justify-between p-2">
                 <button
-                    @click="modals.add_edit.show = true; modals.add_edit.details.method = 'add'; form_add_edit.name = ''"
+                    @click="
+                        modals.add_edit.show = true;
+                        modals.add_edit.details.method = 'add';
+                        form_add_edit.name = '';
+                    "
                     class="flex text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg"
                 >
-                Add Survey
+                    Add Survey
                 </button>
                 <nav
                     class="flex justify-end"
@@ -295,74 +323,90 @@ provide('form_add_edit', form_add_edit);
             <template #title>Add Survey</template>
             <template #content>
                 <div class="grid grid-cols-6 gap-3">
-                        <div class="col-span-3">
-                            <label class="leading-7 text-sm text-gray-600"
-                                >Survey Name</label
-                            >
-                            <input
-                                v-model="form_add_edit.name"
-                                :disabled="modals.add_edit.details.method == 'invite'"
-                                type="text"
-                                class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                            />
-                            <JetInputError :message="form_add_edit.errors.name"></JetInputError>
+                    <div class="col-span-3">
+                        <label class="leading-7 text-sm text-gray-600"
+                            >Survey Name</label
+                        >
+                        <input
+                            v-model="form_add_edit.name"
+                            :disabled="
+                                modals.add_edit.details.method == 'invite'
+                            "
+                            type="text"
+                            class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                        />
+                        <JetInputError
+                            :message="form_add_edit.errors.name"
+                        ></JetInputError>
+                    </div>
+                    <div class="col-span-3">
+                        <label
+                            for="email"
+                            class="leading-7 text-sm text-gray-600"
+                            >Shown Only</label
+                        >
+                        <select
+                            v-model="form_add_edit.setup.shown_only"
+                            @change="resetForeignList(false)"
+                            class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-nonefocus:outline-none focus:ring-0 focus:border-gray-200 peer"
+                        >
+                            <option value="all">All</option>
+                            <option value="college">College</option>
+                            <option value="course">Course</option>
+                            <option value="user">User</option>
+                        </select>
+                    </div>
+                    <template v-if="form_add_edit.setup.shown_only != 'all'">
+                        <div class="col-span-6 flex">
+                            <JetInputLabel>
+                                <JetCheckbox
+                                    v-model:checked="
+                                        form_add_edit.setup.select_all
+                                    "
+                                    @change="
+                                        resetForeignList(
+                                            form_add_edit.setup.select_all
+                                        )
+                                    "
+                                >
+                                </JetCheckbox>
+                                <span>{{
+                                    form_add_edit.setup.select_all == true
+                                        ? "Unselect All"
+                                        : "Select All"
+                                }}</span>
+                            </JetInputLabel>
                         </div>
-                        <div class="col-span-3">
-                            <label
-                                for="email"
-                                class="leading-7 text-sm text-gray-600"
-                                >Shown Only</label
-                            >
-                            <select
-                                v-model="form_add_edit.setup.shown_only"
-                                @change="resetForeignList(false)"
-                                class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-nonefocus:outline-none focus:ring-0 focus:border-gray-200 peer"
-                            >
-                                <option value="all">All</option>
-                                <option value="college">College</option>
-                                <option value="course">Course</option>
-                                <option value="user">User</option>
-                            </select>
-                        </div>
-                        <template v-if="form_add_edit.setup.shown_only != 'all'">
-                            <div class="col-span-6 flex">
+                        <template v-for="(ids, index) in foreign_list">
+                            <div class="col-span-3">
                                 <JetInputLabel>
                                     <JetCheckbox
-                                        v-model:checked="form_add_edit.setup.select_all"
-                                        @change="resetForeignList(form_add_edit.setup.select_all)"
+                                        v-model:checked="ids.is_checked"
                                     >
-                                    </JetCheckbox> <span>{{ form_add_edit.setup.select_all == true ? 'Unselect All': 'Select All'  }}</span>
+                                    </JetCheckbox>
+                                    <span>{{ ids.name }}</span>
                                 </JetInputLabel>
                             </div>
-                            <template v-for="(ids, index) in foreign_list">
-                                <div class="col-span-3">
-                                    <JetInputLabel>
-                                        <JetCheckbox
-                                            v-model:checked="ids.is_checked"
-                                        >
-                                        </JetCheckbox> <span>{{ids.name}}</span>
-                                    </JetInputLabel>
-                                </div>
-                            </template>
                         </template>
-                    </div>
+                    </template>
+                </div>
             </template>
             <template #footer>
                 <button
                     @click="modals.add_edit.show = false"
-                        class="flex mr-2 text-white bg-gray-500 border-0 py-2 px-8 focus:outline-none hover:bg-gray-600 rounded text-lg"
-                    >
-                        Cancel
-                    </button>
+                    class="flex mr-2 text-white bg-gray-500 border-0 py-2 px-8 focus:outline-none hover:bg-gray-600 rounded text-lg"
+                >
+                    Cancel
+                </button>
                 <button
                     @click="addEditSurvey()"
-                        class="flex text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg"
-                    >
-                        {{ modals.add_edit.details.btn_submit }}
-                    </button>
+                    class="flex text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg"
+                >
+                    {{ modals.add_edit.details.btn_submit }}
+                </button>
             </template>
         </JetDialogModal>
-        
+
         <JetDialogModal :show="modals.delete.show">
             <template #title>{{ modals.delete.details.title }}</template>
             <template #content>
@@ -371,16 +415,16 @@ provide('form_add_edit', form_add_edit);
             <template #footer>
                 <button
                     @click="modals.delete.show = false"
-                        class="flex mr-2 text-white bg-gray-500 border-0 py-2 px-8 focus:outline-none hover:bg-gray-600 rounded text-lg"
-                    >
-                        Cancel
-                    </button>
+                    class="flex mr-2 text-white bg-gray-500 border-0 py-2 px-8 focus:outline-none hover:bg-gray-600 rounded text-lg"
+                >
+                    Cancel
+                </button>
                 <button
                     @click="deleteSurvey()"
-                        class="flex text-white bg-red-500 border-0 py-2 px-8 focus:outline-none hover:bg-red-600 rounded text-lg"
-                    >
-                        Delete
-                    </button>
+                    class="flex text-white bg-red-500 border-0 py-2 px-8 focus:outline-none hover:bg-red-600 rounded text-lg"
+                >
+                    Delete
+                </button>
             </template>
         </JetDialogModal>
     </AdminLayout>
