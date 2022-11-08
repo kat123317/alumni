@@ -77,19 +77,19 @@ const function_open_notif = (id, notif_id) => {
 const like_data = useForm({
     post_id: null,
 });
-const function_like_post = (index) => {
-    let post = usePage().props.value.posts[index];
-    let pkey = post.details.like.indexOf(usePage().props.value.user.name);
-    like_data.post_id = post.id;
-    if (pkey == -1) {
-        like_data.post(route("socialmedia.like_post", [post.id]), {
+const function_like_post = (post_id, is_like) => {
+    // let post = usePage().props.value.posts[index];
+    // let pkey = post.details.like.indexOf(usePage().props.value.user.id);
+    like_data.post_id = post_id;
+    if (is_like) {
+        like_data.post(route("socialmedia.unlike_post", [post_id]), {
             preserveScroll: true,
             onSuccess: () => {
                 like_data.reset();
             },
         });
     } else {
-        like_data.post(route("socialmedia.unlike_post", [post.id]), {
+        like_data.post(route("socialmedia.like_post", [post_id]), {
             preserveScroll: true,
             onSuccess: () => {
                 like_data.reset();
@@ -637,20 +637,36 @@ const function_like_post = (index) => {
                                 </div>
                                 <div class="py-4">
                                     <div
-                                        @click="function_like_post(key)"
+                                        @click="
+                                            function_like_post(
+                                                posts.id,
+                                                posts.details.like
+                                                    .map((res) => res.id)
+                                                    .includes(
+                                                        usePage().props.value
+                                                            .user.id
+                                                    )
+                                            )
+                                        "
                                         class="inline-flex items-center"
                                     >
-                                        <button 
+                                        <button
                                             type="button"
                                             :class="
-                                                !posts.details.like.map(res=>res.id).includes(
-                                                    usePage().props.value.user
-                                                        .id
-                                                )
+                                                !posts.details.like
+                                                    .map((res) => res.id)
+                                                    .includes(
+                                                        usePage().props.value
+                                                            .user.id
+                                                    )
                                                     ? 'text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2'
                                                     : 'text-white border border-blue-700 bg-blue-800 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2'
                                             "
-                                            :title="posts.details.like"
+                                            :title="
+                                                posts.details.like.map(
+                                                    (res) => res.name
+                                                )
+                                            "
                                         >
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
