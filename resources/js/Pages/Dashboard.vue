@@ -539,7 +539,7 @@ const commentsSliced = computed((data) => {
                                         </div>
                                     </div>
                                 </div>
-                                <small v-if="posts.comments_custom != null && posts.comments_custom.length >= 3" class="text-center my-2 font-bold text-gray-800">{{posts.comments_custom.length}} more comments  </small>
+                                <small v-if="posts.comments_custom != null && posts.comments_custom.length > 3" class="text-center my-2 font-bold text-gray-800">{{posts.comments_custom.length  - posts.comments_custom.slice(0,3).length}} more comments  </small>
                                 <div class="w-full">
                                     <a :href="
                                         route('socialmedia.comments', [
