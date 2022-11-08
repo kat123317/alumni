@@ -82,6 +82,19 @@ const form_announcement = useForm({
                                 class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"
                             >
                                 <NavLink
+                                    :href="route('socialmedia.messaging')"
+                                    :active="
+                                        route().current('socialmedia.messaging')
+                                    "
+                                >
+                                    Message
+                                </NavLink>
+                            </div>
+
+                            <div
+                                class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"
+                            >
+                                <NavLink
                                     :href="route('graduates.index')"
                                     :active="route().current('graduates.index')"
                                 >
@@ -395,6 +408,12 @@ const form_announcement = useForm({
                             :active="route().current('job_posts')"
                         >
                             Job Posts
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            :href="route('socialmedia.messaging')"
+                            :active="route().current('socialmedia.messaging')"
+                        >
+                            Message
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
                             :href="route('graduates.index')"

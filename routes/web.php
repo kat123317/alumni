@@ -135,6 +135,8 @@ Route::middleware([
         Route::delete('/delete_job_post/{id}', [SocialMediaController::class, 'delete_job_post'])->name('delete_job_post');
         Route::post('/update_job_post/{id}', [SocialMediaController::class, 'update_job_post'])->name('update_job_post');
 
+        Route::get('/messaging', [SocialMediaController::class, 'messaging'])->name('messaging');
+
     });
 
     Route::prefix('events')->name('events.')->group(function () {
