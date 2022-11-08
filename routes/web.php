@@ -151,7 +151,7 @@ Route::middleware([
         Route::delete('/delete/{id}', [SurveyController::class, 'destroy'])->name('delete');
 
         Route::prefix('engine/{survey_id}')->name('engine.')->group(function () {
-            Route::get('/entry', [SurveyController::class, 'entry'])->name('entry');
+            Route::get('/review', [SurveyController::class, 'review'])->name('review');
         });
 
         Route::prefix('questions/{survey_id}')->name('questions.')->group(function () {
