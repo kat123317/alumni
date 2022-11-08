@@ -141,6 +141,10 @@ const checkDropdown = () => {
                             "
                             >Multiple Select</InputToggle
                         >
+                        <InputToggle
+                            v-model:checked="form_add_edit.setup.required"
+                            >Required</InputToggle
+                        >
                     </div>
                 </div>
             </div>

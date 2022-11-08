@@ -5,13 +5,11 @@ import ModalAddEditQuestion from "./ModalAddEditQuestion.vue";
 import QList from "./QList.vue";
 import { Link, usePage, useForm } from "@inertiajs/inertia-vue3";
 import { Inertia } from "@inertiajs/inertia";
-import { provide, reactive, ref } from "vue";
+import { provide, reactive, ref, onBeforeMount } from "vue";
 import helpers from "@/helpers.js";
 
 const { alertOn, alertOnDelete, alertOnUpdate, alertOnMessage, onAlert } =
     helpers();
-
-const myChoice = ref(1);
 
 const form_add_edit = useForm({
     instruction: "",
@@ -19,6 +17,7 @@ const form_add_edit = useForm({
     setup: {
         dropdown: false,
         multiple_select: false,
+        required: false,
         choices: [],
     },
 });
@@ -42,6 +41,26 @@ const modals = reactive({
     },
 });
 
+const MyChoices = ref({});
+onBeforeMount(() => {
+    usePage().props.value.survey.questions.forEach((question) => {
+        if (question.setup.dropdown == true) {
+            MyChoices.value["question_" + question.order] = 0;
+        } else if (
+            question.setup.dropdown == false &&
+            question.setup.multiple_select == true
+        ) {
+            let choices = {};
+            question.setup.choices.forEach((choice) => {
+                choices["choice_" + choice.value] = 0;
+            });
+            MyChoices.value["question_" + question.order] = choices;
+        } else {
+            MyChoices.value["question_" + question.order] = 0;
+        }
+    });
+});
+
 const showAddEditModal = (method = "add", index = -1) => {
     if (method == "add") {
         modals.add_edit.show = true;
@@ -55,6 +74,7 @@ const showAddEditModal = (method = "add", index = -1) => {
         form_add_edit.setup.multiple_select =
             edit_question.setup.multiple_select;
         form_add_edit.setup.choices = edit_question.setup.choices;
+        form_add_edit.setup.required = edit_question.setup.required;
 
         modals.add_edit.details.method = "edit";
         modals.add_edit.details.id = edit_question.id;
@@ -137,7 +157,10 @@ provide("alertOnMessage", alertOnMessage);
                                 Delete
                             </button>
                         </div>
-                        <QList :question="question" v-model="myChoice" />
+                        <QList
+                            :question="question"
+                            v-model="MyChoices['question_' + (index + 1)]"
+                        />
                     </div>
                 </template>
             </div>

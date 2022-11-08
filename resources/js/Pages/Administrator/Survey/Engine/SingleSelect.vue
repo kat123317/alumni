@@ -1,13 +1,31 @@
 <script setup>
 import JetInputLabel from "@/Components/InputLabel.vue";
+import { computed } from "vue";
 
-defineProps({
-    modelValue: String,
+const emit = defineEmits(["update:checked"]);
+
+const props = defineProps({
+    checked: {
+        type: [Number],
+        default: 0,
+    },
+    value: {
+        type: String,
+        default: null,
+    },
     choices: Array,
     ukey: [String, Number],
 });
 
-defineEmits(["update:modelValue"]);
+const proxyChecked = computed({
+    get() {
+        return props.checked;
+    },
+
+    set(val) {
+        emit("update:checked", val);
+    },
+});
 </script>
 <template>
     <div class="grid grid-cols gap-1 mb-5">
@@ -17,9 +35,7 @@ defineEmits(["update:modelValue"]);
                     <input
                         :name="'radio-' + ukey"
                         :value="choice.value"
-                        @change="
-                            $emit('update:modelValue', $event.target.value)
-                        "
+                        v-model="proxyChecked"
                         type="radio"
                         class="border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                     />
