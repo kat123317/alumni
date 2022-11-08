@@ -534,7 +534,7 @@ const function_like_post = (post_id, is_like) => {
                                 <p>
                                     {{ comments.content }}
                                 </p>
-                                <div class="mt-2 flex items-center">
+                                <!-- <div class="mt-2 flex items-center">
                                     <a
                                         class="inline-flex items-center"
                                         href="#"
@@ -561,7 +561,7 @@ const function_like_post = (post_id, is_like) => {
                                             {{ 0 }}
                                         </button>
                                     </a>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
