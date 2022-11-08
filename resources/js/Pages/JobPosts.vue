@@ -70,28 +70,10 @@ const option_view = ref(true);
 
 onMounted(() => {});
 
-const post_data = useForm({
-    content: "",
-});
-
 const open_notif_data = useForm({
     id: "",
     is_read: 1,
 });
-
-const function_add_post = () => {
-    if (post_data.content == "") {
-        errorAlert("System will not allow empty post, Sorry");
-    } else {
-        post_data.post(route("socialmedia.store"), {
-            preserveScroll: true,
-            onSuccess: () => {
-                post_data.reset();
-                errorAlert("Your content has been posted");
-            },
-        });
-    }
-};
 
 const function_open_notif = (id, notif_id) => {
     open_notif_data.id = id;

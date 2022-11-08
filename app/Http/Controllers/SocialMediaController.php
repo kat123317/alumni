@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\JobPost;
 use App\Models\User;
 use App\Models\UserNotification;
 use App\Models\UserPostComment;
@@ -9,7 +10,7 @@ use App\Models\UserPosts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
-
+use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 
 class SocialMediaController extends Controller
@@ -85,6 +86,25 @@ class SocialMediaController extends Controller
             'user_id'=>Auth::user()->id,
             'content' => $request->content,
             'details' => $post_details
+        ]);
+        return Redirect::back();
+    }
+
+    public function post_job(Request $request)
+    {   
+        $input = $request->toArray();
+        Validator::make($input, [
+            'job_email' => ['required', 'string', 'email', 'max:255'],
+        ])->validate();
+        
+        JobPost::create([
+            'user_id'=>Auth::user()->id,
+            'job_title' => $request->job_title,
+            'job_description' => $request->job_description,
+            'job_email' => $request->job_email,
+            'job_salary' => $request->job_salary,
+            'job_company'=>$request->job_company,
+            'details' => []
         ]);
         return Redirect::back();
     }

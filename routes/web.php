@@ -117,6 +117,8 @@ Route::middleware([
     Route::prefix('socialmedia')->name('socialmedia.')->group(function () {
         Route::get('/socialmedia', [SocialMediaController::class, 'index'])->name('index');
         Route::post('/store', [SocialMediaController::class, 'store'])->name('store');
+        Route::post('/post_job', [SocialMediaController::class, 'post_job'])->name('post_job');
+        
         Route::post('/like_post/{id}', [SocialMediaController::class, 'like_post'])->name('like_post');
         Route::post('/unlike_post/{id}', [SocialMediaController::class, 'unlike_post'])->name('unlike_post');
 
