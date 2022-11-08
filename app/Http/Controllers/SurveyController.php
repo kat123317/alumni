@@ -142,12 +142,22 @@ class SurveyController extends Controller
                 'notification_type' => 'survey',
                 'is_read' => false,
                 'title' => 'Alumni Survey',
-                'content' => 'You are invited to alumni survey',
+                'content' => 'You are invited to alumni survey, click the link below to take the survey',
                 'details' => array(
-                    'link' => 'https://bla-bla.com'
+                    'link' => route('surveys.engine.review', ['survey_id' => $survey->id])
                 )
             ]);
         }
         return Redirect::back();
+    }
+
+    public function review(Request $request, $survey_id)
+    {
+        $survey = Survey::with('questions')->where('id', $survey_id)->first();
+        $questions = $survey->questions;
+        // dd($survey->questions);
+        return Inertia::render('SurveyEngine/Index', [
+            'survey' => $survey
+        ]);
     }
 }

@@ -150,6 +150,7 @@ Route::middleware([
         Route::get('/', [SurveyController::class, 'index'])->name('index');
         Route::post('/store', [SurveyController::class, 'store'])->name('store');
         Route::put('/update/{id}', [SurveyController::class, 'update'])->name('update');
+        Route::put('/send_invitaion/{id}', [SurveyController::class, 'sendSurveyInvitation'])->name('send_invitaion');
         Route::delete('/delete/{id}', [SurveyController::class, 'destroy'])->name('delete');
 
         Route::prefix('engine/{survey_id}')->name('engine.')->group(function () {
