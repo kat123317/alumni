@@ -51,8 +51,8 @@ class AnnouncementController extends Controller
         }])->with(['comments_custom' => function($query) {
             $query->with(['user' => function($query){
                 $query->where('is_active', '1');
-            }])->orderBy('created_at', 'desc');
-        }])->orderBy('created_at', 'desc')->get();
+            }])->orderBy('updated_at', 'desc');
+        }])->orderBy('updated_at', 'desc')->get();
         $user_notification = UserNotification::with('user')->where('notification_owner', Auth::user()->id)->where('is_read', 0)->orderBy('created_at', 'desc')->get();
         return Inertia::render('Dashboard', [
             'notifications' => $notifications,
@@ -75,7 +75,7 @@ class AnnouncementController extends Controller
         $users = User::where('status','approved')->get();
         $job_posts = JobPost::with(['user' => function($query){
             $query->where('is_active', '1');
-        }])->orderBy('created_at', 'desc')->get();
+        }])->orderBy('updated_at', 'desc')->get();
         $user_notification = UserNotification::with('user')->where('notification_owner', Auth::user()->id)->where('is_read', 0)->orderBy('created_at', 'desc')->get();
         return Inertia::render('JobPosts', [
             'users' => $users,
