@@ -115,7 +115,9 @@ class SocialMediaController extends Controller
     {   
         $update = UserPosts::find($id);
         $details = $update->details;
-        $key = array_search(Auth::user()->name, $details['like']);
+        $key = collect($details['like'])->search(function($value) {
+            return  Auth::user()->id == $value['id'];
+        });
         unset($details['like'][$key]);
         $details['like'] = array_values($details['like']);
         $update->update([
