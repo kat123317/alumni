@@ -79,9 +79,7 @@ class SocialMediaController extends Controller
     public function store(Request $request)
     {   
         $post_details = array(
-            'heart'=>[],
-            'like'=>[],
-            'sad'=>[],
+            'like'=>[]
         );
         UserPosts::create([
             'user_id'=>Auth::user()->id,
