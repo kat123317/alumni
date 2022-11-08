@@ -68,8 +68,7 @@ class AnnouncementController extends Controller
             'from' => $request->from,
             'to' => $request->to,
             'posts'=>$posts,
-            'user_notification' => $user_notification,
-            'search_text' => $search_text
+            'user_notification' => $user_notification
         ]);
     }
 
