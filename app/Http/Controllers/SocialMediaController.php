@@ -53,10 +53,10 @@ class SocialMediaController extends Controller
         ]);
     }
 
-    public function messaging($id)
+    public function messaging()
     {   
         return Inertia::render('Socialmedia/Components/MessengerPage', [
-            'user_profile' => User::where('id', $id)->with(['posts' => function($query){
+            'user_profile' => User::with(['posts' => function($query){
                 $query->with('user')->orderBy('created_at', 'desc')->with(['comments' => function($query) {
                     $query->with('user')->orderBy('created_at', 'desc');
                 }]);
