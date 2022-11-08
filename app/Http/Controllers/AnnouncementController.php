@@ -54,7 +54,7 @@ class AnnouncementController extends Controller
             }])->orderBy('updated_at', 'desc');
         }])->when($search_text, function($query, $search_text){
             $query -> where('content','like',"%{$search_text}%");
-        })->orderBy('updated_at', 'desc')->get();
+        })->orderBy('created_at', 'desc')->get();
         $user_notification = UserNotification::with('user')->where('notification_owner', Auth::user()->id)->where('is_read', 0)->orderBy('created_at', 'desc')->get();
         return Inertia::render('Dashboard', [
             'notifications' => $notifications,

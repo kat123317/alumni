@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
+use Illuminate\Support\Str;
 
 class SocialMediaController extends Controller
 {
@@ -93,7 +94,7 @@ class SocialMediaController extends Controller
         $images = array();
         if($request->hasfile('photos')){
             foreach($request->file('photos') as $photo){
-                $imageName = time().'.'.$photo->extension();
+                $imageName = Str::random(40).'.'.$photo->extension();
                 $photo->move(public_path().'/images/posts/', $imageName); 
                 array_push($images, $imageName);
             }
