@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Announcement;
 use App\Models\College;
 use App\Models\Course;
+use App\Models\JobPost;
 use App\Models\Notification;
 use App\Models\User;
 use App\Models\UserNotification;
@@ -72,17 +73,13 @@ class AnnouncementController extends Controller
     public function job_posts(Request $request)
     {
         $users = User::where('status','approved')->get();
-        $posts = UserPosts::with(['user' => function($query){
+        $job_posts = JobPost::with(['user' => function($query){
             $query->where('is_active', '1');
-        }])->when(['comments_custom' => function($query) {
-            $query->with(['user' => function($query){
-                $query->where('is_active', '1');
-            }])->orderBy('created_at', 'desc');
         }])->orderBy('created_at', 'desc')->get();
         $user_notification = UserNotification::with('user')->where('notification_owner', Auth::user()->id)->where('is_read', 0)->orderBy('created_at', 'desc')->get();
         return Inertia::render('JobPosts', [
             'users' => $users,
-            'posts'=>$posts,
+            'posts'=>$job_posts,
             'user_notification' => $user_notification
         ]);
     }

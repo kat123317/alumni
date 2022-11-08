@@ -16,4 +16,8 @@ class JobPost extends Model
         'photo' => 'json',
 
     ];
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }
