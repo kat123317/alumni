@@ -108,11 +108,11 @@ const showData = (data) => {
             @sumbitData="alert(sumbitData)"
         />
         <section>
-            <div class="bg-gray-200 dark:bg-gray-800">
+            <div class="bg-gray-200 ">
                 <div
                     class="container flex items-center px-6 py-4 mx-auto overflow-y-auto whitespace-nowrap"
                 >
-                    <a href="#" class="text-gray-600 dark:text-gray-200">
+                    <a href="#" class="text-gray-600 ">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             class="w-5 h-5"
@@ -126,7 +126,7 @@ const showData = (data) => {
                     </a>
 
                     <span
-                        class="mx-5 text-gray-500 dark:text-gray-300 rtl:-scale-x-100"
+                        class="mx-5 text-gray-500  rtl:-scale-x-100"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -144,7 +144,7 @@ const showData = (data) => {
 
                     <a
                         href="#"
-                        class="flex items-center text-gray-600 -px-2 dark:text-gray-200 hover:underline"
+                        class="flex items-center text-gray-600 -px-2  hover:underline"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -168,7 +168,7 @@ const showData = (data) => {
 
             <div
                 v-if="postAlert"
-                class="p-4 mb-4 border border-blue-300 rounded-lg bg-blue-50 dark:bg-blue-300"
+                class="p-4 mb-4 border border-blue-300 rounded-lg bg-blue-50 "
                 role="alert"
             >
                 <div class="flex justify-center items-center">
@@ -197,7 +197,7 @@ const showData = (data) => {
                     <button
                         type="button"
                         @click="postAlert = ''"
-                        class="text-blue-900 bg-transparent border border-blue-900 hover:bg-blue-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:border-blue-800 dark:text-blue-800 dark:hover:text-white"
+                        class="text-blue-900 bg-transparent border border-blue-900 hover:bg-blue-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 text-center "
                         data-dismiss-target="#alert-additional-content-1"
                         aria-label="Close"
                     >
@@ -372,7 +372,7 @@ const showData = (data) => {
                                         </div>
                                         <a
                                             href="#"
-                                            class="block py-2 text-sm font-medium text-center text-gray-900 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white"
+                                            class="block py-2 text-sm font-medium text-center text-gray-900 bg-gray-50 hover:bg-gray-100 "
                                         >
                                             <div
                                                 class="inline-flex items-center"
@@ -477,25 +477,25 @@ const showData = (data) => {
                             <!-- Profile tab -->
                             <!-- About Section -->
                             <section
-                                class="flex flex-col mx-auto overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800 md:flex-row md:h-48"
+                                class="flex flex-col mx-auto overflow-hidden bg-white rounded-lg shadow-lg md:flex-row md:h-48"
                             >
                                 <div
-                                    class="md:flex md:items-center md:justify-center md:w-1/2 md:bg-gray-700 md:dark:bg-gray-800"
+                                    class="md:flex md:items-center md:justify-center md:w-1/2 md:bg-gray-700 "
                                 >
                                     <div class="px-6 py-6 md:px-8 md:py-0">
                                         <h2
-                                            class="text-lg font-bold text-gray-700 dark:text-white md:text-gray-100"
+                                            class="text-lg font-bold text-gray-700  md:text-gray-100"
                                         >
                                             Post and look for
                                             <span
-                                                class="text-blue-600 dark:text-blue-400 md:text-blue-300"
+                                                class="text-blue-600  md:text-blue-300"
                                                 >Jobs</span
                                             >
                                             that fits your skills
                                         </h2>
 
                                         <p
-                                            class="mt-2 text-sm text-gray-600 dark:text-gray-400 md:text-gray-400"
+                                            class="mt-2 text-sm text-gray-600 md:text-gray-400"
                                         >
                                             A wise man will make more
                                             opportunities than he finds.” –
@@ -507,12 +507,12 @@ const showData = (data) => {
                                                 name="searchJob"
                                                 id="searchJob"
                                                 placeholder="Search Job"
-                                                class="block w-full px-4 py-3 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
+                                                class="block w-full px-4 py-3 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 "
                                             />
                                         </label>
                                         <button
                                             type="button"
-                                            class="text-white bg-green-700 mt-2 float-right hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                                            class="text-white bg-green-700 mt-2 float-right hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center "
                                         >
                                             Search
                                         </button>
@@ -525,7 +525,7 @@ const showData = (data) => {
                                     <button
                                         type="button"
                                         @click="titleModal = true"
-                                        class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                                        class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2  inline-flex items-center "
                                     >
                                         Create/Post a Job
                                         <svg
@@ -554,11 +554,11 @@ const showData = (data) => {
                                 v-for="(posts, key) in usePage().props.value
                                     .posts"
                                 :key="key"
-                                class="bounce-in-top mt-5 px-8 py-4 bg-white rounded-lg shadow-md dark:bg-gray-800"
+                                class="bounce-in-top mt-5 px-8 py-4 bg-white rounded-lg shadow-md "
                             >
                                 <div class="flex items-center justify-between">
                                     <span
-                                        class="text-sm font-light text-gray-600 dark:text-gray-400"
+                                        class="text-sm font-light text-gray-600 "
                                         >{{
                                             only_date_conversion(
                                                 posts.created_at
@@ -576,13 +576,13 @@ const showData = (data) => {
                                 <div class="mt-2">
                                     <a
                                         href="#"
-                                        class="text-2xl font-bold text-gray-700 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 hover:underline"
+                                        class="text-2xl font-bold text-gray-700 hover:text-gray-600  hover:underline"
                                         tabindex="0"
                                         role="link"
                                         >{{ posts.job_title }}</a
                                     >
                                     <p
-                                        class="mt-2 text-gray-600 dark:text-gray-300"
+                                        class="mt-2 text-gray-600 "
                                     >
                                         {{ posts.job_description }}
                                     </p>
@@ -593,7 +593,7 @@ const showData = (data) => {
                                 >
                                     <a
                                         @click="showData(posts)"
-                                        class="text-blue-600 cursor-pointer dark:text-blue-400 hover:underline"
+                                        class="text-blue-600 cursor-pointer  hover:underline"
                                         tabindex="0"
                                         role="link"
                                         >Show more</a
@@ -606,7 +606,7 @@ const showData = (data) => {
                                             alt="avatar"
                                         />
                                         <a
-                                            class="font-bold text-gray-700 cursor-pointer dark:text-gray-200"
+                                            class="font-bold text-gray-700 cursor-pointer "
                                             tabindex="0"
                                             role="link"
                                             >{{ posts.user.name }}</a

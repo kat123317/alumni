@@ -172,7 +172,7 @@ const commentsSliced = computed((data) => {
                 <div class="container mx-auto my-5 p-5">
                     <div class="md:flex md:-mx-2">
                         <!-- Left Side -->
-                        <div class="lg:block w-full md:w-3/12 md:mx-2">
+                        <div class="lg:block w-full  md:w-5/12 md:mx-2">
                             <!-- Profile Card -->
                             <div class="bg-white p-3 border-t-4 border-green-400">
                                 <div class="image overflow-hidden">
@@ -352,10 +352,10 @@ const commentsSliced = computed((data) => {
                             <!-- End of friends card -->
                         </div>
                         <!-- Right Side -->
-                        <div class="w-full">
+                        <div class="w-full ">
                             <!-- Profile tab -->
                             <!-- About Section -->
-                            <div class="bg-white p-3 shadow-sm rounded-sm">
+                            <div class="bg-white p-3  shadow-sm rounded-sm">
                                 <div class="w-full h-16 flex items-center flex justify-between px-5">
                                     <a :href="
                                         route('socialmedia.user_profile', [
