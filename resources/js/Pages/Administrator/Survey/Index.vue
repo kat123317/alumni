@@ -91,7 +91,7 @@ const addEditSurvey = () => {
         );
     } else {
         form_add_edit.put(
-            route("surveys.update", { id: modals.add_edit.details.id }),
+            route("surveys.send_invitaion", { id: modals.add_edit.details.id }),
             {
                 preserveScroll: true,
                 onSuccess: () => {
