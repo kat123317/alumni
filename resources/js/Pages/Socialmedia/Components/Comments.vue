@@ -371,7 +371,10 @@ const function_like_post = (post_id, is_like) => {
                             class="flex"
                             href="#"
                         >
-                            <img class="w-auto" :src="photos" />
+                            <img
+                                class="w-auto"
+                                :src="'./../../images/posts/' + photos"
+                            />
                         </a>
                     </div>
                 </div>
