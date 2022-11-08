@@ -46,7 +46,7 @@ const SendResume = () => {
                         >&#8203;</span
                     >
                     <div
-                        class="relative inline-block px-4 pt-5 pb-4 mb-[52vmin] overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl  sm:w-full sm:max-w-sm sm:p-6 sm:align-middle"
+                        class="relative inline-block px-4 pt-5 pb-4 mb-[52vmin] lg:mb-[10vmin] overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl  sm:w-full sm:max-w-sm sm:p-6 sm:align-middle"
                     >
                         <h3
                             class="text-lg font-medium leading-6 text-gray-800 capitalize "

@@ -210,7 +210,7 @@ const showData = (data) => {
                 <div class="container mx-auto my-5 p-5">
                     <div class="md:flex md:-mx-2">
                         <!-- Left Side -->
-                        <div class="lg:block w-full md:w-3/12 md:mx-2">
+                        <div class="lg:block w-full md:w-5/12 md:mx-2">
                             <!-- Profile Card -->
                             <div
                                 class="bg-white p-3 border-t-4 border-green-400"
