@@ -14,7 +14,7 @@ const props = defineProps({
 const emits = defineEmits(["closeModalView"]);
 
 const SendResume = () => {
-    var yourMessage = "This is a Sample Image";
+    var yourMessage = "Application";
     var subject = "Resume: ";
     var mail =
         "mailto:" +
@@ -46,32 +46,32 @@ const SendResume = () => {
                         >&#8203;</span
                     >
                     <div
-                        class="relative inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl dark:bg-gray-900 sm:my-8 sm:w-full sm:max-w-sm sm:p-6 sm:align-middle"
+                        class="relative inline-block px-4 pt-5 pb-4 mb-[52vmin] lg:mb-[10vmin] overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl  sm:w-full sm:max-w-sm sm:p-6 sm:align-middle"
                     >
                         <h3
-                            class="text-lg font-medium leading-6 text-gray-800 capitalize dark:text-white"
+                            class="text-lg font-medium leading-6 text-gray-800 capitalize "
                             id="modal-title"
                         >
                             {{ jobData.job_title }} - {{ jobData.job_company }}
                         </h3>
                         <p
-                            class="mt-2 text-sm text-gray-500 dark:text-gray-400"
+                            class="mt-2 text-sm text-gray-500 "
                         >
                             Details
                         </p>
-                        <p class="text-gray-500 dark:text-gray-400">
+                        <p class="text-gray-500 ">
                             {{ jobData.job_description }}
                         </p>
                         <hr
-                            class="my-2 h-px bg-gray-200 border-0 dark:bg-gray-700"
+                            class="my-2 h-px bg-gray-200 border-0 "
                         />
-                        <p class="text-gray-500 dark:text-gray-400">
+                        <p class="text-gray-500 ">
                             Salary: {{ jobData.job_salary }}
                         </p>
                         <hr
-                            class="my-2 h-px bg-gray-200 border-0 dark:bg-gray-700"
+                            class="my-2 h-px bg-gray-200 border-0 "
                         />
-                        <p class="text-gray-500 dark:text-gray-400">
+                        <p class="text-gray-500 ">
                             Contact Us: {{ jobData.job_email }}
                         </p>
 
@@ -85,7 +85,7 @@ const SendResume = () => {
                         <button
                             type="button"
                             @click="$emit('closeModalView')"
-                            class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 float-center mt-10 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                            class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 float-center mt-10 focus:z-10 focus:ring-4 focus:ring-gray-200 "
                         >
                             Close
                         </button>

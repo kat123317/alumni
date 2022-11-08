@@ -166,6 +166,25 @@ class SocialMediaController extends Controller
         return Redirect::back();
     }
 
+    public function update_job_post(Request $request, $id)
+    {   
+
+        $input = $request->toArray();
+        Validator::make($input, [
+            'job_email' => ['required', 'string', 'email', 'max:255'],
+        ])->validate();
+
+        $update = JobPost::find($id);
+        $update->update([
+            'job_title' => $request->job_title,
+            'job_description' => $request->job_description,
+            'job_email' => $request->job_email,
+            'job_salary' => $request->job_salary,
+            'job_company'=>$request->job_company,
+        ]);
+        return Redirect::back();
+    }
+
     public function delete_comment($id)
     {   
         $delete = UserPostComment::find($id);
@@ -178,5 +197,12 @@ class SocialMediaController extends Controller
         $delete = UserPosts::find($id);
         $delete->delete();
         return Redirect::route('dashboard');
+    }
+
+    public function delete_job_post($id)
+    {   
+        $delete = JobPost::find($id);
+        $delete->delete();
+        return Redirect::back();
     }
 }

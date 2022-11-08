@@ -9,6 +9,11 @@ import modalViewJob from "./JobsComponents/modalView.vue";
 import DynamicAlert from "./GlobalComponents/DynamicAlert.vue";
 import moment from "moment";
 
+//Delete data
+const modal_delete_post = ref(false);
+//update data
+const modal_update_post = ref(false);
+
 // Alert Function
 const postAlert = ref("");
 const titleModal = ref(false);
@@ -89,6 +94,74 @@ const showData = (data) => {
     datatoView.value = data;
     showJob.value = !showJob.value;
 };
+
+const delete_modal_data = useForm({
+    id: "",
+});
+
+const update_modal_data = useForm({
+    id: "",
+    job_title: "",
+    job_description: "",
+    job_email: "",
+    job_salary: "",
+    job_company: "",
+});
+
+const function_open_delete_post_modal = (id) => {
+    delete_modal_data.id = id;
+    modal_delete_post.value = !modal_delete_post.value;
+};
+
+const function_delete_post = () => {
+    delete_modal_data.delete(
+        route("socialmedia.delete_job_post", [delete_modal_data.id]),
+        {
+            preserveScroll: true,
+            onSuccess: () => {
+                modal_delete_post.value = !modal_delete_post.value;
+            },
+        }
+    );
+};
+
+const function_open_update_modal = (post) => {
+    update_modal_data.id = post.id;
+    update_modal_data.job_title = post.job_title;
+    update_modal_data.job_description = post.job_description;
+    update_modal_data.job_email = post.job_email;
+    update_modal_data.job_salary = post.job_salary;
+    update_modal_data.job_company = post.job_company;
+    modal_update_post.value = !modal_update_post.value;
+};
+
+const function_close_update_modal = () => {
+    update_modal_data.reset;
+    modal_update_post.value = !modal_update_post.value;
+};
+
+const function_update_post = () => {
+    if (
+        update_modal_data.job_title == "" ||
+        update_modal_data.job_description == "" ||
+        update_modal_data.job_email == "" ||
+        update_modal_data.job_salary == "" ||
+        update_modal_data.job_company == ""
+    ) {
+        errorAlert("System will not allow empty posts");
+    } else {
+        update_modal_data.post(
+            route("socialmedia.update_job_post", [update_modal_data.id]),
+            {
+                preserveScroll: true,
+                onSuccess: () => {
+                    update_modal_data.reset();
+                    modal_update_post.value = !modal_update_post.value;
+                },
+            }
+        );
+    }
+};
 </script>
 
 <template>
@@ -108,11 +181,11 @@ const showData = (data) => {
             @sumbitData="alert(sumbitData)"
         />
         <section>
-            <div class="bg-gray-200 dark:bg-gray-800">
+            <div class="bg-gray-200 ">
                 <div
                     class="container flex items-center px-6 py-4 mx-auto overflow-y-auto whitespace-nowrap"
                 >
-                    <a href="#" class="text-gray-600 dark:text-gray-200">
+                    <a href="#" class="text-gray-600 ">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             class="w-5 h-5"
@@ -126,7 +199,7 @@ const showData = (data) => {
                     </a>
 
                     <span
-                        class="mx-5 text-gray-500 dark:text-gray-300 rtl:-scale-x-100"
+                        class="mx-5 text-gray-500  rtl:-scale-x-100"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -144,7 +217,7 @@ const showData = (data) => {
 
                     <a
                         href="#"
-                        class="flex items-center text-gray-600 -px-2 dark:text-gray-200 hover:underline"
+                        class="flex items-center text-gray-600 -px-2  hover:underline"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -168,7 +241,7 @@ const showData = (data) => {
 
             <div
                 v-if="postAlert"
-                class="p-4 mb-4 border border-blue-300 rounded-lg bg-blue-50 dark:bg-blue-300"
+                class="p-4 mb-4 border border-blue-300 rounded-lg bg-blue-50 "
                 role="alert"
             >
                 <div class="flex justify-center items-center">
@@ -197,7 +270,7 @@ const showData = (data) => {
                     <button
                         type="button"
                         @click="postAlert = ''"
-                        class="text-blue-900 bg-transparent border border-blue-900 hover:bg-blue-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:border-blue-800 dark:text-blue-800 dark:hover:text-white"
+                        class="text-blue-900 bg-transparent border border-blue-900 hover:bg-blue-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 text-center "
                         data-dismiss-target="#alert-additional-content-1"
                         aria-label="Close"
                     >
@@ -210,7 +283,7 @@ const showData = (data) => {
                 <div class="container mx-auto my-5 p-5">
                     <div class="md:flex md:-mx-2">
                         <!-- Left Side -->
-                        <div class="lg:block w-full md:w-3/12 md:mx-2">
+                        <div class="lg:block w-full md:w-5/12 md:mx-2">
                             <!-- Profile Card -->
                             <div
                                 class="bg-white p-3 border-t-4 border-green-400"
@@ -372,7 +445,7 @@ const showData = (data) => {
                                         </div>
                                         <a
                                             href="#"
-                                            class="block py-2 text-sm font-medium text-center text-gray-900 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white"
+                                            class="block py-2 text-sm font-medium text-center text-gray-900 bg-gray-50 hover:bg-gray-100 "
                                         >
                                             <div
                                                 class="inline-flex items-center"
@@ -477,25 +550,25 @@ const showData = (data) => {
                             <!-- Profile tab -->
                             <!-- About Section -->
                             <section
-                                class="flex flex-col mx-auto overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800 md:flex-row md:h-48"
+                                class="flex flex-col mx-auto overflow-hidden bg-white rounded-lg shadow-lg md:flex-row md:h-48"
                             >
                                 <div
-                                    class="md:flex md:items-center md:justify-center md:w-1/2 md:bg-gray-700 md:dark:bg-gray-800"
+                                    class="md:flex md:items-center md:justify-center md:w-1/2 md:bg-gray-700 "
                                 >
                                     <div class="px-6 py-6 md:px-8 md:py-0">
                                         <h2
-                                            class="text-lg font-bold text-gray-700 dark:text-white md:text-gray-100"
+                                            class="text-lg font-bold text-gray-700  md:text-gray-100"
                                         >
                                             Post and look for
                                             <span
-                                                class="text-blue-600 dark:text-blue-400 md:text-blue-300"
+                                                class="text-blue-600  md:text-blue-300"
                                                 >Jobs</span
                                             >
                                             that fits your skills
                                         </h2>
 
                                         <p
-                                            class="mt-2 text-sm text-gray-600 dark:text-gray-400 md:text-gray-400"
+                                            class="mt-2 text-sm text-gray-600 md:text-gray-400"
                                         >
                                             A wise man will make more
                                             opportunities than he finds.” –
@@ -507,12 +580,12 @@ const showData = (data) => {
                                                 name="searchJob"
                                                 id="searchJob"
                                                 placeholder="Search Job"
-                                                class="block w-full px-4 py-3 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
+                                                class="block w-full px-4 py-3 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 "
                                             />
                                         </label>
                                         <button
                                             type="button"
-                                            class="text-white bg-green-700 mt-2 float-right hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                                            class="text-white bg-green-700 mt-2 float-right hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center "
                                         >
                                             Search
                                         </button>
@@ -525,7 +598,7 @@ const showData = (data) => {
                                     <button
                                         type="button"
                                         @click="titleModal = true"
-                                        class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                                        class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2  inline-flex items-center "
                                     >
                                         Create/Post a Job
                                         <svg
@@ -554,11 +627,11 @@ const showData = (data) => {
                                 v-for="(posts, key) in usePage().props.value
                                     .posts"
                                 :key="key"
-                                class="bounce-in-top mt-5 px-8 py-4 bg-white rounded-lg shadow-md dark:bg-gray-800"
+                                class="bounce-in-top mt-5 px-8 py-4 bg-white rounded-lg shadow-md "
                             >
                                 <div class="flex items-center justify-between">
                                     <span
-                                        class="text-sm font-light text-gray-600 dark:text-gray-400"
+                                        class="text-sm font-light text-gray-600 "
                                         >{{
                                             only_date_conversion(
                                                 posts.created_at
@@ -576,13 +649,13 @@ const showData = (data) => {
                                 <div class="mt-2">
                                     <a
                                         href="#"
-                                        class="text-2xl font-bold text-gray-700 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 hover:underline"
+                                        class="text-2xl font-bold text-gray-700 hover:text-gray-600  hover:underline"
                                         tabindex="0"
                                         role="link"
                                         >{{ posts.job_title }}</a
                                     >
                                     <p
-                                        class="mt-2 text-gray-600 dark:text-gray-300"
+                                        class="mt-2 text-gray-600 "
                                     >
                                         {{ posts.job_description }}
                                     </p>
@@ -593,7 +666,7 @@ const showData = (data) => {
                                 >
                                     <a
                                         @click="showData(posts)"
-                                        class="text-blue-600 cursor-pointer dark:text-blue-400 hover:underline"
+                                        class="text-blue-600 cursor-pointer  hover:underline"
                                         tabindex="0"
                                         role="link"
                                         >Show more</a
@@ -606,17 +679,300 @@ const showData = (data) => {
                                             alt="avatar"
                                         />
                                         <a
-                                            class="font-bold text-gray-700 cursor-pointer dark:text-gray-200"
+                                            class="font-bold text-gray-700 cursor-pointer "
                                             tabindex="0"
                                             role="link"
                                             >{{ posts.user.name }}</a
                                         >
+                                        <div class="flex justify-end">
+                                            <button
+                                                @click="
+                                                    function_open_update_modal(
+                                                        posts
+                                                    )
+                                                "
+                                                v-if="
+                                                    posts.user.id ==
+                                                    usePage().props.value.user
+                                                        .id
+                                                "
+                                                class="text-lg flex font-bold float-right relative"
+                                                href="#"
+                                                title="Update your post"
+                                            >
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    fill="none"
+                                                    viewBox="0 0 24 24"
+                                                    stroke-width="1.5"
+                                                    stroke="currentColor"
+                                                    class="w-6 h-6"
+                                                >
+                                                    <path
+                                                        stroke-linecap="round"
+                                                        class="text-blue-800"
+                                                        stroke-linejoin="round"
+                                                        d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                                                    />
+                                                </svg>
+                                            </button>
+
+                                            <button
+                                                @click="
+                                                    function_open_delete_post_modal(
+                                                        posts.id
+                                                    )
+                                                "
+                                                v-if="
+                                                    posts.user.id ==
+                                                    usePage().props.value.user
+                                                        .id
+                                                "
+                                                class="text-lg font-bold float-right relative flex mr-4"
+                                                title="Delete your post"
+                                            >
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    fill="none"
+                                                    viewBox="0 0 24 24"
+                                                    stroke-width="1.5"
+                                                    stroke="currentColor"
+                                                    class="w-6 h-6"
+                                                >
+                                                    <path
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        class="text-red-500"
+                                                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                                    />
+                                                </svg>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="flex mt-5 justify-center">
                                 <small>End of Posts</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div v-if="modal_update_post" class=" ">
+                <div
+                    id="popup-modal"
+                    tabindex="-1"
+                    class="overflow-y-auto flex fixed justify-center w-full backdrop-blur-sm overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full"
+                >
+                    <div
+                        class="relative p-4 w-full animate mt-10 max-w-md h-full md:h-auto"
+                    >
+                        <div class="relative bg-white rounded-lg shadow">
+                            <div class="p-2 w-full">
+                                <div class="relative">
+                                    <label class="block mt-3" for="title">
+                                        <input
+                                            type="text"
+                                            name="title"
+                                            id="title"
+                                            placeholder="Job Title"
+                                            v-model="
+                                                update_modal_data.job_title
+                                            "
+                                            class="block w-full px-4 py-3 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"
+                                        />
+                                    </label>
+
+                                    <label class="block mt-3" for="Description">
+                                        <textarea
+                                            type="Description"
+                                            name="Description"
+                                            id="Description"
+                                            v-model="
+                                                update_modal_data.job_description
+                                            "
+                                            placeholder="Job Description"
+                                            class="block w-full px-4 py-3 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"
+                                        ></textarea>
+                                    </label>
+
+                                    <label class="block mt-3" for="contact">
+                                        <input
+                                            type="text"
+                                            name="contact"
+                                            id="contact"
+                                            placeholder="Contact Email"
+                                            v-model="
+                                                update_modal_data.job_email
+                                            "
+                                            class="block w-full px-4 py-3 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"
+                                        />
+                                        <small class="text-red-500">{{
+                                            usePage().props.value.errors
+                                                .job_email
+                                        }}</small>
+                                    </label>
+
+                                    <label class="block mt-3" for="Salary">
+                                        <input
+                                            type="text"
+                                            name="Salary"
+                                            id="Salary"
+                                            placeholder="Salary"
+                                            v-model="
+                                                update_modal_data.job_salary
+                                            "
+                                            class="block w-full px-4 py-3 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"
+                                        />
+                                    </label>
+
+                                    <label class="block mt-3" for="Company">
+                                        <input
+                                            type="text"
+                                            name="Company"
+                                            id="Company"
+                                            placeholder="Company"
+                                            v-model="
+                                                update_modal_data.job_company
+                                            "
+                                            class="block w-full px-4 py-3 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"
+                                        />
+                                    </label>
+                                </div>
+                            </div>
+                            <button
+                                @click="function_close_update_modal()"
+                                type="button"
+                                class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+                                data-modal-toggle="popup-modal"
+                            >
+                                <svg
+                                    aria-hidden="true"
+                                    class="w-5 h-5"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"
+                                    ></path>
+                                </svg>
+                                <span class="sr-only">Close modal</span>
+                            </button>
+                            <div class="p-6 text-center">
+                                <svg
+                                    aria-hidden="true"
+                                    class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                    ></path>
+                                </svg>
+                                <h3
+                                    class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400"
+                                >
+                                    Are you sure you want to update your
+                                    comment?
+                                </h3>
+                                <button
+                                    @click="function_update_post()"
+                                    data-modal-toggle="popup-modal"
+                                    type="button"
+                                    class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"
+                                >
+                                    Yes, I'm sure
+                                </button>
+                                <button
+                                    @click="function_close_update_modal()"
+                                    data-modal-toggle="popup-modal"
+                                    type="button"
+                                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10"
+                                >
+                                    No, cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div v-if="modal_delete_post">
+                <div
+                    id="popup-modal"
+                    tabindex="-1"
+                    class="overflow-y-auto flex justify-center backdrop-blur-sm overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full"
+                >
+                    <div
+                        class="relative p-4 animate w-full max-w-md h-full mt-[20vmin] transition ease-in-out md:h-auto"
+                    >
+                        <div class="relative bg-white rounded-lg shadow">
+                            <button
+                                @click="function_open_delete_post_modal()"
+                                type="button"
+                                class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+                                data-modal-toggle="popup-modal"
+                            >
+                                <svg
+                                    aria-hidden="true"
+                                    class="w-5 h-5"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"
+                                    ></path>
+                                </svg>
+                                <span class="sr-only">Close modal</span>
+                            </button>
+                            <div class="p-6 text-center">
+                                <svg
+                                    aria-hidden="true"
+                                    class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                    ></path>
+                                </svg>
+                                <h3
+                                    class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400"
+                                >
+                                    Are you sure you want to delete this post?
+                                </h3>
+                                <button
+                                    @click="function_delete_post()"
+                                    data-modal-toggle="popup-modal"
+                                    type="button"
+                                    class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"
+                                >
+                                    Yes, I'm sure
+                                </button>
+                                <button
+                                    @click="function_open_delete_post_modal()"
+                                    data-modal-toggle="popup-modal"
+                                    type="button"
+                                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10"
+                                >
+                                    No, cancel
+                                </button>
                             </div>
                         </div>
                     </div>

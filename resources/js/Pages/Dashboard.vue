@@ -113,16 +113,16 @@ const commentsSliced = computed((data) => {
 <template>
     <AppLayout title="Dashboard">
         <section>
-            <div class="bg-gray-200 dark:bg-gray-800">
+            <div class="bg-gray-200 ">
                 <div class="container flex items-center px-6 py-4 mx-auto overflow-y-auto whitespace-nowrap">
-                    <a href="#" class="text-gray-600 dark:text-gray-200">
+                    <a href="#" class="text-gray-600 ">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
                             <path
                                 d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
                         </svg>
                     </a>
 
-                    <span class="mx-5 text-gray-500 dark:text-gray-300 rtl:-scale-x-100">
+                    <span class="mx-5 text-gray-500  rtl:-scale-x-100">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd"
                                 d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
@@ -130,7 +130,7 @@ const commentsSliced = computed((data) => {
                         </svg>
                     </span>
 
-                    <a href="#" class="flex items-center text-gray-600 -px-2 dark:text-gray-200 hover:underline">
+                    <a href="#" class="flex items-center text-gray-600 -px-2 hover:underline">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -142,7 +142,7 @@ const commentsSliced = computed((data) => {
                 </div>
             </div>
 
-            <div v-if="postAlert" class="p-4 mb-4 border border-blue-300 rounded-lg bg-blue-50 dark:bg-blue-300"
+            <div v-if="postAlert" class="p-4 mb-4 border border-blue-300 rounded-lg bg-blue-50 "
                 role="alert">
                 <div class="flex justify-center items-center">
                     <svg aria-hidden="true" class="w-5 h-5 mr-2 text-blue-900" fill="currentColor" viewBox="0 0 20 20"
@@ -161,7 +161,7 @@ const commentsSliced = computed((data) => {
                 </div>
                 <div class="flex justify-center">
                     <button type="button" @click="postAlert = ''"
-                        class="text-blue-900 bg-transparent border border-blue-900 hover:bg-blue-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:border-blue-800 dark:text-blue-800 dark:hover:text-white"
+                        class="text-blue-900 bg-transparent border border-blue-900 hover:bg-blue-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 text-center "
                         data-dismiss-target="#alert-additional-content-1" aria-label="Close">
                         Dismiss
                     </button>
@@ -172,7 +172,7 @@ const commentsSliced = computed((data) => {
                 <div class="container mx-auto my-5 p-5">
                     <div class="md:flex md:-mx-2">
                         <!-- Left Side -->
-                        <div class="lg:block w-full md:w-3/12 md:mx-2">
+                        <div class="lg:block w-full  md:w-5/12 md:mx-2">
                             <!-- Profile Card -->
                             <div class="bg-white p-3 border-t-4 border-green-400">
                                 <div class="image overflow-hidden">
@@ -286,7 +286,7 @@ const commentsSliced = computed((data) => {
                                             </a>
                                         </div>
                                         <a href="#"
-                                            class="block py-2 text-sm font-medium text-center text-gray-900 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white">
+                                            class="block py-2 text-sm font-medium text-center text-gray-900 bg-gray-50 hover:bg-gray-100 ">
                                             <div class="inline-flex items-center">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -352,10 +352,10 @@ const commentsSliced = computed((data) => {
                             <!-- End of friends card -->
                         </div>
                         <!-- Right Side -->
-                        <div class="w-full">
+                        <div class="w-full ">
                             <!-- Profile tab -->
                             <!-- About Section -->
-                            <div class="bg-white p-3 shadow-sm rounded-sm">
+                            <div class="bg-white p-3  shadow-sm rounded-sm">
                                 <div class="w-full h-16 flex items-center flex justify-between px-5">
                                     <a :href="
                                         route('socialmedia.user_profile', [
@@ -385,7 +385,7 @@ const commentsSliced = computed((data) => {
                                         </span>
                                     </button>
                                     <button @click="function_add_post()" type="button"
-                                        class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                                        class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center ">
                                         Post
                                         <svg aria-hidden="true" class="ml-2 -mr-1 w-5 h-5" fill="currentColor"
                                             viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
