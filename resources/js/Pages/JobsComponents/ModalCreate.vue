@@ -34,6 +34,7 @@ const function_add_job_post = () => {
             onSuccess: () => {
                 post_data.reset();
                 emits("closeModal");
+                usePage().props.value.errors.job_email = "";
                 errorAlert("Your content has been posted");
             },
         });
@@ -60,10 +61,10 @@ const function_add_job_post = () => {
                         >&#8203;</span
                     >
                     <div
-                        class="relative inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl dark:bg-gray-900 sm:my-8 sm:w-full sm:max-w-sm sm:p-6 sm:align-middle"
+                        class="relative inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:w-full sm:max-w-sm sm:p-6 sm:align-middle"
                     >
                         <h3
-                            class="text-lg font-medium leading-6 text-gray-800 capitalize dark:text-white"
+                            class="text-lg font-medium leading-6 text-gray-800 capitalize"
                             id="modal-title"
                         >
                             Create Job/Work
@@ -76,7 +77,7 @@ const function_add_job_post = () => {
                                 id="title"
                                 placeholder="Job Title"
                                 v-model="post_data.job_title"
-                                class="block w-full px-4 py-3 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
+                                class="block w-full px-4 py-3 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"
                             />
                         </label>
 
@@ -87,7 +88,7 @@ const function_add_job_post = () => {
                                 id="Description"
                                 v-model="post_data.job_description"
                                 placeholder="Job Description"
-                                class="block w-full px-4 py-3 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
+                                class="block w-full px-4 py-3 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"
                             ></textarea>
                         </label>
 
@@ -98,8 +99,11 @@ const function_add_job_post = () => {
                                 id="contact"
                                 placeholder="Contact Email"
                                 v-model="post_data.job_email"
-                                class="block w-full px-4 py-3 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
+                                class="block w-full px-4 py-3 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"
                             />
+                            <small class="text-red-500">{{
+                                usePage().props.value.errors.job_email
+                            }}</small>
                         </label>
 
                         <label class="block mt-3" for="Salary">
@@ -109,7 +113,7 @@ const function_add_job_post = () => {
                                 id="Salary"
                                 placeholder="Salary"
                                 v-model="post_data.job_salary"
-                                class="block w-full px-4 py-3 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
+                                class="block w-full px-4 py-3 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"
                             />
                         </label>
 
@@ -120,7 +124,7 @@ const function_add_job_post = () => {
                                 id="Company"
                                 placeholder="Company"
                                 v-model="post_data.job_company"
-                                class="block w-full px-4 py-3 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
+                                class="block w-full px-4 py-3 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"
                             />
                         </label>
 
@@ -128,7 +132,7 @@ const function_add_job_post = () => {
                             <button
                                 type="button"
                                 @click="$emit('closeModal')"
-                                class="w-full px-4 py-2 text-sm font-medium tracking-wide text-gray-700 capitalize transition-colors duration-300 transform border border-gray-200 rounded-md sm:w-1/2 sm:mx-2 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800 hover:bg-gray-100 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-40"
+                                class="w-full px-4 py-2 text-sm font-medium tracking-wide text-gray-700 capitalize transition-colors duration-300 transform border border-gray-200 rounded-md sm:w-1/2 sm:mx-2 hover:bg-gray-100 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-40"
                             >
                                 Cancel
                             </button>

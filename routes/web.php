@@ -118,7 +118,7 @@ Route::middleware([
         Route::get('/socialmedia', [SocialMediaController::class, 'index'])->name('index');
         Route::post('/store', [SocialMediaController::class, 'store'])->name('store');
         Route::post('/post_job', [SocialMediaController::class, 'post_job'])->name('post_job');
-        
+
         Route::post('/like_post/{id}', [SocialMediaController::class, 'like_post'])->name('like_post');
         Route::post('/unlike_post/{id}', [SocialMediaController::class, 'unlike_post'])->name('unlike_post');
 
@@ -131,6 +131,9 @@ Route::middleware([
         Route::delete('/delete_post/{id}', [SocialMediaController::class, 'delete_post'])->name('delete_post');
         Route::post('/update_comment/{id}', [SocialMediaController::class, 'update_comment'])->name('update_comment');
         Route::delete('/delete_comment/{id}', [SocialMediaController::class, 'delete_comment'])->name('delete_comment');
+
+        Route::delete('/delete_job_post/{id}', [SocialMediaController::class, 'delete_job_post'])->name('delete_job_post');
+        Route::post('/update_job_post/{id}', [SocialMediaController::class, 'update_job_post'])->name('update_job_post');
 
     });
 

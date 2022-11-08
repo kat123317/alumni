@@ -14,7 +14,7 @@ const props = defineProps({
 const emits = defineEmits(["closeModalView"]);
 
 const SendResume = () => {
-    var yourMessage = "This is a Sample Image";
+    var yourMessage = "Application";
     var subject = "Resume: ";
     var mail =
         "mailto:" +
