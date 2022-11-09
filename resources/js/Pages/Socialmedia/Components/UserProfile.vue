@@ -19,27 +19,19 @@ const date_conversion2 = (value) => {
 
 <template>
     <AppLayout title="UserProfile">
-       
+
         <!-- component -->
 
-        <div
-            style="
+        <div style="
                 background: url('https://www.cmu.edu.ph/wp-content/uploads/2022/05/1new-cmubanner-1045x218-1.jpg');
                 background-repeat: no-repeat;
                 background-size: contain;
             "
-            class="bg-gray-800 font-sans pt-[30vmin] lg:pt-0 lg:h-[50vmin] w-full flex flex-row justify-center items-center"
-        >
-            <div
-                class="card w-96 mx-auto bg-white rounded-lg shadow-xl hover:shadow"
-            >
-                <img
-                    class="w-32 mx-auto rounded-full -mt-20 border-8 border-white"
-                    :src="
-                        usePage().props.value.user_profile[0].profile_photo_url
-                    "
-                    alt=""
-                />
+            class="bg-gray-800 font-sans pt-[30vmin] lg:pt-0 lg:h-[50vmin] w-full flex flex-row justify-center items-center">
+            <div class="card w-96 mx-auto bg-white rounded-lg shadow-xl hover:shadow">
+                <img class="w-32 mx-auto rounded-full -mt-20 border-8 border-white" :src="
+                    usePage().props.value.user_profile[0].profile_photo_url
+                " alt="" />
                 <div class="text-center mt-2 text-3xl font-medium">
                     {{ usePage().props.value.user_profile[0].name }}
                 </div>
@@ -53,7 +45,7 @@ const date_conversion2 = (value) => {
                 <div class="px-6 text-center mt-2 font-light text-sm">
                     <p>
                         {{
-                            usePage().props.value.user_profile[0].details.motto
+                                usePage().props.value.user_profile[0].details.motto
                         }}
                     </p>
                 </div>
@@ -62,53 +54,35 @@ const date_conversion2 = (value) => {
                     <div class="w-full text-center">
                         <span class="font-bold">
                             {{
-                                usePage().props.value.user_profile[0].posts
-                                    .length
-                            }}</span
-                        >
+                                    usePage().props.value.user_profile[0].posts
+                                        .length
+                            }}</span>
                         Posts
                     </div>
                 </div>
             </div>
         </div>
         <h2 class="flex flex-row flex-nowrap items-center my-8">
+            <span class="flex-grow block border-t border-green-700" aria-hidden="true" role="presentation"></span>
             <span
-                class="flex-grow block border-t border-green-700"
-                aria-hidden="true"
-                role="presentation"
-            ></span>
-            <span
-                class="flex-none block mx-4 px-4 py-2.5 text-xs leading-none font-medium uppercase bg-green-700 rounded-lg text-white"
-            >
+                class="flex-none block mx-4 px-4 py-2.5 text-xs leading-none font-medium uppercase bg-green-700 rounded-lg text-white">
                 Your Posts
             </span>
-            <span
-                class="flex-grow block border-t border-green-700"
-                aria-hidden="true"
-                role="presentation"
-            ></span>
+            <span class="flex-grow block border-t border-green-700" aria-hidden="true" role="presentation"></span>
         </h2>
         <NoPostsYet v-if="usePage().props.value.user_profile[0].length == 0" />
-        <div class="w-full px-2 lg:px-10 grid grid-cols-1 lg:grid-cols-3 gap-3">
-            <article
-                v-for="(posts, key) in usePage().props.value.user_profile[0]
-                    .posts"
-                :key="key"
-                class="mb-4 w-full break-inside p-6 rounded-xl bg-white"
-            >
+        <div class="w-full px-2 lg:px-10 grid grid-cols-1 lg:grid-cols-2 gap-3">
+            <article v-for="(posts, key) in usePage().props.value.user_profile[0]
+            .posts" :key="key" class="mb-4 w-full break-inside p-6 rounded-xl bg-white">
                 <div class="flex pb-6 items-center justify-between">
                     <div class="flex">
                         <a class="inline-block mr-4" href="#">
-                            <img
-                                class="rounded-full max-w-none w-12 h-12"
-                                :src="posts.user.profile_photo_url"
-                            />
+                            <img class="rounded-full max-w-none w-12 h-12" :src="posts.user.profile_photo_url" />
                         </a>
                         <div class="flex flex-col">
                             <div>
                                 <a class="inline-block text-lg font-bold">
-                                    {{ posts.user.name }}</a
-                                >
+                                    {{ posts.user.name }}</a>
                             </div>
                             <div class="text-slate-500">
                                 {{ date_conversion(posts.created_at) }}
@@ -146,6 +120,53 @@ const date_conversion2 = (value) => {
                 <p class="">
                     {{ posts.content }}
                 </p>
+                <div v-if="posts.photo != null" class="py-4 mx-auto">
+                    <div v-if="posts.photo.length > 3" class="grid grid-cols-2">
+                        <a :href="'./../../images/posts/' + photos" target="_blank" class="flex"
+                            v-for="(photos, key) in posts.photo" :key="key">
+                            <img class="w-auto m-1 max-h-[55vmin] hover:bg-gray-200 hover:scale-100 object-contain"
+                                :src="
+                                    './../../images/posts/' + photos
+                                " />
+                        </a>
+                    </div>
+                    <div v-if="posts.photo.length == 3">
+                        <div class="grid grid-cols-2">
+                            <a class="flex" href="#" v-for="(
+                                                    photos, key2
+                                                ) in posts.photo" :key="key2">
+                                <img v-if="key2 != 2" :href="'./../../images/posts/' + photos" target="_blank"
+                                    class="w-auto  max-h-[55vmin]  hover:bg-gray-200 object-contain" :src="
+                                        './../../images/posts/' +
+                                        photos
+                                    " />
+                            </a>
+                        </div>
+                        <div class="flex justify-center mx-auto">
+                            <img class="w-full max-h-[100vmin]  hover:bg-gray-200 object-contain"
+                                :href="'./../../images/posts/' + photos" target="_blank" :src="
+                                    './../../images/posts/' +
+                                    posts.photo[2]
+                                " />
+                        </div>
+                    </div>
+                    <div v-if="posts.photo.length == 2" class="grid grid-cols-2 grid-rows-1 ...">
+                        <a class="flex" :href="'./../../images/posts/' + photos" target="_blank"
+                            v-for="(photos, key) in posts.photo" :key="key">
+                            <img class="w-auto object-contain  hover:bg-gray-200 max-w-[40vmin]" :src="
+                                './../../images/posts/' + photos
+                            " />
+                        </a>
+                    </div>
+                    <div v-if="posts.photo.length == 1" class="grid grid-cols-1 grid-rows-1 ...">
+                        <a class="flex" :href="'./../../images/posts/' + photos" target="_blank"
+                            v-for="(photos, key) in posts.photo" :key="key">
+                            <img class="w-auto object-contain  hover:bg-gray-200 max-w-[100vmin]" :src="
+                                './../../images/posts/' + photos
+                            " />
+                        </a>
+                    </div>
+                </div>
                 <!-- <div class="py-4">
                         <a class="inline-flex items-center" href="#">
                             <span class="mr-2">
@@ -160,54 +181,62 @@ const date_conversion2 = (value) => {
                         </a>
                     </div> -->
                 <h2 class="mt-4 border-t font-bold">Comments</h2>
-                <div class="max-h-[70vmin] lg:max-h-[25vmin] overflow-hidden">
-                    <div
-                        v-for="(commentsData, key2) in posts.comments"
-                        :key="key2"
-                        class="flex bg-white rounded-lg mx-4 md:mx-auto max-w-md md:max-w-2xl"
-                    >
-                        <!--horizantil margin is just for display-->
-                        <div class="flex items-start px-4 py-6">
-                            <img
-                                class="w-12 h-12 rounded-full object-cover mr-4 shadow"
-                                :src="commentsData.user.profile_photo_url"
-                                alt="avatar"
-                            />
-                            <div class="">
-                                <div class="flex items-center justify-between">
-                                    <h2
-                                        class="text-lg font-semibold text-gray-900 -mt-1"
-                                    >
-                                        {{ commentsData.user.name }}
-                                    </h2>
-                                </div>
-                                <small class="text-gray-700"
-                                    >Commented
-                                    {{
-                                        date_conversion2(
-                                            commentsData.updated_at
+
+                <div class="w-full rounded-lg mx-4 md:mx-auto">
+                    <div v-for="( commentsData, key2 ) in posts.comments.slice(0, 3)" :key="key2"
+                        class="flex items-start px-4 py-6">
+                        <img class="w-12 h-12 rounded-full object-cover mr-4 shadow" :src="
+                            commentsData.user
+                                .profile_photo_url
+                        " alt="avatar" />
+                        <div class="">
+                            <div class="flex items-center justify-between">
+                                <h2 class="text-lg font-semibold text-gray-900 -mt-1">
+                                    {{ commentsData.user.name }}
+                                </h2>
+                                <small class="ml-2 text-sm text-gray-700">{{
+                                        date_conversion(
+                                            commentsData.created_at
                                         )
+                                }}</small>
+                            </div>
+                            <p class="text-gray-700">
+                                <small>
+                                    Updated
+                                    {{
+                                            date_conversion(
+                                                commentsData.updated_at
+                                            )
                                     }}
                                 </small>
-                                <p class="mt-3 text-gray-700 text-lg">
-                                    {{ commentsData.content }}
-                                </p>
-                            </div>
+                            </p>
+                            <p class="mt-3 text-gray-700 text-sm">
+                                {{ commentsData.content }}
+                            </p>
                         </div>
                     </div>
                 </div>
+                <div class="flex justify-center">
+                <small v-if="
+                    posts.comments != null &&
+                    posts.comments.length > 3
+                " class="text-center w-fullmy-2 font-bold text-gray-800">{{
+        posts.comments.length -
+        posts.comments.slice(0, 3).length
+}}
+                    more comments
+                </small>
+            </div>
                 <!-- Comments content -->
                 <div class="pt-6 flex items-end">
                     <div class="w-full">
-                        <a
-                            :href="route('socialmedia.comments', [posts.id])"
-                            class="py-3 px-4 w-full block bg-slate-100 text-center rounded-lg font-medium hover:bg-slate-200 transition ease-in-out delay-75"
-                            >Show more comments
+                        <a :href="route('socialmedia.comments', [posts.id])"
+                            class="py-3 px-4 w-full block bg-slate-100 text-center rounded-lg font-medium hover:bg-slate-200 transition ease-in-out delay-75">Show
+                            more comments
                             <kbd
-                                class="px-2 py-1.5 text-xs font-semibold text-white bg-green-800 border border-green-200 rounded-lg"
-                                >{{ posts.comments.length }}</kbd
-                            ></a
-                        >
+                                class="px-2 py-1.5 text-xs font-semibold text-white bg-green-800 border border-green-200 rounded-lg">{{
+        posts.comments.length
+                                }}</kbd></a>
                     </div>
                 </div>
             </article>
@@ -215,4 +244,6 @@ const date_conversion2 = (value) => {
     </AppLayout>
 </template>
 
-<style></style>
+<style>
+
+</style>

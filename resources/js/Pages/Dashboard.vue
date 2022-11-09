@@ -735,6 +735,10 @@ function onSelectEmojiSearch(emoji) {
                                         multiple
                                     />
 
+                                    <!-- <template v-for="image in post_images">
+                                        <img class="h-auto" :src="image" />
+                                    </template> -->
+
                                     <button
                                         @click="function_add_post()"
                                         type="button"
@@ -892,8 +896,97 @@ function onSelectEmojiSearch(emoji) {
                                 <p>
                                     {{ posts.content }}
                                 </p>
-                                <PostImage :posts="posts" />
-
+                                <div
+                                    v-if="posts.photo != null"
+                                    class="py-4 mx-auto px-5 bg-gray-50 rounded-lg"
+                                >
+                                    <div
+                                        v-if="posts.photo.length > 3"
+                                        class="grid grid-cols-2"
+                                    >
+                                        <a
+                                            class="flex"
+                                            href="#"
+                                            v-for="(photos, key) in posts.photo"
+                                            :key="key"
+                                        >
+                                            <img
+                                                class="w-auto m-1 max-h-[30vmin] object-contain"
+                                                :src="
+                                                    './images/posts/' + photos
+                                                "
+                                            />
+                                        </a>
+                                    </div>
+                                    <div v-if="posts.photo.length == 3">
+                                        <div class="grid grid-cols-2">
+                                            <a
+                                                class="flex"
+                                                href="#"
+                                                v-for="(
+                                                    photos, key2
+                                                ) in posts.photo"
+                                                :key="key2"
+                                            >
+                                                <img
+                                                    v-if="key2 != 2"
+                                                    class="w-auto max-h-[30vmin] object-contain"
+                                                    :src="
+                                                        './images/posts/' +
+                                                        photos
+                                                    "
+                                                />
+                                            </a>
+                                        </div>
+                                        <div
+                                            class="flex justify-center mx-auto"
+                                        >
+                                            <img
+                                                class="w-full max-h-[65vmin] object-contain"
+                                                :src="
+                                                    './images/posts/' +
+                                                    posts.photo[2]
+                                                "
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        v-if="posts.photo.length == 2"
+                                        class="grid grid-cols-2 grid-rows-1 ..."
+                                    >
+                                        <a
+                                            class="flex"
+                                            href="#"
+                                            v-for="(photos, key) in posts.photo"
+                                            :key="key"
+                                        >
+                                            <img
+                                                class="w-auto object-contain max-w-[40vmin]"
+                                                :src="
+                                                    './images/posts/' + photos
+                                                "
+                                            />
+                                        </a>
+                                    </div>
+                                    <div
+                                        v-if="posts.photo.length == 1"
+                                        class="grid grid-cols-1 grid-rows-1 ..."
+                                    >
+                                        <a
+                                            class="flex"
+                                            href="#"
+                                            v-for="(photos, key) in posts.photo"
+                                            :key="key"
+                                        >
+                                            <img
+                                                class="w-screen object-contain max-w-[80vmin]"
+                                                :src="
+                                                    './images/posts/' + photos
+                                                "
+                                            />
+                                        </a>
+                                    </div>
+                                </div>
                                 <div class="py-4">
                                     <div
                                         @click="
@@ -1079,6 +1172,7 @@ function onSelectEmojiSearch(emoji) {
         transform-origin: 50% 100%;
         opacity: 0;
     }
+
     100% {
         -webkit-transform: translateY(0) rotateX(0) scale(1);
         transform: translateY(0) rotateX(0) scale(1);
@@ -1087,6 +1181,7 @@ function onSelectEmojiSearch(emoji) {
         opacity: 1;
     }
 }
+
 @keyframes slide-in-elliptic-top-fwd {
     0% {
         -webkit-transform: translateY(-600px) rotateX(-30deg) scale(0);
@@ -1095,6 +1190,7 @@ function onSelectEmojiSearch(emoji) {
         transform-origin: 50% 100%;
         opacity: 0;
     }
+
     100% {
         -webkit-transform: translateY(0) rotateX(0) scale(1);
         transform: translateY(0) rotateX(0) scale(1);
