@@ -63,6 +63,13 @@ onMounted(() => {
     resetForeignList(false);
 });
 
+const showAddModal = () => {
+    modals.add_edit.show = true;
+    modals.add_edit.details.method = "add";
+    modals.add_edit.details.title = "Add Survey";
+    form_add_edit.name = "";
+};
+
 const addEditSurvey = () => {
     if (modals.add_edit.details.method == "add") {
         form_add_edit.post(route("surveys.store"), {
@@ -240,7 +247,10 @@ watch(
 watch(
     () => modals.add_edit.show,
     (newValue, oldValue) => {
-        if (modals.add_edit.details.method == "edit") {
+        if (
+            modals.add_edit.details.method == "edit" ||
+            modals.add_edit.details.method == "invite"
+        ) {
             resetForeignList(null);
         }
     },
@@ -249,6 +259,7 @@ watch(
 
 provide("modals", modals);
 provide("search", search);
+provide("form_add_edit", form_add_edit);
 provide("form_add_edit", form_add_edit);
 </script>
 <template>
@@ -261,11 +272,7 @@ provide("form_add_edit", form_add_edit);
         <div class="container p-3 shadow-lg rounded-lg bg-white mt-10 mx-auto">
             <div class="flex justify-between p-2">
                 <button
-                    @click="
-                        modals.add_edit.show = true;
-                        modals.add_edit.details.method = 'add';
-                        form_add_edit.name = '';
-                    "
+                    @click="showAddModal()"
                     class="flex text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg"
                 >
                     Add Survey
@@ -320,7 +327,7 @@ provide("form_add_edit", form_add_edit);
             <SurveyList />
         </div>
         <JetDialogModal :show="modals.add_edit.show">
-            <template #title>Add Survey</template>
+            <template #title>{{ modals.add_edit.details.title }}</template>
             <template #content>
                 <div class="grid grid-cols-6 gap-3">
                     <div class="col-span-3">

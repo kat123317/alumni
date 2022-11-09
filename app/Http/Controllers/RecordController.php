@@ -108,9 +108,14 @@ class RecordController extends Controller
     public function finishSurvey(Request $request, $survey_id)
     {
         $record = Record::whereUserId(Auth::user()->id)->whereSurveyId($survey_id)->first();
-        $record->update([
-            'status' => 'complete'
-        ]);
-        return Redirect::route('dashboard');
+        if ($request->status != 'test') {
+            $record->update([
+                'status' => 'complete'
+            ]);
+            return Redirect::route('dashboard');
+        }else {
+            return Redirect::back();
+        }
+        
     }
 }
