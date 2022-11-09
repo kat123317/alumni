@@ -136,12 +136,28 @@ provide("alertOnMessage", alertOnMessage);
                 >
                     <Link :href="route('administrator.survey')"> Back </Link>
                 </button>
-                <button
-                    @click="showAddEditModal('add')"
-                    class="flex text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg"
-                >
-                    Add Question
-                </button>
+                <div class="flex gap-1">
+                    <a
+                        :href="
+                            route('surveys.engine.review', {
+                                survey_id: $page.props.survey.id,
+                            })
+                        "
+                        target="_blank"
+                        ><button
+                            class="flex text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none hover:bg-blue-600 rounded text-lg"
+                        >
+                            Preview
+                        </button></a
+                    >
+
+                    <button
+                        @click="showAddEditModal('add')"
+                        class="flex text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg"
+                    >
+                        Add Question
+                    </button>
+                </div>
             </div>
             <div class="w-full px-2 mt-2">
                 <template

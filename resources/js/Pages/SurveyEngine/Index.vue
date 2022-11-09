@@ -16,7 +16,7 @@ import {
 import { Inertia } from "@inertiajs/inertia";
 import { debounce } from "lodash";
 
-const props = defineProps(["survey", "record"]);
+const props = defineProps(["survey", "record", "user"]);
 const my_choices = useForm({
     answers: {},
     status: "ongoing",
@@ -40,6 +40,9 @@ onBeforeMount(() => {
                 my_choices.answers["question_" + question.order] = 0;
             }
         });
+        if (props.user.user_type != "alumni") {
+            my_choices.status = "test";
+        }
     } else {
         my_choices.answers = props.record.answers;
         my_choices.status = props.record.status;
@@ -59,7 +62,10 @@ const saveAnswer = debounce(() => {
 
 const finishSurvey = () => {
     Inertia.get(
-        route("surveys.engine.finish_survey", { survey_id: props.survey.id })
+        route("surveys.engine.finish_survey", {
+            survey_id: props.survey.id,
+            status: my_choices.status,
+        })
     );
 };
 </script>

@@ -41,7 +41,13 @@ class SocialMediaController extends Controller
         $update->update([
             'is_read' => $request->is_read
         ]);
-        return Redirect::route("socialmedia.comments", [$request->id]);
+
+        if($request->notif_type == 'survey'){
+            return Redirect::back();
+        }
+        else{
+            return Redirect::route("socialmedia.comments", [$request->id]);
+        }
     }
 
     public function comments(Request $request, $id)
