@@ -87,7 +87,7 @@ const form_announcement = useForm({
                                         route().current('socialmedia.messaging')
                                     "
                                 >
-                                    Message
+                                    Hey!
                                 </NavLink>
                             </div>
 
@@ -413,7 +413,7 @@ const form_announcement = useForm({
                             :href="route('socialmedia.messaging')"
                             :active="route().current('socialmedia.messaging')"
                         >
-                            Message
+                            Hey!
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
                             :href="route('graduates.index')"
