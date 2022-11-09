@@ -35,7 +35,7 @@ class SocialMediaController extends Controller
         ]);
     }
 
-    public function user_surveys($id)
+    public function user_surveys()
     {   
         return Inertia::render('Socialmedia/Components/Surveys', [
             
@@ -50,7 +50,7 @@ class SocialMediaController extends Controller
         ]);
 
         if($request->notif_type == "survey"){
-            return Redirect::route("socialmedia.user_surveys", [$request->id]);
+            return Redirect::route("socialmedia.user_surveys");
         }
         else{
             return Redirect::route("socialmedia.comments", [$request->id]);

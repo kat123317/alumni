@@ -122,6 +122,21 @@ const form_announcement = useForm({
                                     Charts
                                 </NavLink>
                             </div>
+
+                            <div
+                                class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"
+                            >
+                                <NavLink
+                                    :href="route('socialmedia.user_surveys')"
+                                    :active="
+                                        route().current(
+                                            'socialmedia.user_surveys'
+                                        )
+                                    "
+                                >
+                                    My Surveys
+                                </NavLink>
+                            </div>
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -435,6 +450,14 @@ const form_announcement = useForm({
                         >
                             Charts
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            :href="route('socialmedia.user_surveys')"
+                            :active="
+                                route().current('socialmedia.user_surveys')
+                            "
+                        >
+                            My Surveys
+                        </ResponsiveNavLink>
                     </div>
 
                     <!-- Responsive Settings Options -->
@@ -575,32 +598,62 @@ const form_announcement = useForm({
 
             <!-- Page Content -->
 
-
             <div class="bg-gray-200">
-                <div class="container flex items-center px-6 py-4 mx-auto overflow-y-auto whitespace-nowrap">
+                <div
+                    class="container flex items-center px-6 py-4 mx-auto overflow-y-auto whitespace-nowrap"
+                >
                     <a href="#" class="text-gray-600">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="w-5 h-5"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                        >
                             <path
-                                d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                                d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"
+                            />
                         </svg>
                     </a>
 
                     <span class="mx-5 text-gray-500 rtl:-scale-x-100">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd"
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="w-5 h-5"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                        >
+                            <path
+                                fill-rule="evenodd"
                                 d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                clip-rule="evenodd" />
+                                clip-rule="evenodd"
+                            />
                         </svg>
                     </span>
 
-                    <a href="#" class="flex items-center text-gray-600 -px-2 hover:underline">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                    <a
+                        href="#"
+                        class="flex items-center text-gray-600 -px-2 hover:underline"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-6 h-6"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
+                            />
                         </svg>
 
-                        <span class="mx-2 capitalize">{{  route().current().replace(/[&\/\\#,+_()$~%.'":*?<>{}]/g, ' ')  }}</span>
+                        <span class="mx-2 capitalize">{{
+                            route()
+                                .current()
+                                .replace(/[&\/\\#,+_()$~%.'":*?<>{}]/g, " ")
+                        }}</span>
                     </a>
                 </div>
             </div>
