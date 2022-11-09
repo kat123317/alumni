@@ -159,7 +159,8 @@ class SurveyController extends Controller
 
         return Inertia::render('SurveyEngine/Index', [
             'survey' => $survey,
-            'record' => $record
+            'record' => $record,
+            "user" => Auth::user()
         ]);
     }
 }
