@@ -143,7 +143,7 @@ class SurveyController extends Controller
                 'notification_type' => 'survey',
                 'is_read' => false,
                 'title' => 'Alumni Survey',
-                'content' => 'You are invited to alumni survey, click the link below to take the survey',
+                'content' => 'You are invited to alumni survey',
                 'details' => array(
                     'link' => route('surveys.engine.review', ['survey_id' => $survey->id])
                 )

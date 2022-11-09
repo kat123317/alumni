@@ -35,13 +35,26 @@ class SocialMediaController extends Controller
         ]);
     }
 
+    public function user_surveys()
+    {   
+        return Inertia::render('Socialmedia/Components/Surveys', [
+            
+        ]);
+    }
+
     public function open_notif(Request $request, $id)
     {   
         $update = UserNotification::find($id);
         $update->update([
             'is_read' => $request->is_read
         ]);
-        return Redirect::route("socialmedia.comments", [$request->id]);
+
+        if($request->notif_type == "survey"){
+            return Redirect::route("socialmedia.user_surveys");
+        }
+        else{
+            return Redirect::route("socialmedia.comments", [$request->id]);
+        }
     }
 
     public function comments(Request $request, $id)

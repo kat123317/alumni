@@ -19,85 +19,6 @@ const date_conversion2 = (value) => {
 
 <template>
     <AppLayout title="UserProfile">
-        <div class="bg-gray-200">
-            <div
-                class="container flex items-center px-6 py-4 mx-auto overflow-y-auto whitespace-nowrap"
-            >
-                <a href="#" class="text-gray-600">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="w-5 h-5"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                    >
-                        <path
-                            d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"
-                        />
-                    </svg>
-                </a>
-
-                <span class="mx-5 text-gray-500 rtl:-scale-x-100">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="w-5 h-5"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                    >
-                        <path
-                            fill-rule="evenodd"
-                            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                            clip-rule="evenodd"
-                        />
-                    </svg>
-                </span>
-
-                <a
-                    href="#"
-                    class="flex items-center text-gray-600 -px-2 hover:underline"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        class="w-6 h-6"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
-                        />
-                    </svg>
-
-                    <span class="mx-2">Home</span>
-                </a>
-                <span class="mx-5 text-gray-500 rtl:-scale-x-100">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="w-5 h-5"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                    >
-                        <path
-                            fill-rule="evenodd"
-                            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                            clip-rule="evenodd"
-                        />
-                    </svg>
-                </span>
-
-                <a
-                    href="#"
-                    class="flex items-center text-green-600 -px-2 hover:underline"
-                >
-                    <span class="mx-2">
-                        {{ usePage().props.value.user_profile[0].name }}</span
-                    >
-                </a>
-            </div>
-        </div>
-
         <!-- component -->
 
         <div
@@ -167,7 +88,7 @@ const date_conversion2 = (value) => {
             ></span>
         </h2>
         <NoPostsYet v-if="usePage().props.value.user_profile[0].length == 0" />
-        <div class="w-full px-2 lg:px-10 grid grid-cols-1 lg:grid-cols-3 gap-3">
+        <div class="w-full px-2 lg:px-10 grid grid-cols-1 lg:grid-cols-2 gap-3">
             <article
                 v-for="(posts, key) in usePage().props.value.user_profile[0]
                     .posts"
@@ -224,6 +145,83 @@ const date_conversion2 = (value) => {
                 <p class="">
                     {{ posts.content }}
                 </p>
+
+                <div v-if="posts.photo != null" class="py-4 mx-auto">
+                    <div v-if="posts.photo.length > 3" class="grid grid-cols-2">
+                        <a
+                            :href="'./../../images/posts/' + photos"
+                            target="_blank"
+                            class="flex"
+                            v-for="(photos, key) in posts.photo"
+                            :key="key"
+                        >
+                            <img
+                                class="w-auto m-1 max-h-[55vmin] hover:bg-gray-200 hover:scale-100 object-contain"
+                                :src="'./../../images/posts/' + photos"
+                            />
+                        </a>
+                    </div>
+                    <div v-if="posts.photo.length == 3">
+                        <div class="grid grid-cols-2">
+                            <a
+                                class="flex"
+                                href="#"
+                                v-for="(photos, key2) in posts.photo"
+                                :key="key2"
+                            >
+                                <img
+                                    v-if="key2 != 2"
+                                    :href="'./../../images/posts/' + photos"
+                                    target="_blank"
+                                    class="w-auto max-h-[55vmin] hover:bg-gray-200 object-contain"
+                                    :src="'./../../images/posts/' + photos"
+                                />
+                            </a>
+                        </div>
+                        <div class="flex justify-center mx-auto">
+                            <img
+                                class="w-full max-h-[100vmin] hover:bg-gray-200 object-contain"
+                                :href="'./../../images/posts/' + photos"
+                                target="_blank"
+                                :src="'./../../images/posts/' + posts.photo[2]"
+                            />
+                        </div>
+                    </div>
+                    <div
+                        v-if="posts.photo.length == 2"
+                        class="grid grid-cols-2 grid-rows-1 ..."
+                    >
+                        <a
+                            class="flex"
+                            :href="'./../../images/posts/' + photos"
+                            target="_blank"
+                            v-for="(photos, key) in posts.photo"
+                            :key="key"
+                        >
+                            <img
+                                class="w-auto object-contain hover:bg-gray-200 max-w-[40vmin]"
+                                :src="'./../../images/posts/' + photos"
+                            />
+                        </a>
+                    </div>
+                    <div
+                        v-if="posts.photo.length == 1"
+                        class="grid grid-cols-1 grid-rows-1 ..."
+                    >
+                        <a
+                            class="flex"
+                            :href="'./../../images/posts/' + photos"
+                            target="_blank"
+                            v-for="(photos, key) in posts.photo"
+                            :key="key"
+                        >
+                            <img
+                                class="w-auto object-contain hover:bg-gray-200 max-w-[100vmin]"
+                                :src="'./../../images/posts/' + photos"
+                            />
+                        </a>
+                    </div>
+                </div>
                 <!-- <div class="py-4">
                         <a class="inline-flex items-center" href="#">
                             <span class="mr-2">
@@ -238,41 +236,58 @@ const date_conversion2 = (value) => {
                         </a>
                     </div> -->
                 <h2 class="mt-4 border-t font-bold">Comments</h2>
-                <div class="max-h-[70vmin] lg:max-h-[25vmin] overflow-hidden">
+
+                <div class="w-full rounded-lg mx-4 md:mx-auto">
                     <div
-                        v-for="(commentsData, key2) in posts.comments"
+                        v-for="(commentsData, key2) in posts.comments.slice(
+                            0,
+                            3
+                        )"
                         :key="key2"
-                        class="flex bg-white rounded-lg mx-4 md:mx-auto max-w-md md:max-w-2xl"
+                        class="flex items-start px-4 py-6"
                     >
-                        <!--horizantil margin is just for display-->
-                        <div class="flex items-start px-4 py-6">
-                            <img
-                                class="w-12 h-12 rounded-full object-cover mr-4 shadow"
-                                :src="commentsData.user.profile_photo_url"
-                                alt="avatar"
-                            />
-                            <div class="">
-                                <div class="flex items-center justify-between">
-                                    <h2
-                                        class="text-lg font-semibold text-gray-900 -mt-1"
-                                    >
-                                        {{ commentsData.user.name }}
-                                    </h2>
-                                </div>
-                                <small class="text-gray-700"
-                                    >Commented
+                        <img
+                            class="w-12 h-12 rounded-full object-cover mr-4 shadow"
+                            :src="commentsData.user.profile_photo_url"
+                            alt="avatar"
+                        />
+                        <div class="">
+                            <div class="flex items-center justify-between">
+                                <h2
+                                    class="text-lg font-semibold text-gray-900 -mt-1"
+                                >
+                                    {{ commentsData.user.name }}
+                                </h2>
+                                <small class="ml-2 text-sm text-gray-700">{{
+                                    date_conversion(commentsData.created_at)
+                                }}</small>
+                            </div>
+                            <p class="text-gray-700">
+                                <small>
+                                    Updated
                                     {{
-                                        date_conversion2(
-                                            commentsData.updated_at
-                                        )
+                                        date_conversion(commentsData.updated_at)
                                     }}
                                 </small>
-                                <p class="mt-3 text-gray-700 text-lg">
-                                    {{ commentsData.content }}
-                                </p>
-                            </div>
+                            </p>
+                            <p class="mt-3 text-gray-700 text-sm">
+                                {{ commentsData.content }}
+                            </p>
                         </div>
                     </div>
+                </div>
+                <div class="flex justify-center">
+                    <small
+                        v-if="
+                            posts.comments != null && posts.comments.length > 3
+                        "
+                        class="text-center w-fullmy-2 font-bold text-gray-800"
+                        >{{
+                            posts.comments.length -
+                            posts.comments.slice(0, 3).length
+                        }}
+                        more comments
+                    </small>
                 </div>
                 <!-- Comments content -->
                 <div class="pt-6 flex items-end">
