@@ -361,23 +361,49 @@ const function_like_post = (post_id, is_like) => {
                 <p class="">
                     {{ post.content }}
                 </p>
-                <div class="py-4">
-                    <div
-                        class="grid grid-flow-row-dense grid-cols-2 grid-rows-1 ..."
-                    >
-                        <a
-                            v-for="(photos, key) in post.photo"
-                            :key="key"
-                            class="flex"
-                            href="#"
-                        >
-                            <img
-                                class="w-auto"
-                                :src="'./../../images/posts/' + photos"
-                            />
-                        </a>
-                    </div>
-                </div>
+              
+                <div v-if="post.photo != null" class="py-4 mx-auto">
+                                    <div v-if="post.photo.length > 3" class="grid grid-cols-2">
+                                        <a :href="'./../../images/posts/' + photos" target="_blank" class="flex"  v-for="(photos, key) in post.photo" :key="key">
+                                            <img class="w-auto m-1 max-h-[55vmin] hover:bg-gray-200 hover:scale-100 object-contain" :src="
+                                                './../../images/posts/' + photos
+                                            " />
+                                        </a>
+                                    </div>
+                                    <div v-if="post.photo.length == 3">
+                                        <div class="grid grid-cols-2">
+                                            <a class="flex" href="#" v-for="(
+                                                    photos, key2
+                                                ) in post.photo" :key="key2">
+                                                <img v-if="key2 != 2" :href="'./../../images/posts/' + photos" target="_blank"  class="w-auto  max-h-[55vmin]  hover:bg-gray-200 object-contain"
+                                                    :src="
+                                                        './../../images/posts/' +
+                                                        photos
+                                                    " />
+                                            </a>
+                                        </div>
+                                        <div class="flex justify-center mx-auto">
+                                            <img class="w-full max-h-[100vmin]  hover:bg-gray-200 object-contain" :href="'./../../images/posts/' + photos" target="_blank"  :src="
+                                                './../../images/posts/' +
+                                                post.photo[2]
+                                            " />
+                                        </div>
+                                    </div>
+                                    <div v-if="post.photo.length == 2" class="grid grid-cols-2 grid-rows-1 ...">
+                                        <a class="flex" :href="'./../../images/posts/' + photos" target="_blank"  v-for="(photos, key) in post.photo" :key="key">
+                                            <img class="w-auto object-contain  hover:bg-gray-200 max-w-[40vmin]" :src="
+                                                './../../images/posts/' + photos
+                                            " />
+                                        </a>
+                                    </div>
+                                    <div v-if="post.photo.length == 1" class="grid grid-cols-1 grid-rows-1 ...">
+                                        <a class="flex" :href="'./../../images/posts/' + photos" target="_blank"  v-for="(photos, key) in post.photo" :key="key">
+                                            <img class="w-auto object-contain  hover:bg-gray-200 max-w-[50vmin]" :src="
+                                                './../../images/posts/' + photos
+                                            " />
+                                        </a>
+                                    </div>
+                                </div>
 
                 <div class="py-4">
                     <div
