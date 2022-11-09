@@ -124,6 +124,7 @@ Route::middleware([
         Route::post('/unlike_post/{id}', [SocialMediaController::class, 'unlike_post'])->name('unlike_post');
 
         Route::post('/open_notif/{id}', [SocialMediaController::class, 'open_notif'])->name('open_notif');
+        Route::get('/user_surveys/{id}', [SocialMediaController::class, 'user_surveys'])->name('user_surveys');
 
         Route::get('/user_profile/{id}', [SocialMediaController::class, 'user_profile'])->name('user_profile');
         Route::get('/comments/{id}', [SocialMediaController::class, 'comments'])->name('comments');

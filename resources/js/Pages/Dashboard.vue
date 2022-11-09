@@ -175,8 +175,6 @@ function onSelectEmojiSearch(emoji) {
 <template>
     <AppLayout title="Dashboard">
         <section>
-       
-
             <div
                 v-if="postAlert"
                 class="p-4 mb-4 border border-blue-300 rounded-lg bg-blue-50"
