@@ -15,6 +15,10 @@ const props = defineProps({
     },
     choices: Array,
     ukey: [String, Number],
+    disabled: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 const proxyChecked = computed({
@@ -35,6 +39,7 @@ const proxyChecked = computed({
                     <input
                         :name="'radio-' + ukey"
                         :value="choice.value"
+                        :disabled="disabled"
                         v-model="proxyChecked"
                         type="radio"
                         class="border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"

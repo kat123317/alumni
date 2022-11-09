@@ -1,10 +1,8 @@
 <script setup>
-import JetCheckbox from "@/Components/Checkbox.vue";
-import JetInputLabel from "@/Components/InputLabel.vue";
 import QDropDown from "@/Pages/Administrator/Survey/EngineComponents/Dropdown.vue";
 import QSingleSelect from "@/Pages/Administrator/Survey/EngineComponents/SingleSelect.vue";
 import QMultipleSelect from "@/Pages/Administrator/Survey/EngineComponents/MultipleSelect.vue";
-import { ref, computed } from "vue";
+import { computed } from "vue";
 
 const emit = defineEmits(["update:modelValue"]);
 
@@ -12,6 +10,10 @@ const props = defineProps({
     question: Object,
     choices: Array,
     modelValue: [Object, Number],
+    disabled: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 const proxyChecked = computed({
@@ -33,6 +35,7 @@ const proxyChecked = computed({
             </div>
             <template v-if="question.setup.dropdown == true">
                 <QDropDown
+                    :disabled="disabled"
                     :choices="question.setup.choices"
                     v-model.number="proxyChecked"
                 />
@@ -44,12 +47,14 @@ const proxyChecked = computed({
                 "
             >
                 <QMultipleSelect
+                    :disabled="disabled"
                     :choices="question.setup.choices"
                     v-model="proxyChecked"
                 />
             </template>
             <template v-else>
                 <QSingleSelect
+                    :disabled="disabled"
                     :ukey="question.order"
                     :choices="question.setup.choices"
                     v-model:checked="proxyChecked"

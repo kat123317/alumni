@@ -7,6 +7,10 @@ const emit = defineEmits(["update:modelValue"]);
 const props = defineProps({
     modelValue: [Object, Number],
     choices: Array,
+    disabled: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 const proxyChecked = computed({
@@ -27,6 +31,7 @@ const proxyChecked = computed({
                     <input
                         v-model="proxyChecked['choice_' + choice.value]"
                         type="checkbox"
+                        :disabled="disabled"
                         :true-value="1"
                         :false-value="0"
                         class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"

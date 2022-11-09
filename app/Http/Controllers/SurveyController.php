@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Survey;
 use App\Models\User;
 use App\Models\UserNotification;
+use App\Models\Record;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -154,10 +155,11 @@ class SurveyController extends Controller
     public function review(Request $request, $survey_id)
     {
         $survey = Survey::with('questions')->where('id', $survey_id)->first();
-        $questions = $survey->questions;
-        // dd($survey->questions);
+        $record = Record::whereUserId(Auth::user()->id)->whereSurveyId($survey_id)->first();
+
         return Inertia::render('SurveyEngine/Index', [
-            'survey' => $survey
+            'survey' => $survey,
+            'record' => $record
         ]);
     }
 }

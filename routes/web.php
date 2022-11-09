@@ -7,6 +7,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\AdministratorController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\RecordController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\SocialMediaController;
 use App\Http\Controllers\SurveyController;
@@ -155,6 +156,8 @@ Route::middleware([
 
         Route::prefix('engine/{survey_id}')->name('engine.')->group(function () {
             Route::get('/review', [SurveyController::class, 'review'])->name('review');
+            Route::post('/save_answer', [RecordController::class, 'saveAnswer'])->name('save_answer');
+            Route::get('/finish_survey', [RecordController::class, 'finishSurvey'])->name('finish_survey');
         });
 
         Route::prefix('questions/{survey_id}')->name('questions.')->group(function () {
