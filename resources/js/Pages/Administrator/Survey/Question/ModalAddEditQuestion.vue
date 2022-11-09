@@ -14,9 +14,21 @@ const form_add_edit = inject("form_add_edit");
 const new_choice = ref("");
 
 const addChoice = () => {
+    let cvalue = 1;
+    let maxValue = Math.max.apply(
+        null,
+        form_add_edit.setup.choices.map(function (o) {
+            return o.value;
+        })
+    );
+    if (maxValue > 0) {
+        //to maintain choice value
+        cvalue = maxValue + 1;
+    }
+
     form_add_edit.setup.choices.push({
         label: new_choice.value,
-        value: form_add_edit.setup.choices.length + 1,
+        value: cvalue,
     });
     new_choice.value = "";
 };
