@@ -104,6 +104,10 @@ const form_announcement = useForm({
 
                             <div
                                 class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"
+                                v-if="
+                                    $page.props.user.user_type == 'admin' ||
+                                    $page.props.user.user_type == 'staff_admin'
+                                "
                             >
                                 <NavLink
                                     :href="route('administrator.announcement')"
@@ -437,6 +441,10 @@ const form_announcement = useForm({
                             Yearbook
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
+                            v-if="
+                                $page.props.user.user_type == 'admin' ||
+                                $page.props.user.user_type == 'staff_admin'
+                            "
                             :href="route('administrator.announcement')"
                             :active="
                                 route().current('administrator.announcement')
