@@ -627,7 +627,7 @@ function onSelectEmojiSearch(emoji) {
                                             </a>
                                         </div>
                                         <div class="flex justify-center mx-auto">
-                                            <img class="w-full max-h-[55vmin] object-contain" :src="
+                                            <img class="w-full max-h-[65vmin] object-contain" :src="
                                                 './images/posts/' +
                                                 posts.photo[2]
                                             " />
@@ -642,7 +642,7 @@ function onSelectEmojiSearch(emoji) {
                                     </div>
                                     <div v-if="posts.photo.length == 1" class="grid grid-cols-1 grid-rows-1 ...">
                                         <a class="flex" href="#" v-for="(photos, key) in posts.photo" :key="key">
-                                            <img class="w-screen object-contain max-w-[0vmin]" :src="
+                                            <img class="w-screen object-contain max-w-[80vmin]" :src="
                                                 './images/posts/' + photos
                                             " />
                                         </a>
