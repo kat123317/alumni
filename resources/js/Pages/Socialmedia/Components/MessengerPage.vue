@@ -255,7 +255,10 @@ const date_conversion_from_now = (value) => {
                                 <div>
                                     <img
                                         class="w-10 h-10 rounded-full"
-                                        src="http://andressantibanez.com/res/avatar.png"
+                                        :src="
+                                            usePage().props.value.user
+                                                .profile_photo_url
+                                        "
                                     />
                                 </div>
 
