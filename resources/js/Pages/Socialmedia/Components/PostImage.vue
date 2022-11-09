@@ -7,7 +7,7 @@ defineProps(["posts"]);
         v-if="posts.photo != null"
         class="py-4 mx-auto px-5 bg-gray-50 rounded-lg"
     >
-        <div v-if="posts.photo.length == 4" class="grid grid-cols-2">
+        <div v-if="posts.photo.length > 3" class="grid grid-cols-2">
             <a
                 class="flex"
                 href="#"
@@ -20,7 +20,7 @@ defineProps(["posts"]);
                 />
             </a>
         </div>
-        <div v-else-if="posts.photo.length == 3">
+        <div v-if="posts.photo.length == 3">
             <div class="grid grid-cols-2">
                 <a
                     class="flex"
@@ -37,13 +37,13 @@ defineProps(["posts"]);
             </div>
             <div class="flex justify-center mx-auto">
                 <img
-                    class="w-full max-h-[55vmin] object-contain"
+                    class="w-full max-h-[65vmin] object-contain"
                     :src="'./images/posts/' + posts.photo[2]"
                 />
             </div>
         </div>
         <div
-            v-else-if="posts.photo.length == 2"
+            v-if="posts.photo.length == 2"
             class="grid grid-cols-2 grid-rows-1 ..."
         >
             <a
@@ -58,7 +58,10 @@ defineProps(["posts"]);
                 />
             </a>
         </div>
-        <div v-else class="grid grid-cols-1 grid-rows-1 ...">
+        <div
+            v-if="posts.photo.length == 1"
+            class="grid grid-cols-1 grid-rows-1 ..."
+        >
             <a
                 class="flex"
                 href="#"
@@ -66,7 +69,7 @@ defineProps(["posts"]);
                 :key="key"
             >
                 <img
-                    class="w-screen object-contain max-w-[50vmin]"
+                    class="w-screen object-contain max-w-[80vmin]"
                     :src="'./images/posts/' + photos"
                 />
             </a>
