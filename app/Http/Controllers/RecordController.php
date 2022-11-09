@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Record;
+use App\Models\Survey;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\Redirect;
 
 class RecordController extends Controller
 {
@@ -81,5 +85,32 @@ class RecordController extends Controller
     public function destroy(Record $record)
     {
         //
+    }
+
+    public function saveAnswer(Request $request, $survey_id)
+    {
+        $record = Record::whereUserId(Auth::user()->id)->whereSurveyId($survey_id)->first();
+        if ($record == null) {
+            Record::create([
+                'user_id' => Auth::user()->id,
+                'survey_id' => $survey_id,
+                'status' => 'ongoing',
+                'answers' => $request->answers
+            ]);
+        } else {
+            $record->update([
+                'answers' => $request->answers
+            ]);
+        }
+        return Redirect::back();
+    }
+
+    public function finishSurvey(Request $request, $survey_id)
+    {
+        $record = Record::whereUserId(Auth::user()->id)->whereSurveyId($survey_id)->first();
+        $record->update([
+            'status' => 'complete'
+        ]);
+        return Redirect::route('dashboard');
     }
 }
