@@ -5,11 +5,16 @@ import { Head, Link, useForm, usePage } from "@inertiajs/inertia-vue3";
 import { ref, onMounted, computed } from "vue";
 import NoPostsYet from "./Socialmedia/Components/emptypost.vue";
 import moment from "moment";
+import EmojiPicker from "vue3-emoji-picker";
+
+// import css
+import "../../../node_modules/vue3-emoji-picker/dist/style.css";
 
 // Alert Function
 const postAlert = ref("");
 const notificationTrigger = ref(false);
 const post_images = ref([]);
+const emojioverlay = ref(false);
 
 const errorAlert = (data) => {
     if (data) {
@@ -144,6 +149,21 @@ const remove_image = (key) => {
     post_images.value.splice(key, 1);
     post_data.photos.splice(key, 1);
 };
+
+function onSelectEmoji(emoji) {
+    console.log(emoji);
+    post_data.content = post_data.content + emoji.i;
+    /*
+      // result
+      { 
+          i: "😚", 
+          n: ["kissing face"], 
+          r: "1f61a", // with skin tone
+          t: "neutral", // skin tone
+          u: "1f61a" // without tone
+      }
+      */
+}
 </script>
 
 <template>
@@ -595,39 +615,95 @@ const remove_image = (key) => {
                                     />
                                 </div>
                                 <div
+                                    v-if="emojioverlay"
+                                    class="absolute flex justify-end mx-auto"
+                                >
+                                    <div>
+                                        <EmojiPicker
+                                            :native="true"
+                                            @select="onSelectEmoji"
+                                        />
+                                        <button
+                                            type="button"
+                                            @click="
+                                                emojioverlay = !emojioverlay
+                                            "
+                                            class="float-right w-full text-white mt-1 bg-red-500 border border-gray-300 focus:outline-none hover:bg-red-900 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5"
+                                        >
+                                            Close
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div
                                     class="w-full h-10 flex justify-between mt-4 px-3 md:px-10 lg:px-24 xl:px-5"
                                 >
-                                    <button
-                                        @click="openFile()"
-                                        class="flex h-full items-center"
-                                    >
-                                        <svg
-                                            class="h-12 text-green-500 stroke-current"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="27"
-                                            height="27"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="#b0b0b0"
-                                            stroke-width="2"
-                                            stroke-linecap="square"
-                                            stroke-linejoin="round"
+                                    <div class="flex">
+                                        <button
+                                            @click="openFile()"
+                                            class="flex h-full items-center"
                                         >
-                                            <rect
-                                                x="3"
-                                                y="3"
-                                                width="18"
-                                                height="18"
-                                                rx="2"
-                                            />
-                                            <circle cx="8.5" cy="8.5" r="1.5" />
-                                            <path d="M20.4 14.5L16 10 4 20" />
-                                        </svg>
-                                        <span
-                                            class="text-xs lg:text-md mx-2 font-semibold text-gray-500"
-                                            >Upload Photo
-                                        </span>
-                                    </button>
+                                            <svg
+                                                class="h-12 text-green-500 stroke-current"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="27"
+                                                height="27"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="#b0b0b0"
+                                                stroke-width="2"
+                                                stroke-linecap="square"
+                                                stroke-linejoin="round"
+                                            >
+                                                <rect
+                                                    x="3"
+                                                    y="3"
+                                                    width="18"
+                                                    height="18"
+                                                    rx="2"
+                                                />
+                                                <circle
+                                                    cx="8.5"
+                                                    cy="8.5"
+                                                    r="1.5"
+                                                />
+                                                <path
+                                                    d="M20.4 14.5L16 10 4 20"
+                                                />
+                                            </svg>
+                                            <span
+                                                class="text-xs lg:text-md mx-2 font-semibold text-gray-500"
+                                                >Upload Photo
+                                            </span>
+                                        </button>
+                                        <button
+                                            @click="
+                                                emojioverlay = !emojioverlay
+                                            "
+                                            class="flex h-full items-center"
+                                        >
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                stroke-width="1.5"
+                                                stroke="currentColor"
+                                                class="w-6 h-6"
+                                            >
+                                                <path
+                                                    class="text-yellow-600"
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    d="M15.182 15.182a4.5 4.5 0 01-6.364 0M21 12a9 9 0 11-18 0 9 9 0 0118 0zM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75zm-.375 0h.008v.015h-.008V9.75zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75zm-.375 0h.008v.015h-.008V9.75z"
+                                                />
+                                            </svg>
+
+                                            <span
+                                                class="text-xs lg:text-md mx-2 font-semibold text-gray-500"
+                                                >Add Emoji
+                                            </span>
+                                        </button>
+                                    </div>
                                     <input
                                         id="post_image"
                                         type="file"
