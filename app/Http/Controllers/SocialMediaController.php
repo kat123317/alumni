@@ -147,6 +147,20 @@ class SocialMediaController extends Controller
         $update->update([
             'details' => $details
         ]);
+
+        $details =array(
+            'post_id'=>  $request->post_id,
+        );
+        UserNotification::create([
+            'user_id'=>Auth::user()->id,
+            'notification_type'=>'react',
+            'notification_owner'=>$request->post_owner,
+            'is_read'=>false,
+            'title'=>'Like',
+            'content'=> 'Like your post',
+            'details'=>$details
+        ]);
+        
         return Redirect::back();
     }
 
