@@ -449,7 +449,7 @@ function onSelectEmojiSearch(emoji) {
                                 </button>
                             </div>
 
-                            <div v-if="emojioverlay" class="z-20 bg-red-200 flex justify-end">
+                            <div v-if="emojioverlay" class="z-20 slide-in-elliptic-top-fwd bg-red-200 flex justify-end">
                                 <div class="absolute mt-16 mr-8">
                                     <EmojiPicker :native="false" @select="onSelectEmoji" />
                                     <button type="button" @click="emojioverlay = !emojioverlay"
@@ -501,7 +501,7 @@ function onSelectEmojiSearch(emoji) {
                                     </div>
                                 </div>
                                 <div v-if="emojioverlay2" class="  flex justify-end">
-                                    <div class="absolute  mt-ne10  z-200  z-12 mr-8">
+                                    <div class="absolute slide-in-elliptic-top-fwd mt-ne10  z-200  z-12 mr-8">
                                         <EmojiPicker class="z-20 " :native="false" @select="onSelectEmojiSearch" />
                                         <button type="button" @click="emojioverlay2 = !emojioverlay2"
                                             class="float-right w-full text-white mt-1 bg-red-500 border border-gray-300 focus:outline-none hover:bg-red-900 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5">
@@ -805,6 +805,45 @@ function onSelectEmojiSearch(emoji) {
 .mt-ne10 {
     margin-top: -6rem;
 }
+
+.slide-in-elliptic-top-fwd {
+	-webkit-animation: slide-in-elliptic-top-fwd 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	        animation: slide-in-elliptic-top-fwd 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+@-webkit-keyframes slide-in-elliptic-top-fwd {
+  0% {
+    -webkit-transform: translateY(-600px) rotateX(-30deg) scale(0);
+            transform: translateY(-600px) rotateX(-30deg) scale(0);
+    -webkit-transform-origin: 50% 100%;
+            transform-origin: 50% 100%;
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0) rotateX(0) scale(1);
+            transform: translateY(0) rotateX(0) scale(1);
+    -webkit-transform-origin: 50% 1400px;
+            transform-origin: 50% 1400px;
+    opacity: 1;
+  }
+}
+@keyframes slide-in-elliptic-top-fwd {
+  0% {
+    -webkit-transform: translateY(-600px) rotateX(-30deg) scale(0);
+            transform: translateY(-600px) rotateX(-30deg) scale(0);
+    -webkit-transform-origin: 50% 100%;
+            transform-origin: 50% 100%;
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0) rotateX(0) scale(1);
+            transform: translateY(0) rotateX(0) scale(1);
+    -webkit-transform-origin: 50% 1400px;
+            transform-origin: 50% 1400px;
+    opacity: 1;
+  }
+}
+
 
 @media only screen and (max-width: 768px) {
     .mt-nmobile {

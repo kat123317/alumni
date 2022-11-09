@@ -5,9 +5,15 @@ import { ref, onMounted, computed } from "vue";
 
 import moment from "moment";
 
+import EmojiPicker from "vue3-emoji-picker";
+
+// import css
+import "../../../../../node_modules/vue3-emoji-picker/dist/style.css";
+
 const modal_update_comment = ref(false);
 const modal_update_post = ref(false);
 const modal_delete_comment = ref(false);
+const emojioverlay = ref(false);
 const modal_delete_post = ref(false);
 const date_conversion = (value) => {
     if (value) {
@@ -170,6 +176,13 @@ const function_like_post = (post_id, is_like) => {
         });
     }
 };
+
+function onSelectEmoji(emoji) {
+    console.log(emoji);
+ 
+    comment_data.comment != null ?  comment_data.comment =  comment_data.comment + emoji.i :   comment_data.comment = emoji.i;
+}
+
 </script>
 
 <template>
@@ -447,36 +460,40 @@ const function_like_post = (post_id, is_like) => {
                         </button>
                     </div>
                 </div>
+
                 <div class="relative">
-                    <input
+                    <div v-if="emojioverlay" class=" bg-red-200 slide-in-elliptic-top-fwd flex justify-end">
+                                <div class="absolute mt-12  mr-10 ">
+                                    <EmojiPicker :native="false" @select="onSelectEmoji" />
+                                    <button type="button" @click="emojioverlay = !emojioverlay"
+                                        class="float-right w-full text-white mt-1 bg-red-500 border border-gray-300 focus:outline-none hover:bg-red-900 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5">
+                                        Close
+                                    </button>
+                                </div>
+                            </div>
+                    <input @click="emojioverlay = false"
                         v-model="comment_data.comment"
                         class="pt-2 pb-2 pl-3 w-full h-11 bg-slate-100 rounded-lg placeholder:text-slate-600 font-medium pr-20"
                         type="text"
                         placeholder="Write a comment"
                         required
                     />
-                    <button
+                    <div
                         class="flex absolute right-3 top-2/4 -mt-3 items-center"
-                        @click="function_comment()"
+                     
                     >
-                        <svg
-                            class="mr-2"
-                            style="width: 26px; height: 26px"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                fill="currentColor"
-                                d="M20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12M22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12M10,9.5C10,10.3 9.3,11 8.5,11C7.7,11 7,10.3 7,9.5C7,8.7 7.7,8 8.5,8C9.3,8 10,8.7 10,9.5M17,9.5C17,10.3 16.3,11 15.5,11C14.7,11 14,10.3 14,9.5C14,8.7 14.7,8 15.5,8C16.3,8 17,8.7 17,9.5M12,17.23C10.25,17.23 8.71,16.5 7.81,15.42L9.23,14C9.68,14.72 10.75,15.23 12,15.23C13.25,15.23 14.32,14.72 14.77,14L16.19,15.42C15.29,16.5 13.75,17.23 12,17.23Z"
-                            ></path>
-                        </svg>
-                        <svg
-                            class="fill-blue-500"
+                    <svg @click="emojioverlay = ! emojioverlay" v-if="!emojioverlay" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-5">
+  <path stroke-linecap="round"  class="cursor-pointer text-yellow-500" stroke-linejoin="round" d="M15.182 15.182a4.5 4.5 0 01-6.364 0M21 12a9 9 0 11-18 0 9 9 0 0118 0zM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75zm-.375 0h.008v.015h-.008V9.75zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75zm-.375 0h.008v.015h-.008V9.75z" />
+</svg>
+
+                        <svg   @click="function_comment()"
+                            class="fill-blue-500 cursor-pointer"
                             style="width: 24px; height: 24px"
                             viewBox="0 0 24 24"
                         >
                             <path d="M2,21L23,12L2,3V10L17,12L2,14V21Z"></path>
                         </svg>
-                    </button>
+                    </div>
                 </div>
 
                 <div v-for="(comments, key) in post.comments" :key="key">
@@ -927,3 +944,46 @@ const function_like_post = (post_id, is_like) => {
         </section>
     </AppLayout>
 </template>
+
+
+<style scoped>
+.slide-in-elliptic-top-fwd {
+	-webkit-animation: slide-in-elliptic-top-fwd 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	        animation: slide-in-elliptic-top-fwd 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+@-webkit-keyframes slide-in-elliptic-top-fwd {
+  0% {
+    -webkit-transform: translateY(-600px) rotateX(-30deg) scale(0);
+            transform: translateY(-600px) rotateX(-30deg) scale(0);
+    -webkit-transform-origin: 50% 100%;
+            transform-origin: 50% 100%;
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0) rotateX(0) scale(1);
+            transform: translateY(0) rotateX(0) scale(1);
+    -webkit-transform-origin: 50% 1400px;
+            transform-origin: 50% 1400px;
+    opacity: 1;
+  }
+}
+@keyframes slide-in-elliptic-top-fwd {
+  0% {
+    -webkit-transform: translateY(-600px) rotateX(-30deg) scale(0);
+            transform: translateY(-600px) rotateX(-30deg) scale(0);
+    -webkit-transform-origin: 50% 100%;
+            transform-origin: 50% 100%;
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0) rotateX(0) scale(1);
+            transform: translateY(0) rotateX(0) scale(1);
+    -webkit-transform-origin: 50% 1400px;
+            transform-origin: 50% 1400px;
+    opacity: 1;
+  }
+}
+
+
+</style>
