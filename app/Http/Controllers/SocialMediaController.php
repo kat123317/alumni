@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Conversation;
 use App\Models\JobPost;
+use App\Models\Survey;
 use App\Models\User;
 use App\Models\UserNotification;
 use App\Models\UserPostComment;
@@ -37,8 +39,15 @@ class SocialMediaController extends Controller
 
     public function user_surveys()
     {   
+        // $update = Survey::with('records')->get();
+        // // dd($update[0]->setup->foreign_ids[0]);
+        // $key = collect($update[0]->setup->foreign_ids[0])->search(function($value) {
+        //     return  Auth::user()->id == $value['id'];
+        // });
+        // $user_surveys = UserNotification::where('notification_owner', Auth::user()->id)->where('notification_type', 'survey')->orderBy('created_at', 'desc')->get();
+        $user_surveys = Survey::whereJsonContains('setup->foriegn_ids', Auth::user()->id)->with('records')->get();
         return Inertia::render('Socialmedia/Components/Surveys', [
-            
+            'user_surveys' => $user_surveys
         ]);
     }
 
@@ -70,11 +79,9 @@ class SocialMediaController extends Controller
     public function messaging()
     {   
         return Inertia::render('Socialmedia/Components/MessengerPage', [
-            'user_profile' => User::with(['posts' => function($query){
-                $query->with('user')->orderBy('created_at', 'desc')->with(['comments' => function($query) {
-                    $query->with('user')->orderBy('created_at', 'desc');
-                }]);
-            }])->get()
+            'conversation' => Conversation::with('user1')->with('user2')->with(['messages' => function($query){
+                $query->with('user');
+            }])->where('user_id_1', Auth::user()->id)->get()
         ]);
     }
 

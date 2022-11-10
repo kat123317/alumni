@@ -25,4 +25,9 @@ class Survey extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function records()
+    {
+        return $this->belongsTo(Record::class, 'id', 'survey_id');
+    }
 }

@@ -26,7 +26,6 @@ const date_conversion_from_now = (value) => {
 <template>
     <AppLayout title="Messenger">
         <div>
-       
             <div class="container mx-auto">
                 <div class="mx-2 block lg:hidden">
                     <h1 class="text-center my-4 text-gray-800 font-bold">
@@ -281,7 +280,7 @@ const date_conversion_from_now = (value) => {
                             <div
                                 class="bg-grey-lighter w-[100vmin] flex-1 overflow-auto"
                                 v-for="(users, key) in usePage().props.value
-                                    .user_profile"
+                                    .conversation"
                                 :key="key"
                             >
                                 <div
@@ -290,7 +289,7 @@ const date_conversion_from_now = (value) => {
                                     <div>
                                         <img
                                             class="h-12 w-12 rounded-full"
-                                            :src="users.profile_photo_url"
+                                            :src="users.user2.profile_photo_url"
                                         />
                                     </div>
                                     <div
@@ -300,7 +299,7 @@ const date_conversion_from_now = (value) => {
                                             class="flex items-bottom justify-between"
                                         >
                                             <p class="text-grey-darkest">
-                                                {{ users.name }}
+                                                {{ users.user2.name }}
                                             </p>
                                             <p
                                                 class="text-xs text-grey-darkest"
@@ -330,18 +329,24 @@ const date_conversion_from_now = (value) => {
                                     <div>
                                         <img
                                             class="w-10 h-10 rounded-full"
-                                            src="https://darrenjameseeley.files.wordpress.com/2014/09/expendables3.jpeg"
+                                            :src="
+                                                usePage().props.value
+                                                    .conversation[0].user2
+                                                    .profile_photo_url
+                                            "
                                         />
                                     </div>
                                     <div class="ml-4">
                                         <p class="text-grey-darkest">
-                                            New Movie! Expendables 4
+                                            {{
+                                                usePage().props.value
+                                                    .conversation[0].user2.name
+                                            }}
                                         </p>
                                         <p
                                             class="text-grey-darker text-xs mt-1"
                                         >
-                                            Andrés, Tom, Harrison, Arnold,
-                                            Sylvester
+                                            Online
                                         </p>
                                     </div>
                                 </div>
@@ -418,26 +423,45 @@ const date_conversion_from_now = (value) => {
                                             </p>
                                         </div>
                                     </div>
-
-                                    <div class="flex mb-2">
+                                    <template
+                                        v-for="(messages, key) in usePage()
+                                            .props.value.conversation[0]
+                                            .messages"
+                                        :key="key"
+                                    >
                                         <div
-                                            class="rounded py-2 px-3"
-                                            style="background-color: #f2f2f2"
+                                            class="flex mb-2"
+                                            :class="
+                                                messages.user_id ==
+                                                usePage().props.value.user.id
+                                                    ? 'justify-end'
+                                                    : ''
+                                            "
                                         >
-                                            <p class="text-sm text-teal">
-                                                Sylverter Stallone
-                                            </p>
-                                            <p class="text-sm mt-1">
-                                                Hi everyone! Glad you could
-                                                join! I am making a new movie.
-                                            </p>
-                                            <p
-                                                class="text-right text-xs text-grey-dark mt-1"
+                                            <div
+                                                class="rounded py-2 px-3"
+                                                style="
+                                                    background-color: #f2f2f2;
+                                                "
                                             >
-                                                12:45 pm
-                                            </p>
+                                                <p class="text-sm text-teal">
+                                                    {{ messages.user.name }}
+                                                </p>
+                                                <p class="text-sm mt-1">
+                                                    {{ messages.content }}
+                                                </p>
+                                                <p
+                                                    class="text-right text-xs text-grey-dark mt-1"
+                                                >
+                                                    {{
+                                                        date_conversion_from_now(
+                                                            messages.created_at
+                                                        )
+                                                    }}
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </template>
                                 </div>
                             </div>
 
