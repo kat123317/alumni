@@ -185,6 +185,7 @@ provide("initialize", initialize);
                         </div>
                         <QList
                             :question="question"
+                            :disabled="false"
                             v-model="my_choice['question_' + (index + 1)]"
                         />
                     </div>

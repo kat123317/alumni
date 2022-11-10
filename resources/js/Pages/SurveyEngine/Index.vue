@@ -1,5 +1,6 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
+import JetInputError from "@/Components/InputError.vue";
 import QList from "@/Pages/Administrator/Survey/Question/QList.vue";
 import { useForm, usePage, Link } from "@inertiajs/inertia-vue3";
 import {
@@ -22,6 +23,7 @@ const my_choices = useForm({
     status: "ongoing",
 });
 
+const err_message = ref([]);
 onBeforeMount(() => {
     initialize();
 });
@@ -37,7 +39,7 @@ const initialize = () => {
             } else {
                 let choices = {};
                 question.setup.choices.forEach((choice) => {
-                    choices["choice_" + choice] = 0;
+                    choices["choice_" + choice.value] = 0;
                 });
                 my_choices.answers["question_" + question.order] = choices;
             }
@@ -67,20 +69,20 @@ const initialize = () => {
                 ) {
                     let choices = {};
                     question.setup.choices.forEach((choice) => {
-                        choices["choice_" + choice] = 0;
+                        choices["choice_" + choice.value] = 0;
                     });
                     my_choices.answers["question_" + question.order] = choices;
                 } else {
                     question.setup.choices.forEach((choice) => {
                         if (
-                            "choice_" + choice in
+                            "choice_" + choice.value in
                                 props.record.answers[
                                     "question_" + question.order
                                 ] ==
                             false
                         ) {
                             my_choices.answers["question_" + question.order][
-                                "choice_" + choice
+                                "choice_" + choice.value
                             ] = 0;
                         }
                     });
@@ -103,7 +105,9 @@ const saveAnswer = debounce(() => {
 
 const finishSurvey = () => {
     let proceed = true;
-    props.survey.questions.every((question) => {
+    err_message.value = [];
+    //check required
+    props.survey.questions.forEach((question) => {
         if (question.setup.required) {
             if (
                 question.setup.dropdown == true ||
@@ -111,18 +115,22 @@ const finishSurvey = () => {
             ) {
                 if (my_choices.answers["question_" + question.order] == 0) {
                     proceed = false;
+                    err_message.value[question.order - 1] = "* Required";
                 }
             } else {
-                my_choices.answers["question_" + question.order].every(
-                    (choice) => {
-                        if (choice == 0) {
-                            proceed = false;
-                        }
+                for (const key in my_choices.answers[
+                    "question_" + question.order
+                ]) {
+                    if (
+                        my_choices.answers["question_" + question.order][key] ==
+                        0
+                    ) {
+                        proceed = false;
+                        err_message.value[question.order - 1] = "* Required";
                     }
-                );
+                }
             }
         }
-        return proceed;
     });
     if (proceed) {
         Inertia.get(
@@ -131,8 +139,6 @@ const finishSurvey = () => {
                 status: my_choices.status,
             })
         );
-    } else {
-        alert("required");
     }
 };
 </script>
@@ -143,6 +149,7 @@ const finishSurvey = () => {
                 <div class="bg-white shadow-xl sm:rounded-lg">
                     <template v-for="(question, index) in survey.questions">
                         <div class="p-6 w-full">
+                            <JetInputError :message="err_message[index]" />
                             <QList
                                 :disabled="
                                     my_choices.status == 'complete' &&
