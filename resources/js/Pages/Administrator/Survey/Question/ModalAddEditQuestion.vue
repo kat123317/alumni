@@ -10,6 +10,7 @@ const modals = inject("modals");
 const alertOnMessage = inject("alertOnMessage");
 const onAlert = inject("onAlert");
 const form_add_edit = inject("form_add_edit");
+const initialize = inject("initialize");
 
 const new_choice = ref("");
 
@@ -46,10 +47,11 @@ const addEditQuestion = () => {
             {
                 preserveScroll: true,
                 onSuccess: () => {
+                    initialize();
+                    modals.add_edit.show = false;
                     alertOnMessage.value = "Question Added";
                     onAlert("Success");
                     form_add_edit.reset();
-                    modals.add_edit.show = false;
                 },
                 onError: (err) => {},
             }
@@ -63,6 +65,7 @@ const addEditQuestion = () => {
             {
                 preserveScroll: true,
                 onSuccess: () => {
+                    initialize();
                     alertOnMessage.value = "Question Successfully updated";
                     onAlert("Update");
                     form_add_edit.reset();

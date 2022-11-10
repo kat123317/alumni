@@ -41,28 +41,32 @@ const modals = reactive({
     },
 });
 
-const MyChoices = ref({});
+const my_choice = ref({});
+
 onBeforeMount(() => {
+    initialize();
+});
+
+const initialize = () => {
     usePage().props.value.survey.questions.forEach((question) => {
-        if (question.setup.dropdown == true) {
-            MyChoices.value["question_" + question.order] = 0;
-        } else if (
-            question.setup.dropdown == false &&
-            question.setup.multiple_select == true
+        if (
+            question.setup.dropdown == true ||
+            question.setup.multiple_select == false
         ) {
+            my_choice.value["question_" + question.order] = 0;
+        } else {
             let choices = {};
             question.setup.choices.forEach((choice) => {
                 choices["choice_" + choice.value] = 0;
             });
-            MyChoices.value["question_" + question.order] = choices;
-        } else {
-            MyChoices.value["question_" + question.order] = 0;
+            my_choice.value["question_" + question.order] = choices;
         }
     });
-});
+};
 
 const showAddEditModal = (method = "add", index = -1) => {
     if (method == "add") {
+        form_add_edit.reset();
         modals.add_edit.show = true;
         modals.add_edit.details.method = method;
         modals.add_edit.details.title = "Add Quesetion";
@@ -116,6 +120,7 @@ provide("modals", modals);
 provide("onAlert", onAlert);
 provide("alertOn", alertOn);
 provide("alertOnMessage", alertOnMessage);
+provide("initialize", initialize);
 </script>
 <template>
     <AdminLayout
@@ -180,7 +185,7 @@ provide("alertOnMessage", alertOnMessage);
                         </div>
                         <QList
                             :question="question"
-                            v-model="MyChoices['question_' + (index + 1)]"
+                            v-model="my_choice['question_' + (index + 1)]"
                         />
                     </div>
                 </template>

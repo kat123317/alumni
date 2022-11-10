@@ -8,7 +8,6 @@ const emit = defineEmits(["update:modelValue"]);
 
 const props = defineProps({
     question: Object,
-    choices: Array,
     modelValue: [Object, Number],
     disabled: {
         type: Boolean,

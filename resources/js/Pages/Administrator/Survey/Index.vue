@@ -34,11 +34,6 @@ const form_add_edit = useForm({
 
 const foreign_list = ref([]);
 
-const modal = reactive({
-    show: false,
-    details: ref({}),
-});
-
 const modals = reactive({
     add_edit: {
         show: false,
@@ -407,6 +402,7 @@ provide("form_add_edit", form_add_edit);
                 </button>
                 <button
                     @click="addEditSurvey()"
+                    :disabled="form_add_edit.processing"
                     class="flex text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg"
                 >
                     {{ modals.add_edit.details.btn_submit }}
