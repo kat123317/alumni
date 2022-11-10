@@ -16,7 +16,22 @@ defineProps(["posts"]);
                     :key="key2"
                 >
                     <img
-                        class="w-auto m-1 max-h-[30vmin] object-contain"
+                        v-if="key2 <= 1"
+                        class="w-screen max-h-[40vmin] max-w-[40vmin] object-contain"
+                        :src="'./../../images/posts/' + photos"
+                    />
+                </a>
+            </div>
+            <div class="flex justify-center mx-auto">
+                <a
+                    class="flex"
+                    href="#"
+                    v-for="(photos, key2) in posts.photo"
+                    :key="key2"
+                >
+                    <img
+                        v-if="key2 > 1"
+                        class="w-screen max-h-[40vmin] max-w-[40vmin] object-contain"
                         :src="'./../../images/posts/' + photos"
                     />
                 </a>
