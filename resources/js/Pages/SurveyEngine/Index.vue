@@ -2,17 +2,8 @@
 import AppLayout from "@/Layouts/AppLayout.vue";
 import JetInputError from "@/Components/InputError.vue";
 import QList from "@/Pages/Administrator/Survey/Question/QList.vue";
-import { useForm, usePage, Link } from "@inertiajs/inertia-vue3";
-import {
-    computed,
-    ref,
-    provide,
-    inject,
-    reactive,
-    watch,
-    onBeforeMount,
-    nextTick,
-} from "vue";
+import { useForm } from "@inertiajs/inertia-vue3";
+import { ref, onBeforeMount } from "vue";
 
 import { Inertia } from "@inertiajs/inertia";
 import { debounce } from "lodash";
