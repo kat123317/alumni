@@ -3,6 +3,8 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import { Head, Link, useForm, usePage } from "@inertiajs/inertia-vue3";
 import { ref, onMounted, computed } from "vue";
 import NoPostsYet from "./emptypost.vue";
+import PostImage from "@/Pages/Socialmedia/Components/PostImageProfile.vue";
+
 import moment from "moment";
 
 const date_conversion = (value) => {
@@ -88,7 +90,9 @@ const date_conversion2 = (value) => {
             ></span>
         </h2>
         <NoPostsYet v-if="usePage().props.value.user_profile[0].length == 0" />
-        <div class="w-full px-2 lg:px-10 grid grid-cols-1 lg:grid-cols-2 gap-3">
+        <div
+            class="w-full px-2 lg:px-[25vmin] grid grid-cols-1 lg:grid-cols-1 gap-3"
+        >
             <article
                 v-for="(posts, key) in usePage().props.value.user_profile[0]
                     .posts"
@@ -145,8 +149,8 @@ const date_conversion2 = (value) => {
                 <p class="">
                     {{ posts.content }}
                 </p>
-
-                <div v-if="posts.photo != null" class="py-4 mx-auto">
+                <PostImage :posts="posts" />
+                <!-- <div v-if="posts.photo != null" class="py-4 mx-auto">
                     <div v-if="posts.photo.length > 3" class="grid grid-cols-2">
                         <a
                             :href="'./../../images/posts/' + photos"
@@ -221,7 +225,7 @@ const date_conversion2 = (value) => {
                             />
                         </a>
                     </div>
-                </div>
+                </div> -->
                 <!-- <div class="py-4">
                         <a class="inline-flex items-center" href="#">
                             <span class="mr-2">
