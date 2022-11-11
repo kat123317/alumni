@@ -145,7 +145,8 @@ class SurveyController extends Controller
                 'title' => 'Alumni Survey',
                 'content' => 'You are invited to alumni survey',
                 'details' => array(
-                    'link' => route('surveys.engine.review', ['survey_id' => $survey->id])
+                    'link' => route('surveys.engine.review', ['survey_id' => $survey->id]),
+                    'survey_id' => $survey->id
                 )
             ]);
         }

@@ -448,6 +448,7 @@ const function_open_messages = (id) => {
                                     <input
                                         class="w-full border rounded px-2 py-2"
                                         type="text"
+                                        disabled
                                     />
                                 </div>
                                 <div>

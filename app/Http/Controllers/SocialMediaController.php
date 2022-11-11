@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Conversation;
 use App\Models\JobPost;
 use App\Models\Survey;
+use App\Models\Record;
 use App\Models\User;
 use App\Models\UserNotification;
 use App\Models\UserPostComment;
@@ -45,7 +46,16 @@ class SocialMediaController extends Controller
         //     return  Auth::user()->id == $value['id'];
         // });
         // $user_surveys = UserNotification::where('notification_owner', Auth::user()->id)->where('notification_type', 'survey')->orderBy('created_at', 'desc')->get();
-        $user_surveys = Survey::whereJsonContains('setup->foriegn_ids', Auth::user()->id)->with('records')->get();
+        
+        $survey_notifications = UserNotification::where(['notification_type' => 'survey', 'notification_owner' => Auth::user()->id])->get();
+        $user_surveys = [];
+        foreach ($survey_notifications as $notification) {
+            $survey = Survey::with('questions')->find($notification->details['survey_id']);
+            $tmp = $notification;
+            $tmp['record'] = Record::whereUserId(Auth::user()->id)->whereSurveyId($survey->id)->first();
+            $tmp['survey'] = $survey;
+            $user_surveys[] = $tmp;
+        }
         return Inertia::render('Socialmedia/Components/Surveys', [
             'user_surveys' => $user_surveys
         ]);

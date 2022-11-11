@@ -15,6 +15,137 @@ const date_conversion2 = (value) => {
         return moment(value).format("h:mm:ss");
     }
 };
+
+const getPercentage = (user_surveys) => {
+    let record = user_surveys.record;
+    let survey = user_surveys.survey;
+    if (record != null) {
+        var count = 0;
+        survey.questions.forEach((question) => {
+            if (
+                question.setup.dropdown == true ||
+                question.setup.multiple_select == false
+            ) {
+                if ("question_" + question.order in record.answers == true) {
+                    if (record.answers["question_" + question.order] != 0) {
+                        count++;
+                    }
+                }
+            } else {
+                if ("question_" + question.order in record.answers == true) {
+                    question.setup.choices.every((choice) => {
+                        if (
+                            "choice_" + choice.value in
+                                record.answers["question_" + question.order] ==
+                            true
+                        ) {
+                            if (
+                                record.answers["question_" + question.order][
+                                    "choice_" + choice.value
+                                ] != 0
+                            ) {
+                                count++;
+                                return false;
+                            }
+                        }
+                        return true;
+                    });
+                }
+            }
+        });
+        return (count / survey.questions.length) * 100;
+    } else {
+        return 0;
+    }
+};
+
+const getStatus = (user_surveys) => {
+    let record = user_surveys.record;
+    let survey = user_surveys.survey;
+    if (record != null) {
+        var count = 0;
+        survey.questions.forEach((question) => {
+            if (
+                question.setup.dropdown == true ||
+                question.setup.multiple_select == false
+            ) {
+                if ("question_" + question.order in record.answers == true) {
+                    if (record.answers["question_" + question.order] != 0) {
+                        count++;
+                    }
+                }
+            } else {
+                if ("question_" + question.order in record.answers == true) {
+                    question.setup.choices.every((choice) => {
+                        if (
+                            "choice_" + choice.value in
+                                record.answers["question_" + question.order] ==
+                            true
+                        ) {
+                            if (
+                                record.answers["question_" + question.order][
+                                    "choice_" + choice.value
+                                ] != 0
+                            ) {
+                                count++;
+                                return false;
+                            }
+                        }
+                        return true;
+                    });
+                }
+            }
+        });
+        var status = (count / survey.questions.length) * 100;
+        return status == 100 ? "Finished" : "Incomplete";
+    } else {
+        return "Not yet taken";
+    }
+};
+
+const getStatusButton = (user_surveys) => {
+    let record = user_surveys.record;
+    let survey = user_surveys.survey;
+    if (record != null) {
+        var count = 0;
+        survey.questions.forEach((question) => {
+            if (
+                question.setup.dropdown == true ||
+                question.setup.multiple_select == false
+            ) {
+                if ("question_" + question.order in record.answers == true) {
+                    if (record.answers["question_" + question.order] != 0) {
+                        count++;
+                    }
+                }
+            } else {
+                if ("question_" + question.order in record.answers == true) {
+                    question.setup.choices.every((choice) => {
+                        if (
+                            "choice_" + choice.value in
+                                record.answers["question_" + question.order] ==
+                            true
+                        ) {
+                            if (
+                                record.answers["question_" + question.order][
+                                    "choice_" + choice.value
+                                ] != 0
+                            ) {
+                                count++;
+                                return false;
+                            }
+                        }
+                        return true;
+                    });
+                }
+            }
+        });
+        var status = (count / survey.questions.length) * 100;
+        return status == 100 ? "Retake" : "Answer";
+    } else {
+        return "Answer";
+    }
+};
 </script>
 
 <template>
@@ -49,9 +180,9 @@ const date_conversion2 = (value) => {
                 class="w-full max-w-sm px-4 py-3 border-b-4 border-green-400 bg-white rounded-md shadow-md"
             >
                 <div class="flex items-center justify-between">
-                    <span class="text-sm font-bold text-gray-800"
-                        >Survey Title</span
-                    >
+                    <span class="text-sm font-bold text-gray-800">{{
+                        user_surveys.survey.name
+                    }}</span>
                     <span
                         class="px-3 py-1 text-xs text-white uppercase bg-green-800 rounded-full"
                         >Survey</span
@@ -60,21 +191,33 @@ const date_conversion2 = (value) => {
 
                 <div>
                     <h1 class="mt-2 text-lg font-semibold text-gray-800">
-                        Items: 100
+                        Items: {{ user_surveys.survey.questions.length }}
                     </h1>
 
                     <div class="grid grid-cols-2 mb-5">
                         <div>
                             <p class="mt-2 text-md text-gray-600">
-                                Percentage taken: 100%
+                                Percentage taken:
+                                {{ getPercentage(user_surveys) }}%
                             </p>
                             <p class="mt-2 text-md text-gray-600">
-                                Status: Finished
+                                Status: {{ getStatus(user_surveys) }}
                             </p>
-                            <p class="mt-2 text-md text-gray-600">created_at</p>
-                            <p class="mt-2 text-md text-gray-600">updated_at</p>
                             <p class="mt-2 text-md text-gray-600">
-                                retake / take
+                                created_at:
+                                {{
+                                    date_conversion(
+                                        user_surveys.survey.created_at
+                                    )
+                                }}
+                            </p>
+                            <p class="mt-2 text-md text-gray-600">
+                                updated_at:
+                                {{
+                                    date_conversion(
+                                        user_surveys.survey.updated_at
+                                    )
+                                }}
                             </p>
                         </div>
                         <a class="inline-block mr-4" href="#">
@@ -83,11 +226,13 @@ const date_conversion2 = (value) => {
                     </div>
                 </div>
 
-                <button
+                <a
                     class="px-6 float-right py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-green-800 rounded-md hover:bg-green-500 focus:outline-none focus:ring focus:ring-green-300 focus:ring-opacity-80"
+                    :href="user_surveys.details.link"
+                    target="_blank"
                 >
-                    Retake / Take
-                </button>
+                    {{ getStatusButton(user_surveys) }}
+                </a>
             </div>
         </div>
     </AppLayout>
