@@ -1,8 +1,11 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Head, Link, useForm, usePage } from "@inertiajs/inertia-vue3";
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, onUnmounted, computed } from "vue";
 import moment from "moment";
+import { Inertia } from "@inertiajs/inertia";
+
+const props = defineProps(["conversation"]);
 
 const open_convo_data = useForm({
     user1: null,
@@ -17,6 +20,25 @@ const message_data = useForm({
 
 const search_data = useForm({
     search_text: usePage().props.value.search_text,
+});
+
+onMounted(() => {
+    if (props.conversation != null) {
+        Echo.channel("message." + props.conversation.id).listen(
+            ".message-sent",
+            (res) => {
+                Inertia.reload({ only: ["conversation"] });
+            }
+        );
+    }
+});
+
+onUnmounted(() => {
+    if (props.conversation != null) {
+        Echo.channel("message." + props.conversation.id).stopListening(
+            ".message-sent"
+        );
+    }
 });
 
 const date_conversion = (value) => {
@@ -50,7 +72,7 @@ const function_open_messages = (id) => {
 
 const function_send_message = (id) => {
     try {
-        message_data.conversation_id = usePage().props.value.conversation[0].id;
+        message_data.conversation_id = usePage().props.value.conversation.id;
         message_data.post(route("socialmedia.send_message"), {
             preserveScroll: true,
             onSuccess: () => {
@@ -386,9 +408,7 @@ const function_search = () => {
 
                         <!-- Right -->
                         <div
-                            v-if="
-                                usePage().props.value.conversation.length == 0
-                            "
+                            v-if="usePage().props.value.conversation == null"
                             class="w-full border flex flex-col"
                         >
                             <!-- Header -->
@@ -780,8 +800,7 @@ const function_search = () => {
                                     </div>
                                     <template
                                         v-for="(messages, key) in usePage()
-                                            .props.value.conversation[0]
-                                            .messages"
+                                            .props.value.conversation.messages"
                                         :key="key"
                                     >
                                         <div

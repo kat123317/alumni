@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import { Head, Link, useForm, usePage } from "@inertiajs/inertia-vue3";
 import ApplicationMark from "@/Components/ApplicationMark.vue";
@@ -14,6 +14,23 @@ defineProps({
 });
 
 const showingNavigationDropdown = ref(false);
+const online_users = ref([]);
+onMounted(() => {
+    Echo.join("online-users")
+        .here((users) => {
+            console.table(users);
+        })
+        .joining((user) => {
+            console.log(user.name);
+        })
+        .leaving((user) => {
+            console.log("leave: " + user.name);
+        });
+});
+
+onUnmounted(() => {
+    // Echo.channel("online-users").stopListening(".online-users");
+});
 
 const switchToTeam = (team) => {
     Inertia.put(

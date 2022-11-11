@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\SendMessage;
 use App\Models\Conversation;
 use App\Models\JobPost;
 use App\Models\Message;
@@ -97,7 +98,7 @@ class SocialMediaController extends Controller
         })->get();
         
         if($open_convo == null){
-            $conversation = [];
+            $conversation = null;
         }
         else{
             $conversation = Conversation::when($open_convo, function($query) use($open_convo){
@@ -108,13 +109,9 @@ class SocialMediaController extends Controller
                 }) ->orWhere(function ($query) use ($open_convo) {
                     $query->where('user_id_1', $open_convo)->where('user_id_2', Auth::user()->id);
                 });
-            })->get();
+            })->first();
             
             $user_selected = User::find($open_convo);
-            if(count($conversation) == 0){
-                $conversation = $user_selected;
-                // dd($conversation);
-            }
         }
         return Inertia::render('Socialmedia/Components/MessengerPage', [
             'users' => $users,
@@ -140,12 +137,14 @@ class SocialMediaController extends Controller
 
         }
         else{
+            $conversation = Conversation::find($request->conversation_id);
             Message::create([
                 'user_id'=>Auth::user()->id,
                 'conversation_id'=>$request->conversation_id,
                 'content'=>$request->content,
             ]);
         }
+        broadcast(new SendMessage($conversation))->toOthers();
         return Redirect::back();
     }
 
