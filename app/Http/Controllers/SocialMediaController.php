@@ -76,14 +76,37 @@ class SocialMediaController extends Controller
         ]);
     }
 
-    public function messaging()
+    public function messaging(Request $request)
     {   
+        $open_convo = $request->user2 ?? null;
+        $users = User::where('status', 'approved')->where('is_active', true)->get();
+        
+        if($open_convo == null){
+            $conversation = [];
+        }
+        else{
+            $conversation = Conversation::when($open_convo, function($query) use($open_convo){
+                $query -> where('user_id_1', Auth::user()->id)->where('user_id_2', $open_convo)->with('user1')->with('user2')->with(['messages' => function($query){
+                    $query->with('user');
+                }]);
+            })->get();
+        }
         return Inertia::render('Socialmedia/Components/MessengerPage', [
-            'conversation' => Conversation::with('user1')->with('user2')->with(['messages' => function($query){
-                $query->with('user');
-            }])->where('user_id_1', Auth::user()->id)->get()
+            'users' => $users,
+            'conversation' => $conversation
         ]);
     }
+   
+    // public function open_message(Request $request)
+    // {   
+    //     $users = User::where('status', 'approved')->where('is_active', true)->get();
+    //     return Inertia::render('Socialmedia/Components/MessengerPage', [
+    //         'users' => $users,
+    //         'conversation' => Conversation::with('user1')->with('user2')->with(['messages' => function($query){
+    //             $query->with('user');
+    //         }])->where('user_id_1', Auth::user()->id)->get()
+    //     ]);
+    // }
 
     public function add_comment(Request $request)
     {   
