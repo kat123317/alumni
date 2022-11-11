@@ -13,7 +13,7 @@ const my_choices = useForm({
     answers: {},
     status: "ongoing",
 });
-
+const questions = ref([]);
 const err_message = ref([]);
 onBeforeMount(() => {
     initialize();
@@ -26,13 +26,13 @@ const initialize = () => {
                 question.setup.dropdown == true ||
                 question.setup.multiple_select == false
             ) {
-                my_choices.answers["question_" + question.order] = 0;
+                my_choices.answers["question_" + question.id] = 0;
             } else {
                 let choices = {};
                 question.setup.choices.forEach((choice) => {
                     choices["choice_" + choice.value] = 0;
                 });
-                my_choices.answers["question_" + question.order] = choices;
+                my_choices.answers["question_" + question.id] = choices;
             }
         });
         if (props.user.user_type != "alumni") {
@@ -48,31 +48,31 @@ const initialize = () => {
                 question.setup.multiple_select == false
             ) {
                 if (
-                    "question_" + question.order in props.record.answers ==
+                    "question_" + question.id in props.record.answers ==
                     false
                 ) {
-                    my_choices.answers["question_" + question.order] = 0;
+                    my_choices.answers["question_" + question.id] = 0;
                 }
             } else {
                 if (
-                    "question_" + question.order in props.record.answers ==
+                    "question_" + question.id in props.record.answers ==
                     false
                 ) {
                     let choices = {};
                     question.setup.choices.forEach((choice) => {
                         choices["choice_" + choice.value] = 0;
                     });
-                    my_choices.answers["question_" + question.order] = choices;
+                    my_choices.answers["question_" + question.id] = choices;
                 } else {
                     question.setup.choices.forEach((choice) => {
                         if (
                             "choice_" + choice.value in
                                 props.record.answers[
-                                    "question_" + question.order
+                                    "question_" + question.id
                                 ] ==
                             false
                         ) {
-                            my_choices.answers["question_" + question.order][
+                            my_choices.answers["question_" + question.id][
                                 "choice_" + choice.value
                             ] = 0;
                         }
@@ -81,6 +81,8 @@ const initialize = () => {
             }
         });
     }
+
+    questions.value = props.survey.questions;
 };
 
 const saveAnswer = debounce(() => {
@@ -104,20 +106,22 @@ const finishSurvey = () => {
                 question.setup.dropdown == true ||
                 question.setup.multiple_select == false
             ) {
-                if (my_choices.answers["question_" + question.order] == 0) {
+                if (my_choices.answers["question_" + question.id] == 0) {
                     proceed = false;
                     err_message.value[question.order - 1] = "* Required";
                 }
             } else {
+                proceed = false;
+                err_message.value[question.order - 1] = "* Required";
                 for (const key in my_choices.answers[
-                    "question_" + question.order
+                    "question_" + question.id
                 ]) {
                     if (
-                        my_choices.answers["question_" + question.order][key] ==
-                        0
+                        my_choices.answers["question_" + question.id][key] == 1
                     ) {
-                        proceed = false;
-                        err_message.value[question.order - 1] = "* Required";
+                        proceed = true;
+                        err_message.value[question.order - 1] = "";
+                        break;
                     }
                 }
             }
@@ -135,10 +139,10 @@ const finishSurvey = () => {
 </script>
 <template>
     <AppLayout title="Survey">
-        <div class="bg-gray-100 ">
+        <div class="bg-gray-100">
             <div class="max-w-6xl bg-white rounded-lg mt-5 py-6 mx-auto">
-                <div class="sm:rounded-lg ">
-                    <template v-for="(question, index) in survey.questions">
+                <div class="sm:rounded-lg">
+                    <template v-for="(question, index) in questions">
                         <div class="p-6 w-full">
                             <JetInputError :message="err_message[index]" />
                             <QList
@@ -150,13 +154,13 @@ const finishSurvey = () => {
                                 :question="question"
                                 v-model="
                                     my_choices.answers[
-                                        'question_' + (index + 1)
+                                        'question_' + question.id
                                     ]
                                 "
                             />
                         </div>
                     </template>
-                    <div class="px-6 flex justify-center    pb-6">
+                    <div class="px-6 flex justify-center pb-6">
                         <button
                             @click="finishSurvey()"
                             class="flex text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg"
