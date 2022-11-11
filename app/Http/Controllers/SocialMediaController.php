@@ -90,6 +90,12 @@ class SocialMediaController extends Controller
                     $query->with('user');
                 }]);
             })->get();
+            
+            $user_selected = User::find($open_convo);
+            if(count($conversation) == 0){
+                $conversation = $user_selected;
+                // dd($conversation);
+            }
         }
         return Inertia::render('Socialmedia/Components/MessengerPage', [
             'users' => $users,
