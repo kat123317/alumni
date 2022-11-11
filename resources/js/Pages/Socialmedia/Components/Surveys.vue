@@ -204,7 +204,7 @@ const getStatusButton = (user_surveys) => {
                                 Status: {{ getStatus(user_surveys) }}
                             </p>
                             <p class="mt-2 text-md text-gray-600">
-                                created_at:
+                                Created at:
                                 {{
                                     date_conversion(
                                         user_surveys.survey.created_at
@@ -212,7 +212,7 @@ const getStatusButton = (user_surveys) => {
                                 }}
                             </p>
                             <p class="mt-2 text-md text-gray-600">
-                                updated_at:
+                                Updated at:
                                 {{
                                     date_conversion(
                                         user_surveys.survey.updated_at
