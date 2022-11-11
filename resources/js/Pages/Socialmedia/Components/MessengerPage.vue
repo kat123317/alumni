@@ -30,7 +30,7 @@ const date_conversion_from_now = (value) => {
 const function_open_messages = (id) => {
     open_convo_data.user1 = usePage().props.value.user.id;
     open_convo_data.user2 = id;
-    open_convo_data.get(route("socialmedia.open_messaging"), {
+    open_convo_data.get(route("socialmedia.messaging"), {
         preserveScroll: true,
         onSuccess: () => {
             open_convo_data.reset();

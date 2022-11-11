@@ -86,9 +86,13 @@ class SocialMediaController extends Controller
         }
         else{
             $conversation = Conversation::when($open_convo, function($query) use($open_convo){
-                $query -> where('user_id_1', Auth::user()->id)->where('user_id_2', $open_convo)->with('user1')->with('user2')->with(['messages' => function($query){
+                $query->with('user1')->with('user2')->with(['messages' => function($query){
                     $query->with('user');
-                }]);
+                }]) ->where(function ($query) use ($open_convo) {
+                    $query->where('user_id_1', Auth::user()->id)->where('user_id_2', $open_convo);
+                }) ->orWhere(function ($query) use ($open_convo) {
+                    $query->where('user_id_1', $open_convo)->where('user_id_2', Auth::user()->id);
+                });
             })->get();
             
             $user_selected = User::find($open_convo);
