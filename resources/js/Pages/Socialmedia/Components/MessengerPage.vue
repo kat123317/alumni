@@ -15,6 +15,10 @@ const message_data = useForm({
     user_id_2: null,
 });
 
+const search_data = useForm({
+    search_text: usePage().props.value.search_text,
+});
+
 const date_conversion = (value) => {
     if (value) {
         return moment(value).format("MMMM Do YYYY, h:mm:ss a");
@@ -62,6 +66,10 @@ const function_send_message = (id) => {
             },
         });
     }
+};
+
+const function_search = () => {
+    search_data.get(route("socialmedia.messaging"));
 };
 </script>
 
@@ -312,10 +320,18 @@ const function_send_message = (id) => {
                             <!-- Search -->
                             <div class="py-2 px-2 bg-grey-lightest">
                                 <input
+                                    v-model="search_data.search_text"
                                     type="text"
                                     class="w-full px-2 py-2 text-sm"
                                     placeholder="Search or start new chat"
                                 />
+                                <button
+                                    @click="function_search()"
+                                    type="submit"
+                                    class="text-white right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mt-1 float-right"
+                                >
+                                    Search
+                                </button>
                             </div>
 
                             <!-- Contacts -->
@@ -328,6 +344,12 @@ const function_send_message = (id) => {
                                 <div
                                     @click="function_open_messages(users.id)"
                                     class="bg-white px-3 flex items-center hover:bg-grey-lighter cursor-pointer"
+                                    :class="
+                                        users.id ==
+                                        usePage().props.value.user_selected.id
+                                            ? 'bg-green-300'
+                                            : ''
+                                    "
                                 >
                                     <div>
                                         <img

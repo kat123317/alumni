@@ -91,7 +91,10 @@ class SocialMediaController extends Controller
     {   
         $user_selected ='';
         $open_convo = $request->user2 ?? null;
-        $users = User::where('status', 'approved')->where('is_active', true)->get();
+        $search = $request->search_text ?? null;
+        $users = User::where('status', 'approved')->where('is_active', true)->when($search, function($query, $search){
+            $query -> where('name','like',"%{$search}%");
+        })->get();
         
         if($open_convo == null){
             $conversation = [];
@@ -116,7 +119,8 @@ class SocialMediaController extends Controller
         return Inertia::render('Socialmedia/Components/MessengerPage', [
             'users' => $users,
             'conversation' => $conversation,
-            'user_selected' => $user_selected
+            'user_selected' => $user_selected,
+            'search_text' => $search
         ]);
     }
    
