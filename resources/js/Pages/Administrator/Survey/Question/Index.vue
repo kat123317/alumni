@@ -110,7 +110,7 @@ const deleteQuesiton = () => {
                 onAlert("Delete");
                 modals.delete.show = false;
             },
-            onError: (err) => {},
+            onError: (err) => { },
         }
     );
 };
@@ -123,71 +123,95 @@ provide("alertOnMessage", alertOnMessage);
 provide("initialize", initialize);
 </script>
 <template>
-    <AdminLayout
-        :alertOn="alertOn"
-        :alertOnDelete="alertOnDelete"
-        :alertOnUpdate="alertOnUpdate"
-        :alertOnMessage="alertOnMessage"
-    >
-        <div class="container p-3 shadow-lg rounded-lg bg-white mt-10 mx-auto">
-            <h1
-                class="sm:text-3xl text-2xl font-medium title-font mb-4 text-center text-gray-900"
-            >
-                {{ $page.props.survey.name }}
-            </h1>
-            <div class="flex justify-between p-2">
-                <button
-                    class="flex text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg"
-                >
-                    <Link :href="route('administrator.survey')"> Back </Link>
-                </button>
-                <div class="flex gap-1">
-                    <a
-                        :href="
+    <AdminLayout :alertOn="alertOn" :alertOnDelete="alertOnDelete" :alertOnUpdate="alertOnUpdate"
+        :alertOnMessage="alertOnMessage">
+        <div class="container p-3  shadow-lg rounded-lg bg-white mt-10 mx-auto">
+            <!-- <div class="sm:text-3xl m-5 mt-10 font-bold text-2xl font-medium title-font mb-4  text-gray-900">
+                <h1> {{ $page.props.survey.name }}</h1>
+            </div> -->
+            <nav
+                class="font-sans flex flex-col text-center bg-whte sm:flex-row sm:text-left sm:justify-between py-4 px-6 bg-white shadow sm:items-baseline w-full">
+                <div class="mb-2 sm:mb-0">
+                    <a class="text-2xl no-underline text-grey-darkest text-gray-700 font-bold">{{
+                            $page.props.survey.name
+                    }}</a>
+                </div>
+                <div>
+                    <div class="flex justify-center  gap-1">
+                        <button
+                            class="flex text-white bg-gray-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">
+                            <Link class="flex" :href="route('administrator.survey')"> <svg
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
+                            </svg>
+                             </Link>
+                        </button>
+                        <a :href="
                             route('surveys.engine.review', {
                                 survey_id: $page.props.survey.id,
                             })
-                        "
-                        target="_blank"
-                        ><button
-                            class="flex text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none hover:bg-blue-600 rounded text-lg"
-                        >
-                            Preview
-                        </button></a
-                    >
+                        " target="_blank"><button
+                                class="flex text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none hover:bg-blue-600 rounded text-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                                    <span class = "ml-1">Preview</span>
+                                
+                            </button></a>
 
-                    <button
-                        @click="showAddEditModal('add')"
-                        class="flex text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg"
-                    >
+                        <button @click="showAddEditModal('add')"
+                            class="flex text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-7 h-7">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span class = "ml-1">Add</span>
+                        </button>
+                    </div>
+                </div>
+            </nav>
+            <div class="flex justify-between p-2">
+                <!-- <button
+                    class="flex text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">
+                    <Link :href="route('administrator.survey')"> Back </Link>
+                </button> -->
+                <!-- <div class="flex gap-1">
+                    <a :href="
+                        route('surveys.engine.review', {
+                            survey_id: $page.props.survey.id,
+                        })
+                    " target="_blank"><button
+                            class="flex text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none hover:bg-blue-600 rounded text-lg">
+                            Preview
+                        </button></a>
+
+                    <button @click="showAddEditModal('add')"
+                        class="flex text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">
                         Add Question
                     </button>
-                </div>
+                </div> -->
             </div>
             <div class="w-full px-2 mt-2">
-                <template
-                    v-for="(question, index) in $page.props.survey.questions"
-                >
+                <template v-for="(question, index) in $page.props.survey.questions">
                     <div class="w-full">
                         <div class="flex float-right gap-1">
-                            <button
-                                @click="showAddEditModal('edit', index)"
-                                class="flex text-white bg-blue-500 border-0 py-1 px-2 focus:outline-none hover:bg-blue-600 rounded text-sm"
-                            >
+                            <button @click="showAddEditModal('edit', index)"
+                                class="flex text-white bg-blue-500 border-0 py-1 px-2 focus:outline-none hover:bg-blue-600 rounded text-sm">
                                 Edit
                             </button>
-                            <button
-                                @click="showDeleteModal(index)"
-                                class="flex text-white bg-red-500 border-0 py-1 px-2 focus:outline-none hover:bg-red-600 rounded text-sm"
-                            >
+                            <button @click="showDeleteModal(index)"
+                                class="flex text-white bg-red-500 border-0 py-1 px-2 focus:outline-none hover:bg-red-600 rounded text-sm">
                                 Delete
                             </button>
                         </div>
-                        <QList
-                            :question="question"
-                            :disabled="false"
-                            v-model="my_choice['question_' + (index + 1)]"
-                        />
+                        <QList :question="question" :disabled="false" v-model="my_choice['question_' + (index + 1)]" />
                     </div>
                 </template>
             </div>
@@ -199,19 +223,20 @@ provide("initialize", initialize);
                 {{ modals.delete.details.content }}
             </template>
             <template #footer>
-                <button
-                    @click="modals.delete.show = false"
-                    class="flex mr-2 text-white bg-gray-500 border-0 py-2 px-8 focus:outline-none hover:bg-gray-600 rounded text-lg"
-                >
+                <button @click="modals.delete.show = false"
+                    class="flex mr-2 text-white bg-gray-500 border-0 py-2 px-8 focus:outline-none hover:bg-gray-600 rounded text-lg">
                     Cancel
                 </button>
-                <button
-                    @click="deleteQuesiton()"
-                    class="flex text-white bg-red-500 border-0 py-2 px-8 focus:outline-none hover:bg-red-600 rounded text-lg"
-                >
+                <button @click="deleteQuesiton()"
+                    class="flex text-white bg-red-500 border-0 py-2 px-8 focus:outline-none hover:bg-red-600 rounded text-lg">
                     Delete
                 </button>
             </template>
         </JetDialogModal>
     </AdminLayout>
 </template>
+
+
+<style scoped>
+
+</style>

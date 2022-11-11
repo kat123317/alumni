@@ -135,9 +135,9 @@ const finishSurvey = () => {
 </script>
 <template>
     <AppLayout title="Survey">
-        <div class="bg-gray-100">
-            <div class="max-w-6xl py-6 mx-auto">
-                <div class="bg-white shadow-xl sm:rounded-lg">
+        <div class="bg-gray-100 ">
+            <div class="max-w-6xl bg-white rounded-lg mt-5 py-6 mx-auto">
+                <div class="sm:rounded-lg ">
                     <template v-for="(question, index) in survey.questions">
                         <div class="p-6 w-full">
                             <JetInputError :message="err_message[index]" />
@@ -156,7 +156,7 @@ const finishSurvey = () => {
                             />
                         </div>
                     </template>
-                    <div class="px-6 pb-6">
+                    <div class="px-6 flex justify-center    pb-6">
                         <button
                             @click="finishSurvey()"
                             class="flex text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg"

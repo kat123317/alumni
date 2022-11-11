@@ -379,7 +379,7 @@ provide("form_add_edit", form_add_edit);
                                 }}</span>
                             </JetInputLabel>
                         </div>
-                        <template v-for="(ids, index) in foreign_list">
+                        <template v-for="(ids, index) in foreign_list" :key="index">
                             <div class="col-span-3">
                                 <JetInputLabel>
                                     <JetCheckbox
