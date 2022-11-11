@@ -89,6 +89,7 @@ class SocialMediaController extends Controller
 
     public function messaging(Request $request)
     {   
+        $user_selected ='';
         $open_convo = $request->user2 ?? null;
         $users = User::where('status', 'approved')->where('is_active', true)->get();
         
@@ -114,17 +115,33 @@ class SocialMediaController extends Controller
         }
         return Inertia::render('Socialmedia/Components/MessengerPage', [
             'users' => $users,
-            'conversation' => $conversation
+            'conversation' => $conversation,
+            'user_selected' => $user_selected
         ]);
     }
    
     public function send_message(Request $request)
     {   
-        Message::create([
-            'user_id'=>Auth::user()->id,
-            'conversation_id'=>$request->conversation_id,
-            'content'=>$request->content,
-        ]);
+        if($request->conversation_id == null){
+            $conversation = Conversation::create([
+                'user_id_1' => Auth::user()->id,
+                'user_id_2' => $request->user_id_2,
+            ]);
+
+            Message::create([
+                'user_id'=>Auth::user()->id,
+                'conversation_id'=>$conversation->id,
+                'content'=>$request->content,
+            ]);
+
+        }
+        else{
+            Message::create([
+                'user_id'=>Auth::user()->id,
+                'conversation_id'=>$request->conversation_id,
+                'content'=>$request->content,
+            ]);
+        }
         return Redirect::back();
     }
 
