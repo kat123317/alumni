@@ -25,7 +25,7 @@ const form = useForm({
     civil_status: props.user.details.civil_status,
     current_work: props.user.details.current_work,
     date_of_birth: props.user.details.date_of_birth,
-    gender: props.user.details.current_work,
+    gender: props.user.details.gender,
     nickname: props.user.details.nickname,
     phone_number: props.user.details.phone_number,
     religion: props.user.details.religion,
@@ -209,12 +209,153 @@ const clearPhotoFileInput = () => {
                 <InputLabel for="motto" value="Motto" />
                 <TextInput
                     id="motto"
-                    v-model="form.name"
+                    v-model="form.motto"
                     type="text"
                     class="mt-1 block w-full"
                     autocomplete="motto"
                 />
                 <InputError :message="form.errors.motto" class="mt-2" />
+            </div>
+
+            <!-- Address -->
+            <div class="col-span-6 sm:col-span-4">
+                <InputLabel for="address" value="Address" />
+                <TextInput
+                    id="address"
+                    v-model="form.address"
+                    type="text"
+                    class="mt-1 block w-full"
+                    autocomplete="motto"
+                />
+                <InputError :message="form.errors.address" class="mt-2" />
+            </div>
+
+            <!-- Civil Status -->
+            <div class="col-span-6 sm:col-span-4">
+                <InputLabel for="civil_status" value="Civil_status" />
+                <!-- <TextInput
+                    id="civil_status"
+                    v-model="form.civil_status"
+                    type="text"
+                    class="mt-1 block w-full"
+                    autocomplete="civil_status"
+                /> -->
+                <select
+                    class="mt-1 block w-full"
+                    v-model="form.civil_status"
+                    autocomplete="civil_status"
+                    name="civil_status"
+                    id="civil_status"
+                >
+                    <option value="1">Single</option>
+                    <option value="2">Married</option>
+                    <option value="3">Annulled</option>
+                    <option value="4">Widdowed</option>
+                </select>
+                <InputError :message="form.errors.civil_status" class="mt-2" />
+            </div>
+
+            <!-- Current Work -->
+            <div class="col-span-6 sm:col-span-4">
+                <InputLabel for="current_work" value="Current_work" />
+                <TextInput
+                    id="current_work"
+                    v-model="form.current_work"
+                    type="text"
+                    class="mt-1 block w-full"
+                    autocomplete="current_work"
+                />
+                <InputError :message="form.errors.current_work" class="mt-2" />
+            </div>
+
+            <!-- Date of Birth -->
+            <div class="col-span-6 sm:col-span-4">
+                <InputLabel for="date_of_birth" value="Date_of_birth" />
+                <TextInput
+                    id="date_of_birth"
+                    v-model="form.date_of_birth"
+                    type="date"
+                    class="mt-1 block w-full"
+                    autocomplete="date_of_birth"
+                />
+                <InputError :message="form.errors.date_of_birth" class="mt-2" />
+            </div>
+
+            <!-- Gender -->
+            <div class="col-span-6 sm:col-span-4">
+                <InputLabel for="gender" value="Gender" />
+                <!-- <TextInput
+                    id="gender"
+                    v-model="form.gender"
+                    type="text"
+                    class="mt-1 block w-full"
+                    autocomplete="gender"
+                /> -->
+                <select
+                    id="gender"
+                    v-model="form.gender"
+                    class="mt-1 block w-full"
+                    autocomplete="gender"
+                >
+                    <option value="1">Male</option>
+                    <option value="2">Female</option>
+                </select>
+                <InputError :message="form.errors.gender" class="mt-2" />
+            </div>
+
+            <!-- Nickname -->
+            <div class="col-span-6 sm:col-span-4">
+                <InputLabel for="nickname" value="Nickname" />
+                <TextInput
+                    id="nickname"
+                    v-model="form.name"
+                    type="text"
+                    class="mt-1 block w-full"
+                    autocomplete="nickname"
+                />
+                <InputError :message="form.errors.motto" class="mt-2" />
+            </div>
+
+            <!-- Phone number -->
+            <div class="col-span-6 sm:col-span-4">
+                <InputLabel for="phone_number" value="Phone_number" />
+                <TextInput
+                    id="phone_number"
+                    v-model="form.phone_number"
+                    type="text"
+                    class="mt-1 block w-full"
+                    autocomplete="phone_number"
+                />
+                <InputError :message="form.errors.phone_number" class="mt-2" />
+            </div>
+
+            <!-- Religion -->
+            <div class="col-span-6 sm:col-span-4">
+                <InputLabel for="religion" value="Religion" />
+                <TextInput
+                    id="religion"
+                    v-model="form.religion"
+                    type="text"
+                    class="mt-1 block w-full"
+                    autocomplete="religion"
+                />
+                <InputError :message="form.errors.motto" class="mt-2" />
+            </div>
+
+            <!-- Year Graduated -->
+            <div class="col-span-6 sm:col-span-4">
+                <InputLabel for="year_graduated" value="Year_graduated" />
+                <TextInput
+                    id="year_graduated"
+                    v-model="form.year_graduated"
+                    type="text"
+                    class="mt-1 block w-full"
+                    autocomplete="year_graduated"
+                />
+                <InputError
+                    :message="form.errors.year_graduated"
+                    class="mt-2"
+                />
             </div>
         </template>
 

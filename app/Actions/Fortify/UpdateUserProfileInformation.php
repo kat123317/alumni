@@ -22,7 +22,33 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
+
+            'course_id' => ['required', 'integer'],
+            'date_of_birth' => ['required', 'date'],
+            'religion'=>['required', 'string'],
+            'civil_status'=>['required'],
+            'gender'=>['required'],
+            'address'=>['required'],
+            'phone_number'=>['required'],
+            'current_work'=>['required'],
+            'year_graduated'=>['required'],
+            'motto'=>['required'],
+            'nickname' => ['required'], 
         ])->validateWithBag('updateProfileInformation');
+
+
+        $user_details = array(
+            'course_id'=>$input['course_id'],
+            'date_of_birth'=>$input['date_of_birth'], 
+            'religion'=>$input['religion'], 
+            'civil_status'=>$input['civil_status'], 
+            'gender'=>$input['gender'], 
+            'address'=>$input['address'], 
+            'phone_number'=>$input['phone_number'], 
+            'current_work'=>$input['current_work'], 
+            'year_graduated'=>$input['year_graduated'], 
+            'motto'=>$input['motto'], 
+            'nickname'=>$input['nickname']);
 
         if (isset($input['photo'])) {
             $user->updateProfilePhoto($input['photo']);
@@ -35,6 +61,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             $user->forceFill([
                 'name' => $input['name'],
                 'email' => $input['email'],
+                'details' => $user_details,
             ])->save();
         }
     }
