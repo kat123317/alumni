@@ -138,6 +138,7 @@ Route::middleware([
         Route::post('/update_job_post/{id}', [SocialMediaController::class, 'update_job_post'])->name('update_job_post');
 
         Route::get('/messaging', [SocialMediaController::class, 'messaging'])->name('messaging');
+        Route::post('/send_message', [SocialMediaController::class, 'send_message'])->name('send_message');
     });
 
     Route::prefix('events')->name('events.')->group(function () {

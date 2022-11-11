@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Conversation;
 use App\Models\JobPost;
+use App\Models\Message;
 use App\Models\Survey;
 use App\Models\Record;
 use App\Models\User;
@@ -117,16 +118,15 @@ class SocialMediaController extends Controller
         ]);
     }
    
-    // public function open_message(Request $request)
-    // {   
-    //     $users = User::where('status', 'approved')->where('is_active', true)->get();
-    //     return Inertia::render('Socialmedia/Components/MessengerPage', [
-    //         'users' => $users,
-    //         'conversation' => Conversation::with('user1')->with('user2')->with(['messages' => function($query){
-    //             $query->with('user');
-    //         }])->where('user_id_1', Auth::user()->id)->get()
-    //     ]);
-    // }
+    public function send_message(Request $request)
+    {   
+        Message::create([
+            'user_id'=>Auth::user()->id,
+            'conversation_id'=>$request->conversation_id,
+            'content'=>$request->content,
+        ]);
+        return Redirect::back();
+    }
 
     public function add_comment(Request $request)
     {   
