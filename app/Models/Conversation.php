@@ -12,7 +12,7 @@ class Conversation extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'read'
+        'read' => 'array'
     ];
 
     public function user1()

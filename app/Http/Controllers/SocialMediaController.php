@@ -91,71 +91,67 @@ class SocialMediaController extends Controller
     public function messaging(Request $request)
     {   
         // $user_selected ='';
-        $open_convo = $request->conversation_id ?? null;
-        $search = $request->search_text ?? null;
-        $users = User::where('status', 'approved')->where('is_active', true)->when($search, function($query, $search){
-            $query -> where('name','like',"%{$search}%");
-        })->get();
+        $open_convo = ($request->conversation_id == null || $request->conversation_id == '') == true ? null : $request->conversation_id;
+        $users = User::whereNot('id', Auth::user()->id)->where('status', 'approved')->where('is_active', true)->get();
+           
+        if($open_convo == null && $request->selected_user_id !=  null){
+            $conversation = Conversation::where(['user_id_1' => Auth::user()->id, 'user_id_2' => $request->selected_user_id])->orWhere(['user_id_2' => Auth::user()->id, 'user_id_1' => $request->selected_user_id])->first();
+            if ($conversation == null) {
+                $conversation = Conversation::create([
+                    'user_id_1' => Auth::user()->id,
+                    'user_id_2' => $request->selected_user_id,
+                    'read' => []
+                ]);
+            }            
+            $open_convo = $conversation->id;
+        }
+        $conversations = Conversation::with('user1')->with('user2')->where('user_id_1', Auth::user()->id)->orWhere('user_id_2', Auth::user()->id)->orderBy('updated_at', 'desc')->get();
+        if ($open_convo != null) {
+            $conversation = Conversation::find($open_convo);
+            $tmp_read = $conversation->read;
+            if (in_array(Auth::user()->id, $tmp_read) == false) {
+                $tmp_read[] = Auth::user()->id;
+                $conversation->update([
+                    'read' => $tmp_read
+                ]);
+            }
+            $messages = Message::where('conversation_id', $open_convo)->with('user')->get();
+        } else {
+            $messages = [];
+        }
         
-        $conversations = Conversation::where('user_id_1', Auth::user()->id)->orWhere('user_id_2', Auth::user()->id)->with('user1')->with('user2')->orderBy('updated_at', 'desc')->get();
-        $messages = Message::where('conversation_id', $open_convo)->with('user')->get();
-        $user_selected = User::find($request->selected_user_id);
-        // if($open_convo == null){
-        //     $conversation = null;
-        // }
-        // else{
-        //     $conversation = Conversation::when($open_convo, function($query) use($open_convo){
-        //         $query->with('user1')->with('user2')->with(['messages' => function($query){
-        //             $query->with('user');
-        //         }]) ->where(function ($query) use ($open_convo) {
-        //             $query->where('user_id_1', Auth::user()->id)->where('user_id_2', $open_convo);
-        //         }) ->orWhere(function ($query) use ($open_convo) {
-        //             $query->where('user_id_1', $open_convo)->where('user_id_2', Auth::user()->id);
-        //         });
-        //     })->first();
-            
-        //     $user_selected = User::find($open_convo);
-        // }
+        if ($request->selected_user_id == null) {
+            $user_selected = null;
+        } else {
+            $user_selected = User::find($request->selected_user_id);
+        }
+
         return Inertia::render('Socialmedia/Components/MessengerPage', [
             'users' => $users,
             'conversations' => $conversations,
             'messages' => $messages,
             'user_selected' => $user_selected,
-            'search_text' => $search,
-            'conversation_id' => $open_convo
+            'conversation_id' => $open_convo,
+            'user' => Auth::user()
         ]);
     }
    
     public function send_message(Request $request)
     {   
-        // if($request->conversation_id == null){
-        //     $conversation = Conversation::create([
-        //         'user_id_1' => Auth::user()->id,
-        //         'user_id_2' => $request->user_id_2,
-        //         'read' => [Auth::user()->id]
-        //     ]);
+        $conversation = Conversation::find($request->conversation_id);
+        Message::create([
+            'user_id'=>Auth::user()->id,
+            'conversation_id'=>$request->conversation_id,
+            'content'=>$request->content,
+        ]);
 
-        //     Message::create([
-        //         'user_id'=>Auth::user()->id,
-        //         'conversation_id'=>$conversation->id,
-        //         'content'=>$request->content,
-        //     ]);
-
-        // }
-        // else{
-            $conversation = Conversation::find($request->conversation_id);
-            Message::create([
-                'user_id'=>Auth::user()->id,
-                'conversation_id'=>$request->conversation_id,
-                'content'=>$request->content,
-            ]);
-
-            $conversation::update([
-                'read' => 0
-            ]);
-        // }
-        broadcast(new SendMessage($conversation))->toOthers();
-        return Redirect::back();
+        $conversation->update([
+            'read' => [Auth::user()->id]
+        ]);
+        broadcast(new SendMessage($conversation));
+        return response()->json([
+            'status' => true
+        ], 200);
     }
 
     public function add_comment(Request $request)
