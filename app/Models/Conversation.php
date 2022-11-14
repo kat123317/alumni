@@ -11,6 +11,10 @@ class Conversation extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'read'
+    ];
+
     public function user1()
     {
         return $this->belongsTo(User::class, 'user_id_1', 'id');
