@@ -173,8 +173,8 @@ const changeTab = (data) => {
                             </div>
                         </div>
                         <div v-if="route().params.tab == 1"
-                            class="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-1">
-                            <div>
+                            class="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
+                          
                                 <div class="md:col-span-2 lg:col-span-1" v-for="(colleges, key) in usePage().props.value
                                 .colleges" :key="key">
                                     <div class="h-full py-8 px-6 space-y-6 rounded-xl border border-gray-200 bg-white">
@@ -203,8 +203,7 @@ const changeTab = (data) => {
                                         " legend="left" :donut="true"></pie-chart>
                                     </div>
                                 </div>
-                            </div>
-
+                           
                         </div>
 
                         <div v-if="route().params.tab == 2">
