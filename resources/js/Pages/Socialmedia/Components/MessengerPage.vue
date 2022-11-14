@@ -5,17 +5,22 @@ import { ref, onMounted, onUnmounted, computed, inject } from "vue";
 import moment from "moment";
 import { Inertia } from "@inertiajs/inertia";
 
-const props = defineProps(["conversation", "user_selected"]);
+const props = defineProps([
+    "conversations",
+    "user_selected",
+    "messages",
+    "conversation_id",
+]);
 
 const open_convo_data = useForm({
     // user1: null,
     // user2: null,
-    conversation_id: null,
+    conversation_id: props.conversation_id,
     selected_user_id: null,
 });
 
 const message_data = useForm({
-    conversation_id: null,
+    conversation_id: props.conversation_id,
     content: "",
     user_id_2: null,
 });
@@ -41,11 +46,11 @@ const selected_is_online = computed(() => {
 });
 
 onMounted(() => {
-    if (props.conversation != null) {
-        Echo.channel("message." + props.conversation.id).listen(
+    if (open_convo_data.conversation_id != null) {
+        Echo.channel("message." + open_convo_data.conversation_id).listen(
             ".message-sent",
             (res) => {
-                Inertia.reload({ only: ["conversation"] });
+                Inertia.reload({ only: ["messages"] });
             }
         );
     }
@@ -466,7 +471,7 @@ const function_search = () => {
 
                         <!-- Right -->
                         <div
-                            v-if="usePage().props.value.conversations == null"
+                            v-if="messages.length <= 0"
                             class="w-full border flex flex-col"
                         >
                             <!-- Header -->
@@ -603,18 +608,13 @@ const function_search = () => {
                                         <img
                                             class="w-10 h-10 rounded-full"
                                             :src="
-                                                usePage().props.value
-                                                    .user_selected
-                                                    .profile_photo_url
+                                                user_selected.profile_photo_url
                                             "
                                         />
                                     </div>
                                     <div class="ml-4">
                                         <p class="text-grey-darkest">
-                                            {{
-                                                usePage().props.value
-                                                    .user_selected.name
-                                            }}
+                                            {{ user_selected.name }}
                                         </p>
                                         <p
                                             class="text-grey-darker text-xs mt-1"

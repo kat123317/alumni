@@ -99,7 +99,6 @@ class SocialMediaController extends Controller
         
         $conversations = Conversation::where('user_id_1', Auth::user()->id)->orWhere('user_id_2', Auth::user()->id)->with('user1')->with('user2')->orderBy('updated_at', 'desc')->get();
         $messages = Message::where('conversation_id', $open_convo)->with('user')->get();
-
         $user_selected = User::find($request->selected_user_id);
         // if($open_convo == null){
         //     $conversation = null;
