@@ -90,60 +90,71 @@ class SocialMediaController extends Controller
 
     public function messaging(Request $request)
     {   
-        $user_selected ='';
-        $open_convo = $request->user2 ?? null;
+        // $user_selected ='';
+        $open_convo = $request->conversation_id ?? null;
         $search = $request->search_text ?? null;
         $users = User::where('status', 'approved')->where('is_active', true)->when($search, function($query, $search){
             $query -> where('name','like',"%{$search}%");
         })->get();
         
-        if($open_convo == null){
-            $conversation = null;
-        }
-        else{
-            $conversation = Conversation::when($open_convo, function($query) use($open_convo){
-                $query->with('user1')->with('user2')->with(['messages' => function($query){
-                    $query->with('user');
-                }]) ->where(function ($query) use ($open_convo) {
-                    $query->where('user_id_1', Auth::user()->id)->where('user_id_2', $open_convo);
-                }) ->orWhere(function ($query) use ($open_convo) {
-                    $query->where('user_id_1', $open_convo)->where('user_id_2', Auth::user()->id);
-                });
-            })->first();
+        $conversations = Conversation::where('user_id_1', Auth::user()->id)->orWhere('user_id_2', Auth::user()->id)->with('user1')->with('user2')->orderBy('updated_at', 'desc')->get();
+        $messages = Message::where('conversation_id', $open_convo)->with('user')->get();
+
+        $user_selected = User::find($request->selected_user_id);
+        // if($open_convo == null){
+        //     $conversation = null;
+        // }
+        // else{
+        //     $conversation = Conversation::when($open_convo, function($query) use($open_convo){
+        //         $query->with('user1')->with('user2')->with(['messages' => function($query){
+        //             $query->with('user');
+        //         }]) ->where(function ($query) use ($open_convo) {
+        //             $query->where('user_id_1', Auth::user()->id)->where('user_id_2', $open_convo);
+        //         }) ->orWhere(function ($query) use ($open_convo) {
+        //             $query->where('user_id_1', $open_convo)->where('user_id_2', Auth::user()->id);
+        //         });
+        //     })->first();
             
-            $user_selected = User::find($open_convo);
-        }
+        //     $user_selected = User::find($open_convo);
+        // }
         return Inertia::render('Socialmedia/Components/MessengerPage', [
             'users' => $users,
-            'conversation' => $conversation,
+            'conversations' => $conversations,
+            'messages' => $messages,
             'user_selected' => $user_selected,
-            'search_text' => $search
+            'search_text' => $search,
+            'conversation_id' => $open_convo
         ]);
     }
    
     public function send_message(Request $request)
     {   
-        if($request->conversation_id == null){
-            $conversation = Conversation::create([
-                'user_id_1' => Auth::user()->id,
-                'user_id_2' => $request->user_id_2,
-            ]);
+        // if($request->conversation_id == null){
+        //     $conversation = Conversation::create([
+        //         'user_id_1' => Auth::user()->id,
+        //         'user_id_2' => $request->user_id_2,
+        //         'read' => [Auth::user()->id]
+        //     ]);
 
-            Message::create([
-                'user_id'=>Auth::user()->id,
-                'conversation_id'=>$conversation->id,
-                'content'=>$request->content,
-            ]);
+        //     Message::create([
+        //         'user_id'=>Auth::user()->id,
+        //         'conversation_id'=>$conversation->id,
+        //         'content'=>$request->content,
+        //     ]);
 
-        }
-        else{
+        // }
+        // else{
             $conversation = Conversation::find($request->conversation_id);
             Message::create([
                 'user_id'=>Auth::user()->id,
                 'conversation_id'=>$request->conversation_id,
                 'content'=>$request->content,
             ]);
-        }
+
+            $conversation::update([
+                'read' => 0
+            ]);
+        // }
         broadcast(new SendMessage($conversation))->toOthers();
         return Redirect::back();
     }
