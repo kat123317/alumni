@@ -5,15 +5,22 @@ import { ref, onMounted, onUnmounted, computed, inject } from "vue";
 import moment from "moment";
 import { Inertia } from "@inertiajs/inertia";
 
-const props = defineProps(["conversation", "user_selected"]);
+const props = defineProps([
+    "conversations",
+    "user_selected",
+    "messages",
+    "conversation_id",
+]);
 
 const open_convo_data = useForm({
-    user1: null,
-    user2: null,
+    // user1: null,
+    // user2: null,
+    conversation_id: props.conversation_id,
+    selected_user_id: null,
 });
 
 const message_data = useForm({
-    conversation_id: null,
+    conversation_id: props.conversation_id,
     content: "",
     user_id_2: null,
 });
@@ -39,11 +46,11 @@ const selected_is_online = computed(() => {
 });
 
 onMounted(() => {
-    if (props.conversation != null) {
-        Echo.channel("message." + props.conversation.id).listen(
+    if (open_convo_data.conversation_id != null) {
+        Echo.channel("message." + open_convo_data.conversation_id).listen(
             ".message-sent",
             (res) => {
-                Inertia.reload({ only: ["conversation"] });
+                Inertia.reload({ only: ["messages"] });
             }
         );
     }
@@ -90,9 +97,11 @@ const date_conversion_from_now = (value) => {
     }
 };
 
-const function_open_messages = (id) => {
-    open_convo_data.user1 = usePage().props.value.user.id;
-    open_convo_data.user2 = id;
+const function_open_messages = (id, user_id) => {
+    // open_convo_data.user1 = usePage().props.value.user.id;
+    // open_convo_data.user2 = id;
+    open_convo_data.conversation_id = id;
+    open_convo_data.selected_user_id = user_id;
     open_convo_data.get(route("socialmedia.messaging"), {
         preserveScroll: true,
         onSuccess: () => {
@@ -102,23 +111,23 @@ const function_open_messages = (id) => {
 };
 
 const function_send_message = (id) => {
-    try {
-        message_data.conversation_id = usePage().props.value.conversation.id;
-        message_data.post(route("socialmedia.send_message"), {
-            preserveScroll: true,
-            onSuccess: () => {
-                message_data.reset();
-            },
-        });
-    } catch {
-        message_data.user_id_2 = id;
-        message_data.post(route("socialmedia.send_message"), {
-            preserveScroll: true,
-            onSuccess: () => {
-                message_data.reset();
-            },
-        });
-    }
+    // try {
+    message_data.conversation_id = id;
+    message_data.post(route("socialmedia.send_message"), {
+        preserveScroll: true,
+        onSuccess: () => {
+            message_data.reset();
+        },
+    });
+    // } catch {
+    //     message_data.user_id_2 = id;
+    //     message_data.post(route("socialmedia.send_message"), {
+    //         preserveScroll: true,
+    //         onSuccess: () => {
+    //             message_data.reset();
+    //         },
+    //     });
+    // }
 };
 
 const function_search = () => {
@@ -390,16 +399,24 @@ const function_search = () => {
                             <!-- Contacts -->
                             <div
                                 class="bg-grey-lighter w-[100vmin] flex-1 overflow-auto"
-                                v-for="(users, key) in usePage().props.value
-                                    .users"
+                                v-for="(conversations, key) in usePage().props
+                                    .value.conversations"
                                 :key="key"
                             >
                                 <div
-                                    @click="function_open_messages(users.id)"
+                                    @click="
+                                        function_open_messages(
+                                            conversations.id,
+                                            conversations.user1.id ==
+                                                usePage().props.value.user.id
+                                                ? conversations.user2.id
+                                                : conversations.user1.id
+                                        )
+                                    "
                                     class="bg-white px-3 flex items-center hover:bg-grey-lighter cursor-pointer"
                                     :class="
-                                        users.id ==
-                                        usePage().props.value.user_selected.id
+                                        conversations.id ==
+                                        usePage().props.value.conversation_id
                                             ? 'bg-green-300'
                                             : ''
                                     "
@@ -407,7 +424,14 @@ const function_search = () => {
                                     <div>
                                         <img
                                             class="h-12 w-12 rounded-full"
-                                            :src="users.profile_photo_url"
+                                            :src="
+                                                conversations.user1.id ==
+                                                usePage().props.value.user.id
+                                                    ? conversations.user2
+                                                          .profile_photo_url
+                                                    : conversations.user1
+                                                          .profile_photo_url
+                                            "
                                         />
                                     </div>
                                     <div
@@ -417,14 +441,22 @@ const function_search = () => {
                                             class="flex items-bottom justify-between"
                                         >
                                             <p class="text-grey-darkest">
-                                                {{ users.name }}
+                                                {{
+                                                    conversations.user1.id ==
+                                                    usePage().props.value.user
+                                                        .id
+                                                        ? conversations.user2
+                                                              .name
+                                                        : conversations.user1
+                                                              .name
+                                                }}
                                             </p>
                                             <p
                                                 class="text-xs text-grey-darkest"
                                             >
                                                 {{
                                                     date_conversion_from_now(
-                                                        users.created_at
+                                                        conversations.created_at
                                                     )
                                                 }}
                                             </p>
@@ -439,7 +471,7 @@ const function_search = () => {
 
                         <!-- Right -->
                         <div
-                            v-if="usePage().props.value.conversation == null"
+                            v-if="messages.length <= 0"
                             class="w-full border flex flex-col"
                         >
                             <!-- Header -->
@@ -576,18 +608,13 @@ const function_search = () => {
                                         <img
                                             class="w-10 h-10 rounded-full"
                                             :src="
-                                                usePage().props.value
-                                                    .user_selected
-                                                    .profile_photo_url
+                                                user_selected.profile_photo_url
                                             "
                                         />
                                     </div>
                                     <div class="ml-4">
                                         <p class="text-grey-darkest">
-                                            {{
-                                                usePage().props.value
-                                                    .user_selected.name
-                                            }}
+                                            {{ user_selected.name }}
                                         </p>
                                         <p
                                             class="text-grey-darker text-xs mt-1"
@@ -675,7 +702,7 @@ const function_search = () => {
                                     </div>
                                     <template
                                         v-for="(messages, key) in usePage()
-                                            .props.value.conversation.messages"
+                                            .props.value.messages"
                                         :key="key"
                                     >
                                         <div
@@ -747,7 +774,12 @@ const function_search = () => {
                                 </div>
                                 <div>
                                     <a
-                                        @click="function_send_message()"
+                                        @click="
+                                            function_send_message(
+                                                usePage().props.value
+                                                    .conversation_id
+                                            )
+                                        "
                                         href="#"
                                     >
                                         <svg
