@@ -96,6 +96,7 @@ class AnnouncementController extends Controller
         //
         $search_text = $request->search_text;
         $between = false;
+        $tab = $request->tab ?? null;
         if ($request->from != null && $request->to != null) {
             $yearbook_temp_1 =Yearbook::find($request->from);
             $yearbook_temp_2 = Yearbook::find($request->to);
@@ -128,7 +129,8 @@ class AnnouncementController extends Controller
             'yearbook' => $graduates,
             'yearbooks' => Yearbook::orderBy('schoolyear_from')->get(),
             'from' => $request->from,
-            'to' => $request->to
+            'to' => $request->to,
+            'tab' => $tab 
         ]);
     }
 
