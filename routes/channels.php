@@ -22,6 +22,6 @@ Broadcast::channel('message.{id}', function(){
 });
 
 Broadcast::channel('online-users', function($user){
-    return ['id' => $user->id, 'name' => $user->name];
+    return ['id' => $user->id, 'name' => $user->name, 'profile_photo_url' => $user->profile_photo_url];
 });
 

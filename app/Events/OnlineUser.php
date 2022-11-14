@@ -40,7 +40,7 @@ class OnlineUser implements ShouldBroadcast
     public function broadcastWith()
     {
         return [
-            'id'=> $this->user->id, 'name' => $this->user->name
+            'id'=> $this->user->id, 'name' => $this->user->name, 'profile_photo_url' => $this->user->profile_photo_url
         ];
     }
 }
