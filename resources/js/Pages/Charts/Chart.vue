@@ -498,7 +498,7 @@ const changeTab = (data) => {
                                 <div
                                     class="w-1/3 bg-cover"
                                     style="
-                                        background-image: url('https://i.ibb.co/TBSV6zN/download.jpg');
+                                        background-image: url('http://devops.cmu.edu.ph/formlinks/assets/dist/assets/img/logos/CMU-LOGO.png');
                                     "
                                 ></div>
 
