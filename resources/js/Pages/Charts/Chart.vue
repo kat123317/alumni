@@ -547,10 +547,6 @@ const changeTab = (data) => {
                                     </p>
                                     <div
                                         class="flex justify-between mt-3 item-center"
-                                        v-if="
-                                            usePage().props.value.user
-                                                .user_type == 'alumni'
-                                        "
                                     >
                                         <button
                                             class="px-2 py-1 text-xs font-bold text-white uppercase transition-colors duration-300 transform bg-green-800 rounded dhover:bg-gray-700 focus:outline-none focus:bg-gray-700"
@@ -560,7 +556,12 @@ const changeTab = (data) => {
                                     </div>
                                     <div
                                         class="flex justify-between mt-3 item-center"
-                                        v-else
+                                        v-if="
+                                            usePage().props.value.user
+                                                .user_type == 'admin' ||
+                                            usePage().props.value.user
+                                                .user_type == 'staff_admin'
+                                        "
                                     >
                                         <button
                                             class="px-2 py-1 text-xs font-bold text-white uppercase transition-colors duration-300 transform bg-green-800 rounded dhover:bg-gray-700 focus:outline-none focus:bg-gray-700"
