@@ -179,15 +179,15 @@ const function_like_post = (post_id, is_like) => {
 
 function onSelectEmoji(emoji) {
     console.log(emoji);
- 
-    comment_data.comment != null ?  comment_data.comment =  comment_data.comment + emoji.i :   comment_data.comment = emoji.i;
-}
 
+    comment_data.comment != null
+        ? (comment_data.comment = comment_data.comment + emoji.i)
+        : (comment_data.comment = emoji.i);
+}
 </script>
 
 <template>
     <AppLayout title="Comments">
-  
         <div
             v-if="postAlert"
             class="p-4 mb-4 border border-blue-300 rounded-lg bg-blue-50 dark:bg-blue-300"
@@ -292,11 +292,24 @@ function onSelectEmoji(emoji) {
                         </a>
 
                         <a
-                            v-if="post.user.id == usePage().props.value.user.id"
+                            v-if="
+                                post.user.id == usePage().props.value.user.id ||
+                                usePage().props.value.user.user_type ==
+                                    'admin' ||
+                                usePage().props.value.user.user_type ==
+                                    'staff_admin'
+                            "
                             @click="function_open_delete_post_modal()"
                             class="text-lg font-bold float-right relative flex mr-4"
                             href="#"
-                            title="Delete your post"
+                            :title="
+                                usePage().props.value.user.user_type ==
+                                    'admin' ||
+                                usePage().props.value.user.user_type ==
+                                    'staff_admin'
+                                    ? 'Delete Forbidden Post'
+                                    : 'Delete your post'
+                            "
                             ><svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
@@ -318,49 +331,83 @@ function onSelectEmoji(emoji) {
                 <p class="">
                     {{ post.content }}
                 </p>
-              
+
                 <div v-if="post.photo != null" class="py-4 mx-auto">
-                                    <div v-if="post.photo.length > 3" class="grid grid-cols-2">
-                                        <a :href="'./../../images/posts/' + photos" target="_blank" class="flex"  v-for="(photos, key) in post.photo" :key="key">
-                                            <img class="w-auto m-1 max-h-[55vmin] hover:bg-gray-200 hover:scale-100 object-contain" :src="
-                                                './../../images/posts/' + photos
-                                            " />
-                                        </a>
-                                    </div>
-                                    <div v-if="post.photo.length == 3">
-                                        <div class="grid grid-cols-2">
-                                            <a class="flex" href="#" v-for="(
-                                                    photos, key2
-                                                ) in post.photo" :key="key2">
-                                                <img v-if="key2 != 2" :href="'./../../images/posts/' + photos" target="_blank"  class="w-auto  max-h-[55vmin]  hover:bg-gray-200 object-contain"
-                                                    :src="
-                                                        './../../images/posts/' +
-                                                        photos
-                                                    " />
-                                            </a>
-                                        </div>
-                                        <div class="flex justify-center mx-auto">
-                                            <img class="w-full max-h-[100vmin]  hover:bg-gray-200 object-contain" :href="'./../../images/posts/' + photos" target="_blank"  :src="
-                                                './../../images/posts/' +
-                                                post.photo[2]
-                                            " />
-                                        </div>
-                                    </div>
-                                    <div v-if="post.photo.length == 2" class="grid grid-cols-2 grid-rows-1 ...">
-                                        <a class="flex" :href="'./../../images/posts/' + photos" target="_blank"  v-for="(photos, key) in post.photo" :key="key">
-                                            <img class="w-auto object-contain  hover:bg-gray-200 max-w-[40vmin]" :src="
-                                                './../../images/posts/' + photos
-                                            " />
-                                        </a>
-                                    </div>
-                                    <div v-if="post.photo.length == 1" class="grid grid-cols-1 grid-rows-1 ...">
-                                        <a class="flex" :href="'./../../images/posts/' + photos" target="_blank"  v-for="(photos, key) in post.photo" :key="key">
-                                            <img class="w-auto object-contain  hover:bg-gray-200 max-w-[50vmin]" :src="
-                                                './../../images/posts/' + photos
-                                            " />
-                                        </a>
-                                    </div>
-                                </div>
+                    <div v-if="post.photo.length > 3" class="grid grid-cols-2">
+                        <a
+                            :href="'./../../images/posts/' + photos"
+                            target="_blank"
+                            class="flex"
+                            v-for="(photos, key) in post.photo"
+                            :key="key"
+                        >
+                            <img
+                                class="w-auto m-1 max-h-[55vmin] hover:bg-gray-200 hover:scale-100 object-contain"
+                                :src="'./../../images/posts/' + photos"
+                            />
+                        </a>
+                    </div>
+                    <div v-if="post.photo.length == 3">
+                        <div class="grid grid-cols-2">
+                            <a
+                                class="flex"
+                                href="#"
+                                v-for="(photos, key2) in post.photo"
+                                :key="key2"
+                            >
+                                <img
+                                    v-if="key2 != 2"
+                                    :href="'./../../images/posts/' + photos"
+                                    target="_blank"
+                                    class="w-auto max-h-[55vmin] hover:bg-gray-200 object-contain"
+                                    :src="'./../../images/posts/' + photos"
+                                />
+                            </a>
+                        </div>
+                        <div class="flex justify-center mx-auto">
+                            <img
+                                class="w-full max-h-[100vmin] hover:bg-gray-200 object-contain"
+                                :href="'./../../images/posts/' + photos"
+                                target="_blank"
+                                :src="'./../../images/posts/' + post.photo[2]"
+                            />
+                        </div>
+                    </div>
+                    <div
+                        v-if="post.photo.length == 2"
+                        class="grid grid-cols-2 grid-rows-1 ..."
+                    >
+                        <a
+                            class="flex"
+                            :href="'./../../images/posts/' + photos"
+                            target="_blank"
+                            v-for="(photos, key) in post.photo"
+                            :key="key"
+                        >
+                            <img
+                                class="w-auto object-contain hover:bg-gray-200 max-w-[40vmin]"
+                                :src="'./../../images/posts/' + photos"
+                            />
+                        </a>
+                    </div>
+                    <div
+                        v-if="post.photo.length == 1"
+                        class="grid grid-cols-1 grid-rows-1 ..."
+                    >
+                        <a
+                            class="flex"
+                            :href="'./../../images/posts/' + photos"
+                            target="_blank"
+                            v-for="(photos, key) in post.photo"
+                            :key="key"
+                        >
+                            <img
+                                class="w-auto object-contain hover:bg-gray-200 max-w-[50vmin]"
+                                :src="'./../../images/posts/' + photos"
+                            />
+                        </a>
+                    </div>
+                </div>
 
                 <div class="py-4">
                     <div
@@ -406,16 +453,26 @@ function onSelectEmoji(emoji) {
                 </div>
 
                 <div class="relative">
-                    <div v-if="emojioverlay" class=" bg-red-200 slide-in-elliptic-top-fwd flex justify-end">
-                                <div class="absolute mt-12  mr-10 ">
-                                    <EmojiPicker :native="false" @select="onSelectEmoji" />
-                                    <button type="button" @click="emojioverlay = !emojioverlay"
-                                        class="float-right w-full text-white mt-1 bg-red-500 border border-gray-300 focus:outline-none hover:bg-red-900 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5">
-                                        Close
-                                    </button>
-                                </div>
-                            </div>
-                    <input @click="emojioverlay = false"
+                    <div
+                        v-if="emojioverlay"
+                        class="bg-red-200 slide-in-elliptic-top-fwd flex justify-end"
+                    >
+                        <div class="absolute mt-12 mr-10">
+                            <EmojiPicker
+                                :native="false"
+                                @select="onSelectEmoji"
+                            />
+                            <button
+                                type="button"
+                                @click="emojioverlay = !emojioverlay"
+                                class="float-right w-full text-white mt-1 bg-red-500 border border-gray-300 focus:outline-none hover:bg-red-900 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5"
+                            >
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        @click="emojioverlay = false"
                         v-model="comment_data.comment"
                         class="pt-2 pb-2 pl-3 w-full h-11 bg-slate-100 rounded-lg placeholder:text-slate-600 font-medium pr-20"
                         type="text"
@@ -424,13 +481,27 @@ function onSelectEmoji(emoji) {
                     />
                     <div
                         class="flex absolute right-3 top-2/4 -mt-3 items-center"
-                     
                     >
-                    <svg @click="emojioverlay = ! emojioverlay" v-if="!emojioverlay" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-5">
-  <path stroke-linecap="round"  class="cursor-pointer text-yellow-500" stroke-linejoin="round" d="M15.182 15.182a4.5 4.5 0 01-6.364 0M21 12a9 9 0 11-18 0 9 9 0 0118 0zM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75zm-.375 0h.008v.015h-.008V9.75zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75zm-.375 0h.008v.015h-.008V9.75z" />
-</svg>
+                        <svg
+                            @click="emojioverlay = !emojioverlay"
+                            v-if="!emojioverlay"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-6 h-6 mr-5"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                class="cursor-pointer text-yellow-500"
+                                stroke-linejoin="round"
+                                d="M15.182 15.182a4.5 4.5 0 01-6.364 0M21 12a9 9 0 11-18 0 9 9 0 0118 0zM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75zm-.375 0h.008v.015h-.008V9.75zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75zm-.375 0h.008v.015h-.008V9.75z"
+                            />
+                        </svg>
 
-                        <svg   @click="function_comment()"
+                        <svg
+                            @click="function_comment()"
                             class="fill-blue-500 cursor-pointer"
                             style="width: 24px; height: 24px"
                             viewBox="0 0 24 24"
@@ -494,7 +565,11 @@ function onSelectEmoji(emoji) {
                                     <button
                                         v-if="
                                             comments.user.id ==
-                                            usePage().props.value.user.id
+                                                usePage().props.value.user.id ||
+                                            usePage().props.value.user
+                                                .user_type == 'admin' ||
+                                            usePage().props.value.user
+                                                .user_type == 'staff_admin'
                                         "
                                         @click="
                                             function_open_delete_modal(
@@ -502,7 +577,14 @@ function onSelectEmoji(emoji) {
                                             )
                                         "
                                         class="inline-block ml-2"
-                                        title="Delete your comment"
+                                        :title="
+                                            usePage().props.value.user
+                                                .user_type == 'admin' ||
+                                            usePage().props.value.user
+                                                .user_type == 'staff_admin'
+                                                ? 'Delete Forbidden comment'
+                                                : 'Delete your comment'
+                                        "
                                     >
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -889,45 +971,44 @@ function onSelectEmoji(emoji) {
     </AppLayout>
 </template>
 
-
 <style scoped>
 .slide-in-elliptic-top-fwd {
-	-webkit-animation: slide-in-elliptic-top-fwd 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-	        animation: slide-in-elliptic-top-fwd 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    -webkit-animation: slide-in-elliptic-top-fwd 0.7s
+        cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    animation: slide-in-elliptic-top-fwd 0.7s
+        cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
 @-webkit-keyframes slide-in-elliptic-top-fwd {
-  0% {
-    -webkit-transform: translateY(-600px) rotateX(-30deg) scale(0);
-            transform: translateY(-600px) rotateX(-30deg) scale(0);
-    -webkit-transform-origin: 50% 100%;
-            transform-origin: 50% 100%;
-    opacity: 0;
-  }
-  100% {
-    -webkit-transform: translateY(0) rotateX(0) scale(1);
-            transform: translateY(0) rotateX(0) scale(1);
-    -webkit-transform-origin: 50% 1400px;
-            transform-origin: 50% 1400px;
-    opacity: 1;
-  }
+    0% {
+        -webkit-transform: translateY(-600px) rotateX(-30deg) scale(0);
+        transform: translateY(-600px) rotateX(-30deg) scale(0);
+        -webkit-transform-origin: 50% 100%;
+        transform-origin: 50% 100%;
+        opacity: 0;
+    }
+    100% {
+        -webkit-transform: translateY(0) rotateX(0) scale(1);
+        transform: translateY(0) rotateX(0) scale(1);
+        -webkit-transform-origin: 50% 1400px;
+        transform-origin: 50% 1400px;
+        opacity: 1;
+    }
 }
 @keyframes slide-in-elliptic-top-fwd {
-  0% {
-    -webkit-transform: translateY(-600px) rotateX(-30deg) scale(0);
-            transform: translateY(-600px) rotateX(-30deg) scale(0);
-    -webkit-transform-origin: 50% 100%;
-            transform-origin: 50% 100%;
-    opacity: 0;
-  }
-  100% {
-    -webkit-transform: translateY(0) rotateX(0) scale(1);
-            transform: translateY(0) rotateX(0) scale(1);
-    -webkit-transform-origin: 50% 1400px;
-            transform-origin: 50% 1400px;
-    opacity: 1;
-  }
+    0% {
+        -webkit-transform: translateY(-600px) rotateX(-30deg) scale(0);
+        transform: translateY(-600px) rotateX(-30deg) scale(0);
+        -webkit-transform-origin: 50% 100%;
+        transform-origin: 50% 100%;
+        opacity: 0;
+    }
+    100% {
+        -webkit-transform: translateY(0) rotateX(0) scale(1);
+        transform: translateY(0) rotateX(0) scale(1);
+        -webkit-transform-origin: 50% 1400px;
+        transform-origin: 50% 1400px;
+        opacity: 1;
+    }
 }
-
-
 </style>
