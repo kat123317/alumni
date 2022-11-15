@@ -1,13 +1,38 @@
 <script setup>
+import { usePage } from "@inertiajs/inertia-vue3";
 import moment from "moment";
+import { onMounted, ref, watch, nextTick } from "vue";
 const date_conversion_from_now = (value) => {
     if (value) {
         return moment(value).fromNow();
     }
+   
 };
+const messagesLength = ref(0)
+onMounted(() => {
+    // setInterval(() => {
+    //     scrolltoDown()
+    // }, 1000);
+    scrolltoDown()
+});
+
+
+watch(
+  () => usePage().props.value.messages.length,
+  (message) => {
+    scrolltoDown()
+  }
+)
+
+
+const scrolltoDown = async () =>{
+    await nextTick()
+    let objDiv = document.getElementById("scrollMe");
+    objDiv.scrollTop = objDiv.scrollHeight;
+}
 </script>
 <template>
-    <div class="flex-1 overflow-auto" style="background-color: #dad3cc">
+    <div class="flex-1 overflow-auto" id="scrollMe" style="background-color: #dad3cc">
         <div class="py-2 px-3">
             <div class="flex justify-center mb-2">
                 <div class="rounded py-2 px-4">
@@ -26,7 +51,7 @@ const date_conversion_from_now = (value) => {
                     </p>
                 </div>
             </div>
-            <template
+            <div
                 v-for="(messages, key) in $page.props.messages"
                 :key="key"
             >
@@ -57,7 +82,7 @@ const date_conversion_from_now = (value) => {
                         </p>
                     </div>
                 </div>
-            </template>
+            </div>
         </div>
     </div>
 </template>
