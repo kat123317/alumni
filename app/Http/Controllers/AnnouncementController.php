@@ -7,6 +7,7 @@ use App\Models\College;
 use App\Models\Course;
 use App\Models\JobPost;
 use App\Models\Notification;
+use App\Models\Survey;
 use App\Models\User;
 use App\Models\UserNotification;
 use App\Models\UserPosts;
@@ -119,6 +120,8 @@ class AnnouncementController extends Controller
             $query->whereBetween('schoolyear_from', [(int)$yearbook_temp_1->schoolyear_from, (int)$yearbook_temp_2->schoolyear_from]);
         })->orderBy('schoolyear_from', 'desc' )->limit(10)->get();
 
+        $surveys = Survey::with('user')->orderBy('updated_at', 'desc' )->get();
+
         return Inertia::render('Charts/Chart', [
             'notifications' => $notifications,
             'colleges' => $colleges,
@@ -130,7 +133,15 @@ class AnnouncementController extends Controller
             'yearbooks' => Yearbook::orderBy('schoolyear_from')->get(),
             'from' => $request->from,
             'to' => $request->to,
-            'tab' => $tab 
+            'tab' => $tab,
+            'surveys' => $surveys
+        ]);
+    }
+
+    public function survey_charts(Request $request)
+    {
+        return Inertia::render('Charts/SurveyDetails', [
+            
         ]);
     }
 

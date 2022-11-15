@@ -71,6 +71,7 @@ Route::middleware([
     Route::get('/dashboard', [AnnouncementController::class, 'index'])->name('dashboard');
     Route::get('/job_posts', [AnnouncementController::class, 'job_posts'])->name('job_posts');
     Route::get('/chart', [AnnouncementController::class, 'charts'])->name('charts');
+    Route::get('/survey_charts', [AnnouncementController::class, 'survey_charts'])->name('survey_charts');
 
     Route::prefix('yearbooks')->name('yearbooks.')->group(function () {
         Route::get('/', [YearbookController::class, 'index'])->name('index');
