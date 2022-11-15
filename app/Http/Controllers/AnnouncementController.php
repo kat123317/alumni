@@ -138,6 +138,13 @@ class AnnouncementController extends Controller
         ]);
     }
 
+    public function survey_charts(Request $request)
+    {
+        return Inertia::render('Charts/SurveyDetails', [
+            
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
