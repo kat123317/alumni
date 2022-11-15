@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('survey_id');
             $table->integer('order');
-            $table->string('type',255);
             $table->longText('instruction');
             $table->json('setup')->nullable();
             $table->timestamps();
