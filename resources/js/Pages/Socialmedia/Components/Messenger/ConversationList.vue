@@ -59,55 +59,35 @@ const function_open_messages = (id, user_id) => {
 };
 </script>
 <template>
-    
+
     <div class="w-1/3  border flex flex-col">
         <!-- Header -->
-        <div
-            class="py-2 px-3 bg-grey-lighter flex flex-row justify-between items-center"
-        >
+        <div class="py-2 px-3 bg-grey-lighter flex flex-row justify-between items-center">
             <div>
-                <img
-                    class="w-10 h-10 rounded-full"
-                    :src="$page.props.user.profile_photo_url"
-                />
+                <img class="w-10 h-10 rounded-full" :src="$page.props.user.profile_photo_url" />
             </div>
 
-         
+
         </div>
 
         <!-- Search -->
         <div class="flex gap-1 py-2 px-2 bg-grey-lightest">
-            <input
-                v-model="search_data.search_text"
-                type="text"
-                class="w-full px-2 py-2 text-sm"
-                placeholder="Search or start new chat"
-            />
-            <button
-                @click="function_search()"
-                type="submit"
-                class="text-white right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mt-1 float-right"
-            >
+            <input v-model="search_data.search_text" type="text" class="w-full px-2 py-2 text-sm"
+                placeholder="Search or start new chat" />
+            <button @click="function_search()" type="submit"
+                class="text-white right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mt-1 float-right">
                 Search
             </button>
         </div>
 
         <!-- Contacts -->
         <template v-if="search_data.searching == true">
-            <div
-                class="bg-grey-lighter w-[100vmin] flex-1 overflow-auto"
-                v-for="(conversation, key) in conversation_list"
-                :key="key"
-            >
-                <div
-                    @click="function_open_messages(null, conversation.id)"
-                    class="bg-white px-3 flex items-center hover:bg-grey-lighter cursor-pointer"
-                >
+            <div class="bg-grey-200 w-full flex-1  overflow-auto"
+                v-for="(conversation, key) in conversation_list" :key="key">
+                <div @click="function_open_messages(null, conversation.id)"
+                    class="bg-white px-3 flex items-center  hover:bg-grey-lighter cursor-pointer">
                     <div>
-                        <img
-                            class="h-12 w-12 rounded-full"
-                            :src="conversation.profile_photo_url"
-                        />
+                        <img class="h-12 w-12 rounded-full" :src="conversation.profile_photo_url" />
                     </div>
                     <div class="ml-4 flex-1 border-b border-grey-lighter py-4">
                         <div class="flex items-bottom justify-between">
@@ -121,59 +101,46 @@ const function_open_messages = (id, user_id) => {
             </div>
         </template>
         <template v-else>
-            <div
-                class="bg-grey-lighter  w-[100vmin] lg:flex-1 overflow-auto"
-                v-for="(conversation, key) in conversation_list"
-                :key="key"
-            >
-                <div
-                    @click="
-                        function_open_messages(
-                            conversation.id,
-                            conversation.user1.id == $page.props.user.id
-                                ? conversation.user2.id
-                                : conversation.user1.id
-                        )
-                    "
-                    class="bg-white px-3 flex items-center hover:bg-grey-lighter cursor-pointer"
-                    :class="
-                        conversation.id == $page.props.conversation_id
-                            ? 'bg-green-300'
-                            : ''
-                    "
-                >
+            <div class="bg-grey-lighter  lg:flex-1 overflow-auto"
+                v-for="(conversation, key) in conversation_list" :key="key">
+                <div @click="
+                    function_open_messages(
+                        conversation.id,
+                        conversation.user1.id == $page.props.user.id
+                            ? conversation.user2.id
+                            : conversation.user1.id
+                    )
+                " class="bg-white px-3  flex items-center hover:bg-grey-lighter cursor-pointer" :class="
+    conversation.id == $page.props.conversation_id
+        ? 'bg-green-300'
+        : ''
+">
                     <div>
-                        <img
-                            class="h-12 w-12 rounded-full"
-                            :src="
-                                conversation.user1.id == $page.props.user.id
-                                    ? conversation.user2.profile_photo_url
-                                    : conversation.user1.profile_photo_url
-                            "
-                        />
+                        <img class="h-12 w-12 rounded-full" :src="
+                            conversation.user1.id == $page.props.user.id
+                                ? conversation.user2.profile_photo_url
+                                : conversation.user1.profile_photo_url
+                        " />
                     </div>
                     <div class="ml-4 flex-1 border-b border-grey-lighter py-4">
                         <div class="flex items-bottom justify-between">
-                            <p
-                                class="text-grey-darkest"
-                                :class="{
-                                    'font-bold':
-                                        conversation.read.includes(
-                                            $page.props.user.id
-                                        ) == false,
-                                }"
-                            >
+                            <p class="text-grey-darkest" :class="{
+                                'font-bold':
+                                    conversation.read.includes(
+                                        $page.props.user.id
+                                    ) == false,
+                            }">
                                 {{
-                                    conversation.user1.id == $page.props.user.id
-                                        ? conversation.user2.name
-                                        : conversation.user1.name
+                                        conversation.user1.id == $page.props.user.id
+                                            ? conversation.user2.name
+                                            : conversation.user1.name
                                 }}
                             </p>
                             <p class="text-xs text-grey-darkest">
                                 {{
-                                    date_conversion_from_now(
-                                        conversation.created_at
-                                    )
+        date_conversion_from_now(
+            conversation.created_at
+        )
                                 }}
                             </p>
                         </div>
