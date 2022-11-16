@@ -122,6 +122,10 @@ const changeTab = (data) => {
         preserveScroll: true,
     });
 };
+
+const functionDownload = () => {
+    axios.get(route("downloadChart")).then((response) => {});
+};
 </script>
 
 <template>
@@ -569,6 +573,7 @@ const changeTab = (data) => {
                                         "
                                     >
                                         <button
+                                            @click="functionDownload()"
                                             class="px-2 py-1 text-xs font-bold text-white uppercase transition-colors duration-300 transform bg-green-800 rounded dhover:bg-gray-700 focus:outline-none focus:bg-gray-700"
                                         >
                                             Download CSV

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ChartExport;
 use App\Models\Announcement;
 use App\Models\College;
 use App\Models\Course;
@@ -17,6 +18,7 @@ use App\Models\Yearbook;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Maatwebsite\Excel\Facades\Excel;
 use Inertia\Inertia;
 
 class AnnouncementController extends Controller
@@ -177,6 +179,11 @@ class AnnouncementController extends Controller
             $result = $results[$choice['value']] ?? 0;
         }
         return  $result;
+    }
+
+    public function downloadChart() {
+        $results = [['sample', 'sample1']];
+        return Excel::download(ChartExport::new($results), "filename.xlsx");
     }
 
     /**
