@@ -29,11 +29,12 @@ const scrolltoDown = async () => {
 };
 </script>
 <template>
-    <div class="flex-1 overflow-auto" id="scrollMe" style="background: #dad3cc">
-        <div
-            class="py-2 px-3"
-            style="background: url('https://i.ibb.co/BqvS41T/whatsa.png')"
-        >
+    <div
+        class="flex-1 overflow-auto bg-gray-200"
+        id="scrollMe"
+        style="background: url('https://i.ibb.co/BqvS41T/whatsa.png')"
+    >
+        <div class="py-2 px-3">
             <div class="flex justify-center mb-2">
                 <div class="rounded py-2 px-4">
                     <p class="text-sm uppercase">February 20, 2018</p>

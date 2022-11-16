@@ -14,7 +14,7 @@ import moment from "moment";
                 <h1
                     class="text-3xl font-semibold text-gray-800 capitalize lg:text-4xl dark:text-white"
                 >
-                    Survey Charts - Survey title
+                    Survey Charts
                 </h1>
 
                 <p class="mt-4 text-gray-500 xl:mt-6 dark:text-gray-300">

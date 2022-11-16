@@ -15,7 +15,7 @@ defineProps(["posts"]);
                 :key="key"
             >
                 <img
-                    class="w-auto m-1 max-h-[30vmin] object-contain"
+                    class="w-auto scale-in-top m-1 max-h-[30vmin] object-contain"
                     :src="'./images/posts/' + photos"
                 />
             </a>
@@ -30,14 +30,14 @@ defineProps(["posts"]);
                 >
                     <img
                         v-if="key2 != 2"
-                        class="w-auto max-h-[30vmin] object-contain"
+                        class="w-auto scale-in-top max-h-[30vmin] object-contain"
                         :src="'./images/posts/' + photos"
                     />
                 </a>
             </div>
             <div class="flex justify-center mx-auto">
                 <img
-                    class="w-full max-h-[65vmin] object-contain"
+                    class="w-full scale-in-top max-h-[65vmin] object-contain"
                     :src="'./images/posts/' + posts.photo[2]"
                 />
             </div>
@@ -53,7 +53,7 @@ defineProps(["posts"]);
                 :key="key"
             >
                 <img
-                    class="w-auto object-contain max-w-[40vmin]"
+                    class="w-auto scale-in-top object-contain max-w-[40vmin]"
                     :src="'./images/posts/' + photos"
                 />
             </a>
@@ -69,10 +69,51 @@ defineProps(["posts"]);
                 :key="key"
             >
                 <img
-                    class="w-screen object-contain max-w-[80vmin]"
+                    class="w-screen scale-in-top object-contain max-w-[50vmin]"
                     :src="'./images/posts/' + photos"
                 />
             </a>
         </div>
     </div>
 </template>
+
+
+<style scoped>
+.scale-in-top {
+	-webkit-animation: scale-in-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	        animation: scale-in-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+@-webkit-keyframes scale-in-top {
+  0% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+    -webkit-transform-origin: 50% 0%;
+            transform-origin: 50% 0%;
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    -webkit-transform-origin: 50% 0%;
+            transform-origin: 50% 0%;
+    opacity: 1;
+  }
+}
+@keyframes scale-in-top {
+  0% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+    -webkit-transform-origin: 50% 0%;
+            transform-origin: 50% 0%;
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    -webkit-transform-origin: 50% 0%;
+            transform-origin: 50% 0%;
+    opacity: 1;
+  }
+}
+
+</style>
