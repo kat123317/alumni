@@ -69,7 +69,7 @@ defineProps(["posts"]);
                 :key="key"
             >
                 <img
-                    class="w-screen object-contain max-w-[80vmin]"
+                    class="w-screen object-contain max-w-[50vmin]"
                     :src="'./images/posts/' + photos"
                 />
             </a>
