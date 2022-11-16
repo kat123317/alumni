@@ -572,12 +572,17 @@ const functionDownload = () => {
                                                 .user_type == 'staff_admin'
                                         "
                                     >
-                                        <button
-                                            @click="functionDownload()"
+                                        <a
+                                            :href="
+                                                route('downloadChart', {
+                                                    survey_id: surveys.id,
+                                                    survey_name: surveys.name,
+                                                })
+                                            "
                                             class="px-2 py-1 text-xs font-bold text-white uppercase transition-colors duration-300 transform bg-green-800 rounded dhover:bg-gray-700 focus:outline-none focus:bg-gray-700"
                                         >
                                             Download CSV
-                                        </button>
+                                        </a>
                                     </div>
                                 </div>
                             </div>

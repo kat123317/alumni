@@ -181,9 +181,14 @@ class AnnouncementController extends Controller
         return  $result;
     }
 
-    public function downloadChart() {
-        $results = [['sample', 'sample1']];
-        return Excel::download(ChartExport::new($results), "filename.xlsx");
+    public function downloadChart(Request $request) {
+        $records = Record::where('survey_id', $request->survey_id)->where('status', 'complete')->get();
+        $questions = Question::where('survey_id', $request->survey_id)->orderBy('order', 'asc' )->get();
+        $results = [];
+        $results[] = [$request->survey_name];
+        $tmp = ['sadfds'];
+        $results[] = $tmp;
+        return Excel::download(ChartExport::new($results), "Survey results.xlsx");
     }
 
     /**
