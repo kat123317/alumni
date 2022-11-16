@@ -32,8 +32,8 @@ const scrolltoDown = async () =>{
 }
 </script>
 <template>
-    <div class="flex-1 overflow-auto" id="scrollMe" style="background-color: #dad3cc">
-        <div class="py-2 px-3">
+    <div class="flex-1 overflow-auto" id="scrollMe" style="background: #dad3cc">
+        <div class="py-2 px-3 " style="background: url('https://i.ibb.co/BqvS41T/whatsa.png')">
             <div class="flex justify-center mb-2">
                 <div class="rounded py-2 px-4">
                     <p class="text-sm uppercase">February 20, 2018</p>
@@ -46,8 +46,8 @@ const scrolltoDown = async () =>{
                     style="background-color: #fcf4cb"
                 >
                     <p class="text-xs">
-                        Messages to this chat and calls are now secured with
-                        end-to-end encryption. Tap for more info.
+                        Messages to this chat is now secured with
+                        end-to-end encryption. 
                     </p>
                 </div>
             </div>
@@ -59,15 +59,15 @@ const scrolltoDown = async () =>{
                     class="flex mb-2"
                     :class="
                         messages.user_id == $page.props.user.id
-                            ? 'justify-end'
+                            ? 'justify-end  '
                             : ''
                     "
                 >
                     <div
-                        class="rounded py-2 px-3"
-                        style="background-color: #f2f2f2"
+                        :class="messages.user_id == $page.props.user.id ? 'rounded-lg py-2 px-3 text-white bg-green-500' : 'rounded-lg py-2 px-3 bg-white '"
+                     
                     >
-                        <p class="text-sm text-teal">
+                        <p class="text-sm font-bold text-teal">
                             {{
                                 messages.user.name == $page.props.user.name
                                     ? "You"
