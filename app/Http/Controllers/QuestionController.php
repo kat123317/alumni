@@ -63,7 +63,6 @@ class QuestionController extends Controller
         Question::create([
             'survey_id' => $survey->id,
             'order' => ++$question_count,
-            'type' => $request->type,
             'instruction' => $request->instruction,
             'setup' => $request->setup
         ]);
@@ -103,7 +102,6 @@ class QuestionController extends Controller
     {
         $question = Question::find($id);
         $question->update([
-            'type' => $request->type,
             'instruction' => $request->instruction,
             'setup' => $request->setup
         ]);

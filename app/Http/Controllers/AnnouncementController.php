@@ -7,6 +7,8 @@ use App\Models\College;
 use App\Models\Course;
 use App\Models\JobPost;
 use App\Models\Notification;
+use App\Models\Question;
+use App\Models\Record;
 use App\Models\Survey;
 use App\Models\User;
 use App\Models\UserNotification;
@@ -140,9 +142,31 @@ class AnnouncementController extends Controller
 
     public function survey_charts(Request $request)
     {
+        $records = Record::where('survey_id', $request->survey_id)->where('status', 'complete')->get();
+        $questions = Question::where('survey_id', $request->survey_id)->orderBy('order', 'asc' )->get();
+        $charts = [];
+        foreach ($questions as $question) {
+            $tmp = [
+                'instruction' => $question->instruction
+            ];
+            $tmp_data = [];
+            foreach ($question['setup']['choices'] as $choice) {
+                $tmp_data[] = [
+                    $choice['label'],
+                    $this->getRecordData($records, $choice)
+                ];
+            }
+            $tmp['data'] = $tmp_data;
+            $charts[] = $tmp;
+        }
         return Inertia::render('Charts/SurveyDetails', [
-            
+            'charts' => $charts,
+            'records_count' => $records->count()
         ]);
+    }
+
+    public function getRecordData($records, $choice) {
+        return $records->count();
     }
 
     /**

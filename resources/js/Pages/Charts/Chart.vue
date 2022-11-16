@@ -548,11 +548,16 @@ const changeTab = (data) => {
                                     <div
                                         class="flex justify-between mt-3 item-center"
                                     >
-                                        <button
+                                        <a
+                                            :href="
+                                                route('survey_charts', {
+                                                    survey_id: surveys.id,
+                                                })
+                                            "
                                             class="px-2 py-1 text-xs font-bold text-white uppercase transition-colors duration-300 transform bg-green-800 rounded dhover:bg-gray-700 focus:outline-none focus:bg-gray-700"
                                         >
                                             View Charts
-                                        </button>
+                                        </a>
                                     </div>
                                     <div
                                         class="flex justify-between mt-3 item-center"
