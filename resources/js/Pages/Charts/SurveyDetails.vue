@@ -1,5 +1,6 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
+import  'https://unpkg.com/flowbite@1.5.3/dist/datepicker.js';
 </script>
 
 <template>
@@ -18,6 +19,8 @@ import AppLayout from "@/Layouts/AppLayout.vue";
         >
           Survey Charts - Survey title
         </h1>
+
+        <div inline-datepicker data-date="02/25/2022"></div>
 
         <p class="mt-4 text-gray-500 xl:mt-6 dark:text-gray-300">
           Survey Reports
