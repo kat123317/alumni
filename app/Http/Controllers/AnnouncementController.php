@@ -147,13 +147,14 @@ class AnnouncementController extends Controller
         $charts = [];
         foreach ($questions as $question) {
             $tmp = [
+                'order' => $question->order,
                 'instruction' => $question->instruction
             ];
             $tmp_data = [];
             foreach ($question['setup']['choices'] as $choice) {
                 $tmp_data[] = [
                     $choice['label'],
-                    $this->getRecordData($records, $choice)
+                    $this->getRecordData($records, $question, $choice)
                 ];
             }
             $tmp['data'] = $tmp_data;
@@ -165,8 +166,17 @@ class AnnouncementController extends Controller
         ]);
     }
 
-    public function getRecordData($records, $choice) {
-        return $records->count();
+    public function getRecordData($records, $question, $choice) {
+        if ($question->setup['multiple_select'] == true) {
+            $answer = $records->pluck('answers.question_'.$question->id.'.choice_'.$choice['value']);
+            $results = $answer->countBy();
+            $result = $results[1] ?? 0;
+        } else {
+            $answer = $records->pluck('answers.question_'.$question->id);
+            $results = $answer->countBy();
+            $result = $results[$choice['value']] ?? 0;
+        }
+        return  $result;
     }
 
     /**
