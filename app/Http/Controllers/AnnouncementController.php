@@ -18,7 +18,6 @@ use App\Models\Yearbook;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
-use Maatwebsite\Excel\Facades\Excel;
 use Inertia\Inertia;
 
 class AnnouncementController extends Controller
@@ -178,17 +177,72 @@ class AnnouncementController extends Controller
             $results = $answer->countBy();
             $result = $results[$choice['value']] ?? 0;
         }
+        
         return  $result;
     }
 
     public function downloadChart(Request $request) {
-        $records = Record::where('survey_id', $request->survey_id)->where('status', 'complete')->get();
+        $records = Record::with('user')->where('survey_id', $request->survey_id)->where('status', 'complete')->get();
         $questions = Question::where('survey_id', $request->survey_id)->orderBy('order', 'asc' )->get();
+
         $results = [];
-        $results[] = [$request->survey_name];
-        $tmp = ['sadfds'];
-        $results[] = $tmp;
-        return Excel::download(ChartExport::new($results), "Survey results.xlsx");
+        $results[] = [$request->survey_name, '', 'Total'];
+
+        foreach ($questions as $question) {
+            $tmp = [
+                'order' => $question->order,
+                'instruction' => $question->instruction
+            ];
+            $tmp_data = [];
+            foreach ($question['setup']['choices'] as $choice) {
+                $tmp_data[] = [
+                    '',
+                    $choice['label'],
+                    $this->getRecordData($records, $question, $choice)
+                ];
+            }
+            $results[] = $tmp;
+            
+            foreach ($tmp_data as $data) {
+
+                $results[] = $data;
+            }
+        }
+        
+        $tmp_record = [[$request->survey_name]];
+        $tmp_header = ['User'];
+        foreach ($questions as $question){
+            if ($question->setup['multiple_select'] == true) {
+                foreach ($question->setup['choices'] as $key => $value) {
+                    $tmp_header[] = 'Question_'.$question->order.'_'.$key+1;
+                }
+            }
+            else{
+                $tmp_header[] = 'Question_'.$question->order;
+            }
+        }
+        $tmp_record[] = $tmp_header;
+        
+        foreach ($records as $record) {
+            $answers=[$record->user->name];
+            foreach ($questions as $question){
+                // $val = $record->answers['question_1'];
+                if ($question->setup['multiple_select'] == true) {
+                    foreach ($record->answers['question_'.$question->id] as $answer_value) {
+                        $answers[] = $answer_value;
+                    }
+                } else {
+                    $answers[] = $record->answers['question_'.$question->id];
+                }
+            }
+            $tmp_record[] = $answers;
+        }
+        // dd($tmp_record);
+
+        $individual_results = [$tmp_record];
+
+
+        return (new ChartExport([$results, $individual_results], ['Overall', 'Raw Data']))->download($request->survey_name." - results.xlsx");
     }
 
     /**

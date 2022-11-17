@@ -499,12 +499,11 @@ const functionDownload = () => {
                                 :key="key"
                                 class="flex max-w-md overflow-hidden bg-white rounded-lg shadow-lg"
                             >
-                                <div
-                                    class="w-1/3 bg-cover"
-                                    style="
+                                <div class="w-1/3 bg-cover">
+                                    <!-- style="
                                         background-image: url('http://devops.cmu.edu.ph/formlinks/assets/dist/assets/img/logos/CMU-LOGO.png');
-                                    "
-                                ></div>
+                                    " -->
+                                </div>
 
                                 <div class="w-2/3 p-4 md:p-4">
                                     <h1

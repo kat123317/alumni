@@ -2,28 +2,36 @@
 
 namespace App\Exports;
 
-use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
+use App\Exports\Sheets\SurveyDataSheet;
+use Maatwebsite\Excel\Concerns\WithMultipleSheets;
+use Maatwebsite\Excel\Concerns\Exportable;
 
-class ChartExport implements FromCollection, WithStrictNullComparison
+class ChartExport implements WithMultipleSheets
 {
-    public array $data;
+    use Exportable;
+    public array $datas;
+    public array $titles;
 
-    public function __construct(array $data)
+    public function __construct(array $datas, array $titles)
     {
-        $this->data = $data;
-    }
-
-    public static function new(array $data): ChartExport
-    {
-        return new self($data);
+        $this->datas = $datas;
+        $this->titles = $titles;
     }
 
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function collection(): \Illuminate\Support\Collection
+    /* public function collection()
     {
-        return collect($this->data);
+        return [collect($this->data), collect($this->data)];
+    } */
+
+    public function sheets(): array
+    {
+        $sheets = [];
+        for ($i = 0; $i < count($this->datas); $i++) {
+            $sheets[] = new SurveyDataSheet($this->datas[$i], $this->titles[$i]);
+        }
+        return $sheets;
     }
 }

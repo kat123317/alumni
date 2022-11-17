@@ -15,4 +15,9 @@ class Record extends Model
     protected $casts = [
         'answers' => 'json'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
