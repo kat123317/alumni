@@ -226,7 +226,6 @@ class AnnouncementController extends Controller
         foreach ($records as $record) {
             $answers=[$record->user->name];
             foreach ($questions as $question){
-                // $val = $record->answers['question_1'];
                 if ($question->setup['multiple_select'] == true) {
                     foreach ($record->answers['question_'.$question->id] as $answer_value) {
                         $answers[] = $answer_value;
@@ -237,8 +236,6 @@ class AnnouncementController extends Controller
             }
             $tmp_record[] = $answers;
         }
-        // dd($tmp_record);
-
         $individual_results = [$tmp_record];
 
 
