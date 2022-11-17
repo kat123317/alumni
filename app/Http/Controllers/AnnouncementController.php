@@ -115,21 +115,19 @@ class AnnouncementController extends Controller
         $colleges = College::with('users')->withCount('users')->with(['courses' => function($query) {
             $query->with('users');
         }])->get();
-        // $announcements = Announcement::with('user')->when($search_text, function($query, $search_text) {
-        //     $query->where('title', 'like', "%{$search_text}%");
-        // })->orderBy('id', 'desc')->get();
         $courses = Course::all();
         $graduates = Yearbook::withCount('graduates')->when($between, function($query, $between) use ($yearbook_temp_1, $yearbook_temp_2) {
             $query->whereBetween('schoolyear_from', [(int)$yearbook_temp_1->schoolyear_from, (int)$yearbook_temp_2->schoolyear_from]);
         })->orderBy('schoolyear_from', 'desc' )->limit(10)->get();
 
-        $surveys = Survey::with('user')->orderBy('updated_at', 'desc' )->get();
+        $surveys = Survey::with('user')->with('survey_records', function($query){
+            $query -> where('status', 'complete');
+        })->where('status', 'live')->orderBy('updated_at', 'desc' )->get();
 
         return Inertia::render('Charts/Chart', [
             'notifications' => $notifications,
             'colleges' => $colleges,
             'users' => $users,
-            // 'announcements' => $announcements,
             'courses' => $courses,
             'search_text' => $search_text,
             'yearbook' => $graduates,

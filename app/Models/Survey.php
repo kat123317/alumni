@@ -30,4 +30,10 @@ class Survey extends Model
     {
         return $this->belongsTo(Record::class, 'id', 'survey_id');
     }
+
+    public function survey_records()
+    {
+        return $this->hasMany(Record::class);
+    }
+
 }

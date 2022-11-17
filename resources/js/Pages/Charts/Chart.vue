@@ -525,7 +525,12 @@ const functionDownload = () => {
                                     <p
                                         class="mt-2 text-sm text-gray-600 dark:text-gray-400"
                                     >
-                                        Completes: 200
+                                        Completes:
+                                        {{
+                                            surveys.survey_records == null
+                                                ? 0
+                                                : surveys.survey_records.length
+                                        }}
                                     </p>
                                     <p
                                         class="mt-2 text-sm text-gray-600 dark:text-gray-400"
