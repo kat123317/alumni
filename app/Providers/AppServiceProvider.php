@@ -49,7 +49,7 @@ class AppServiceProvider extends ServiceProvider
         if($ans == false){
             
             Auth::logout();
-            header("Location: ".env('APP_URL').'/login');
+            // header("Location: ".env('APP_URL').'/login?status=expired');
         }
     }
 }
