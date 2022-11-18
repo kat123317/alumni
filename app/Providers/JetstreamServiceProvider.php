@@ -50,7 +50,7 @@ class JetstreamServiceProvider extends ServiceProvider
                             'custom'=> "Sorry! Your account has been decline by the administrators.",
                         ]);
                     }
-                    elseif($user->status == 'pre-approved'){
+                    elseif($user->status == 'pre_approved'){
                         throw ValidationException::withMessages([
                             'custom'=> "Sorry! Your account has been pre-approved by the administrators.",
                         ]);
