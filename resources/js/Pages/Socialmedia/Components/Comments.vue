@@ -155,11 +155,13 @@ const function_delete_comment = () => {
 
 const like_data = useForm({
     post_id: null,
+    post_owner: null,
 });
-const function_like_post = (post_id, is_like) => {
+const function_like_post = (post_id, is_like, notification_owner) => {
     // let post = usePage().props.value.posts[index];
     // let pkey = post.details.like.indexOf(usePage().props.value.user.id);
     like_data.post_id = post_id;
+    like_data.post_owner = notification_owner;
     if (is_like) {
         like_data.post(route("socialmedia.unlike_post", [post_id]), {
             preserveScroll: true,
@@ -416,7 +418,8 @@ function onSelectEmoji(emoji) {
                                 post.id,
                                 post.details.like
                                     .map((res) => res.id)
-                                    .includes(usePage().props.value.user.id)
+                                    .includes(usePage().props.value.user.id),
+                                post.user_id
                             )
                         "
                         class="inline-flex items-center"
