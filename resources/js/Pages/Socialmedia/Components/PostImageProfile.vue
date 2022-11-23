@@ -11,7 +11,7 @@ defineProps(["posts"]);
             <div class="flex justify-center">
                 <a
                     class="flex"
-                    href="#"
+                    :href="route('socialmedia.comments', [posts.id])"
                     v-for="(photos, key2) in posts.photo"
                     :key="key2"
                 >
@@ -25,7 +25,7 @@ defineProps(["posts"]);
             <div class="flex justify-center mx-auto">
                 <a
                     class="flex"
-                    href="#"
+                    :href="route('socialmedia.comments', [posts.id])"
                     v-for="(photos, key2) in posts.photo"
                     :key="key2"
                 >
@@ -38,7 +38,11 @@ defineProps(["posts"]);
             </div>
             <!-- <a
                 class="flex"
-                href="#"
+                :href="
+                                            route('socialmedia.comments', [
+                                                posts.id,
+                                            ])
+                                        "
                 v-for="(photos, key) in posts.photo"
                 :key="key"
             >
@@ -52,7 +56,7 @@ defineProps(["posts"]);
             <div class="flex justify-center">
                 <a
                     class="flex"
-                    href="#"
+                    :href="route('socialmedia.comments', [posts.id])"
                     v-for="(photos, key2) in posts.photo"
                     :key="key2"
                 >
@@ -74,7 +78,7 @@ defineProps(["posts"]);
             <div class="flex justify-center">
                 <a
                     class="flex"
-                    href="#"
+                    :href="route('socialmedia.comments', [posts.id])"
                     v-for="(photos, key) in posts.photo"
                     :key="key"
                 >
@@ -89,7 +93,7 @@ defineProps(["posts"]);
             <div class="flex justify-center">
                 <a
                     class="flex"
-                    href="#"
+                    :href="route('socialmedia.comments', [posts.id])"
                     v-for="(photos, key) in posts.photo"
                     :key="key"
                 >
