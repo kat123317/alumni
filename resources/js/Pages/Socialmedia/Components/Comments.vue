@@ -330,9 +330,7 @@ function onSelectEmoji(emoji) {
                         </a>
                     </div>
                 </div>
-                <p class="">
-                    {{ post.content }}
-                </p>
+                <div v-html="post.content" class=""></div>
 
                 <div v-if="post.photo != null" class="py-4 mx-auto">
                     <div v-if="post.photo.length > 3" class="grid grid-cols-2">
