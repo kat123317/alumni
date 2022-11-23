@@ -42,6 +42,7 @@ Route::get('/', [EventController::class, 'welcome'])->name('welcome');
 
 Route::post('/register_user', [UserController::class, 'register'])->name('register_user');
 
+Route::post('/update_expire', [UserController::class, 'update_expire'])->name('update_expire');
 
 Route::middleware([
     'auth:sanctum',

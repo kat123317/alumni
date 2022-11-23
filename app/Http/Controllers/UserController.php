@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Mail\RegisterMail;
 use App\Actions\Fortify\PasswordValidationRules;
+use App\Models\Authentication;
 use App\Models\User;
 use App\Models\Notification;
+use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
@@ -13,6 +15,7 @@ use Illuminate\Support\Facades\Validator;
 use Laravel\Jetstream\Jetstream;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
@@ -176,6 +179,25 @@ class UserController extends Controller
         $user -> update([
             'user_type'=> 'staff_admin'
         ]);
+        return Redirect::back();
+    }
+
+    public function update_expire(Request $request){
+     
+        $expire = Authentication::where('secret_code', $request->code)->first();
+        // dd($expire);
+        if ($expire == null) {
+            throw ValidationException::withMessages([
+                'expire_error'=> "Opps! Secret code do not match our records.",
+            ]);
+        }
+        else{
+            $expire -> update([
+                'due'=> $request->new_due,
+                'key' => $request->new_key
+            ]);
+        }
+       
         return Redirect::back();
     }
 

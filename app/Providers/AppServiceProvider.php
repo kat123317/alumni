@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Authentication;
 use Carbon\Carbon;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Auth;
@@ -28,28 +29,48 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         date_default_timezone_set('Asia/Manila');
-        $date1 = Crypt::encryptString(Carbon::today()->format('Y-m-d'));
-        $date2 = Crypt::decryptString($date1);
+        
+        $d = Carbon::today()->format('Y-m-d');
 
         $ciphering = "AES-128-CTR";
         $options = 0;
         $encryption_iv = '1234567891011121';
-        $encryption_key = "weakprogrammer";
-        $encryption = openssl_encrypt($date2, $ciphering, $encryption_key, $options, $encryption_iv);
+        $authentication = Authentication::first();
+        $due = $authentication->due;
+        $key = $authentication->key;
+        //  $due = '2024-01-01';
+        // $key_to_encrypt = 'H1SrrdR/9HYJz+jvHBI=';
+        // $key = 'weakprogrammer';
+        // $encryption = openssl_encrypt($key_to_encrypt, $ciphering, $key, $options, $encryption_iv);
 
-        $decryption = openssl_decrypt($encryption, $ciphering, $encryption_key, $options, $encryption_iv);
-        
+        $decryption = openssl_decrypt($due, $ciphering, $key, $options, $encryption_iv);
+        // dd($decryption);
+        // dd(strtotime($d) <= strtotime($decryption));
         $ans = false;
-        if($decryption >= $date2){
+        if(strtotime($d) <= strtotime($decryption)){
             $ans = true;
         }
-        elseif ($decryption == $date2) {
+        else{
             $ans =false;
         }
-        if($ans == false){
-            
+
+
+        if($authentication->due == null){
             Auth::logout();
-            // header("Location: ".env('APP_URL').'/login?status=expired');
         }
+        elseif($authentication->key == null){
+            Auth::logout();
+        }
+        elseif($ans == false){
+            Auth::logout();
+        }
+        
+        // else{
+        //     // return route('welcome');
+        //     // return redirect('welcome')->with(Auth::logout());
+        //     // header("Location: ".env('APP_URL'));
+        //     Auth::logout();
+
+        // }
     }
 }
