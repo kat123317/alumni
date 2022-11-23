@@ -98,7 +98,7 @@ const form_announcement = useForm({
                                     :href="route('graduates.index')"
                                     :active="route().current('graduates.index')"
                                 >
-                                    Yearbook
+                                    E - Yearbook
                                 </NavLink>
                             </div>
 
@@ -438,7 +438,7 @@ const form_announcement = useForm({
                             :href="route('graduates.index')"
                             :active="route().current('graduates.index')"
                         >
-                            Yearbook
+                            E - Yearbook
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
                             v-if="
