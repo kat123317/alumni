@@ -20,9 +20,9 @@ defineProps({
     },
     alertOnMessage: {
         type: String,
-        default: '',
+        default: "",
     },
-})
+});
 </script>
 <template>
     <div class="bg-cmu">
@@ -97,7 +97,7 @@ defineProps({
                     </button>
                     <button class="mr-8 text-white hover:text-gray-200">
                         <Link :href="route('administrator.notification')">
-                            Notification
+                            Incomming Requests
                             <span
                                 class="w-10 h-4 ml-[-16px] mt-[-16px] text-[1.5vmin] absolute custom_notification_count"
                             >
@@ -137,7 +137,7 @@ defineProps({
         </header>
         <section class="text-gray-600 body-font relative">
             <div
-            v-if="alertOn"
+                v-if="alertOn"
                 class="bg-green-100 alertanim text-center py-4 lg:px-4"
             >
                 <div
@@ -148,9 +148,9 @@ defineProps({
                         class="flex rounded-full bg-green-500 uppercase px-2 py-1 text-xs font-bold mr-3"
                         >Success</span
                     >
-                    <span class="font-semibold mr-2 text-left flex-auto"
-                        >{{ alertOnMessage }}</span
-                    >
+                    <span class="font-semibold mr-2 text-left flex-auto">{{
+                        alertOnMessage
+                    }}</span>
                     <svg
                         class="fill-current opacity-75 h-4 w-4"
                         xmlns="http://www.w3.org/2000/svg"
@@ -174,9 +174,9 @@ defineProps({
                         class="flex rounded-full bg-blue-500 uppercase px-2 py-1 text-xs font-bold mr-3"
                         >Success</span
                     >
-                    <span class="font-semibold mr-2 text-left flex-auto"
-                        >{{ alertOnMessage }}</span
-                    >
+                    <span class="font-semibold mr-2 text-left flex-auto">{{
+                        alertOnMessage
+                    }}</span>
                     <svg
                         class="fill-current opacity-75 h-4 w-4"
                         xmlns="http://www.w3.org/2000/svg"
@@ -200,9 +200,9 @@ defineProps({
                         class="flex rounded-full bg-red-500 uppercase px-2 py-1 text-xs font-bold mr-3"
                         >Success</span
                     >
-                    <span class="font-semibold mr-2 text-left flex-auto"
-                        >{{ alertOnMessage }}</span
-                    >
+                    <span class="font-semibold mr-2 text-left flex-auto">{{
+                        alertOnMessage
+                    }}</span>
                     <svg
                         class="fill-current opacity-75 h-4 w-4"
                         xmlns="http://www.w3.org/2000/svg"
@@ -226,9 +226,9 @@ defineProps({
                         class="flex rounded-full bg-gray-500 uppercase px-2 py-1 text-xs font-bold mr-3"
                         >Notice</span
                     >
-                    <span class="font-semibold mr-2 text-left flex-auto"
-                        >{{ alertOnMessage }}</span
-                    >
+                    <span class="font-semibold mr-2 text-left flex-auto">{{
+                        alertOnMessage
+                    }}</span>
                     <svg
                         class="fill-current opacity-75 h-4 w-4"
                         xmlns="http://www.w3.org/2000/svg"
@@ -273,7 +273,4 @@ defineProps({
         margin-left: 0px;
     }
 }
-
-
-
 </style>
