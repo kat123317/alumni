@@ -13,7 +13,8 @@ class Announcement extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'foreign_ids' => 'array'
+        'foreign_ids' => 'array',
+        'photo'=> 'json'
     ];
 
     public function user()

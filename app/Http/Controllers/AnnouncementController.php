@@ -19,6 +19,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use Illuminate\Support\Str;
+
 
 class AnnouncementController extends Controller
 {
@@ -274,11 +276,20 @@ class AnnouncementController extends Controller
                 
                 break;
         } */
+        $images = array();
+        if($request->hasfile('photos')){
+            foreach($request->file('photos') as $photo){
+                $imageName = Str::random(40).'.'.$photo->extension();
+                $photo->move(public_path().'/images/announcements/', $imageName); 
+                array_push($images, $imageName);
+            }
+        }
         Announcement::create([
             'title' => $request->title,
             'content' => $request->content,
             'user_id' => Auth::user()->id,
-            'updated_by' => Auth::user()->id
+            'updated_by' => Auth::user()->id,
+            'photo' => $images
         ]);
         return Redirect::back();
     }

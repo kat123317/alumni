@@ -32,6 +32,8 @@ const collapseVar = ref(false);
 const modal_update = ref(false);
 const modal_delete = ref(false);
 
+const post_images = ref([]);
+
 const announcement_search = useForm({
     search: usePage().props.value.search ? usePage().props.value.search : "",
 });
@@ -39,6 +41,7 @@ const announcement_search = useForm({
 const announcement_data = useForm({
     title: "",
     content: "",
+    photos: [],
 });
 
 const update_announcement_data = useForm({
@@ -60,6 +63,8 @@ const post_announcement = () => {
             preserveScroll: true,
             onSuccess: () => {
                 announcement_data.reset();
+                post_images.value = [];
+                announcement_data.photos = [];
                 alertOnMessage.value = "Announcement Successfully added";
                 onAlert("Success");
             },
@@ -114,6 +119,30 @@ const searchAnnouncements = () => {
 };
 
 // provide("announcement_search_key", announcement_search.announcement_search_key);
+
+const openFile = () => {
+    let hidden = document.getElementById("post_image");
+    hidden.click();
+    hidden.onchange = (e) => {
+        if (post_images.value.length + e.target.files.length > 2) {
+            alertOnMessage.value = "Only 2 images can be selected";
+            onAlert("Delete");
+            return;
+        } else {
+            for (let index = 0; index < e.target.files.length; index++) {
+                post_images.value.push(
+                    window.URL.createObjectURL(e.target.files[index])
+                );
+                announcement_data.photos.push(e.target.files[index]);
+            }
+        }
+    };
+};
+
+const remove_image = (key) => {
+    post_images.value.splice(key, 1);
+    announcement_data.photos.splice(key, 1);
+};
 </script>
 <template>
     <AdminLayout
@@ -184,6 +213,7 @@ const searchAnnouncements = () => {
                             >
                                 <tr>
                                     <th scope="col" class="py-3 px-6">Title</th>
+                                    <th scope="col" class="py-3 px-6">Image</th>
                                     <th scope="col" class="py-3 px-6">
                                         Content
                                     </th>
@@ -218,6 +248,29 @@ const searchAnnouncements = () => {
                                     >
                                         {{ announcements.title }}
                                     </th>
+                                    <td
+                                        class="py-4 max-w-[70vmin] w-[26vmin] px-2"
+                                    >
+                                        <div v-if="announcements.photo == null">
+                                            <p>No Image</p>
+                                        </div>
+                                        <div
+                                            v-else
+                                            v-for="(
+                                                photo, key
+                                            ) in announcements.photo"
+                                            :key="key"
+                                        >
+                                            <img
+                                                class="mb-2"
+                                                :src="
+                                                    './../images/announcements/' +
+                                                    photo
+                                                "
+                                                alt=""
+                                            />
+                                        </div>
+                                    </td>
                                     <td
                                         class="py-4 max-w-[70vmin] w-[26vmin] px-2"
                                     >
@@ -293,6 +346,67 @@ const searchAnnouncements = () => {
                             name="name"
                             class="w-full bg-white rounded border border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                         />
+                    </div>
+                    <div class="relative mb-4">
+                        <input
+                            id="post_image"
+                            type="file"
+                            class="hidden"
+                            accept="image/png, image/gif, image/jpeg"
+                            multiple
+                        />
+                        <button
+                            @click="openFile"
+                            class="mt-2 rounded-sm px-3 py-1 bg-gray-200 hover:bg-gray-300 focus:shadow-outline focus:outline-none"
+                        >
+                            Upload Images
+                        </button>
+                        <div
+                            v-if="post_images != null"
+                            class="grid mt-2 grid-cols-1 lg:grid-cols-4"
+                        >
+                            <div v-for="(image, key) in post_images" :key="key">
+                                <div
+                                    class="w-auto mt-2 mx-auto lg:max-w-[20vmin] z-30"
+                                >
+                                    <div class="shadow-lg bg-white p-3">
+                                        <img
+                                            class="w-full max-h-[40vmin] object-cover"
+                                            :src="image"
+                                        />
+                                        <ul
+                                            class="mt-3 flex justify-end flex-wrap"
+                                        >
+                                            <li>
+                                                <button
+                                                    @click="remove_image(key)"
+                                                    class="flex text-gray-400 hover:text-gray-600"
+                                                >
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        fill="none"
+                                                        viewBox="0 0 24 24"
+                                                        stroke-width="1.5"
+                                                        stroke="currentColor"
+                                                        class="w-6 h-6"
+                                                    >
+                                                        <path
+                                                            class="text-red-500"
+                                                            stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                            d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                                        />
+                                                    </svg>
+                                                    <span class="text-red-500"
+                                                        >Remove</span
+                                                    >
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="relative mb-4">
