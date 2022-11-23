@@ -48,7 +48,7 @@ const date_conversion_from_now = (value) => {
 const option_view = ref(true);
 
 onMounted(() => {
-    var editor1 = new RichTextEditor("#inp_editor1");    
+   
 });
 
 const post_data = useForm({
