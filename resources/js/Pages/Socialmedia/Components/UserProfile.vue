@@ -75,9 +75,7 @@ const status = (value) => {
                     </svg>
 
                     <h1 class="mx-3 text-lg font-semibold text-white">
-                        {{
-                            usePage().props.value.user_profile[0].college.name
-                        }}
+                        {{ usePage().props.value.user_profile[0].college.name }}
                         -
                         {{ usePage().props.value.user_profile[0].course.name }}
                     </h1>
@@ -247,7 +245,7 @@ const status = (value) => {
             <span
                 class="flex-none block mx-4 px-4 py-2.5 text-xs leading-none font-medium uppercase bg-green-700 rounded-lg text-white"
             >
-                Your Posts
+                Posts
             </span>
             <span
                 class="flex-grow block border-t border-green-700"
@@ -312,9 +310,10 @@ const status = (value) => {
                             </a>
                         </div>
                     </div> -->
-                <p class="">
+                <!-- <p class="">
                     {{ posts.content }}
-                </p>
+                </p> -->
+                <div v-html="posts.content"></div>
                 <PostImage :posts="posts" />
                 <!-- <div v-if="posts.photo != null" class="py-4 mx-auto">
                     <div v-if="posts.photo.length > 3" class="grid grid-cols-2">
