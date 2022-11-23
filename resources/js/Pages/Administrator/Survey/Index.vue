@@ -29,6 +29,7 @@ const form_add_edit = useForm({
         shown_only: "all",
         select_all: false,
         foreign_ids: [],
+        is_private: 1,
     },
 });
 
@@ -324,7 +325,7 @@ provide("form_add_edit", form_add_edit);
         <JetDialogModal :show="modals.add_edit.show">
             <template #title>{{ modals.add_edit.details.title }}</template>
             <template #content>
-                <div class="grid grid-cols-6 gap-3">
+                <div class="grid grid-cols-8 gap-3">
                     <div class="col-span-3">
                         <label class="leading-7 text-sm text-gray-600"
                             >Survey Name</label
@@ -358,6 +359,21 @@ provide("form_add_edit", form_add_edit);
                             <option value="user">User</option>
                         </select>
                     </div>
+                    <div class="col-span-2">
+                        <label
+                            for="email"
+                            class="leading-7 text-sm text-gray-600"
+                            >Private Survey</label
+                        >
+                        <select
+                            v-model="form_add_edit.setup.is_private"
+                            @change="resetForeignList(false)"
+                            class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-nonefocus:outline-none focus:ring-0 focus:border-gray-200 peer"
+                        >
+                            <option value="0">Private</option>
+                            <option value="1">Public</option>
+                        </select>
+                    </div>
                     <template v-if="form_add_edit.setup.shown_only != 'all'">
                         <div class="col-span-6 flex">
                             <JetInputLabel>
@@ -379,7 +395,10 @@ provide("form_add_edit", form_add_edit);
                                 }}</span>
                             </JetInputLabel>
                         </div>
-                        <template v-for="(ids, index) in foreign_list" :key="index">
+                        <template
+                            v-for="(ids, index) in foreign_list"
+                            :key="index"
+                        >
                             <div class="col-span-3">
                                 <JetInputLabel>
                                     <JetCheckbox

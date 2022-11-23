@@ -47,6 +47,7 @@ const showDeleteModal = (index) => {
                 <tr>
                     <th scope="col" class="py-3 px-6">Name</th>
                     <th scope="col" class="py-3 px-6">Status</th>
+                    <th scope="col" class="py-3 px-6">Shown Only</th>
                     <th scope="col" class="py-3 px-6">Created by</th>
                     <th scope="col" class="py-3 px-6">Created</th>
                     <th scope="col" class="py-3 px-6">Updated</th>
@@ -74,6 +75,11 @@ const showDeleteModal = (index) => {
                     </th>
                     <td class="py-4 capitalize px-6">
                         {{ survey.status }}
+                    </td>
+                    <td class="py-4 capitalize px-6">
+                        {{
+                            survey.setup.is_private == 1 ? "Public" : "Private"
+                        }}
                     </td>
                     <td class="py-4 px-6">
                         {{ survey.user.name }}

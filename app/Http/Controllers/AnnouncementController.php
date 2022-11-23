@@ -122,7 +122,13 @@ class AnnouncementController extends Controller
 
         $surveys = Survey::with('user')->with('survey_records', function($query){
             $query -> where('status', 'complete');
-        })->where('status', 'live')->orderBy('updated_at', 'desc' )->get();
+        })->where(function ($query){
+            $query -> where('status', 'live') -> where(function($query){
+                if (Auth::user()->user_type == 'alumni') {
+                    $query -> where('setup->is_private', '1');
+                }
+            });
+        })->orderBy('updated_at', 'desc' )->get();
 
         return Inertia::render('Charts/Chart', [
             'notifications' => $notifications,
