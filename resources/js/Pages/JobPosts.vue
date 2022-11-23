@@ -192,7 +192,6 @@ const function_search = () => {
             @sumbitData="alert(sumbitData)"
         />
         <section>
-
             <div
                 v-if="postAlert"
                 class="p-4 mb-4 border border-blue-300 rounded-lg bg-blue-50"
@@ -441,7 +440,7 @@ const function_search = () => {
                             <!-- End of profile card -->
                             <div class="my-4"></div>
                             <!-- Friends card -->
-                            <div class="bg-white mb-5 p-3 hover:shadow">
+                            <!-- <div class="bg-white mb-5 p-3 hover:shadow">
                                 <div
                                     class="flex items-center space-x-3 font-semibold text-gray-900 text-xl leading-8"
                                 >
@@ -496,7 +495,7 @@ const function_search = () => {
                                         >
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <!-- End of friends card -->
                         </div>
                         <!-- Right Side -->
@@ -612,9 +611,10 @@ const function_search = () => {
                                         role="link"
                                         >{{ posts.job_title }}</a
                                     >
-                                    <p class="mt-2 text-gray-600">
-                                        {{ posts.job_description }}
-                                    </p>
+                                    <div
+                                        v-html="posts.job_description"
+                                        class="mt-2 text-gray-600"
+                                    ></div>
                                 </div>
 
                                 <div

@@ -425,7 +425,7 @@ function onSelectEmojiSearch(emoji) {
                             <!-- End of profile card -->
                             <div class="my-4"></div>
                             <!-- Friends card -->
-                            <div class="bg-white mb-5 p-3 hover:shadow">
+                            <!-- <div class="bg-white mb-5 p-3 hover:shadow">
                                 <div
                                     class="flex items-center space-x-3 font-semibold text-gray-900 text-xl leading-8"
                                 >
@@ -480,7 +480,7 @@ function onSelectEmojiSearch(emoji) {
                                         >
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <!-- End of friends card -->
                         </div>
                         <!-- Right Side -->
@@ -893,9 +893,7 @@ function onSelectEmojiSearch(emoji) {
                                     </div>
                                 </div>
 
-                                <p>
-                                    {{ posts.content }}
-                                </p>
+                                <div v-html="posts.content"></div>
                                 <PostImage :posts="posts" />
 
                                 <div class="py-4">
