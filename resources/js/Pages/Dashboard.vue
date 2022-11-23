@@ -47,7 +47,9 @@ const date_conversion_from_now = (value) => {
 
 const option_view = ref(true);
 
-onMounted(() => {});
+onMounted(() => {
+    var editor1 = new RichTextEditor("#inp_editor1");    
+});
 
 const post_data = useForm({
     content: "",
@@ -488,11 +490,11 @@ function onSelectEmojiSearch(emoji) {
                             <!-- Profile tab -->
                             <!-- About Section -->
 
-                            <div class="flex items-center mb-5">
+                            <div class="flex items-center mx-auto max-w-lg lg:max-w-[60vmin] mb-5">
                                 <label for="voice-search" class="sr-only"
                                     >Search</label
                                 >
-                                <div class="relative w-full">
+                                <div class="relative w-full ">
                                     <div
                                         class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
                                     >
@@ -541,6 +543,11 @@ function onSelectEmojiSearch(emoji) {
                                         </svg>
                                     </button>
                                 </div>
+                                <select id="countries" class="bg-gray-50 ml-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-25 p-2.5">
+                                    <option selected> Filter</option>
+                                    <option value="">Posts</option>
+                                    <option value="">User Profile</option>
+                                </select>
                                 <button
                                     @click="function_search()"
                                     class="inline-flex items-center py-2.5 px-3 ml-2 text-sm font-medium text-white bg-green-700 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300"
@@ -608,34 +615,11 @@ function onSelectEmojiSearch(emoji) {
                                             class="sr-only"
                                             >Search</label
                                         >
+                                        
                                         <div class="relative w-full">
-                                            <div
-                                                class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
-                                            >
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                    stroke-width="1.5"
-                                                    stroke="currentColor"
-                                                    class="w-6 h-6"
-                                                >
-                                                    <path
-                                                        stroke-linecap="round"
-                                                        class="text-gray-800"
-                                                        stroke-linejoin="round"
-                                                        d="M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 110-9h.75c.704 0 1.402-.03 2.09-.09m0 9.18c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38c-.551.318-1.26.117-1.527-.461a20.845 20.845 0 01-1.44-4.282m3.102.069a18.03 18.03 0 01-.59-4.59c0-1.586.205-3.124.59-4.59m0 9.18a23.848 23.848 0 018.835 2.535M10.34 6.66a23.847 23.847 0 008.835-2.535m0 0A23.74 23.74 0 0018.795 3m.38 1.125a23.91 23.91 0 011.014 5.395m-1.014 8.855c-.118.38-.245.754-.38 1.125m.38-1.125a23.91 23.91 0 001.014-5.395m0-3.46c.495.413.811 1.035.811 1.73 0 .695-.316 1.317-.811 1.73m0-3.46a24.347 24.347 0 010 3.46"
-                                                    />
-                                                </svg>
-                                            </div>
-                                            <input
-                                                @click="emojioverlay = false"
-                                                type="text"
-                                                v-model="post_data.content"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full relative pl-10 p-2.5"
-                                                placeholder="Hey! What's up?"
-                                                required
-                                            />
+                                          
+                                            <quill-editor v-model:content="post_data.content" class=" bg-gray-50 max-h-sm border border-gray-300 overflow-hidden text-gray-900 text-sm rounded-lg border-t-1 border-gray-500 focus:ring-blue-500 focus:border-blue-500 block w-full relative  p-2.5" contentType="html"></quill-editor>
+                                        
                                             <button
                                                 type="button"
                                                 @click="
@@ -667,7 +651,7 @@ function onSelectEmojiSearch(emoji) {
                                     class="flex justify-end"
                                 >
                                     <div
-                                        class="absolute slide-in-elliptic-top-fwd mt-ne10 z-200 z-12 mr-8"
+                                        class="absolute slide-in-elliptic-top-fwd mt-ne10 z-200 z-12 lg:mr-52 "
                                     >
                                         <EmojiPicker
                                             class="z-20"
@@ -1114,4 +1098,6 @@ function onSelectEmojiSearch(emoji) {
         margin-top: -60vmin !important;
     }
 }
+
+
 </style>

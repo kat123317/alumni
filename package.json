@@ -23,6 +23,7 @@
         "vue": "^3.2.31"
     },
     "dependencies": {
+        "@vueup/vue-quill": "^1.0.0",
         "chart.js": "^3.9.1",
         "moment": "^2.29.4",
         "vue-chartkick": "^1.1.0",

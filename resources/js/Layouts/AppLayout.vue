@@ -685,4 +685,19 @@ body::-webkit-scrollbar-thumb {
     background-color: darkgrey;
     outline: 1px solid slategrey;
 }
+
+.ql-toolbar.ql-snow {
+    border: 1px solid #d1d5db;
+    box-sizing: border-box;
+    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    padding: 8px;
+    display: none;
+}
+
+.ql-editor{
+    max-height:5vmin;
+}
+.ql-toolbar.ql-snow + .ql-container.ql-snow {
+     border-top: 1px solid lightgray !important;
+}
 </style>

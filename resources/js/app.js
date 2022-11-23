@@ -9,6 +9,9 @@ import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
 import VueChartkick from "vue-chartkick";
 import "chartkick/chart.js";
 import ScrollParallax from "vue3-parallax/src/components/ScrollParallax.vue";
+import { QuillEditor } from '@vueup/vue-quill'
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
+import '@vueup/vue-quill/dist/vue-quill.bubble.css';
 
 const appName =
     window.document.getElementsByTagName("title")[0]?.innerText || "Laravel";
@@ -28,6 +31,7 @@ createInertiaApp({
             .use(ZiggyVue, Ziggy)
             .use(VueChartkick)
             .component("scroll-parallax", ScrollParallax)
+            .component('QuillEditor', QuillEditor)
             .mount(el);
     },
 });
