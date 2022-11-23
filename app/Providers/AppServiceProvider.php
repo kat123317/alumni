@@ -31,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
         date_default_timezone_set('Asia/Manila');
         
         $d = Carbon::today()->format('Y-m-d');
-
+        return;
         $ciphering = "AES-128-CTR";
         $options = 0;
         $encryption_iv = '1234567891011121';
