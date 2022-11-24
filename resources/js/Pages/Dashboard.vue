@@ -86,6 +86,8 @@ const function_add_post = () => {
                 errorAlert("Your content has been posted");
             },
         });
+        var element = document.getElementsByClassName("ql-editor");
+        element[0].innerHTML = "";
     }
 };
 
@@ -964,6 +966,7 @@ function onSelectEmojiSearch(emoji) {
                                 </div>
 
                                 <div
+                                    class="max-h-[10vmin]  overflow-hidden truncate"
                                     style="white-space: pre"
                                     v-html="posts.content"
                                 ></div>
@@ -1074,7 +1077,7 @@ function onSelectEmojiSearch(emoji) {
                                             <!-- <p class="mt-3 text-gray-700 text-sm">
                                                 {{ commentsData.content }}
                                             </p> -->
-                                            <small
+                                            <small class="max-h-[5vmin]  overflow-hidden truncate"
                                                 v-html="commentsData.content"
                                             ></small>
                                         </div>

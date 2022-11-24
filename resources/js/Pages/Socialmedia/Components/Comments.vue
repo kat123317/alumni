@@ -113,6 +113,8 @@ const function_comment = () => {
                 comment_data.reset();
             },
         });
+        var element = document.getElementsByClassName("ql-editor");
+        element[0].innerHTML = "";
     }
 };
 
@@ -133,6 +135,7 @@ const function_update_comment = () => {
             },
         }
     );
+
 };
 
 const function_open_delete_modal = (id) => {

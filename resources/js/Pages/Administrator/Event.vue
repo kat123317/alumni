@@ -91,6 +91,8 @@ const function_submit = () => {
                 event_data.reset();
             },
         });
+        var element = document.getElementsByClassName("ql-editor");
+        element[0].innerHTML = "";
     }
 };
 

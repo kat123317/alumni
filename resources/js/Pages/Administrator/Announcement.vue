@@ -69,6 +69,8 @@ const post_announcement = () => {
                 onAlert("Success");
             },
         });
+        var element = document.getElementsByClassName("ql-editor");
+        element[0].innerHTML = "";
     }
 };
 
