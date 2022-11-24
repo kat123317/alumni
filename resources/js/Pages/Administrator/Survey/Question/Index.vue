@@ -71,7 +71,7 @@ const showAddEditModal = (method = "add", index = -1) => {
         form_add_edit.reset();
         modals.add_edit.show = true;
         modals.add_edit.details.method = method;
-        modals.add_edit.details.title = "Add Quesetion";
+        modals.add_edit.details.title = "Add Question";
     } else {
         let edit_question = usePage().props.value.survey.questions[index];
 

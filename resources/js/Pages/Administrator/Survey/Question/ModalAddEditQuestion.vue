@@ -91,14 +91,17 @@ const checkDropdown = () => {
     >
         <template #title>{{ modals.add_edit.details.title }}</template>
         <template #content>
+                    <JetInputLabel>Instruction</JetInputLabel>
+                    <QuillEditor v-model:content="form_add_edit.instruction"  class="relative w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" theme="snow" toolbar="minimal"   id="postEditor"   contentType="html"></QuillEditor>
             <div class="grid grid-cols-6 gap-1">
                 <div class="col-span-6">
-                    <JetInputLabel>Instruction</JetInputLabel>
-                    <textarea
+                 
+                    <!-- <textarea
                         v-model="form_add_edit.instruction"
                         rows="5"
                         class="w-full w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                    ></textarea>
+                    ></textarea> -->
+                  
                     <JetInputError
                         :message="form_add_edit.errors.instruction"
                     ></JetInputError>

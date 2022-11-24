@@ -31,10 +31,10 @@ const proxyChecked = computed({
             class="max-w-7xl slide-in-top bg-white mb-6 overflow-hidden rounded-lg shadow-lg"
         >
             <div class="px-4 py-2">
-                <h1
+                <h1 v-html="question.instruction "
                     class="text-3xl text-focus-in text-green-900 font-bold text-white uppercase"
                 >
-                    {{ question.instruction }}
+               
                 </h1>
             </div>
 
