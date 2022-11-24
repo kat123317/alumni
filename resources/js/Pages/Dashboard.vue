@@ -21,6 +21,8 @@ const emojioverlay2 = ref(false);
 const searchUser = ref("")
 const SearchType = ref('posts')
 
+const userSearched = ref([])
+
 const errorAlert = (data) => {
     if (data) {
         postAlert.value = data;
@@ -51,7 +53,7 @@ const date_conversion_from_now = (value) => {
 const option_view = ref(true);
 
 onMounted(() => {
-
+   
 });
 
 const post_data = useForm({
@@ -452,19 +454,24 @@ function onSelectEmojiSearch(emoji) {
 
                                         <ul class="overflow-y-auto py-1 h-48 text-gray-700 "
                                             aria-labelledby="dropdownUsersButton">
-                                            <li>
-                                                <a href="#"
+                                            <li v-for="(drpUser, index) in usePage().props.value.users" :key="index">
+                                                <a v-if="drpUser.name.toLowerCase().includes(searchUser.toLowerCase())" :href="
+                                                        route(
+                                                            'socialmedia.user_profile',
+                                                            [drpUser.id]
+                                                        )
+                                                    "
                                                     class="flex items-center py-2 px-4 hover:bg-gray-100  ">
                                                     <img class="mr-2 w-6 h-6 rounded-full"
-                                                        src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                                                        :src="drpUser.profile_photo_url"
                                                         alt="Jese image">
-                                                    Jese Leos
+                                                    {{drpUser.name}}
                                                 </a>
                                             </li>
                                         </ul>
                                         <div class="flex justify-center">
 
-                                            <small>No result found</small>
+                                            <small>Results</small>
                                         </div>
                                         <a @click="searchUser = ''"
                                             class="flex items-center p-3 text-sm font-medium text-blue-600 bg-gray-50 border-t border-gray-200  hover:bg-gray-100  hover:underline">
