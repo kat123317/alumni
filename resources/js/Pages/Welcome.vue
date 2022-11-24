@@ -500,10 +500,10 @@ defineProps({
                                 >
                                     {{ events.title }}
                                 </div>
-                                <div
+                                <div v-html="events.content"
                                     class="bg-yellow-500 mt-1 rounded-lg text-center text-green-800 font-bold"
                                 >
-                                    {{ events.content }}
+                                 
                                 </div>
 
                                 <div

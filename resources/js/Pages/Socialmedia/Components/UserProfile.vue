@@ -313,7 +313,7 @@ const status = (value) => {
                 <!-- <p class="">
                     {{ posts.content }}
                 </p> -->
-                <div v-html="posts.content"></div>
+                <div  class="text-ellipsis max-h-[20vmin] overflow-hidden" v-html="posts.content"></div>
                 <PostImage :posts="posts" />
                 <!-- <div v-if="posts.photo != null" class="py-4 mx-auto">
                     <div v-if="posts.photo.length > 3" class="grid grid-cols-2">
@@ -439,9 +439,11 @@ const status = (value) => {
                                     }}
                                 </small>
                             </p>
+                            <div class="max-h-[15vmin]  overflow-hidden truncate">
                             <small v-html="commentsData.content" >
                          
                             </small>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -966,7 +966,7 @@ function onSelectEmojiSearch(emoji) {
                                 </div>
 
                                 <div
-                                    class="max-h-[10vmin]  overflow-hidden truncate"
+                                    class="max-h-[17vmin] lg:max-h-[10vmin]  overflow-hidden truncate"
                                     style="white-space: pre"
                                     v-html="posts.content"
                                 ></div>
@@ -1077,9 +1077,12 @@ function onSelectEmojiSearch(emoji) {
                                             <!-- <p class="mt-3 text-gray-700 text-sm">
                                                 {{ commentsData.content }}
                                             </p> -->
-                                            <small class="max-h-[5vmin]  overflow-hidden truncate"
+                                            <div class="max-h-[15vmin]  overflow-hidden truncate">
+                                             <small 
                                                 v-html="commentsData.content"
                                             ></small>
+                                            </div>
+                                           
                                         </div>
                                     </div>
                                 </div>
@@ -1151,7 +1154,7 @@ function onSelectEmojiSearch(emoji) {
 }
 
 .ql-editor {
-    max-height: 5vmin !important;
+    max-height: 7vmin !important;
 }
 .slide-in-elliptic-top-fwd {
     -webkit-animation: slide-in-elliptic-top-fwd 0.7s
@@ -1200,5 +1203,8 @@ function onSelectEmojiSearch(emoji) {
     .mt-nmobile {
         margin-top: -60vmin !important;
     }
+ .ql-editor {
+    max-height: 12vmin !important;
+}
 }
 </style>
