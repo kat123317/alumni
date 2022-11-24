@@ -271,10 +271,10 @@ const remove_image = (key) => {
                                             />
                                         </div>
                                     </td>
-                                    <td
+                                    <td  v-html="announcements.content"
                                         class="py-4 max-w-[70vmin] w-[26vmin] px-2"
                                     >
-                                        {{ announcements.content }}
+                                       
                                     </td>
                                     <td class="py-4 px-6">
                                         {{
@@ -415,21 +415,20 @@ const remove_image = (key) => {
                             class="leading-7 text-sm text-gray-600"
                             >Announcement</label
                         >
-                        <textarea
-                            v-model="announcement_data.content"
-                            id="message"
-                            name="message"
-                            class="w-full bg-white rounded border border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
-                        ></textarea>
-                    </div>
-                    <button
+                    
+                        <QuillEditor v-model:content="announcement_data.content" theme="snow" toolbar="minimal"   id="postEditor"   contentType="html"></QuillEditor>
+                        <button
                         @click="post_announcement()"
-                        class="text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded text-lg"
+                        class="text-white w-full mt-4 bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded text-lg"
                     >
                         Post
                     </button>
+                    </div>
+             
                 </div>
+                
             </div>
+            
             <div
                 class="px-4 w-100 py-3 flex items-center justify-center border-gray-200 sm:px-6"
             >
@@ -472,7 +471,7 @@ const remove_image = (key) => {
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
                                         >Your content</label
                                     >
-                                    <textarea
+                                    <!-- <textarea
                                         v-model="
                                             update_announcement_data.content
                                         "
@@ -481,7 +480,8 @@ const remove_image = (key) => {
                                         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                                         placeholder="Your content..."
                                         required
-                                    ></textarea>
+                                    ></textarea> -->
+                                    <QuillEditor v-model:content="update_announcement_data.content" theme="snow" toolbar="minimal"   id="postEditor"   contentType="html"></QuillEditor>
                                 </div>
                             </div>
                             <button

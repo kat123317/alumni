@@ -313,14 +313,15 @@ const searchEvents = () => {
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
                                     >Your content</label
                                 >
-                                <textarea
+                                <!-- <textarea
                                     v-model="event_data.content"
                                     id="content"
                                     rows="4"
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                                     placeholder="Your content..."
                                     required
-                                ></textarea>
+                                ></textarea> -->
+                                <QuillEditor v-model:content="event_data.content" theme="snow" toolbar="minimal"   id="postEditor"   contentType="html"></QuillEditor>
                             </div>
                         </div>
 
@@ -432,8 +433,8 @@ const searchEvents = () => {
                                             >
                                                 {{ events.title }}
                                             </th>
-                                            <td class="py-4 px-6">
-                                                {{ events.content }}
+                                            <td v-html="events.content" class="py-4 px-6">
+                                              
                                             </td>
                                             <td class="py-4 px-6">
                                                 {{
@@ -574,7 +575,7 @@ const searchEvents = () => {
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
                                                         >Your content</label
                                                     >
-                                                    <textarea
+                                                    <!-- <textarea
                                                         v-model="
                                                             update_event_data.content
                                                         "
@@ -583,7 +584,8 @@ const searchEvents = () => {
                                                         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                                                         placeholder="Your content..."
                                                         required
-                                                    ></textarea>
+                                                    ></textarea> -->
+                                                    <QuillEditor v-model:content="update_event_data.content" theme="snow" toolbar="minimal"   id="postEditor"   contentType="html"></QuillEditor>
                                                 </div>
                                             </div>
                                             <button
