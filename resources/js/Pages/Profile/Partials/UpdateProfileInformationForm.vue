@@ -308,7 +308,7 @@ const clearPhotoFileInput = () => {
                 <InputLabel for="nickname" value="Nickname" />
                 <TextInput
                     id="nickname"
-                    v-model="form.name"
+                    v-model="form.nickname"
                     type="text"
                     class="mt-1 block w-full"
                     autocomplete="nickname"

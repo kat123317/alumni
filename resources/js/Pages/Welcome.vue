@@ -373,7 +373,7 @@ defineProps({
             <section class="px-10 bg-gray-200">
                 <div class="py-8 px-4 mx-auto sm:py-16 lg:px-6">
                     <div
-                        class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-2 md:gap-12 md:space-y-0"
+                        class="space-y-8 md:grid md:grid-cols-1 lg:grid-cols-1 md:gap-12 md:space-y-0"
                     >
                         <!-- <div v-for="(announcement, key) in usePage().props.value.announcements" :key="key"
                             class="bg-white p-2 rounded drop-shadow-sm">
