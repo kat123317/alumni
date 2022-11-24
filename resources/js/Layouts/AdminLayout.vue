@@ -97,7 +97,7 @@ defineProps({
                     </button>
                     <button class="mr-8 text-white hover:text-gray-200">
                         <Link :href="route('administrator.notification')">
-                            Incomming Requests
+                            Incoming Requests
                             <span
                                 class="w-10 h-4 ml-[-16px] mt-[-16px] text-[1.5vmin] absolute custom_notification_count"
                             >
