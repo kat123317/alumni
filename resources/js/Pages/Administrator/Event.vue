@@ -308,11 +308,11 @@ const searchEvents = () => {
                                 />
                             </div>
                         </div>
-                        <div class="p-2 w-full">
-                            <div class="relative">
+                        <div class="p-2 min-h-[20vmin]  w-full">
+                            <div class="relative min-h-[20vmin]">
                                 <label
                                     for="content"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+                                    class=" mb-2 text-sm  font-medium text-gray-900 dark:text-gray-400"
                                     >Your content</label
                                 >
                                 <!-- <textarea
@@ -323,8 +323,9 @@ const searchEvents = () => {
                                     placeholder="Your content..."
                                     required
                                 ></textarea> -->
-                                <QuillEditor v-model:content="event_data.content" theme="snow" toolbar="minimal"   id="postEditor"   contentType="html"></QuillEditor>
+                                <QuillEditor class="min-h-[20vmin]" v-model:content="event_data.content" theme="snow" toolbar="minimal"   id="postEditor"   contentType="html"></QuillEditor>
                             </div>
+                        
                         </div>
 
                         <div class="p-2 w-full">
@@ -753,4 +754,3 @@ const searchEvents = () => {
         </section>
     </AdminLayout>
 </template>
-
