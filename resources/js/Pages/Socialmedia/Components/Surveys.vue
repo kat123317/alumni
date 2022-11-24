@@ -16,31 +16,32 @@ const date_conversion2 = (value) => {
     }
 };
 
-const getPercentage = (user_surveys) => {
-    let record = user_surveys.record;
-    let survey = user_surveys.survey;
-    if (record.length != 0) {
+const getPercentage = (notification) => {
+    let record = notification.record;
+    let survey = notification.survey;
+    // console.log(record != null);
+    if (record != null) {
         var count = 0;
         survey.questions.forEach((question) => {
             if (
                 question.setup.dropdown == true ||
                 question.setup.multiple_select == false
             ) {
-                if ("question_" + question.order in record.answers == true) {
-                    if (record.answers["question_" + question.order] != 0) {
+                if ("question_" + question.id in record.answers == true) {
+                    if (record.answers["question_" + question.id] != 0) {
                         count++;
                     }
                 }
             } else {
-                if ("question_" + question.order in record.answers == true) {
+                if ("question_" + question.id in record.answers == true) {
                     question.setup.choices.every((choice) => {
                         if (
                             "choice_" + choice.value in
-                                record.answers["question_" + question.order] ==
+                                record.answers["question_" + question.id] ==
                             true
                         ) {
                             if (
-                                record.answers["question_" + question.order][
+                                record.answers["question_" + question.id][
                                     "choice_" + choice.value
                                 ] != 0
                             ) {
@@ -53,99 +54,144 @@ const getPercentage = (user_surveys) => {
                 }
             }
         });
+
         return (count / survey.questions.length) * 100;
     } else {
         return 0;
     }
 };
 
-// const getStatus = (user_surveys) => {
-//     let record = user_surveys.record;
-//     let survey = user_surveys.survey;
-//     if (record != null) {
-//         var count = 0;
-//         survey.questions.forEach((question) => {
-//             if (
-//                 question.setup.dropdown == true ||
-//                 question.setup.multiple_select == false
-//             ) {
-//                 if ("question_" + question.order in record.answers == true) {
-//                     if (record.answers["question_" + question.order] != 0) {
-//                         count++;
-//                     }
-//                 }
-//             } else {
-//                 if ("question_" + question.order in record.answers == true) {
-//                     question.setup.choices.every((choice) => {
-//                         if (
-//                             "choice_" + choice.value in
-//                                 record.answers["question_" + question.order] ==
-//                             true
-//                         ) {
-//                             if (
-//                                 record.answers["question_" + question.order][
-//                                     "choice_" + choice.value
-//                                 ] != 0
-//                             ) {
-//                                 count++;
-//                                 return false;
-//                             }
-//                         }
-//                         return true;
-//                     });
-//                 }
-//             }
-//         });
-//         var status = (count / survey.questions.length) * 100;
-//         return status == 100 ? "Finished" : "Incomplete";
-//     } else {
-//         return "Not yet taken";
-//     }
-// };
+const getStatus = (notification) => {
+    let record = notification.record;
+    let survey = notification.survey;
+    if (record != null) {
+        var count = 0;
+        survey.questions.forEach((question) => {
+            if (
+                question.setup.dropdown == true ||
+                question.setup.multiple_select == false
+            ) {
+                if ("question_" + question.id in record.answers == true) {
+                    if (record.answers["question_" + question.id] != 0) {
+                        count++;
+                    }
+                }
+            } else {
+                if ("question_" + question.id in record.answers == true) {
+                    question.setup.choices.every((choice) => {
+                        if (
+                            "choice_" + choice.value in
+                                record.answers["question_" + question.id] ==
+                            true
+                        ) {
+                            if (
+                                record.answers["question_" + question.id][
+                                    "choice_" + choice.value
+                                ] != 0
+                            ) {
+                                count++;
+                                return false;
+                            }
+                        }
+                        return true;
+                    });
+                }
+            }
+        });
+        var status = (count / survey.questions.length) * 100;
+        return status == 100 ? "Finished" : "Incomplete";
+    } else {
+        return "Not yet taken";
+    }
+};
 
-// const getStatusButton = (user_surveys) => {
-//     let record = user_surveys.record;
-//     let survey = user_surveys.survey;
-//     if (record != null) {
-//         var count = 0;
-//         survey.questions.forEach((question) => {
-//             if (
-//                 question.setup.dropdown == true ||
-//                 question.setup.multiple_select == false
-//             ) {
-//                 if ("question_" + question.order in record.answers == true) {
-//                     if (record.answers["question_" + question.order] != 0) {
-//                         count++;
-//                     }
-//                 }
-//             } else {
-//                 if ("question_" + question.order in record.answers == true) {
-//                     question.setup.choices.every((choice) => {
-//                         if (
-//                             "choice_" + choice.value in
-//                                 record.answers["question_" + question.order] ==
-//                             true
-//                         ) {
-//                             if (
-//                                 record.answers["question_" + question.order][
-//                                     "choice_" + choice.value
-//                                 ] != 0
-//                             ) {
-//                                 count++;
-//                                 return false;
-//                             }
-//                         }
-//                         return true;
-//                     });
-//                 }
-//             }
-//         });
-//         var status = (count / survey.questions.length) * 100;
-//         return status == 100 ? "Retake" : "Answer";
-//     } else {
-//         return "Answer";
-//     }
-// };
+const getStatusButton = (notification) => {
+    let record = notification.record;
+    let survey = notification.survey;
+    if (record != null) {
+        var count = 0;
+        survey.questions.forEach((question) => {
+            if (
+                question.setup.dropdown == true ||
+                question.setup.multiple_select == false
+            ) {
+                if ("question_" + question.id in record.answers == true) {
+                    if (record.answers["question_" + question.id] != 0) {
+                        count++;
+                    }
+                }
+            } else {
+                if ("question_" + question.id in record.answers == true) {
+                    question.setup.choices.every((choice) => {
+                        if (
+                            "choice_" + choice.value in
+                                record.answers["question_" + question.id] ==
+                            true
+                        ) {
+                            if (
+                                record.answers["question_" + question.id][
+                                    "choice_" + choice.value
+                                ] != 0
+                            ) {
+                                count++;
+                                return false;
+                            }
+                        }
+                        return true;
+                    });
+                }
+            }
+        });
+        var status = (count / survey.questions.length) * 100;
+        return status == 100 ? "Retake" : "Answer";
+    } else {
+        return "Answer";
+    }
+};
+
+const getSurveyType = (notification) => {
+    let record = notification.record;
+    let survey = notification.survey;
+    if (record != null) {
+        var count = 0;
+        survey.questions.forEach((question) => {
+            if (
+                question.setup.dropdown == true ||
+                question.setup.multiple_select == false
+            ) {
+                if ("question_" + question.id in record.answers == true) {
+                    if (record.answers["question_" + question.id] != 0) {
+                        count++;
+                    }
+                }
+            } else {
+                if ("question_" + question.id in record.answers == true) {
+                    question.setup.choices.every((choice) => {
+                        if (
+                            "choice_" + choice.value in
+                                record.answers["question_" + question.id] ==
+                            true
+                        ) {
+                            if (
+                                record.answers["question_" + question.id][
+                                    "choice_" + choice.value
+                                ] != 0
+                            ) {
+                                count++;
+                                return false;
+                            }
+                        }
+                        return true;
+                    });
+                }
+            }
+        });
+        var status = (count / survey.questions.length) * 100;
+        return status == 100 ? "Retake" : "Answer";
+    } else {
+        return "Answer";
+    }
+};
 </script>
 
 <template>
@@ -174,14 +220,13 @@ const getPercentage = (user_surveys) => {
         >
             <div
                 v
-                v-for="(user_surveys, key) in usePage().props.value
-                    .user_surveys"
+                v-for="(user_survey, key) in usePage().props.value.user_surveys"
                 :key="key"
                 class="w-full max-w-sm px-4 py-3 border-b-4 border-green-400 bg-white rounded-md shadow-md"
             >
                 <div class="flex items-center justify-between">
                     <span class="text-sm font-bold text-gray-800">{{
-                        user_surveys.survey.name
+                        user_survey.survey.name
                     }}</span>
                     <span
                         class="px-3 py-1 text-xs text-white uppercase bg-green-800 rounded-full"
@@ -191,23 +236,23 @@ const getPercentage = (user_surveys) => {
 
                 <div>
                     <h1 class="mt-2 text-lg font-semibold text-gray-800">
-                        Items: {{ user_surveys.survey.questions.length }}
+                        Items: {{ user_survey.survey.questions.length }}
                     </h1>
 
                     <div class="grid grid-cols-2 mb-5">
                         <div>
                             <p class="mt-2 text-md text-gray-600">
                                 Percentage taken:
-                                {{ getPercentage(user_surveys) }}%
+                                {{ getPercentage(user_survey) }}%
                             </p>
                             <p class="mt-2 text-md text-gray-600">
-                                Status: {{ user_surveys.record.status }}
+                                Status: {{ getStatus(user_survey) }}
                             </p>
                             <p class="mt-2 text-md text-gray-600">
                                 Created at:
                                 {{
                                     date_conversion(
-                                        user_surveys.survey.created_at
+                                        user_survey.survey.created_at
                                     )
                                 }}
                             </p>
@@ -215,7 +260,7 @@ const getPercentage = (user_surveys) => {
                                 Updated at:
                                 {{
                                     date_conversion(
-                                        user_surveys.survey.updated_at
+                                        user_survey.survey.updated_at
                                     )
                                 }}
                             </p>
@@ -228,10 +273,10 @@ const getPercentage = (user_surveys) => {
 
                 <a
                     class="px-6 float-right py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-green-800 rounded-md hover:bg-green-500 focus:outline-none focus:ring focus:ring-green-300 focus:ring-opacity-80"
-                    :href="user_surveys.details.link"
+                    :href="user_survey.details.link"
                     target="_blank"
                 >
-                    <!-- {{ getStatusButton(user_surveys) }} -->
+                    {{ getStatusButton(user_survey) }}
                 </a>
             </div>
         </div>
