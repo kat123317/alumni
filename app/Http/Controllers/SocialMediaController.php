@@ -54,10 +54,13 @@ class SocialMediaController extends Controller
         foreach ($survey_notifications as $notification) {
             $survey = Survey::with('questions')->find($notification->details['survey_id']);
             $tmp = $notification;
-            $tmp['record'] = Record::whereUserId(Auth::user()->id)->whereSurveyId($survey->id)->first();
+            $tmp['record'] = Record::when([function($query) use($survey) {
+                $query ->whereUserId(Auth::user()->id)->whereSurveyId($survey->id)->first();
+            }]);
             $tmp['survey'] = $survey;
             $user_surveys[] = $tmp;
         }
+        // dd($user_surveys);
         return Inertia::render('Socialmedia/Components/Surveys', [
             'user_surveys' => $user_surveys
         ]);

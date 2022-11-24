@@ -19,7 +19,7 @@ const date_conversion2 = (value) => {
 const getPercentage = (user_surveys) => {
     let record = user_surveys.record;
     let survey = user_surveys.survey;
-    if (record != null) {
+    if (record.length != 0) {
         var count = 0;
         survey.questions.forEach((question) => {
             if (
@@ -59,93 +59,93 @@ const getPercentage = (user_surveys) => {
     }
 };
 
-const getStatus = (user_surveys) => {
-    let record = user_surveys.record;
-    let survey = user_surveys.survey;
-    if (record != null) {
-        var count = 0;
-        survey.questions.forEach((question) => {
-            if (
-                question.setup.dropdown == true ||
-                question.setup.multiple_select == false
-            ) {
-                if ("question_" + question.order in record.answers == true) {
-                    if (record.answers["question_" + question.order] != 0) {
-                        count++;
-                    }
-                }
-            } else {
-                if ("question_" + question.order in record.answers == true) {
-                    question.setup.choices.every((choice) => {
-                        if (
-                            "choice_" + choice.value in
-                                record.answers["question_" + question.order] ==
-                            true
-                        ) {
-                            if (
-                                record.answers["question_" + question.order][
-                                    "choice_" + choice.value
-                                ] != 0
-                            ) {
-                                count++;
-                                return false;
-                            }
-                        }
-                        return true;
-                    });
-                }
-            }
-        });
-        var status = (count / survey.questions.length) * 100;
-        return status == 100 ? "Finished" : "Incomplete";
-    } else {
-        return "Not yet taken";
-    }
-};
+// const getStatus = (user_surveys) => {
+//     let record = user_surveys.record;
+//     let survey = user_surveys.survey;
+//     if (record != null) {
+//         var count = 0;
+//         survey.questions.forEach((question) => {
+//             if (
+//                 question.setup.dropdown == true ||
+//                 question.setup.multiple_select == false
+//             ) {
+//                 if ("question_" + question.order in record.answers == true) {
+//                     if (record.answers["question_" + question.order] != 0) {
+//                         count++;
+//                     }
+//                 }
+//             } else {
+//                 if ("question_" + question.order in record.answers == true) {
+//                     question.setup.choices.every((choice) => {
+//                         if (
+//                             "choice_" + choice.value in
+//                                 record.answers["question_" + question.order] ==
+//                             true
+//                         ) {
+//                             if (
+//                                 record.answers["question_" + question.order][
+//                                     "choice_" + choice.value
+//                                 ] != 0
+//                             ) {
+//                                 count++;
+//                                 return false;
+//                             }
+//                         }
+//                         return true;
+//                     });
+//                 }
+//             }
+//         });
+//         var status = (count / survey.questions.length) * 100;
+//         return status == 100 ? "Finished" : "Incomplete";
+//     } else {
+//         return "Not yet taken";
+//     }
+// };
 
-const getStatusButton = (user_surveys) => {
-    let record = user_surveys.record;
-    let survey = user_surveys.survey;
-    if (record != null) {
-        var count = 0;
-        survey.questions.forEach((question) => {
-            if (
-                question.setup.dropdown == true ||
-                question.setup.multiple_select == false
-            ) {
-                if ("question_" + question.order in record.answers == true) {
-                    if (record.answers["question_" + question.order] != 0) {
-                        count++;
-                    }
-                }
-            } else {
-                if ("question_" + question.order in record.answers == true) {
-                    question.setup.choices.every((choice) => {
-                        if (
-                            "choice_" + choice.value in
-                                record.answers["question_" + question.order] ==
-                            true
-                        ) {
-                            if (
-                                record.answers["question_" + question.order][
-                                    "choice_" + choice.value
-                                ] != 0
-                            ) {
-                                count++;
-                                return false;
-                            }
-                        }
-                        return true;
-                    });
-                }
-            }
-        });
-        var status = (count / survey.questions.length) * 100;
-        return status == 100 ? "Retake" : "Answer";
-    } else {
-        return "Answer";
-    }
-};
+// const getStatusButton = (user_surveys) => {
+//     let record = user_surveys.record;
+//     let survey = user_surveys.survey;
+//     if (record != null) {
+//         var count = 0;
+//         survey.questions.forEach((question) => {
+//             if (
+//                 question.setup.dropdown == true ||
+//                 question.setup.multiple_select == false
+//             ) {
+//                 if ("question_" + question.order in record.answers == true) {
+//                     if (record.answers["question_" + question.order] != 0) {
+//                         count++;
+//                     }
+//                 }
+//             } else {
+//                 if ("question_" + question.order in record.answers == true) {
+//                     question.setup.choices.every((choice) => {
+//                         if (
+//                             "choice_" + choice.value in
+//                                 record.answers["question_" + question.order] ==
+//                             true
+//                         ) {
+//                             if (
+//                                 record.answers["question_" + question.order][
+//                                     "choice_" + choice.value
+//                                 ] != 0
+//                             ) {
+//                                 count++;
+//                                 return false;
+//                             }
+//                         }
+//                         return true;
+//                     });
+//                 }
+//             }
+//         });
+//         var status = (count / survey.questions.length) * 100;
+//         return status == 100 ? "Retake" : "Answer";
+//     } else {
+//         return "Answer";
+//     }
+// };
 </script>
 
 <template>
@@ -201,7 +201,7 @@ const getStatusButton = (user_surveys) => {
                                 {{ getPercentage(user_surveys) }}%
                             </p>
                             <p class="mt-2 text-md text-gray-600">
-                                Status: {{ getStatus(user_surveys) }}
+                                Status: {{ user_surveys.record.status }}
                             </p>
                             <p class="mt-2 text-md text-gray-600">
                                 Created at:
@@ -231,7 +231,7 @@ const getStatusButton = (user_surveys) => {
                     :href="user_surveys.details.link"
                     target="_blank"
                 >
-                    {{ getStatusButton(user_surveys) }}
+                    <!-- {{ getStatusButton(user_surveys) }} -->
                 </a>
             </div>
         </div>

@@ -822,7 +822,7 @@ function onSelectEmojiSearch(emoji) {
 }
 
 .ql-editor{
-    max-height:10vmin;
+    max-height:5vmin!important;
    
 }
 .slide-in-elliptic-top-fwd {
