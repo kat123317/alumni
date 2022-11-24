@@ -49,7 +49,7 @@ class SocialMediaController extends Controller
         // });
         // $user_surveys = UserNotification::where('notification_owner', Auth::user()->id)->where('notification_type', 'survey')->orderBy('created_at', 'desc')->get();
         
-        $survey_notifications = UserNotification::where(['notification_type' => 'survey', 'notification_owner' => Auth::user()->id])->get();
+        $survey_notifications = UserNotification::where(['notification_type' => 'survey', 'notification_owner' => Auth::user()->id])->orderBy('created_at', 'desc')->get();
         $survey_notifications = $survey_notifications->unique('details->survey_id');
         $user_surveys = [];
         foreach ($survey_notifications as $notification) {

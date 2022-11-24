@@ -21,9 +21,9 @@ defineProps(["posts"]);
             </a>
         </div>
         <div v-if="posts.photo.length == 3">
-            <div class="grid grid-cols-2">
+            <div class="grid grid-cols-2 mt-2">
                 <a
-                    class="flex"
+                    class="flex justify-center"
                     :href="route('socialmedia.comments', [posts.id])"
                     v-for="(photos, key2) in posts.photo"
                     :key="key2"
@@ -35,7 +35,7 @@ defineProps(["posts"]);
                     />
                 </a>
             </div>
-            <div class="flex justify-center mx-auto">
+            <div class="flex justify-center mx-auto mt-2">
                 <img
                     class="w-full scale-in-top max-h-[65vmin] object-contain"
                     :src="'./images/posts/' + posts.photo[2]"
