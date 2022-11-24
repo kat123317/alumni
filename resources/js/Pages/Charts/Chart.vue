@@ -131,15 +131,15 @@ const functionDownload = () => {
 <template>
     <AppLayout title="Chart">
         <!-- component -->
-        <section class="bg-gray-900 min-h-screen">
+        <section class="min-h-screen">
             <div class="container px-6 py-12 mx-auto">
-                <h1 class="text-2xl font-semibold lg:text-4xl text-white">
+                <h1 class="text-2xl font-semibold lg:text-4xl text-black">
                     Charts and Reports
                 </h1>
 
                 <div class="mt-8 xl:mt-16 lg:flex lg:-mx-12">
                     <div class="lg:mx-12">
-                        <h1 class="text-xl font-semibold text-white">
+                        <h1 class="text-xl font-semibold text-black">
                             Available Charts
                         </h1>
 
@@ -149,7 +149,7 @@ const functionDownload = () => {
                                 :class="[
                                     route().params.tab == 1
                                         ? 'text-blue-500 block cursor-pointer'
-                                        : 'text-white block cursor-pointer',
+                                        : 'text-black block cursor-pointer',
                                 ]"
                                 >Colleges</a
                             >
@@ -159,7 +159,7 @@ const functionDownload = () => {
                                 :class="[
                                     route().params.tab == 2
                                         ? 'text-blue-500 block cursor-pointer'
-                                        : 'text-white block cursor-pointer',
+                                        : 'text-black block cursor-pointer',
                                 ]"
                                 >Users</a
                             >
@@ -168,7 +168,7 @@ const functionDownload = () => {
                                 :class="[
                                     route().params.tab == 3
                                         ? 'text-blue-500 block cursor-pointer'
-                                        : 'text-white block cursor-pointer',
+                                        : 'text-black block cursor-pointer',
                                 ]"
                                 >Graduates</a
                             >
@@ -177,7 +177,7 @@ const functionDownload = () => {
                                 :class="[
                                     route().params.tab == 4
                                         ? 'text-blue-500 block cursor-pointer'
-                                        : 'text-white block cursor-pointer',
+                                        : 'text-black block cursor-pointer',
                                 ]"
                                 >Surveys</a
                             >
@@ -499,11 +499,12 @@ const functionDownload = () => {
                                 :key="key"
                                 class="flex max-w-md overflow-hidden bg-white rounded-lg shadow-lg"
                             >
-                                <div class="w-1/3 bg-cover">
-                                    <!-- style="
+                                <div
+                                    class="w-1/3 bg-cover"
+                                    style="
                                         background-image: url('http://devops.cmu.edu.ph/formlinks/assets/dist/assets/img/logos/CMU-LOGO.png');
-                                    " -->
-                                </div>
+                                    "
+                                ></div>
 
                                 <div class="w-2/3 p-4 md:p-4">
                                     <h1

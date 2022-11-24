@@ -9,18 +9,18 @@ import moment from "moment";
 
 <template>
     <AppLayout title="survey_charts">
-        <section class="bg-white dark:bg-gray-900">
+        <section class="bg-white">
             <div class="container px-6 py-10 mx-auto">
                 <h1
-                    class="text-3xl font-semibold text-gray-800 capitalize lg:text-4xl dark:text-white"
+                    class="text-3xl font-semibold text-gray-800 capitalize lg:text-4xl"
                 >
                     Survey Charts
                 </h1>
 
-                <p class="mt-4 text-gray-500 xl:mt-6 dark:text-gray-300">
+                <p class="mt-4 text-gray-500 xl:mt-6">
                     Survey Reports
-                    {{ usePage().props.value.records_count }} person who answer
-                    this survey
+                    {{ usePage().props.value.records_count }} person/s who
+                    answer this survey
                 </p>
 
                 <div
@@ -29,24 +29,20 @@ import moment from "moment";
                     <div
                         v-for="(chart, key) in usePage().props.value.charts"
                         :key="key"
-                        class="p-8 space-y-3 border-2 border-green-400 dark:border-green-300 rounded-xl"
+                        class="p-8 space-y-3 border-2 border-green-400 rounded-xl"
                     >
-                        <span
-                            class="inline-block flex text-green-500 dark:text-green-400"
-                        >
+                        <span class="inline-block flex text-green-500">
                             Question {{ key + 1 }}
                         </span>
 
                         <h1
-                            class="text-2xl font-semibold text-gray-700 capitalize dark:text-white"
+                            class="text-2xl font-semibold text-gray-700 capitalize"
                         >
                             {{ chart.instructions }}
                         </h1>
 
                         <pie-chart :data="chart.data"></pie-chart>
-                        <ul
-                            class="mb-8 space-y-4 text-left text-gray-500 dark:text-gray-400"
-                        >
+                        <ul class="mb-8 space-y-4 text-left text-gray-500">
                             <li
                                 v-for="(answer, key2) in chart.data"
                                 :key="key2"
@@ -60,7 +56,7 @@ import moment from "moment";
                                     viewBox="0 0 24 24"
                                     stroke-width="1.5"
                                     stroke="currentColor"
-                                    class="w-6 h-6 flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400"
+                                    class="w-6 h-6 flex-shrink-0 w-5 h-5 text-green-500"
                                 >
                                     <path
                                         stroke-linecap="round"
