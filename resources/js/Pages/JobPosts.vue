@@ -611,7 +611,7 @@ const function_search = () => {
                                         role="link"
                                         >{{ posts.job_title }}</a
                                     >
-                                    <div
+                                    <div style="white-space: pre;"
                                         v-html="posts.job_description"
                                         class="mt-2 text-gray-600"
                                     ></div>
