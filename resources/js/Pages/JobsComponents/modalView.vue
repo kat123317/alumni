@@ -59,9 +59,10 @@ const SendResume = () => {
                         >
                             Details
                         </p>
-                        <p class="text-gray-500 ">
-                            {{ jobData.job_description }}
-                        </p>
+                        <div v-html="jobData.job_description ">
+
+                        </div>
+               
                         <hr
                             class="my-2 h-px bg-gray-200 border-0 "
                         />

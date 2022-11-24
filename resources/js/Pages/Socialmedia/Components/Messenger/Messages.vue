@@ -75,7 +75,7 @@ const scrolltoDown = async () => {
                                     : messages.user.name
                             }}
                         </p>
-                        <p class="text-sm mt-1">
+                        <p class="text-sm mt-1" style="white-space: pre;">
                             {{ messages.content }}
                         </p>
                         <p class="text-right text-xs text-grey-dark mt-1">

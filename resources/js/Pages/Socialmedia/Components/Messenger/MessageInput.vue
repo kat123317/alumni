@@ -46,7 +46,7 @@ function onSelectEmoji(emoji) {
                                 </div>
                             </div>
         <div class="flex-1 mx-4">
-            <input @click="emojioverlay = false" @keydown.enter="
+            <textarea @click="emojioverlay = false" @keydown.enter="
                 function_send_message($page.props.conversation_id)
             " v-model="message_data.content" class="w-full border rounded px-2 py-2" type="text"
                 :disabled="usePage().props.value.user_selected == null" />
