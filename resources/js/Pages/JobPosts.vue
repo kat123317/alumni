@@ -611,7 +611,7 @@ const function_search = () => {
                                         role="link"
                                         >{{ posts.job_title }}</a
                                     >
-                                    <div style="white-space: pre;"
+                                    <div 
                                         v-html="posts.job_description"
                                         class="mt-2 text-gray-600"
                                     ></div>
@@ -741,7 +741,7 @@ const function_search = () => {
                                     </label>
 
                                     <label class="block mt-3" for="Description">
-                                        <textarea
+                                        <!-- <textarea
                                             type="Description"
                                             name="Description"
                                             id="Description"
@@ -750,7 +750,8 @@ const function_search = () => {
                                             "
                                             placeholder="Job Description"
                                             class="block w-full px-4 py-3 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"
-                                        ></textarea>
+                                        ></textarea> -->
+                                        <QuillEditor v-model:content="update_modal_data.job_description" theme="snow" toolbar="minimal"   id="postEditor"   contentType="html"></QuillEditor>
                                     </label>
 
                                     <label class="block mt-3" for="contact">

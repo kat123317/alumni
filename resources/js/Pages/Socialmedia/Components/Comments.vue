@@ -471,16 +471,19 @@ function onSelectEmoji(emoji) {
                                 Close
                             </button>
                         </div>
+                        
                     </div>
-                    <input
+                    <!-- <input
                         @click="emojioverlay = false"
                         v-model="comment_data.comment"
                         class="pt-2 pb-2 pl-3 w-full h-11 bg-slate-100 rounded-lg placeholder:text-slate-600 font-medium pr-20"
                         type="text"
                         placeholder="Write a comment"
                         required
-                    />
-                    <div
+                    /> -->
+                        
+               
+                    <!-- <div
                         class="flex absolute right-3 top-2/4 -mt-3 items-center"
                     >
                         <svg
@@ -509,9 +512,17 @@ function onSelectEmoji(emoji) {
                         >
                             <path d="M2,21L23,12L2,3V10L17,12L2,14V21Z"></path>
                         </svg>
-                    </div>
+                    </div> -->
                 </div>
-
+                <QuillEditor v-model:content="comment_data.comment" theme="snow" toolbar="minimal"   id="postEditor"   contentType="html"></QuillEditor>
+                <div class="flex justify-end mt-5">
+                    <button @click="function_comment()" type="button" class="text-white  bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex  items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 max-w-sm">
+                    Post comment
+                    <svg aria-hidden="true" class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                </button>
+                </div>
+           
+         
                 <div v-for="(comments, key) in post.comments" :key="key">
                     <div class="pt-6">
                         <div class="media flex pb-4">
@@ -604,9 +615,8 @@ function onSelectEmoji(emoji) {
                                         </svg>
                                     </button>
                                 </div>
-                                <p>
-                                    {{ comments.content }} 
-                                </p>
+                                <div v-html="comments.content ">
+                                </div>
                                 <!-- <div class="mt-2 flex items-center">
                                     <a
                                         class="inline-flex items-center"
@@ -657,14 +667,16 @@ function onSelectEmoji(emoji) {
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
                                         >Your content</label
                                     >
-                                    <textarea
+                                    <!-- <textarea
                                         v-model="post_update_data.content"
                                         id="post"
                                         rows="4"
                                         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                                         placeholder="Your content..."
                                         required
-                                    ></textarea>
+                                    ></textarea> -->
+                                    <QuillEditor v-model:content="post_update_data.content" theme="snow" toolbar="minimal"   id="postEditor"   contentType="html"></QuillEditor>
+                                    
                                 </div>
                             </div>
                             <button
@@ -747,14 +759,16 @@ function onSelectEmoji(emoji) {
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
                                         >Your content</label
                                     >
-                                    <textarea
+                                    <!-- <textarea
                                         v-model="comment_update_data.comment"
                                         id="content"
                                         rows="4"
                                         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                                         placeholder="Your content..."
                                         required
-                                    ></textarea>
+                                    ></textarea> -->
+                                    <QuillEditor v-model:content="comment_update_data.comment" theme="snow" toolbar="minimal"   id="postEditor"   contentType="html"></QuillEditor>
+                                    
                                 </div>
                             </div>
                             <button

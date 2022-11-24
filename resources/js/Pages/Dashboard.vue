@@ -523,17 +523,17 @@ function onSelectEmojiSearch(emoji) {
 
                                     <div class="flex w-full items-center">
                                         <label for="voice-search" class="sr-only">Search</label>
+                                      
+                                        <div class="relative w-full mt-10">
 
-                                        <div class="relative w-full">
-
-                                            <!-- <QuillEditor v-model:content="post_data.content" id="postEditor" :content="post_data?.content" class=" bg-gray-50 max-h-sm border border-gray-300 overflow-hidden text-gray-900 text-sm rounded-lg border-t-1 border-gray-500 focus:ring-blue-500 focus:border-blue-500 block w-full relative  p-2.5" contentType="html"></QuillEditor> -->
-                                            <textarea v-model="post_data.content" id="postEditor"
+                                    
+                                            <!-- <textarea v-model="post_data.content" id="postEditor"
                                                 class=" bg-gray-50 max-h-sm border border-gray-300 overflow-hidden text-gray-900 text-sm rounded-lg border-t-1 border-gray-500 focus:ring-blue-500 focus:border-blue-500 block w-full relative  p-2.5"
                                                 contentType="html">
 
-                                            </textarea>
-
-                                            <button type="button" @click="
+                                            </textarea> -->
+                                            <QuillEditor v-model:content="post_data.content" theme="snow" toolbar="minimal"   id="postEditor" :content="post_data?.content"  contentType="html"></QuillEditor>
+                                            <!-- <button type="button" @click="
                                                 emojioverlay = !emojioverlay
                                             " class="flex absolute inset-y-0 right-0 items-center pr-3">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -542,7 +542,7 @@ function onSelectEmojiSearch(emoji) {
                                                         stroke-linejoin="round"
                                                         d="M15.182 15.182a4.5 4.5 0 01-6.364 0M21 12a9 9 0 11-18 0 9 9 0 0118 0zM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75zm-.375 0h.008v.015h-.008V9.75zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75zm-.375 0h.008v.015h-.008V9.75z" />
                                                 </svg>
-                                            </button>
+                                            </button> -->
                                         </div>
                                     </div>
                                 </div>
@@ -557,7 +557,7 @@ function onSelectEmojiSearch(emoji) {
                                         </button>
                                     </div>
                                 </div>
-                                <div class="w-full h-10 flex justify-between mt-4 px-3 md:px-10 lg:px-24 xl:px-5">
+                                <div class="w-full h-10 flex justify-between mt-12 px-3 md:px-10 lg:px-24 xl:px-5">
                                     <div class="flex">
                                         <button @click="openFile()" class="flex h-full items-center">
                                             <svg class="h-12 text-green-500 stroke-current"
@@ -813,6 +813,18 @@ function onSelectEmojiSearch(emoji) {
     margin-top: -6rem;
 }
 
+.ql-toolbar.ql-snow {
+    border: 0px solid #d1d5db;
+    box-sizing: border-box;
+    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    padding: 8px;
+    
+}
+
+.ql-editor{
+    max-height:10vmin;
+   
+}
 .slide-in-elliptic-top-fwd {
     -webkit-animation: slide-in-elliptic-top-fwd 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
     animation: slide-in-elliptic-top-fwd 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
