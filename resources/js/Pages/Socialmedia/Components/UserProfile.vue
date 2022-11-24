@@ -439,9 +439,9 @@ const status = (value) => {
                                     }}
                                 </small>
                             </p>
-                            <p class="mt-3 text-gray-700 text-sm">
-                                {{ commentsData.content }}
-                            </p>
+                            <small v-html="commentsData.content" >
+                         
+                            </small>
                         </div>
                     </div>
                 </div>
