@@ -148,6 +148,50 @@ const getStatusButton = (notification) => {
         return "Answer";
     }
 };
+
+const getSurveyType = (notification) => {
+    let record = notification.record;
+    let survey = notification.survey;
+    if (record != null) {
+        var count = 0;
+        survey.questions.forEach((question) => {
+            if (
+                question.setup.dropdown == true ||
+                question.setup.multiple_select == false
+            ) {
+                if ("question_" + question.id in record.answers == true) {
+                    if (record.answers["question_" + question.id] != 0) {
+                        count++;
+                    }
+                }
+            } else {
+                if ("question_" + question.id in record.answers == true) {
+                    question.setup.choices.every((choice) => {
+                        if (
+                            "choice_" + choice.value in
+                                record.answers["question_" + question.id] ==
+                            true
+                        ) {
+                            if (
+                                record.answers["question_" + question.id][
+                                    "choice_" + choice.value
+                                ] != 0
+                            ) {
+                                count++;
+                                return false;
+                            }
+                        }
+                        return true;
+                    });
+                }
+            }
+        });
+        var status = (count / survey.questions.length) * 100;
+        return status == 100 ? "Retake" : "Answer";
+    } else {
+        return "Answer";
+    }
+};
 </script>
 
 <template>
