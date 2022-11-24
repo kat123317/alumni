@@ -50,7 +50,21 @@ class SocialMediaController extends Controller
         // $user_surveys = UserNotification::where('notification_owner', Auth::user()->id)->where('notification_type', 'survey')->orderBy('created_at', 'desc')->get();
         
         $survey_notifications = UserNotification::where(['notification_type' => 'survey', 'notification_owner' => Auth::user()->id])->orderBy('created_at', 'desc')->get();
-        $survey_notifications = $survey_notifications->unique('details->survey_id');
+
+        // $survey_notifications = $survey_notifications->unique('details->survey_id');
+        // dd($survey_notifications[0]->details['survey_id']);
+        $tmp_data = [];
+        $tmp_array = [];
+        foreach ($survey_notifications as $notif) {
+                if (in_array($notif->details['survey_id'],$tmp_array) == false) {
+                    $tmp_data[] = $notif;
+                    $tmp_array[] = $notif->details['survey_id'];
+                }
+        }
+        $survey_notifications = $tmp_data;
+        // $survey_notifications->all();
+
+
         $user_surveys = [];
         foreach ($survey_notifications as $notification) {
             $survey = Survey::with('questions')->find($notification->details['survey_id']);
