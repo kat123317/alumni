@@ -197,7 +197,7 @@ class AnnouncementController extends Controller
         foreach ($questions as $question) {
             $tmp = [
                 'order' => $question->order,
-                'instruction' => $question->instruction
+                'instruction' =>strip_tags( $question->instruction )
             ];
             $tmp_data = [];
             foreach ($question['setup']['choices'] as $choice) {
@@ -216,7 +216,7 @@ class AnnouncementController extends Controller
         }
         
         $tmp_record = [[$request->survey_name]];
-        $tmp_header = ['User'];
+        $tmp_header = ['User ID'];
         foreach ($questions as $question){
             if ($question->setup['multiple_select'] == true) {
                 foreach ($question->setup['choices'] as $key => $value) {
@@ -230,7 +230,7 @@ class AnnouncementController extends Controller
         $tmp_record[] = $tmp_header;
         
         foreach ($records as $record) {
-            $answers=[$record->user->name];
+            $answers=[$record->user->id];
             foreach ($questions as $question){
                 if ($question->setup['multiple_select'] == true) {
                     foreach ($record->answers['question_'.$question->id] as $answer_value) {

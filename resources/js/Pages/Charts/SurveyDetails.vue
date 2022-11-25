@@ -5,6 +5,11 @@ import { Head, Link, useForm, usePage } from "@inertiajs/inertia-vue3";
 import { ref, onMounted, computed } from "vue";
 
 import moment from "moment";
+
+const function_calculate_percent = (answer) => {
+    let calculated = (answer / usePage().props.value.records_count) * 100;
+    return calculated + "%";
+};
 </script>
 
 <template>
@@ -33,6 +38,9 @@ import moment from "moment";
                     >
                         <span class="inline-block flex text-green-500">
                             Question {{ key + 1 }}
+                        </span>
+                        <span class="inline-block flex text-green-500">
+                            <span v-html="chart.instruction"></span>
                         </span>
 
                         <h1
@@ -69,7 +77,15 @@ import moment from "moment";
                                     {{ answer[0] }}:
                                     <span class="decoration-sky-500">{{
                                         answer[1]
-                                    }}</span></span
+                                    }}</span>
+                                    <span>
+                                        -
+                                        {{
+                                            function_calculate_percent(
+                                                answer[1]
+                                            )
+                                        }}</span
+                                    ></span
                                 >
                             </li>
                         </ul>
