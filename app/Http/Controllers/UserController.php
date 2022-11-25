@@ -113,27 +113,38 @@ class UserController extends Controller
             'religion'=>['required', 'string'],
             'civil_status'=>['required'],
             'gender'=>['required'],
-            'address'=>['required'],
+            'address'=>['required', 'string'],
             'phone_number'=>['required', 'integer'],
             'current_work'=>['required'],
-            // 'year_graduated'=>['required'],
-            'motto'=>['required'],
-            'nickname' => ['required'], 
+            'year_graduated'=>['required'],
+            // 'motto'=>['required'],
+            // 'nickname' => ['required'], 
+            'region_of_origin'=> ['required', 'string'],
+            'province'=> ['required', 'string'],
+            'degree_graduated' => ['required'],
+
 
         ])->validate();
         
         $user_details = array(
-            'course_id'=>$input['course_id'],
-            'date_of_birth'=>$input['date_of_birth'], 
-            'religion'=>$input['religion'], 
-            'civil_status'=>$input['civil_status'], 
-            'gender'=>$input['gender'], 
+            //personal info
             'address'=>$input['address'], 
             'phone_number'=>$input['phone_number'], 
+            'civil_status'=>$input['civil_status'], 
+            'gender'=>$input['gender'], 
+            'date_of_birth'=>$input['date_of_birth'], 
+            'region_of_origin'=>$input['region_of_origin'],
+            'province'=>$input['province'],
+            'religion'=>$input['religion'], 
+            //educational info
+            'degree_graduated'=> $input['degree_graduated'],
+            // 'course_id'=>$input['course_id'],
+            'honors_awards'=>$input['honors_awards'],
             'current_work'=>$input['current_work'], 
             'year_graduated'=>$input['year_graduated'], 
-            'motto'=>$input['motto'], 
-            'nickname'=>$input['nickname']);
+            'motto'=>$input['motto']??'', 
+            'nickname'=>$input['nickname']??''
+        );
             
         $user = User::create([
             'name' => $input['name'],
