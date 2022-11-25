@@ -40,6 +40,9 @@ const form = useForm({
 const year_graduated = ref("");
 const tmp_achievement = ref("");
 
+const aggreement = ref(false);
+
+
 onMounted(() => {
     year_graduated.value = function_date();
 });
@@ -75,6 +78,10 @@ const function_add_honors = () => {
 const remove_achievement = (key) => {
     const temp_achievement = ref(form.honors_awards.splice(key, 1));
 };
+
+const function_aggree = () => {
+    aggreement.value = ! aggreement.value
+}
 
 const submit = () => {
     form.post(route("register_user"), {
@@ -498,6 +505,28 @@ const submit = () => {
                         />
                     </div>
                 </div>
+                <div class="text-center mt-6 mb-6">
+                    <p><strong>PRIVACY NOTICE CMU</strong></p>
+                    <p>
+                        CMU is committed in complying the mandates of National
+                        Privacy Commission and implementing the Rules and
+                        Regulations of Data Privacy Act of 2012. Personal
+                        information being collected through this attendance
+                        sheet will be used to monitor attendance of the
+                        participants for the following specified purpose/s:
+                    </p>
+                    <p>
+                        <p> 1.Alumni Directory</p>
+                        <p>2.CMUAAI ID</p>
+                    </p>
+                    <p>
+                        I hereby declare that the information given in this application is true and correct to the best of my knowledge and belief. In case any information given in this application proves to be false or incorrect, I shall be responsible for the consequences
+                    </p>
+                    <p class="mt-10">
+                        <input @click="function_aggree()" type="checkbox" id="" name="" value=""> I aggree 
+                    </p>
+
+                </div>
 
                 <div
                     v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature"
@@ -542,9 +571,11 @@ const submit = () => {
                     </Link>
 
                     <PrimaryButton
+                    v-if="aggreement == true"
                         class="ml-4"
                         :class="{ 'opacity-25': form.processing }"
                         :disabled="form.processing"
+                        
                     >
                         Register
                     </PrimaryButton>
