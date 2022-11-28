@@ -907,7 +907,7 @@ function onSelectEmojiSearch(emoji) {
                                             :href="
                                                 route(
                                                     'socialmedia.user_profile',
-                                                    [posts.user.id]
+                                                    [posts.user_id]
                                                 )
                                             "
                                         >
@@ -966,7 +966,7 @@ function onSelectEmojiSearch(emoji) {
                                 </div>
 
                                 <div
-                                    class="max-h-[17vmin] lg:max-h-[10vmin]  overflow-hidden truncate"
+                                    class="max-h-[17vmin] lg:max-h-[10vmin] overflow-hidden truncate"
                                     style="white-space: pre"
                                     v-html="posts.content"
                                 ></div>
@@ -1077,12 +1077,15 @@ function onSelectEmojiSearch(emoji) {
                                             <!-- <p class="mt-3 text-gray-700 text-sm">
                                                 {{ commentsData.content }}
                                             </p> -->
-                                            <div class="max-h-[15vmin]  overflow-hidden truncate">
-                                             <small 
-                                                v-html="commentsData.content"
-                                            ></small>
+                                            <div
+                                                class="max-h-[15vmin] overflow-hidden truncate"
+                                            >
+                                                <small
+                                                    v-html="
+                                                        commentsData.content
+                                                    "
+                                                ></small>
                                             </div>
-                                           
                                         </div>
                                     </div>
                                 </div>
@@ -1203,8 +1206,8 @@ function onSelectEmojiSearch(emoji) {
     .mt-nmobile {
         margin-top: -60vmin !important;
     }
- .ql-editor {
-    max-height: 12vmin !important;
-}
+    .ql-editor {
+        max-height: 12vmin !important;
+    }
 }
 </style>

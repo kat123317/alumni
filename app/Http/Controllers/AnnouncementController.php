@@ -52,6 +52,7 @@ class AnnouncementController extends Controller
         $graduates = Yearbook::withCount('graduates')->when($between, function($query, $between) use ($yearbook_temp_1, $yearbook_temp_2) {
             $query->whereBetween('schoolyear_from', [(int)$yearbook_temp_1->schoolyear_from, (int)$yearbook_temp_2->schoolyear_from]);
         })->orderBy('schoolyear_from', 'desc' )->limit(10)->get();
+
         $posts = UserPosts::with(['user' => function($query){
             $query->where('is_active', '1');
         }])->with(['comments_custom' => function($query) {
@@ -61,7 +62,22 @@ class AnnouncementController extends Controller
         }])->when($search_text, function($query, $search_text){
             $query -> where('content','like',"%{$search_text}%");
         })->orderBy('created_at', 'desc')->get();
-        $user_notification = UserNotification::with('user')->where('notification_owner', Auth::user()->id)->where('is_read', 0)->orderBy('created_at', 'desc')->get();
+
+        $user_notification = UserNotification::with('user')->where(function($query){
+            $query -> where('notification_type', 'react')
+                    -> orWhere('notification_type', 'comment');
+        })->where('notification_owner', Auth::user()->id)->where('is_read', 0)->orderBy('created_at', 'desc')->get();
+
+        $survey_notifications = UserNotification::where(['notification_type' => 'survey', 'notification_owner' => Auth::user()->id])->where('is_read', 0)->orderBy('created_at', 'desc')->get();
+        $tmp_data = [];
+        $tmp_array = [];
+        foreach ($survey_notifications as $notif) {
+                if (in_array($notif->details['survey_id'],$tmp_array) == false) {
+                    $tmp_data[] = $notif;
+                    $tmp_array[] = $notif->details['survey_id'];
+                }
+        }
+        $survey_notifications = $tmp_data;
         return Inertia::render('Dashboard', [
             'notifications' => $notifications,
             'colleges' => $colleges,
@@ -74,7 +90,8 @@ class AnnouncementController extends Controller
             'from' => $request->from,
             'to' => $request->to,
             'posts'=>$posts,
-            'user_notification' => $user_notification
+            'user_notification' => $user_notification,
+            'survey_notifications' => $survey_notifications
         ]);
     }
 

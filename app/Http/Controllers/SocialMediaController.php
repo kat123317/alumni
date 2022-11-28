@@ -81,15 +81,31 @@ class SocialMediaController extends Controller
 
     public function open_notif(Request $request, $id)
     {   
-        $update = UserNotification::find($id);
-        $update->update([
-            'is_read' => $request->is_read
-        ]);
+        
 
         if($request->notif_type == "survey"){
+            $survey_notifications = UserNotification::where(['notification_type' => 'survey', 'notification_owner' => Auth::user()->id])->where('is_read', 0)->orderBy('created_at', 'desc')->get();
+            $tmp_data = [];
+            $tmp_array = [];
+            foreach ($survey_notifications as $notif) {
+                    if (in_array($notif->details['survey_id'],$tmp_array) == true) {
+                        $tmp_data[] = $notif;
+                        $tmp_array[] = $notif->details['survey_id'];
+                        $update = UserNotification::find($notif->id);
+                        $update->update([
+                            'is_read' => $request->is_read
+                        ]);
+                    }
+            }
+            
             return Redirect::route("socialmedia.user_surveys");
         }
         else{
+            $update = UserNotification::find($id);
+            $update->update([
+                'is_read' => $request->is_read
+            ]);
+
             return Redirect::route("socialmedia.comments", [$request->id]);
         }
     }
