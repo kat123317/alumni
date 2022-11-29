@@ -100,9 +100,9 @@ class AnnouncementController extends Controller
         $search = $request->search_text ?? null;
 
         $users = User::where('status','approved')->get();
-        $job_posts = JobPost::with(['user' => function($query){
+        $job_posts = JobPost::with('user')->whereHas('user', function($query){
             $query->where('is_active', '1');
-        }])->when($search, function($query, $search){
+        })->when($search, function($query, $search){
             $query -> where('job_title','like',"%{$search}%");
         })->orderBy('updated_at', 'desc')->get();
 
