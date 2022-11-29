@@ -33,6 +33,7 @@ const modal_update = ref(false);
 const modal_delete = ref(false);
 
 const post_images = ref([]);
+const update_images = ref([]);
 
 const announcement_search = useForm({
     search: usePage().props.value.search ? usePage().props.value.search : "",
@@ -48,6 +49,7 @@ const update_announcement_data = useForm({
     id: "",
     title: "",
     content: "",
+    photos: [],
 });
 
 const delete_announcement_data = useForm({
@@ -68,6 +70,10 @@ const post_announcement = () => {
                 alertOnMessage.value = "Announcement Successfully added";
                 onAlert("Success");
             },
+            onError: () => {
+                alertOnMessage.value = "Image must below 2mb";
+                onAlert("Tae");
+            },
         });
         var element = document.getElementsByClassName("ql-editor");
         element[0].innerHTML = "";
@@ -82,7 +88,7 @@ const function_open_update_modal = (id, title, content) => {
 };
 
 const function_update_post = () => {
-    update_announcement_data.put(
+    update_announcement_data.post(
         route("announcements.update", [update_announcement_data.id]),
         {
             preserveScroll: true,
@@ -141,9 +147,33 @@ const openFile = () => {
     };
 };
 
+const openFile2 = () => {
+    let hidden = document.getElementById("update_image");
+    hidden.click();
+    hidden.onchange = (e) => {
+        if (update_images.value.length + e.target.files.length > 2) {
+            alertOnMessage.value = "Only 2 images can be selected";
+            onAlert("Delete");
+            return;
+        } else {
+            for (let index = 0; index < e.target.files.length; index++) {
+                update_images.value.push(
+                    window.URL.createObjectURL(e.target.files[index])
+                );
+                update_announcement_data.photos.push(e.target.files[index]);
+            }
+        }
+    };
+};
+
 const remove_image = (key) => {
     post_images.value.splice(key, 1);
     announcement_data.photos.splice(key, 1);
+};
+
+const remove_image_update = (key) => {
+    update_images.value.splice(key, 1);
+    update_announcement_data.photos.splice(key, 1);
 };
 </script>
 <template>
@@ -273,11 +303,10 @@ const remove_image = (key) => {
                                             />
                                         </div>
                                     </td>
-                                    <td  v-html="announcements.content"
+                                    <td
+                                        v-html="announcements.content"
                                         class="py-4 max-w-[70vmin] w-[26vmin] px-2"
-                                    >
-                                       
-                                    </td>
+                                    ></td>
                                     <td class="py-4 px-6">
                                         {{
                                             date_conversion(
@@ -417,20 +446,24 @@ const remove_image = (key) => {
                             class="leading-7 text-sm text-gray-600"
                             >Announcement</label
                         >
-                    
-                        <QuillEditor v-model:content="announcement_data.content" theme="snow" toolbar="minimal"   id="postEditor"   contentType="html"></QuillEditor>
+
+                        <QuillEditor
+                            v-model:content="announcement_data.content"
+                            theme="snow"
+                            toolbar="minimal"
+                            id="postEditor"
+                            contentType="html"
+                        ></QuillEditor>
                         <button
-                        @click="post_announcement()"
-                        class="text-white w-full mt-4 bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded text-lg"
-                    >
-                        Post
-                    </button>
+                            @click="post_announcement()"
+                            class="text-white w-full mt-4 bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded text-lg"
+                        >
+                            Post
+                        </button>
                     </div>
-             
                 </div>
-                
             </div>
-            
+
             <div
                 class="px-4 w-100 py-3 flex items-center justify-center border-gray-200 sm:px-6"
             >
@@ -466,6 +499,75 @@ const remove_image = (key) => {
                                     />
                                 </div>
                             </div>
+                            <div class="relative mb-4">
+                                <input
+                                    id="update_image"
+                                    type="file"
+                                    class="hidden"
+                                    accept="image/png, image/gif, image/jpeg"
+                                    multiple
+                                />
+                                <button
+                                    @click="openFile2"
+                                    class="mt-2 rounded-sm px-3 py-1 bg-gray-200 hover:bg-gray-300 focus:shadow-outline focus:outline-none"
+                                >
+                                    Upload Images
+                                </button>
+                                <div
+                                    v-if="post_images != null"
+                                    class="grid mt-2 grid-cols-1 lg:grid-cols-4"
+                                >
+                                    <div
+                                        v-for="(image, key) in update_images"
+                                        :key="key"
+                                    >
+                                        <div
+                                            class="w-auto mt-2 mx-auto lg:max-w-[20vmin] z-30"
+                                        >
+                                            <div class="shadow-lg bg-white p-3">
+                                                <img
+                                                    class="w-full max-h-[40vmin] object-cover"
+                                                    :src="image"
+                                                />
+                                                <ul
+                                                    class="mt-3 flex justify-end flex-wrap"
+                                                >
+                                                    <li>
+                                                        <button
+                                                            @click="
+                                                                remove_image_update(
+                                                                    key
+                                                                )
+                                                            "
+                                                            class="flex text-gray-400 hover:text-gray-600"
+                                                        >
+                                                            <svg
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                fill="none"
+                                                                viewBox="0 0 24 24"
+                                                                stroke-width="1.5"
+                                                                stroke="currentColor"
+                                                                class="w-6 h-6"
+                                                            >
+                                                                <path
+                                                                    class="text-red-500"
+                                                                    stroke-linecap="round"
+                                                                    stroke-linejoin="round"
+                                                                    d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                                                />
+                                                            </svg>
+                                                            <span
+                                                                class="text-red-500"
+                                                                >Remove</span
+                                                            >
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="p-2 w-full">
                                 <div class="relative">
                                     <label
@@ -483,7 +585,15 @@ const remove_image = (key) => {
                                         placeholder="Your content..."
                                         required
                                     ></textarea> -->
-                                    <QuillEditor v-model:content="update_announcement_data.content" theme="snow" toolbar="minimal"   id="postEditor"   contentType="html"></QuillEditor>
+                                    <QuillEditor
+                                        v-model:content="
+                                            update_announcement_data.content
+                                        "
+                                        theme="snow"
+                                        toolbar="minimal"
+                                        id="postEditor"
+                                        contentType="html"
+                                    ></QuillEditor>
                                 </div>
                             </div>
                             <button

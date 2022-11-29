@@ -360,11 +360,31 @@ class AnnouncementController extends Controller
     public function update(Request $request, $id)
     {
         $announcement = Announcement::find($id);
-        $announcement->update([
-            'title' => $request->title,
-            'content' => $request->content,
-            'updated_by' => Auth::user()->id
-        ]);
+        if($request->hasfile('photos')){
+            $images = array();
+            foreach ($request->file('photos') as $index => $photo) {
+                $imageName = $announcement->photo[$index];
+                $filename = explode('.', $announcement->photo[$index]);
+                $imageName = $filename[0].'.'.$photo->extension();
+                $photo->move(public_path().'/images/announcements/', $imageName);
+
+                array_push($images, $imageName);
+            }
+
+            $announcement->update([
+                'title' => $request->title,
+                'content' => $request->content,
+                'updated_by' => Auth::user()->id,
+                'photo' => $images
+            ]);
+        }
+        else{
+            $announcement->update([
+                'title' => $request->title,
+                'content' => $request->content,
+                'updated_by' => Auth::user()->id
+            ]);
+        }
         return Redirect::back();
     }
 

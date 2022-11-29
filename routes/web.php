@@ -106,7 +106,7 @@ Route::middleware([
     Route::prefix('announcements')->name('announcements.')->group(function () {
         // Route::get('/', [AnnouncementController::class, 'index'])->name('index');
         Route::post('/store', [AnnouncementController::class, 'store'])->name('store');
-        Route::put('/update/{id}', [AnnouncementController::class, 'update'])->name('update');
+        Route::post('/update/{id}', [AnnouncementController::class, 'update'])->name('update');
         Route::delete('/delete/{id}', [AnnouncementController::class, 'destroy'])->name('delete');
         // Route::get('/search', [AnnouncementController::class, 'index'])->name('search');
 
