@@ -17,7 +17,7 @@ const function_calculate_percent = (answer, index) => {
     }
     console.log(total_answers);
     let calculated = (answer / total_answers) * 100;
-    return calculated + "%";
+    return calculated.toFixed(2) + "%";
 };
 </script>
 
