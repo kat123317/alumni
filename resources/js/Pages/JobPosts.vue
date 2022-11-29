@@ -20,6 +20,7 @@ const titleModal = ref(false);
 const showJob = ref(false);
 const notificationTrigger = ref(false);
 
+const noftype = ref(1);
 // Dynamic Trigger
 const alertTrigger = ref(false);
 const configDataq = ref({
@@ -335,66 +336,221 @@ const function_search = () => {
                                         >
                                             Notifications
                                         </div>
+                                        <ul
+                                            class="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400"
+                                        >
+                                            <li class="cursor-pointer">
+                                                <a
+                                                    @click="noftype = 1"
+                                                    :class="
+                                                        noftype == 1
+                                                            ? 'inline-flex p-4 text-blue-600 rounded-t-lg border-b-2 border-blue-600  dark:text-blue-500 dark:border-blue-500 group'
+                                                            : 'inline-flex active p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group '
+                                                    "
+                                                >
+                                                    <svg
+                                                        aria-hidden="true"
+                                                        :class="
+                                                            noftype == 1
+                                                                ? 'mr-2 w-5 h-5 text-blue-500'
+                                                                : 'mr-2 w-5 h-5 text-grey-200'
+                                                        "
+                                                        fill="currentColor"
+                                                        viewBox="0 0 20 20"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                    >
+                                                        <path
+                                                            fill-rule="evenodd"
+                                                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
+                                                            clip-rule="evenodd"
+                                                        ></path></svg
+                                                    >Social
+                                                </a>
+                                            </li>
+
+                                            <li class="cursor-pointer">
+                                                <a
+                                                    @click="noftype = 2"
+                                                    :class="
+                                                        noftype == 2
+                                                            ? 'inline-flex p-4 text-blue-600 rounded-t-lg border-b-2 border-blue-600  dark:text-blue-500 dark:border-blue-500 group'
+                                                            : 'inline-flex active p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group '
+                                                    "
+                                                >
+                                                    <svg
+                                                        aria-hidden="true"
+                                                        :class="
+                                                            noftype == 2
+                                                                ? 'mr-2 w-5 h-5 text-blue-500'
+                                                                : 'mr-2 w-5 h-5 text-grey-200'
+                                                        "
+                                                        fill="currentColor"
+                                                        viewBox="0 0 20 20"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                    >
+                                                        <path
+                                                            d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
+                                                        ></path>
+                                                    </svg>
+                                                    Surveys
+                                                </a>
+                                            </li>
+                                        </ul>
                                         <div
                                             class="divide-y max-h-[70vmin] lg:max-h-[20vmin] overflow-hidden overflow-y-auto divide-gray-100"
                                         >
-                                            <a
-                                                @click="
-                                                    function_open_notif(
-                                                        user_notification
-                                                            .details.post_id,
-                                                        user_notification.id
-                                                    )
-                                                "
-                                                v-for="(
-                                                    user_notification, key
-                                                ) in usePage().props.value
-                                                    .user_notification"
-                                                :key="key"
-                                                class="flex py-3 px-4 hover:bg-gray-100"
-                                            >
-                                                <div class="flex-shrink-0">
-                                                    <img
-                                                        class="w-11 h-11 rounded-full"
-                                                        :src="
+                                        <div v-if="noftype == 1">
+                                                <div
+                                                    v-if="
+                                                        usePage().props.value
+                                                            .user_notification ==
+                                                        null
+                                                    "
+                                                    class="flex justify-center my-10"
+                                                >
+                                                    <small class="text-center"
+                                                        >No Notifications</small
+                                                    >
+                                                </div>
+                                                <a
+                                                    @click="
+                                                        function_open_notif(
                                                             user_notification
-                                                                .user
-                                                                .profile_photo_url
-                                                        "
-                                                        alt="Jese image"
-                                                    />
-                                                </div>
-                                                <div class="pl-3 w-full">
-                                                    <div
-                                                        class="text-gray-500 text-sm mb-1.5"
-                                                    >
-                                                        New message from
-                                                        <span
-                                                            class="font-semibold text-gray-900"
-                                                            >{{
+                                                                .details
+                                                                .post_id,
+                                                            user_notification.id,
+                                                            user_notification.notification_type
+                                                        )
+                                                    "
+                                                    v-for="(
+                                                        user_notification, key
+                                                    ) in usePage().props.value
+                                                        .user_notification"
+                                                    :key="key"
+                                                    class="flex py-3 px-4 hover:bg-gray-100"
+                                                >
+                                                    <div class="flex-shrink-0">
+                                                        <img
+                                                            class="w-11 h-11 rounded-full"
+                                                            :src="
                                                                 user_notification
-                                                                    .user.name
-                                                            }}</span
-                                                        >: "{{
-                                                            user_notification.title
-                                                        }}"
-                                                        <p>
+                                                                    .user
+                                                                    .profile_photo_url
+                                                            "
+                                                            alt="Jese image"
+                                                        />
+                                                    </div>
+                                                    <div class="pl-3 w-full">
+                                                        <div
+                                                            class="text-gray-500 text-sm mb-1.5"
+                                                        >
+                                                            New message from
+                                                            <span
+                                                                class="font-semibold text-gray-900"
+                                                                >{{
+                                                                    user_notification
+                                                                        .user
+                                                                        .name
+                                                                }}</span
+                                                            >: "{{
+                                                                user_notification.title
+                                                            }}"
+                                                            <p
+                                                                class="text-ellipsis max-h-[5vmin] overflow-hidden"
+                                                                v-html="
+                                                                    user_notification.content
+                                                                "
+                                                            ></p>
+                                                        </div>
+                                                        <div
+                                                            class="text-xs text-blue-600"
+                                                        >
                                                             {{
-                                                                user_notification.content
+                                                                date_conversion_from_now(
+                                                                    user_notification.created_at
+                                                                )
                                                             }}
-                                                        </p>
+                                                        </div>
                                                     </div>
-                                                    <div
-                                                        class="text-xs text-blue-600"
+                                                </a>
+                                            </div>
+                                            <div v-if="noftype == 2">
+                                                <div
+                                                    v-if="
+                                                        usePage().props.value
+                                                            .survey_notification ==
+                                                        null
+                                                    "
+                                                    class="flex justify-center my-10"
+                                                >
+                                                    <small class="text-center"
+                                                        >No Surveys
+                                                        Available</small
                                                     >
-                                                        {{
-                                                            date_conversion_from_now(
-                                                                user_notification.created_at
-                                                            )
-                                                        }}
-                                                    </div>
                                                 </div>
-                                            </a>
+
+                                                <a
+                                                    @click="
+                                                        function_open_notif(
+                                                            survey_notification
+                                                                .details
+                                                                .post_id,
+                                                            survey_notification.id,
+                                                            survey_notification.notification_type
+                                                        )
+                                                    "
+                                                    v-for="(
+                                                        survey_notification, key
+                                                    ) in usePage().props.value
+                                                        .survey_notification"
+                                                    :key="key"
+                                                    class="flex py-3 px-4 hover:bg-gray-100"
+                                                >
+                                                    <div class="flex-shrink-0">
+                                                        <img
+                                                            class="w-11 h-11 rounded-full"
+                                                            :src="
+                                                                user_notification
+                                                                    .user
+                                                                    .profile_photo_url
+                                                            "
+                                                            alt="Jese image"
+                                                        />
+                                                    </div>
+                                                    <div class="pl-3 w-full">
+                                                        <div
+                                                            class="text-gray-500 text-sm mb-1.5"
+                                                        >
+                                                            New message from
+                                                            <span
+                                                                class="font-semibold text-gray-900"
+                                                                >{{
+                                                                    user_notification
+                                                                        .user
+                                                                        .name
+                                                                }}</span
+                                                            >: "{{
+                                                                user_notification.title
+                                                            }}"
+                                                            <p
+                                                                class="text-ellipsis max-h-[5vmin] overflow-hidden"
+                                                                v-html="
+                                                                    user_notification.content
+                                                                "
+                                                            ></p>
+                                                        </div>
+                                                        <div
+                                                            class="text-xs text-blue-600"
+                                                        >
+                                                            {{
+                                                                date_conversion_from_now(
+                                                                    user_notification.created_at
+                                                                )
+                                                            }}
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
                                         </div>
                                         <a
                                             href="#"
