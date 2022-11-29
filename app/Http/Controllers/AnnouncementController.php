@@ -53,16 +53,16 @@ class AnnouncementController extends Controller
             $query->whereBetween('schoolyear_from', [(int)$yearbook_temp_1->schoolyear_from, (int)$yearbook_temp_2->schoolyear_from]);
         })->orderBy('schoolyear_from', 'desc' )->limit(10)->get();
 
-        $posts = UserPosts::with(['user' => function($query){
+        $posts = UserPosts::with('user')->whereHas('user', function($query){
             $query->where('is_active', '1');
-        }])->with(['comments_custom' => function($query) {
-            $query->with(['user' => function($query){
+        })->with(['comments_custom' => function($query) {
+            $query->with('user')->whereHas('user', function($query){
                 $query->where('is_active', '1');
-            }])->orderBy('updated_at', 'desc');
+            })->orderBy('updated_at', 'desc');
         }])->when($search_text, function($query, $search_text){
             $query -> where('content','like',"%{$search_text}%");
         })->orderBy('created_at', 'desc')->get();
-
+       
         $user_notification = UserNotification::with('user')->where(function($query){
             $query -> where('notification_type', 'react')
                     -> orWhere('notification_type', 'comment');
