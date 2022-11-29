@@ -6,21 +6,16 @@ import { ref, onMounted, computed } from "vue";
 
 import moment from "moment";
 
-const function_calculate_percent = (answer) => {
+const function_calculate_percent = (answer, index) => {
     let total_answers = 0;
     for (
-        let index = 0;
-        index < usePage().props.value.charts[0].length;
-        index++
+        let index2 = 0;
+        index2 < usePage().props.value.charts[index].data.length;
+        index2++
     ) {
-        for (
-            let index2 = 0;
-            index2 < usePage().props.value.charts[index].data[0].length;
-            index2++
-        ) {
-            total_answers += usePage().props.value.charts[index].data[index2];
-        }
+        total_answers += usePage().props.value.charts[index].data[index2][1];
     }
+    console.log(total_answers);
     let calculated = (answer / total_answers) * 100;
     return calculated + "%";
 };
@@ -96,7 +91,8 @@ const function_calculate_percent = (answer) => {
                                         -
                                         {{
                                             function_calculate_percent(
-                                                answer[1]
+                                                answer[1],
+                                                key
                                             )
                                         }}</span
                                     ></span
