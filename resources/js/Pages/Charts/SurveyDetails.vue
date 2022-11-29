@@ -7,7 +7,21 @@ import { ref, onMounted, computed } from "vue";
 import moment from "moment";
 
 const function_calculate_percent = (answer) => {
-    let calculated = (answer / usePage().props.value.records_count) * 100;
+    let total_answers = 0;
+    for (
+        let index = 0;
+        index < usePage().props.value.charts[0].length;
+        index++
+    ) {
+        for (
+            let index2 = 0;
+            index2 < usePage().props.value.charts[index].data[0].length;
+            index2++
+        ) {
+            total_answers += usePage().props.value.charts[index].data[index2];
+        }
+    }
+    let calculated = (answer / total_answers) * 100;
     return calculated + "%";
 };
 </script>
