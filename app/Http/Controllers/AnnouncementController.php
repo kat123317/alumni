@@ -53,16 +53,16 @@ class AnnouncementController extends Controller
             $query->whereBetween('schoolyear_from', [(int)$yearbook_temp_1->schoolyear_from, (int)$yearbook_temp_2->schoolyear_from]);
         })->orderBy('schoolyear_from', 'desc' )->limit(10)->get();
 
-        $posts = UserPosts::with(['user' => function($query){
+        $posts = UserPosts::with('user')->whereHas('user', function($query){
             $query->where('is_active', '1');
-        }])->with(['comments_custom' => function($query) {
-            $query->with(['user' => function($query){
+        })->with(['comments_custom' => function($query) {
+            $query->with('user')->whereHas('user', function($query){
                 $query->where('is_active', '1');
-            }])->orderBy('updated_at', 'desc');
+            })->orderBy('updated_at', 'desc');
         }])->when($search_text, function($query, $search_text){
             $query -> where('content','like',"%{$search_text}%");
         })->orderBy('created_at', 'desc')->get();
-
+       
         $user_notification = UserNotification::with('user')->where(function($query){
             $query -> where('notification_type', 'react')
                     -> orWhere('notification_type', 'comment');
@@ -100,16 +100,33 @@ class AnnouncementController extends Controller
         $search = $request->search_text ?? null;
 
         $users = User::where('status','approved')->get();
-        $job_posts = JobPost::with(['user' => function($query){
+        $job_posts = JobPost::with('user')->whereHas('user', function($query){
             $query->where('is_active', '1');
-        }])->when($search, function($query, $search){
+        })->when($search, function($query, $search){
             $query -> where('job_title','like',"%{$search}%");
         })->orderBy('updated_at', 'desc')->get();
-        $user_notification = UserNotification::with('user')->where('notification_owner', Auth::user()->id)->where('is_read', 0)->orderBy('created_at', 'desc')->get();
+
+        $user_notification = UserNotification::with('user')->where(function($query){
+            $query -> where('notification_type', 'react')
+                    -> orWhere('notification_type', 'comment');
+        })->where('notification_owner', Auth::user()->id)->where('is_read', 0)->orderBy('created_at', 'desc')->get();
+
+        $survey_notifications = UserNotification::where(['notification_type' => 'survey', 'notification_owner' => Auth::user()->id])->where('is_read', 0)->orderBy('created_at', 'desc')->get();
+        $tmp_data = [];
+        $tmp_array = [];
+
+        foreach ($survey_notifications as $notif) {
+                if (in_array($notif->details['survey_id'],$tmp_array) == false) {
+                    $tmp_data[] = $notif;
+                    $tmp_array[] = $notif->details['survey_id'];
+                }
+        }
+        $survey_notifications = $tmp_data;
         return Inertia::render('JobPosts', [
             'users' => $users,
             'posts'=>$job_posts,
             'user_notification' => $user_notification,
+            'survey_notifications' => $survey_notifications,
             'search_text' => $search
         ]);
     }
