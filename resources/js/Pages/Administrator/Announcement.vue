@@ -94,6 +94,8 @@ const function_update_post = () => {
             preserveScroll: true,
             onSuccess: () => {
                 announcement_data.reset();
+                update_images.value = [];
+                update_announcement_data.photos = [];
                 alertOnMessage.value = "Announcement Successfully updated";
                 onAlert("Update");
                 modal_update.value = !modal_update.value;
