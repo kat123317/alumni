@@ -30,6 +30,8 @@ const form = useForm({
     phone_number: props.user.details.phone_number,
     religion: props.user.details.religion,
     year_graduated: props.user.details.year_graduated,
+    region_of_origin: props.user.details.region_of_origin,
+    province: props.user.details.province,
 });
 
 const verificationLinkSent = ref(null);
@@ -101,6 +103,7 @@ const clearPhotoFileInput = () => {
                 v-if="$page.props.jetstream.managesProfilePhotos"
                 class="col-span-6 sm:col-span-4"
             >
+                <h2 class="text-[3vmin]">General Information</h2>
                 <!-- Profile Photo File Input -->
                 <input
                     ref="photoInput"
@@ -204,22 +207,9 @@ const clearPhotoFileInput = () => {
                 </div>
             </div>
 
-            <!-- Motto -->
-            <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="motto" value="Motto" />
-                <TextInput
-                    id="motto"
-                    v-model="form.motto"
-                    type="text"
-                    class="mt-1 block w-full"
-                    autocomplete="motto"
-                />
-                <InputError :message="form.errors.motto" class="mt-2" />
-            </div>
-
             <!-- Address -->
             <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="address" value="Address" />
+                <InputLabel for="address" value="Permanent Address" />
                 <TextInput
                     id="address"
                     v-model="form.address"
@@ -230,16 +220,25 @@ const clearPhotoFileInput = () => {
                 <InputError :message="form.errors.address" class="mt-2" />
             </div>
 
+            <!-- Phone number -->
+            <div class="col-span-6 sm:col-span-4">
+                <InputLabel
+                    for="phone_number"
+                    value="Telephone or Contact Number(s)"
+                />
+                <TextInput
+                    id="phone_number"
+                    v-model="form.phone_number"
+                    type="text"
+                    class="mt-1 block w-full"
+                    autocomplete="phone_number"
+                />
+                <InputError :message="form.errors.phone_number" class="mt-2" />
+            </div>
+
             <!-- Civil Status -->
             <div class="col-span-6 sm:col-span-4">
                 <InputLabel for="civil_status" value="Civil_status" />
-                <!-- <TextInput
-                    id="civil_status"
-                    v-model="form.civil_status"
-                    type="text"
-                    class="mt-1 block w-full"
-                    autocomplete="civil_status"
-                /> -->
                 <select
                     class="mt-1 block w-full"
                     v-model="form.civil_status"
@@ -251,21 +250,24 @@ const clearPhotoFileInput = () => {
                     <option value="2">Married</option>
                     <option value="3">Annulled</option>
                     <option value="4">Widdowed</option>
+                    <option value="5">Single Parent</option>
                 </select>
                 <InputError :message="form.errors.civil_status" class="mt-2" />
             </div>
 
-            <!-- Current Work -->
+            <!-- Gender -->
             <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="current_work" value="Current_work" />
-                <TextInput
-                    id="current_work"
-                    v-model="form.current_work"
-                    type="text"
+                <InputLabel for="gender" value="Sex" />
+                <select
+                    id="gender"
+                    v-model="form.gender"
                     class="mt-1 block w-full"
-                    autocomplete="current_work"
-                />
-                <InputError :message="form.errors.current_work" class="mt-2" />
+                    autocomplete="gender"
+                >
+                    <option value="1">Male</option>
+                    <option value="2">Female</option>
+                </select>
+                <InputError :message="form.errors.gender" class="mt-2" />
             </div>
 
             <!-- Date of Birth -->
@@ -281,26 +283,61 @@ const clearPhotoFileInput = () => {
                 <InputError :message="form.errors.date_of_birth" class="mt-2" />
             </div>
 
-            <!-- Gender -->
+            <!-- Region of Origin -->
             <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="gender" value="Gender" />
-                <!-- <TextInput
-                    id="gender"
-                    v-model="form.gender"
+                <InputLabel for="region_of_origin" value="Region of Origin" />
+                <TextInput
+                    id="region_of_origin"
+                    v-model="form.region_of_origin"
                     type="text"
                     class="mt-1 block w-full"
-                    autocomplete="gender"
-                /> -->
-                <select
-                    id="gender"
-                    v-model="form.gender"
+                    autocomplete="region_of_origin"
+                />
+                <InputError
+                    :message="form.errors.region_of_origin"
+                    class="mt-2"
+                />
+            </div>
+
+            <!-- Province -->
+            <div class="col-span-6 sm:col-span-4">
+                <InputLabel for="province" value="Province" />
+                <TextInput
+                    id="province"
+                    v-model="form.province"
+                    type="text"
                     class="mt-1 block w-full"
-                    autocomplete="gender"
-                >
-                    <option value="1">Male</option>
-                    <option value="2">Female</option>
-                </select>
-                <InputError :message="form.errors.gender" class="mt-2" />
+                    autocomplete="province"
+                />
+                <InputError :message="form.errors.province" class="mt-2" />
+            </div>
+
+            <h2 class="text-[3vmin]">General Information</h2>
+
+            <!-- Motto -->
+            <div class="col-span-6 sm:col-span-4">
+                <InputLabel for="motto" value="Motto" />
+                <TextInput
+                    id="motto"
+                    v-model="form.motto"
+                    type="text"
+                    class="mt-1 block w-full"
+                    autocomplete="motto"
+                />
+                <InputError :message="form.errors.motto" class="mt-2" />
+            </div>
+
+            <!-- Current Work -->
+            <div class="col-span-6 sm:col-span-4">
+                <InputLabel for="current_work" value="Current_work" />
+                <TextInput
+                    id="current_work"
+                    v-model="form.current_work"
+                    type="text"
+                    class="mt-1 block w-full"
+                    autocomplete="current_work"
+                />
+                <InputError :message="form.errors.current_work" class="mt-2" />
             </div>
 
             <!-- Nickname -->
@@ -314,19 +351,6 @@ const clearPhotoFileInput = () => {
                     autocomplete="nickname"
                 />
                 <InputError :message="form.errors.motto" class="mt-2" />
-            </div>
-
-            <!-- Phone number -->
-            <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="phone_number" value="Phone_number" />
-                <TextInput
-                    id="phone_number"
-                    v-model="form.phone_number"
-                    type="text"
-                    class="mt-1 block w-full"
-                    autocomplete="phone_number"
-                />
-                <InputError :message="form.errors.phone_number" class="mt-2" />
             </div>
 
             <!-- Religion -->

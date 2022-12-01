@@ -363,12 +363,16 @@ class AnnouncementController extends Controller
         if($request->hasfile('photos')){
             $images = array();
             foreach ($request->file('photos') as $index => $photo) {
-                $imageName = $announcement->photo[$index];
-                $filename = explode('.', $announcement->photo[$index]);
-                $imageName = $filename[0].'.'.$photo->extension();
+                if(isset($announcement->photo[$index])) {
+                    $filename = explode('.', $announcement->photo[$index]);
+                    $imageName = $filename[0].'.'.$photo->extension();
+                } else {
+                    $imageName = Str::random(40).'.'.$photo->extension();
+                }
+                
                 $photo->move(public_path().'/images/announcements/', $imageName);
 
-                array_push($images, $imageName);
+                array_push($images, $imageName.'?rnd='.Str::random(3));
             }
 
             $announcement->update([
