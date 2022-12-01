@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import { Link, useForm } from "@inertiajs/inertia-vue3";
 import ActionMessage from "@/Components/ActionMessage.vue";
@@ -32,11 +32,41 @@ const form = useForm({
     year_graduated: props.user.details.year_graduated,
     region_of_origin: props.user.details.region_of_origin,
     province: props.user.details.province,
+    degree_graduated: props.user.details.degree_graduated,
+    honors_awards: [],
+    professional_examination: props.user.details.professional_examination,
 });
 
 const verificationLinkSent = ref(null);
 const photoPreview = ref(null);
 const photoInput = ref(null);
+const year_graduated = ref("");
+const tmp_achievement = ref("");
+
+onMounted(() => {
+    year_graduated.value = function_date();
+    function_achievement();
+});
+
+const function_achievement = () => {
+    for (
+        let index = 0;
+        index < props.user.details.honors_awards.length;
+        index++
+    ) {
+        form.honors_awards.push(props.user.details.honors_awards[index]);
+    }
+};
+
+const function_date = (startYear) => {
+    var currentYear = new Date().getFullYear(),
+        years = [];
+    startYear = 1900;
+    while (startYear <= currentYear) {
+        years.push(startYear++);
+    }
+    return years;
+};
 
 const updateProfileInformation = () => {
     if (photoInput.value) {
@@ -87,6 +117,19 @@ const clearPhotoFileInput = () => {
         photoInput.value.value = null;
     }
 };
+
+const function_add_honors = () => {
+    if (tmp_achievement.value == "") {
+        alert("Please fill achievement first");
+    } else {
+        form.honors_awards.push(tmp_achievement.value);
+        tmp_achievement.value = "";
+    }
+};
+
+const remove_achievement = (key) => {
+    const temp_achievement = ref(form.honors_awards.splice(key, 1));
+};
 </script>
 
 <template>
@@ -94,7 +137,7 @@ const clearPhotoFileInput = () => {
         <template #title> Profile Information </template>
 
         <template #description>
-            Update your account's profile information and email address.
+            Update your account's profile information.
         </template>
 
         <template #form>
@@ -164,6 +207,19 @@ const clearPhotoFileInput = () => {
                     autocomplete="name"
                 />
                 <InputError :message="form.errors.name" class="mt-2" />
+            </div>
+
+            <!-- Nickname -->
+            <div class="col-span-6 sm:col-span-4">
+                <InputLabel for="nickname" value="Nickname" />
+                <TextInput
+                    id="nickname"
+                    v-model="form.nickname"
+                    type="text"
+                    class="mt-1 block w-full"
+                    autocomplete="nickname"
+                />
+                <InputError :message="form.errors.motto" class="mt-2" />
             </div>
 
             <!-- Email -->
@@ -283,6 +339,19 @@ const clearPhotoFileInput = () => {
                 <InputError :message="form.errors.date_of_birth" class="mt-2" />
             </div>
 
+            <!-- Religion -->
+            <div class="col-span-6 sm:col-span-4">
+                <InputLabel for="religion" value="Religion" />
+                <TextInput
+                    id="religion"
+                    v-model="form.religion"
+                    type="text"
+                    class="mt-1 block w-full"
+                    autocomplete="religion"
+                />
+                <InputError :message="form.errors.motto" class="mt-2" />
+            </div>
+
             <!-- Region of Origin -->
             <div class="col-span-6 sm:col-span-4">
                 <InputLabel for="region_of_origin" value="Region of Origin" />
@@ -312,7 +381,107 @@ const clearPhotoFileInput = () => {
                 <InputError :message="form.errors.province" class="mt-2" />
             </div>
 
-            <h2 class="text-[3vmin]">General Information</h2>
+            <!-- Degree Graduated -->
+            <div class="col-span-6 sm:col-span-4">
+                <h2 class="text-[3vmin]">Educational Background</h2>
+
+                <InputLabel for="degree_graduated" value="Degree Graduated" />
+                <select
+                    id="degree_graduated"
+                    v-model="form.degree_graduated"
+                    class="mt-1 block w-full"
+                    autocomplete="degree_graduated"
+                >
+                    <option value="1">Undergraduate</option>
+                    <option value="2">Masters</option>
+                    <option value="3">Doctors</option>
+                    <option value="4">Certification</option>
+                </select>
+                <InputError
+                    :message="form.errors.degree_graduated"
+                    class="mt-2"
+                />
+            </div>
+
+            <!-- Year Graduated -->
+            <div class="col-span-6 sm:col-span-4">
+                <InputLabel for="year_graduated" value="Year graduated" />
+                <select
+                    id="year_graduated"
+                    v-model="form.year_graduated"
+                    class="mt-1 block w-full"
+                    autocomplete="year_graduated"
+                >
+                    <template
+                        v-for="(year_graduated, key) in year_graduated"
+                        :key="key"
+                    >
+                        <option :value="year_graduated">
+                            {{ year_graduated }}
+                        </option>
+                    </template>
+                </select>
+                <InputError
+                    :message="form.errors.year_graduated"
+                    class="mt-2"
+                />
+            </div>
+
+            <!-- Honors and Awards Received -->
+            <div class="col-span-6 sm:col-span-4">
+                <InputLabel
+                    for="honors_awards"
+                    value="Honors and Awards Received"
+                />
+                <TextInput
+                    id="honors_awards"
+                    v-model="tmp_achievement"
+                    type="text"
+                    class="mt-1 w-3/4"
+                />
+                <a
+                    @click="function_add_honors()"
+                    class="bg-green-500 ... w-1/4 float-right text-center mt-3 rounded-md cursor-pointer"
+                    :disabled="form.processing"
+                    title="Add"
+                >
+                    ADD
+                </a>
+                <template v-for="(honor, key) in form.honors_awards" :key="key">
+                    <span class="text-sm ml-3"
+                        >{{ key + 1 + ". " + honor }}
+                        <a
+                            @click="remove_achievement(key)"
+                            class="bg-red-500 ... w-1/4 mt-3 rounded-md"
+                            :disabled="form.processing"
+                            title="remove"
+                        >
+                            remove
+                        </a></span
+                    >
+                </template>
+
+                <InputError :message="form.errors.honors_awards" class="mt-2" />
+            </div>
+
+            <!-- Professional Examination Passed -->
+            <div class="col-span-6 sm:col-span-4">
+                <InputLabel
+                    for="professional_examination"
+                    value="Professional Examination Passed"
+                />
+                <TextInput
+                    id="professional_examination"
+                    v-model="form.professional_examination"
+                    type="text"
+                    class="mt-1 block w-full"
+                    autocomplete="professional_examination"
+                />
+                <InputError
+                    :message="form.errors.professional_examination"
+                    class="mt-2"
+                />
+            </div>
 
             <!-- Motto -->
             <div class="col-span-6 sm:col-span-4">
@@ -338,48 +507,6 @@ const clearPhotoFileInput = () => {
                     autocomplete="current_work"
                 />
                 <InputError :message="form.errors.current_work" class="mt-2" />
-            </div>
-
-            <!-- Nickname -->
-            <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="nickname" value="Nickname" />
-                <TextInput
-                    id="nickname"
-                    v-model="form.nickname"
-                    type="text"
-                    class="mt-1 block w-full"
-                    autocomplete="nickname"
-                />
-                <InputError :message="form.errors.motto" class="mt-2" />
-            </div>
-
-            <!-- Religion -->
-            <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="religion" value="Religion" />
-                <TextInput
-                    id="religion"
-                    v-model="form.religion"
-                    type="text"
-                    class="mt-1 block w-full"
-                    autocomplete="religion"
-                />
-                <InputError :message="form.errors.motto" class="mt-2" />
-            </div>
-
-            <!-- Year Graduated -->
-            <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="year_graduated" value="Year_graduated" />
-                <TextInput
-                    id="year_graduated"
-                    v-model="form.year_graduated"
-                    type="text"
-                    class="mt-1 block w-full"
-                    autocomplete="year_graduated"
-                />
-                <InputError
-                    :message="form.errors.year_graduated"
-                    class="mt-2"
-                />
             </div>
         </template>
 

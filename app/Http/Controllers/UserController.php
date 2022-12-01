@@ -140,6 +140,7 @@ class UserController extends Controller
             'degree_graduated'=> $input['degree_graduated'],
             // 'course_id'=>$input['course_id'],
             'honors_awards'=>$input['honors_awards']??[],
+            'professional_examination'=>$input['professional_examination'],
             'current_work'=>$input['current_work'], 
             'year_graduated'=>$input['year_graduated'], 
             'motto'=>$input['motto']??'', 

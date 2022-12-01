@@ -34,6 +34,10 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'year_graduated'=>['required'],
             'motto'=>['required'],
             'nickname' => ['required'], 
+            'region_of_origin' => ['required'], 
+            'province' => ['required'], 
+            'degree_graduated' => ['required'], 
+            
         ])->validateWithBag('updateProfileInformation');
 
 
@@ -48,7 +52,14 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'current_work'=>$input['current_work'], 
             'year_graduated'=>$input['year_graduated'], 
             'motto'=>$input['motto'], 
-            'nickname'=>$input['nickname']);
+            'nickname'=>$input['nickname'],
+            'region_of_origin'=>$input['region_of_origin'],
+            'province'=>$input['province'],
+            'degree_graduated'=>$input['degree_graduated'],
+            'honors_awards'=>$input['honors_awards']??[],
+            'professional_examination'=>$input['professional_examination'],
+            
+        );
 
         if (isset($input['photo'])) {
             $user->updateProfilePhoto($input['photo']);
