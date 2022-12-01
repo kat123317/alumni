@@ -15,8 +15,11 @@ const form_add_edit = useForm({
     instruction: "",
     type: "descriptive",
     setup: {
+        input: false,
+        input_label: "",
         dropdown: false,
         multiple_select: false,
+        image: false,
         required: false,
         choices: [],
     },
@@ -50,7 +53,9 @@ onBeforeMount(() => {
 
 const initialize = () => {
     usePage().props.value.survey.questions.forEach((question) => {
-        if (
+        if (question.setup.input == true) {
+            my_choice.value["question_" + question.id] = "";
+        } else if (
             question.setup.dropdown == true ||
             question.setup.multiple_select == false
         ) {
@@ -76,10 +81,12 @@ const showAddEditModal = (method = "add", index = -1) => {
         let edit_question = usePage().props.value.survey.questions[index];
 
         form_add_edit.instruction = edit_question.instruction;
+        form_add_edit.setup.input = edit_question.setup.input;
         form_add_edit.setup.dropdown = edit_question.setup.dropdown;
         form_add_edit.setup.multiple_select =
             edit_question.setup.multiple_select;
         form_add_edit.setup.choices = edit_question.setup.choices;
+        form_add_edit.setup.image = edit_question.setup.image;
         form_add_edit.setup.required = edit_question.setup.required;
 
         modals.add_edit.details.method = "edit";
@@ -226,27 +233,6 @@ provide("initialize", initialize);
                     </div>
                 </div>
             </nav>
-            <div class="flex justify-between p-2">
-                <!-- <button
-                    class="flex text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">
-                    <Link :href="route('administrator.survey')"> Back </Link>
-                </button> -->
-                <!-- <div class="flex gap-1">
-                    <a :href="
-                        route('surveys.engine.review', {
-                            survey_id: $page.props.survey.id,
-                        })
-                    " target="_blank"><button
-                            class="flex text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none hover:bg-blue-600 rounded text-lg">
-                            Preview
-                        </button></a>
-
-                    <button @click="showAddEditModal('add')"
-                        class="flex text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">
-                        Add Question
-                    </button>
-                </div> -->
-            </div>
             <div class="w-full px-2 mt-2">
                 <template v-for="(question, index) in questions">
                     <div class="w-full">

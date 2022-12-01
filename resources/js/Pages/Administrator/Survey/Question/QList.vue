@@ -2,13 +2,14 @@
 import QDropDown from "@/Pages/Administrator/Survey/EngineComponents/Dropdown.vue";
 import QSingleSelect from "@/Pages/Administrator/Survey/EngineComponents/SingleSelect.vue";
 import QMultipleSelect from "@/Pages/Administrator/Survey/EngineComponents/MultipleSelect.vue";
+import QInputText from "@/Pages/Administrator/Survey/EngineComponents/InputText.vue";
 import { computed, ref } from "vue";
 
 const emit = defineEmits(["update:modelValue"]);
 
 const props = defineProps({
     question: Object,
-    modelValue: [Object, Number],
+    modelValue: [Object, Number, String],
     disabled: {
         type: Boolean,
         default: false,
@@ -31,11 +32,10 @@ const proxyChecked = computed({
             class="max-w-7xl slide-in-top bg-white mb-6 overflow-hidden rounded-lg shadow-lg"
         >
             <div class="px-4 py-2">
-                <h1 v-html="question.instruction "
+                <h1
+                    v-html="question.instruction"
                     class="text-3xl text-focus-in text-green-900 font-bold text-white uppercase"
-                >
-               
-                </h1>
+                ></h1>
             </div>
 
             <div class="ml-8">
@@ -56,6 +56,13 @@ const proxyChecked = computed({
                         :disabled="disabled"
                         :choices="question.setup.choices"
                         v-model="proxyChecked"
+                    />
+                </template>
+                <template v-else-if="question.setup.input == true">
+                    <QInputText
+                        :disabled="disabled"
+                        :value="modelValue"
+                        @input="$emit('update:modelValue', $event.target.value)"
                     />
                 </template>
                 <template v-else>
@@ -79,25 +86,6 @@ const proxyChecked = computed({
                 </button>
             </div>
         </div>
-        <!-- <span>{{ question.order + ". " }}</span>
-        <div class="ml-1">
-            <div class="w-full">
-                {{ question.instruction }}
-            </div>
-            <template v-if="question.setup.dropdown == true">
-                <QDropDown :disabled="disabled" :choices="question.setup.choices" v-model.number="proxyChecked" />
-            </template>
-            <template v-else-if="
-                question.setup.dropdown == false &&
-                question.setup.multiple_select == true
-            ">
-                <QMultipleSelect :disabled="disabled" :choices="question.setup.choices" v-model="proxyChecked" />
-            </template>
-            <template v-else>
-                <QSingleSelect :disabled="disabled" :ukey="question.order" :choices="question.setup.choices"
-                    v-model:checked="proxyChecked" />
-            </template>
-        </div> -->
     </div>
 </template>
 
