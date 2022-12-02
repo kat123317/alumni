@@ -195,7 +195,6 @@ class AnnouncementController extends Controller
             $tmp_data = [];
             
             if($question->setup['input']==false){
-                dd("dsd");
                 foreach ($question['setup']['choices'] as $key => $choice) {
                     $tmp_data[] = [
                         'Choice '. $key + 1 .'. '.$choice['label'],
