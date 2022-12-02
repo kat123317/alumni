@@ -208,7 +208,7 @@ class AnnouncementController extends Controller
                     ];
                 
             }
-            
+             
             $tmp['data'] = $tmp_data;
             $charts[] = $tmp;
         }
