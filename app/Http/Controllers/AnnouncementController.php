@@ -192,9 +192,9 @@ class AnnouncementController extends Controller
                 'instruction' => $question->instruction
             ];
             $tmp_data = [];
-            foreach ($question['setup']['choices'] as $choice) {
+            foreach ($question['setup']['choices'] as $key => $choice) {
                 $tmp_data[] = [
-                    $choice['label'],
+                    'Choice '. $key + 1 .'. '.$choice['label'],
                     $this->getRecordData($records, $question, $choice)
                 ];
             }
