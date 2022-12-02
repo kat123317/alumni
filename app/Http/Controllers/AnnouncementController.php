@@ -187,17 +187,29 @@ class AnnouncementController extends Controller
         $questions = Question::where('survey_id', $request->survey_id)->orderBy('order', 'asc' )->get();
         $charts = [];
         foreach ($questions as $question) {
+            // dd($question->setup['input']);
             $tmp = [
                 'order' => $question->order,
                 'instruction' => $question->instruction
             ];
             $tmp_data = [];
-            foreach ($question['setup']['choices'] as $key => $choice) {
-                $tmp_data[] = [
-                    'Choice '. $key + 1 .'. '.$choice['label'],
-                    $this->getRecordData($records, $question, $choice)
-                ];
+            
+            if($question->setup['input']==false){
+                dd("dsd");
+                foreach ($question['setup']['choices'] as $key => $choice) {
+                    $tmp_data[] = [
+                        'Choice '. $key + 1 .'. '.$choice['label'],
+                        $this->getRecordData($records, $question, $choice)
+                    ];
+                }
+            }else{
+                    $tmp_data[] = [
+                        'Answered',
+                        $this->getRecordInput($records, $question)
+                    ];
+                
             }
+            
             $tmp['data'] = $tmp_data;
             $charts[] = $tmp;
         }
@@ -219,6 +231,13 @@ class AnnouncementController extends Controller
         }
         
         return  $result;
+    }
+
+    public function getRecordInput($records, $question,){
+         
+        $answer = $records->pluck('answers.question_'.$question->id);
+        $results = $answer->count();
+        return $results;
     }
 
     public function downloadChart(Request $request) {
