@@ -252,12 +252,21 @@ class AnnouncementController extends Controller
                 'instruction' =>strip_tags( $question->instruction )
             ];
             $tmp_data = [];
+            if($question->setup['input']==false){
             foreach ($question['setup']['choices'] as $choice) {
                 $tmp_data[] = [
                     '',
                     $choice['label'],
                     $this->getRecordData($records, $question, $choice)
                 ];
+            }
+            }
+            else{
+                $tmp_data[] = [
+                    '','',
+                    $this->getRecordInput($records, $question)
+                ];
+            
             }
             $results[] = $tmp;
             
