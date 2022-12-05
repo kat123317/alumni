@@ -3,7 +3,7 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import JetInputError from "@/Components/InputError.vue";
 import QList from "@/Pages/Administrator/Survey/Question/QList.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
-import { ref, onBeforeMount } from "vue";
+import { ref, onBeforeMount, provide } from "vue";
 
 import { Inertia } from "@inertiajs/inertia";
 import { debounce } from "lodash";
@@ -22,17 +22,24 @@ onBeforeMount(() => {
 const initialize = () => {
     if (props.record == null) {
         props.survey.questions.forEach((question) => {
-            if (
+            if (question.setup.input == true) {
+                my_choices.answers["question_" + question.id] = "";
+            } else if (
                 question.setup.dropdown == true ||
                 question.setup.multiple_select == false
             ) {
                 my_choices.answers["question_" + question.id] = 0;
             } else {
                 let choices = {};
+                let write_in = {};
                 question.setup.choices.forEach((choice) => {
                     choices["choice_" + choice.value] = 0;
+                    if (choice.write_in) {
+                        write_in["write_" + choice.value] = "";
+                    }
                 });
                 my_choices.answers["question_" + question.id] = choices;
+                my_choices.answers["write_in_" + question.id] = write_in;
             }
         });
         if (props.user.user_type != "alumni") {
@@ -43,7 +50,14 @@ const initialize = () => {
         my_choices.status = props.record.status;
 
         props.survey.questions.forEach((question) => {
-            if (
+            if (question.setup.input == true) {
+                if (
+                    "question_" + question.id in props.record.answers ==
+                    false
+                ) {
+                    my_choices.answers["question_" + question.id] = "";
+                }
+            } else if (
                 question.setup.dropdown == true ||
                 question.setup.multiple_select == false
             ) {
@@ -59,10 +73,15 @@ const initialize = () => {
                     false
                 ) {
                     let choices = {};
+                    let write_in = {};
                     question.setup.choices.forEach((choice) => {
                         choices["choice_" + choice.value] = 0;
+                        if (choice.write_in) {
+                            write_in["write_" + choice.value] = "";
+                        }
                     });
                     my_choices.answers["question_" + question.id] = choices;
+                    my_choices.answers["write_in_" + question.id] = write_in;
                 } else {
                     question.setup.choices.forEach((choice) => {
                         if (
@@ -75,6 +94,11 @@ const initialize = () => {
                             my_choices.answers["question_" + question.id][
                                 "choice_" + choice.value
                             ] = 0;
+                            if (choice.write_in) {
+                                my_choices.answers["write_in_" + question.id][
+                                    "write_" + choice.value
+                                ] = "";
+                            }
                         }
                     });
                 }
@@ -136,6 +160,8 @@ const finishSurvey = () => {
         );
     }
 };
+
+provide("my_choices", my_choices);
 </script>
 <template>
     <AppLayout title="Survey">

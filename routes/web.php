@@ -169,6 +169,7 @@ Route::middleware([
             Route::post('/store', [QuestionController::class, 'store'])->name('store');
             Route::put('/update/{id}', [QuestionController::class, 'update'])->name('update');
             Route::delete('/delete/{id}', [QuestionController::class, 'destroy'])->name('delete');
+            Route::post('/upload_images/{id}', [QuestionController::class, 'upload_images'])->name('upload_images');
         });
     });
 });

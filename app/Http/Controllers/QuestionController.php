@@ -60,15 +60,34 @@ class QuestionController extends Controller
         ]);
 
         $question_count = Question::whereSurveyId($survey_id)->count();
-        Question::create([
+        $question = Question::create([
             'survey_id' => $survey->id,
             'order' => ++$question_count,
             'instruction' => $request->instruction,
             'setup' => $request->setup
         ]);
-        return Redirect::back();
+        return response()->json([
+            'q_id' => $question->id,
+            'question' => $question
+        ], 200);
+        // return Redirect::back()->with('q_id', $question->id);
     }
 
+    public function upload_images(Request $request, $survey_id, $id) {
+        $survey = Survey::find($survey_id);
+        $question = Question::find($id);
+        if($request->hasfile('images')){
+            foreach($request->file('images') as $key => $image){
+                $imageName = $question->setup['choices'][$key]['img_src'];
+                $image->move(public_path().'/images/questions/', $imageName);
+                // dd($imageName);
+            }
+        }
+        /* return response()->json([
+            'status' => true
+        ], 200); */
+        return Redirect::back();
+    }
     /**
      * Display the specified resource.
      *
@@ -105,7 +124,11 @@ class QuestionController extends Controller
             'instruction' => $request->instruction,
             'setup' => $request->setup
         ]);
-        return Redirect::back();
+        return response()->json([
+            'q_id' => $question->id,
+            'question' => $question
+        ], 200);
+        // return Redirect::back()->with('q_id', $question->id);
     }
 
     /**

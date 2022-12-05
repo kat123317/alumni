@@ -6,14 +6,20 @@ import JetInputError from "@/Components/InputError.vue";
 import JetCheckbox from "@/Components/Checkbox.vue";
 import { useForm, usePage } from "@inertiajs/inertia-vue3";
 import { inject, nextTick, ref } from "vue";
+import helpers from "@/helpers.js";
+import { Inertia } from "@inertiajs/inertia";
+
+const { random_str } = helpers();
 
 const modals = inject("modals");
 const alertOnMessage = inject("alertOnMessage");
 const onAlert = inject("onAlert");
 const form_add_edit = inject("form_add_edit");
 const initialize = inject("initialize");
+const questions = inject("questions");
 
 const new_choice = ref("");
+const img_choices = ref([]);
 
 const addChoice = () => {
     let cvalue = 1;
@@ -43,40 +49,59 @@ const removeChoice = (index) => {
 
 const addEditQuestion = () => {
     if (modals.add_edit.details.method == "add") {
-        form_add_edit.post(
-            route("surveys.questions.store", {
-                survey_id: usePage().props.value.survey.id,
-            }),
-            {
-                preserveScroll: true,
-                onSuccess: () => {
-                    initialize();
-                    modals.add_edit.show = false;
-                    alertOnMessage.value = "Question Added";
-                    onAlert("Success");
+        axios
+            .post(
+                route("surveys.questions.store", {
+                    survey_id: usePage().props.value.survey.id,
+                }),
+                form_add_edit
+            )
+            .then(function (res) {
+                //upload image after adding question
+                if (img_choices.value.length > 0) {
+                    uploadImages(res);
+                } else {
                     form_add_edit.reset();
-                },
-                onError: (err) => {},
-            }
-        );
+                    questions.value.push(res.data.question);
+                    initialize();
+                }
+
+                modals.add_edit.show = false;
+                alertOnMessage.value = "Question Added";
+                onAlert("Success");
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     } else {
-        form_add_edit.put(
-            route("surveys.questions.update", {
-                survey_id: usePage().props.value.survey.id,
-                id: modals.add_edit.details.id,
-            }),
-            {
-                preserveScroll: true,
-                onSuccess: () => {
-                    initialize();
-                    alertOnMessage.value = "Question Successfully updated";
-                    onAlert("Update");
+        axios
+            .put(
+                route("surveys.questions.update", {
+                    survey_id: usePage().props.value.survey.id,
+                    id: modals.add_edit.details.id,
+                }),
+                form_add_edit
+            )
+            .then(function (res) {
+                //upload image after adding question
+
+                if (img_choices.value.length > 0) {
+                    uploadImages(res);
+                } else {
                     form_add_edit.reset();
-                    modals.add_edit.show = false;
-                },
-                onError: (err) => {},
-            }
-        );
+                    let index = questions.value.findIndex(
+                        (q) => q.id == modals.add_edit.details.id
+                    );
+                    questions.value[index] = res.data.question;
+                    initialize();
+                }
+                alertOnMessage.value = "Question Successfully updated";
+                onAlert("Update");
+                modals.add_edit.show = false;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 };
 
@@ -97,6 +122,47 @@ const checkDropdown = (check = "dropdown") => {
             form_add_edit.setup.dropdown = false;
         }
     }
+};
+
+const openFile = (index) => {
+    let hidden = document.getElementById("hidden-input-" + index);
+    hidden.click();
+    hidden.onchange = (e) => {
+        let file = e.target.files[0];
+        if (
+            form_add_edit.setup.choices[index].img_src == "" ||
+            form_add_edit.setup.choices[index].img_src == null
+        ) {
+            form_add_edit.setup.choices[index].img_src =
+                random_str(5) + "." + file.name.split(".").pop();
+        } else {
+            form_add_edit.setup.choices[index].img_src =
+                form_add_edit.setup.choices[index].img_src.split(".").shift() +
+                "." +
+                file.name.split(".").pop();
+        }
+        img_choices.value[index] = file;
+    };
+};
+
+const uploadImages = (res) => {
+    Inertia.post(
+        route("surveys.questions.upload_images", {
+            survey_id: usePage().props.value.survey.id,
+            id: res.data.q_id,
+        }),
+        { images: img_choices.value, setup: form_add_edit.setup },
+        {
+            preserveScroll: true,
+            onSuccess: () => {
+                img_choices.value = [];
+                form_add_edit.reset();
+                initialize();
+            },
+            onFinish: () => {},
+            onError: (err) => {},
+        }
+    );
 };
 </script>
 <template>
@@ -148,15 +214,22 @@ const checkDropdown = (check = "dropdown") => {
                                     <input
                                         v-model="choice.img_src"
                                         readonly
-                                        placeholder="image url"
+                                        placeholder="image name"
                                         type="text"
                                         class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base placeholder-gray-300 outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                                     />
                                     <button
+                                        @click="openFile(index)"
                                         class="flex text-white bg-blue-500 border-0 py-2 px-4 focus:outline-none hover:bg-blue-600 rounded text-lg"
                                     >
                                         Image
                                     </button>
+                                    <input
+                                        :id="'hidden-input-' + index"
+                                        type="file"
+                                        class="hidden"
+                                        accept="image/png, image/gif, image/jpeg"
+                                    />
                                 </template>
 
                                 <button

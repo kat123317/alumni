@@ -1,9 +1,14 @@
 <script setup>
 import JetInputLabel from "@/Components/InputLabel.vue";
-import { computed } from "vue";
+import QInputText from "@/Pages/Administrator/Survey/EngineComponents/InputText.vue";
+import { computed, inject } from "vue";
+import helpers from "@/helpers.js";
+
+const { random_str } = helpers();
 
 const emit = defineEmits(["update:modelValue"]);
 
+const r_string = random_str(2);
 const props = defineProps({
     modelValue: [Object, Number],
     choices: Array,
@@ -11,7 +16,11 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    image: Boolean,
+    qid: Number,
 });
+
+const my_choices = inject("my_choices");
 
 const proxyChecked = computed({
     get() {
@@ -27,7 +36,7 @@ const proxyChecked = computed({
     <div class="grid grid-cols gap-1 mb-5">
         <template v-for="(choice, i) in choices">
             <div class="col-span-6">
-                <JetInputLabel>
+                <JetInputLabel class="inline-block">
                     <input
                         v-model="proxyChecked['choice_' + choice.value]"
                         type="checkbox"
@@ -36,9 +45,39 @@ const proxyChecked = computed({
                         :false-value="0"
                         class="rounded w-6 h-6 border-gray-300 text-green-600 shadow-sm focus:border-green-300 focus:ring focus:ring-green-200 focus:ring-opacity-50"
                     />
-                   <!-- <span class="ml-2"> {{ choice.label }} </span> -->
-                   <span class="ml-2 text-gray-800 text-lg font-lg mr-2 px-2.5 py-0.5 rounded ">{{ choice.label }}</span>
+
+                    <template
+                        v-if="
+                            image == true &&
+                            choice.img_src != null &&
+                            choice.img_src != ''
+                        "
+                    >
+                        <img
+                            :src="
+                                '/images/questions/' +
+                                choice.img_src +
+                                '?rnd=' +
+                                r_string
+                            "
+                            class="h-[5vmin]"
+                        />
+                    </template>
+                    <span
+                        v-else
+                        class="ml-2 text-gray-800 text-lg font-lg mr-2 px-2.5 py-0.5 rounded"
+                        >{{ choice.label }}</span
+                    >
                 </JetInputLabel>
+                <template v-if="choice.write_in">
+                    <QInputText
+                        v-model="
+                            my_choices.answers['write_in_' + qid][
+                                'write_' + choice.value
+                            ]
+                        "
+                    />
+                </template>
             </div>
         </template>
     </div>

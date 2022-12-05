@@ -13,7 +13,6 @@ const { alertOn, alertOnDelete, alertOnUpdate, alertOnMessage, onAlert } =
 
 const form_add_edit = useForm({
     instruction: "",
-    type: "descriptive",
     setup: {
         input: false,
         input_label: "",
@@ -47,12 +46,18 @@ const modals = reactive({
 const questions = ref([]);
 const my_choice = ref({});
 
+const my_choices = useForm({
+    answers: {},
+    status: "ongoing",
+});
+
 onBeforeMount(() => {
+    questions.value = usePage().props.value.survey.questions;
     initialize();
 });
 
 const initialize = () => {
-    usePage().props.value.survey.questions.forEach((question) => {
+    questions.value.forEach((question) => {
         if (question.setup.input == true) {
             my_choice.value["question_" + question.id] = "";
         } else if (
@@ -62,13 +67,17 @@ const initialize = () => {
             my_choice.value["question_" + question.id] = 0;
         } else {
             let choices = {};
+            let write_in = {};
             question.setup.choices.forEach((choice) => {
                 choices["choice_" + choice.value] = 0;
+                if (choice.write_in) {
+                    write_in["write_" + choice.value] = "";
+                }
             });
             my_choice.value["question_" + question.id] = choices;
+            my_choices.answers["write_in_" + question.id] = write_in;
         }
     });
-    questions.value = usePage().props.value.survey.questions;
 };
 
 const showAddEditModal = (method = "add", index = -1) => {
@@ -78,7 +87,7 @@ const showAddEditModal = (method = "add", index = -1) => {
         modals.add_edit.details.method = method;
         modals.add_edit.details.title = "Add Question";
     } else {
-        let edit_question = usePage().props.value.survey.questions[index];
+        let edit_question = questions.value[index];
 
         form_add_edit.instruction = edit_question.instruction;
         form_add_edit.setup.input = edit_question.setup.input;
@@ -98,10 +107,10 @@ const showAddEditModal = (method = "add", index = -1) => {
 };
 
 const showDeleteModal = (index) => {
-    modals.delete.details.id = usePage().props.value.survey.questions[index].id;
+    modals.delete.details.id = questions.value[index].id;
     modals.delete.details.content =
         "Are you sure you want to delete Question " +
-        usePage().props.value.survey.questions[index].order +
+        questions.value[index].order +
         "?";
     modals.delete.show = true;
 };
@@ -131,6 +140,8 @@ provide("onAlert", onAlert);
 provide("alertOn", alertOn);
 provide("alertOnMessage", alertOnMessage);
 provide("initialize", initialize);
+provide("questions", questions);
+provide("my_choices", my_choices);
 </script>
 <template>
     <AdminLayout

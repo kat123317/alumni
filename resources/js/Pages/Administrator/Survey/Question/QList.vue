@@ -55,11 +55,14 @@ const proxyChecked = computed({
                     <QMultipleSelect
                         :disabled="disabled"
                         :choices="question.setup.choices"
+                        :qid="question.id"
+                        :image="question.setup.image"
                         v-model="proxyChecked"
                     />
                 </template>
                 <template v-else-if="question.setup.input == true">
                     <QInputText
+                        :placeholder="question.setup.input_label"
                         :disabled="disabled"
                         :value="modelValue"
                         @input="$emit('update:modelValue', $event.target.value)"
@@ -69,7 +72,9 @@ const proxyChecked = computed({
                     <QSingleSelect
                         :disabled="disabled"
                         :ukey="question.order"
+                        :qid="question.id"
                         :choices="question.setup.choices"
+                        :image="question.setup.image"
                         v-model:checked="proxyChecked"
                     />
                 </template>

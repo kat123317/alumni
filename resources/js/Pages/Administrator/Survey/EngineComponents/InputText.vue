@@ -1,27 +1,14 @@
 <script setup>
-import { onMounted, ref } from "vue";
-
 defineProps({
     modelValue: String,
 });
 
 defineEmits(["update:modelValue"]);
-
-const input = ref(null);
-
-onMounted(() => {
-    if (input.value.hasAttribute("autofocus")) {
-        input.value.focus();
-    }
-});
-
-defineExpose({ focus: () => input.value.focus() });
 </script>
 
 <template>
     <input
-        ref="input"
-        class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+        class="bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
         :value="modelValue"
         @input="$emit('update:modelValue', $event.target.value)"
     />

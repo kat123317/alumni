@@ -5,7 +5,7 @@ export default function helpers() {
     const alertOnUpdate = ref(false);
     const alertOnDelete = ref(false);
     const alertOnError = ref(false);
-    const alertOnMessage = ref('');
+    const alertOnMessage = ref("");
 
     const onAlert = (data) => {
         if (data == "Success") {
@@ -17,7 +17,7 @@ export default function helpers() {
         } else {
             alertOnError.value = true;
         }
-    
+
         setTimeout(() => {
             if (data == "Success") {
                 alertOn.value = false;
@@ -31,12 +31,26 @@ export default function helpers() {
         }, 4000);
     };
 
+    const random_str = (length) => {
+        var result = "";
+        var characters =
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        var charactersLength = characters.length;
+        for (var i = 0; i < length; i++) {
+            result += characters.charAt(
+                Math.floor(Math.random() * charactersLength)
+            );
+        }
+        return result;
+    };
+
     return {
         alertOn,
         alertOnUpdate,
         alertOnDelete,
         alertOnError,
         alertOnMessage,
-        onAlert
-    }
+        onAlert,
+        random_str,
+    };
 }
