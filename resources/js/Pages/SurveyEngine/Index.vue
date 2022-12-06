@@ -29,6 +29,15 @@ const initialize = () => {
                 question.setup.multiple_select == false
             ) {
                 my_choices.answers["question_" + question.id] = 0;
+                let write_in = {};
+                question.setup.choices.forEach((choice) => {
+                    if (choice.write_in) {
+                        write_in["write_" + choice.value] = "";
+                    }
+                });
+                if (Object.keys(write_in).length > 0) {
+                    my_choices.answers["write_in_" + question.id] = write_in;
+                }
             } else {
                 let choices = {};
                 let write_in = {};
@@ -39,7 +48,9 @@ const initialize = () => {
                     }
                 });
                 my_choices.answers["question_" + question.id] = choices;
-                my_choices.answers["write_in_" + question.id] = write_in;
+                if (Object.keys(write_in).length > 0) {
+                    my_choices.answers["write_in_" + question.id] = write_in;
+                }
             }
         });
         if (props.user.user_type != "alumni") {
@@ -66,6 +77,19 @@ const initialize = () => {
                     false
                 ) {
                     my_choices.answers["question_" + question.id] = 0;
+                    if (question.setup.dropdown == false) {
+                        //single select
+                        let write_in = {};
+                        question.setup.choices.forEach((choice) => {
+                            if (choice.write_in) {
+                                write_in["write_" + choice.value] = "";
+                            }
+                        });
+                        if (Object.keys(write_in).length > 0) {
+                            my_choices.answers["write_in_" + question.id] =
+                                write_in;
+                        }
+                    }
                 }
             } else {
                 if (
@@ -81,7 +105,11 @@ const initialize = () => {
                         }
                     });
                     my_choices.answers["question_" + question.id] = choices;
-                    my_choices.answers["write_in_" + question.id] = write_in;
+                    if (Object.keys(write_in).length > 0) {
+                        my_choices.answers["write_in_" + question.id] =
+                            write_in;
+                        console.table(write_in);
+                    }
                 } else {
                     question.setup.choices.forEach((choice) => {
                         if (

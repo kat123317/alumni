@@ -79,6 +79,7 @@ const proxyChecked = computed({
                 </JetInputLabel>
                 <template v-if="choice.write_in">
                     <QInputText
+                        :disabled="checked != choice.value"
                         v-model="
                             my_choices.answers['write_in_' + qid][
                                 'write_' + choice.value

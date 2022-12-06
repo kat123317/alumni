@@ -65,6 +65,16 @@ const initialize = () => {
             question.setup.multiple_select == false
         ) {
             my_choice.value["question_" + question.id] = 0;
+            if (question.setup.dropdown == false) {
+                //single select
+                let write_in = {};
+                question.setup.choices.forEach((choice) => {
+                    if (choice.write_in) {
+                        write_in["write_" + choice.value] = "";
+                    }
+                });
+                my_choices.answers["write_in_" + question.id] = write_in;
+            }
         } else {
             let choices = {};
             let write_in = {};
