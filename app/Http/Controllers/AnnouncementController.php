@@ -280,12 +280,22 @@ class AnnouncementController extends Controller
         $tmp_header = ['User ID'];
         foreach ($questions as $question){
             if ($question->setup['multiple_select'] == true) {
-                foreach ($question->setup['choices'] as $key => $value) {
+                foreach ($question->setup['choices'] as $key => $choice) {
                     $tmp_header[] = 'Question_'.$question->order.'_'.$key+1;
+                    if ($choice['write_in'] == true) {
+                        $tmp_header[] = 'Question_'.$question->order.'_'.($key+1).'_write_in';
+                    }
                 }
             }
             else{
                 $tmp_header[] = 'Question_'.$question->order;
+                if ($question->setup['input'] == false && $question->setup['dropdown'] == false) {
+                    foreach ($question->setup['choices'] as $key => $choice) {
+                        if ($choice['write_in'] == true) {
+                            $tmp_header[] = 'Question_'.$question->order.'_'.($key+1).'_write_in';
+                        }
+                    }
+                }
             }
         }
         $tmp_record[] = $tmp_header;
@@ -294,11 +304,37 @@ class AnnouncementController extends Controller
             $answers=[$record->user->id];
             foreach ($questions as $question){
                 if ($question->setup['multiple_select'] == true) {
-                    foreach ($record->answers['question_'.$question->id] as $answer_value) {
+                    /* foreach ($record->answers['question_'.$question->id] as $answer_value) {
                         $answers[] = $answer_value;
+                    } */
+                    foreach ($question->setup['choices'] as $key => $choice) {
+                        $answers[] = $record->answers['question_'.$question->id]['choice_'.$choice['value']];
+                        if ($choice['write_in'] == true) {
+                            $answers[] = $record->answers['write_in_'.$question->id]['write_'.$choice['value']];
+                        }
                     }
                 } else {
-                    $answers[] = $record->answers['question_'.$question->id];
+                    
+                    if ($question->setup['input'] == false && $question->setup['dropdown'] == false) {
+                        //find index of the answer
+                        $index = collect($question->setup['choices'])->search(function ($choice, $key) use ($record, $question) {
+                            return $choice['value'] == $record->answers['question_'.$question->id];
+                        });
+                        $answers[] = $index + 1; //use the index + 1 to download data
+                        foreach ($question->setup['choices'] as $key => $choice) {
+                            if ($choice['write_in'] == true) {
+                                $answers[] = $record->answers['write_in_'.$question->id]['write_'.$choice['value']];
+                            }
+                        }
+                    } else if($question->setup['dropdown'] == true) {
+                        //find index of the answer
+                        $index = collect($question->setup['choices'])->search(function ($choice, $key) use ($record, $question) {
+                            return $choice['value'] == $record->answers['question_'.$question->id];
+                        });
+                        $answers[] = $index + 1; //use the index + 1 to download data
+                    } else {
+                        $answers[] = $record->answers['question_'.$question->id];
+                    }
                 }
             }
             $tmp_record[] = $answers;
