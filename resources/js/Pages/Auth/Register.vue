@@ -414,13 +414,13 @@ const submit = () => {
                                 type="text"
                                 class="mt-1 mr-2 mb-2 w-3/4"
                             />
-                            <PrimaryButton
+                            <a
                                 @click="function_add_honors()"
-                                :disabled="form.processing"
                                 title="Add"
+                                class="inline-flex items-center px-4 py-2 bg-green-800 border border-transparent rounded-md font-semibold text-xs text-yellow-400 uppercase tracking-widest hover:bg-green-700 active:bg-green-900 focus:outline-none focus:border-green-900 focus:ring focus:ring-green-300 disabled:opacity-25 transition cursor-pointer"
                             >
                                 ADD
-                            </PrimaryButton>
+                        </a>
                         </div>
                         <template
                             v-for="(honor, key) in form.honors_awards"
@@ -428,14 +428,14 @@ const submit = () => {
                         >
                             <span class="text-sm  ml-3"
                                 >{{ key + 1 + ". " + honor }}
-                                <SecondaryButton
+                                <a
                                     @click="remove_achievement(key)"
                                   
-                                    :disabled="form.processing"
                                     title="remove"
+                                    class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200 active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition bg-red-500 cursor-pointer text-white"
                                 >
                                     remove
-                                </SecondaryButton>
+                    </a>
                                 
 
                                 </span

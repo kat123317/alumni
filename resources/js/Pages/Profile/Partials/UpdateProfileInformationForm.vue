@@ -42,7 +42,7 @@ const photoPreview = ref(null);
 const photoInput = ref(null);
 const year_graduated = ref("");
 const tmp_achievement = ref("");
-const fillAchive = ref(false)
+const fillAchive = ref(false);
 onMounted(() => {
     year_graduated.value = function_date();
     function_achievement();
@@ -120,9 +120,9 @@ const clearPhotoFileInput = () => {
 
 const function_add_honors = () => {
     if (tmp_achievement.value == "") {
-        fillAchive.value = true
+        fillAchive.value = true;
         setTimeout(() => {
-            fillAchive.value = false
+            fillAchive.value = false;
         }, 4000);
     } else {
         form.honors_awards.push(tmp_achievement.value);
@@ -442,7 +442,7 @@ const remove_achievement = (key) => {
                     type="text"
                     class="mt-1 mr-2 mb-2 w-3/4"
                 />
-               
+
                 <!-- <a
                     @click="function_add_honors()"
                     class="bg-green-500 ... w-1/4 float-right text-center mt-3 rounded-md cursor-pointer"
@@ -451,12 +451,13 @@ const remove_achievement = (key) => {
                 >
                     ADD
                 </a> -->
-                <PrimaryButton
-                :class="{ 'opacity-25': form.processing }"
-                @click="function_add_honors()"
-            >
-                Add
-            </PrimaryButton><br>
+                <a
+                    class="inline-flex items-center px-4 py-2 bg-green-800 border border-transparent rounded-md font-semibold text-xs text-yellow-400 uppercase tracking-widest hover:bg-green-700 active:bg-green-900 focus:outline-none focus:border-green-900 focus:ring focus:ring-green-300 disabled:opacity-25 transition cursor-pointer"
+                    :class="{ 'opacity-25': form.processing }"
+                    @click="function_add_honors()"
+                >
+                    Add </a
+                ><br />
                 <template v-for="(honor, key) in form.honors_awards" :key="key">
                     <span class="text-sm ml-3"
                         >{{ key + 1 + ". " + honor }}
@@ -468,14 +469,20 @@ const remove_achievement = (key) => {
                         >
                             remove
                         </a> -->
-                        <SecondaryButton @click="remove_achievement(key)">remove</SecondaryButton>
-                        </span
-                    >
+                        <a
+                            @click="remove_achievement(key)"
+                            class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200 active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition bg-red-500 cursor-pointer text-white"
+                            >remove</a
+                        >
+                    </span>
                 </template>
-               
+
                 <InputError :message="form.errors.honors_awards" class="mt-2" />
+                <br />
+                <small v-if="fillAchive" class="text-red-500 w-screen"
+                    >Please fill Achievements first</small
+                >
             </div>
-            <small v-if="fillAchive" class="text-red-300 w-screen">Please fill Achievements first</small>
 
             <!-- Professional Examination Passed -->
             <div class="col-span-6 sm:col-span-4">
