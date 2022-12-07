@@ -42,6 +42,8 @@ const year_graduated = ref("");
 const tmp_achievement = ref("");
 
 const aggreement = ref(false);
+const fillAchive = ref(false);
+
 
 
 onMounted(() => {
@@ -69,7 +71,10 @@ const shown_courses = computed(() => {
 
 const function_add_honors = () => {
     if (tmp_achievement.value == "") {
-        alert("Please fill achievement first");
+        fillAchive.value = true;
+        setTimeout(() => {
+            fillAchive.value = false;
+        }, 4000);
     } else {
         form.honors_awards.push(tmp_achievement.value);
         tmp_achievement.value = "";
@@ -446,6 +451,9 @@ const submit = () => {
                             class="mt-2"
                             :message="form.errors.honors_awards"
                         />
+                        <br>
+                        <small v-if="fillAchive" class="text-red-500 w-screen"
+                    >Please fill Achievements first</small>
                     </div>
 
                     <div class="mt-4 col-span-3">
