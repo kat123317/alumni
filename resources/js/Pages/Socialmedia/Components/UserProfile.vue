@@ -223,6 +223,80 @@ const status = (value) => {
                             }}
                         </h1>
                     </div>
+                    
+                    <div class="flex items-center mt-4 text-gray-700">
+                        <svg
+                            aria-label="suitcase icon"
+                            class="w-6 h-6 fill-current"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path d="M14 11H10V13H14V11Z" />
+                            ><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                       
+
+                        <h1 class="px-2 text-sm">
+                            {{
+                                usePage().props.value.user_profile[0].details.professional_examination
+                            }}
+                        </h1>
+                    </div>
+
+                    <div class="flex items-center mt-4 text-gray-700">
+                        <svg
+                            aria-label="suitcase icon"
+                            class="w-6 h-6 fill-current"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path d="M14 11H10V13H14V11Z" />
+                            ><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                   
+
+                        <h1 class="px-2 text-sm">
+                            {{
+                                usePage().props.value.user_profile[0].details.region_of_origin
+                            }}   {{
+                                usePage().props.value.user_profile[0].details.province
+                            }}
+                        </h1>
+                    </div>
+
+                    <div class="flex items-center mt-4 text-gray-700">
+                        <svg
+                            aria-label="suitcase icon"
+                            class="w-6 h-6 fill-current"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                        <path d="M12 14l9-5-9-5-9 5 9 5z"></path><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"></path>
+                        </svg>
+                      
+
+                        <h1 class="px-2 text-sm">
+                            {{
+                                usePage().props.value.user_profile[0].details.year_graduated
+                            }} 
+                        </h1>
+                    </div>
+
+
+                    
+                    <div class=" items-center mt-4 text-gray-700">
+                            <h2 class="mb-2 text-lg font-semibold text-gray-900 ">Achievements:</h2>
+                            <ul class="space-y-1 max-w-md list-disc list-inside text-gray-500 ">
+                                <li v-for="(items, k55) in usePage().props.value.user_profile[0].details.honors_awards" :key="k55">
+                                    {{items}}
+                                </li>
+                            </ul>
+
+                      
+                    </div>
                 </div>
                 <div class="flex p-4">
                     <div class="w-full text-center">

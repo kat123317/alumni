@@ -6,6 +6,7 @@ import Checkbox from "@/Components/Checkbox.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
+import SecondaryButton from "@/Components/SecondaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { computed, onMounted, ref } from "vue";
 import moment from "moment";
@@ -411,31 +412,33 @@ const submit = () => {
                                 id="honors_awards"
                                 v-model="tmp_achievement"
                                 type="text"
-                                class="mt-1 w-3/4"
+                                class="mt-1 mr-2 mb-2 w-3/4"
                             />
-                            <a
+                            <PrimaryButton
                                 @click="function_add_honors()"
-                                class="bg-green-500 ... w-1/4 float-right text-center mt-3 rounded-md"
                                 :disabled="form.processing"
                                 title="Add"
                             >
                                 ADD
-                            </a>
+                            </PrimaryButton>
                         </div>
                         <template
                             v-for="(honor, key) in form.honors_awards"
                             :key="key"
                         >
-                            <span class="text-sm ml-3"
+                            <span class="text-sm  ml-3"
                                 >{{ key + 1 + ". " + honor }}
-                                <a
+                                <SecondaryButton
                                     @click="remove_achievement(key)"
-                                    class="bg-red-500 ... w-1/4 mt-3 rounded-md"
+                                  
                                     :disabled="form.processing"
                                     title="remove"
                                 >
                                     remove
-                                </a></span
+                                </SecondaryButton>
+                                
+
+                                </span
                             >
                         </template>
 
@@ -523,7 +526,7 @@ const submit = () => {
                         I hereby declare that the information given in this application is true and correct to the best of my knowledge and belief. In case any information given in this application proves to be false or incorrect, I shall be responsible for the consequences
                     </p>
                     <p class="mt-10">
-                        <input @click="function_aggree()" type="checkbox" id="" name="" value=""> I aggree 
+                        <input @click="function_aggree()" type="checkbox" id="" name="" value=""> I agree 
                     </p>
 
                 </div>

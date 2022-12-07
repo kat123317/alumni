@@ -36,7 +36,7 @@ const proxyChecked = computed({
     <div class="grid grid-cols gap-1 mb-5">
         <template v-for="(choice, i) in choices">
             <div class="col-span-6">
-                <JetInputLabel class="inline-block">
+                <div class="flex">
                     <input
                         v-model="proxyChecked['choice_' + choice.value]"
                         type="checkbox"
@@ -60,7 +60,7 @@ const proxyChecked = computed({
                                 '?rnd=' +
                                 r_string
                             "
-                            class="h-[5vmin]"
+                            class="h-[20vmin] ml-10"
                         />
                     </template>
                     <span
@@ -68,7 +68,7 @@ const proxyChecked = computed({
                         class="ml-2 text-gray-800 text-lg font-lg mr-2 px-2.5 py-0.5 rounded"
                         >{{ choice.label }}</span
                     >
-                </JetInputLabel>
+                </div>
                 <template v-if="choice.write_in">
                     <QInputText
                         :disabled="proxyChecked['choice_' + choice.value] == 0"

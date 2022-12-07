@@ -42,16 +42,16 @@ const proxyChecked = computed({
 </script>
 <template>
     <div class="grid grid-cols gap-1 mb-5">
-        <template v-for="(choice, i) in choices">
+        <template v-for="(choice, i) in choices" :key="i">
             <div class="col-span-6">
-                <JetInputLabel class="inline-block">
+                <div class="flex">
                     <input
                         :name="'radio-' + ukey"
                         :value="choice.value"
                         :disabled="disabled"
                         v-model="proxyChecked"
                         type="radio"
-                        class="border-gray-300 w-6 h-6 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        class="border-gray-300 flex  w-6 h-6 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                     />
 
                     <template
@@ -60,6 +60,7 @@ const proxyChecked = computed({
                             choice.img_src != null &&
                             choice.img_src != ''
                         "
+
                     >
                         <img
                             :src="
@@ -68,7 +69,7 @@ const proxyChecked = computed({
                                 '?rnd=' +
                                 r_string
                             "
-                            class="h-[5vmin]"
+                            class="w-[20vmin] ml-10"
                         />
                     </template>
                     <span
@@ -76,7 +77,7 @@ const proxyChecked = computed({
                         class="ml-2 text-gray-800 text-lg font-lg mr-2 px-2.5 py-0.5 rounded"
                         >{{ choice.label }}</span
                     >
-                </JetInputLabel>
+                </div>
                 <template v-if="choice.write_in">
                     <QInputText
                         :disabled="checked != choice.value"

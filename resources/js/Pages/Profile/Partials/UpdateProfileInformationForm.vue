@@ -42,7 +42,7 @@ const photoPreview = ref(null);
 const photoInput = ref(null);
 const year_graduated = ref("");
 const tmp_achievement = ref("");
-
+const fillAchive = ref(false)
 onMounted(() => {
     year_graduated.value = function_date();
     function_achievement();
@@ -120,7 +120,10 @@ const clearPhotoFileInput = () => {
 
 const function_add_honors = () => {
     if (tmp_achievement.value == "") {
-        alert("Please fill achievement first");
+        fillAchive.value = true
+        setTimeout(() => {
+            fillAchive.value = false
+        }, 4000);
     } else {
         form.honors_awards.push(tmp_achievement.value);
         tmp_achievement.value = "";
@@ -437,32 +440,42 @@ const remove_achievement = (key) => {
                     id="honors_awards"
                     v-model="tmp_achievement"
                     type="text"
-                    class="mt-1 w-3/4"
+                    class="mt-1 mr-2 mb-2 w-3/4"
                 />
-                <a
+               
+                <!-- <a
                     @click="function_add_honors()"
                     class="bg-green-500 ... w-1/4 float-right text-center mt-3 rounded-md cursor-pointer"
                     :disabled="form.processing"
                     title="Add"
                 >
                     ADD
-                </a>
+                </a> -->
+                <PrimaryButton
+                :class="{ 'opacity-25': form.processing }"
+                @click="function_add_honors()"
+            >
+                Add
+            </PrimaryButton><br>
                 <template v-for="(honor, key) in form.honors_awards" :key="key">
                     <span class="text-sm ml-3"
                         >{{ key + 1 + ". " + honor }}
-                        <a
+                        <!-- <a
                             @click="remove_achievement(key)"
                             class="bg-red-500 ... w-1/4 mt-3 rounded-md"
                             :disabled="form.processing"
                             title="remove"
                         >
                             remove
-                        </a></span
+                        </a> -->
+                        <SecondaryButton @click="remove_achievement(key)">remove</SecondaryButton>
+                        </span
                     >
                 </template>
-
+               
                 <InputError :message="form.errors.honors_awards" class="mt-2" />
             </div>
+            <small v-if="fillAchive" class="text-red-300 w-screen">Please fill Achievements first</small>
 
             <!-- Professional Examination Passed -->
             <div class="col-span-6 sm:col-span-4">
