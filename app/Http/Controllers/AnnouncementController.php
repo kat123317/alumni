@@ -68,7 +68,7 @@ class AnnouncementController extends Controller
                     -> orWhere('notification_type', 'comment');
         })->where('notification_owner', Auth::user()->id)->where('is_read', 0)->orderBy('created_at', 'desc')->get();
 
-        $survey_notifications = UserNotification::where(['notification_type' => 'survey', 'notification_owner' => Auth::user()->id])->where('is_read', 0)->orderBy('created_at', 'desc')->get();
+        $survey_notifications = UserNotification::with('user')->where(['notification_type' => 'survey', 'notification_owner' => Auth::user()->id])->where('is_read', 0)->orderBy('created_at', 'desc')->get();
         $tmp_data = [];
         $tmp_array = [];
         foreach ($survey_notifications as $notif) {
@@ -111,7 +111,7 @@ class AnnouncementController extends Controller
                     -> orWhere('notification_type', 'comment');
         })->where('notification_owner', Auth::user()->id)->where('is_read', 0)->orderBy('created_at', 'desc')->get();
 
-        $survey_notifications = UserNotification::where(['notification_type' => 'survey', 'notification_owner' => Auth::user()->id])->where('is_read', 0)->orderBy('created_at', 'desc')->get();
+        $survey_notifications = UserNotification::with('user')->where(['notification_type' => 'survey', 'notification_owner' => Auth::user()->id])->where('is_read', 0)->orderBy('created_at', 'desc')->get();
         $tmp_data = [];
         $tmp_array = [];
 

@@ -399,7 +399,7 @@ const function_search = () => {
                                         <div
                                             class="divide-y max-h-[70vmin] lg:max-h-[20vmin] overflow-hidden overflow-y-auto divide-gray-100"
                                         >
-                                        <div v-if="noftype == 1">
+                                            <div v-if="noftype == 1">
                                                 <div
                                                     v-if="
                                                         usePage().props.value
@@ -427,7 +427,7 @@ const function_search = () => {
                                                     ) in usePage().props.value
                                                         .user_notification"
                                                     :key="key"
-                                                    class="flex py-3 px-4 hover:bg-gray-100"
+                                                    class="flex py-3 px-4 hover:bg-gray-100 cursor-pointer"
                                                 >
                                                     <div class="flex-shrink-0">
                                                         <img
@@ -478,7 +478,7 @@ const function_search = () => {
                                                 <div
                                                     v-if="
                                                         usePage().props.value
-                                                            .survey_notification ==
+                                                            .survey_notifications ==
                                                         null
                                                     "
                                                     class="flex justify-center my-10"
@@ -502,15 +502,15 @@ const function_search = () => {
                                                     v-for="(
                                                         survey_notification, key
                                                     ) in usePage().props.value
-                                                        .survey_notification"
+                                                        .survey_notifications"
                                                     :key="key"
-                                                    class="flex py-3 px-4 hover:bg-gray-100"
+                                                    class="flex py-3 px-4 hover:bg-gray-100 cursor-pointer"
                                                 >
                                                     <div class="flex-shrink-0">
                                                         <img
                                                             class="w-11 h-11 rounded-full"
                                                             :src="
-                                                                user_notification
+                                                                survey_notification
                                                                     .user
                                                                     .profile_photo_url
                                                             "
@@ -525,17 +525,17 @@ const function_search = () => {
                                                             <span
                                                                 class="font-semibold text-gray-900"
                                                                 >{{
-                                                                    user_notification
+                                                                    survey_notification
                                                                         .user
                                                                         .name
                                                                 }}</span
                                                             >: "{{
-                                                                user_notification.title
+                                                                survey_notification.title
                                                             }}"
                                                             <p
                                                                 class="text-ellipsis max-h-[5vmin] overflow-hidden"
                                                                 v-html="
-                                                                    user_notification.content
+                                                                    survey_notification.content
                                                                 "
                                                             ></p>
                                                         </div>
@@ -544,7 +544,7 @@ const function_search = () => {
                                                         >
                                                             {{
                                                                 date_conversion_from_now(
-                                                                    user_notification.created_at
+                                                                    survey_notification.created_at
                                                                 )
                                                             }}
                                                         </div>
@@ -767,7 +767,7 @@ const function_search = () => {
                                         role="link"
                                         >{{ posts.job_title }}</a
                                     >
-                                    <div 
+                                    <div
                                         v-html="posts.job_description"
                                         class="mt-2 text-gray-600"
                                     ></div>
@@ -907,7 +907,15 @@ const function_search = () => {
                                             placeholder="Job Description"
                                             class="block w-full px-4 py-3 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"
                                         ></textarea> -->
-                                        <QuillEditor v-model:content="update_modal_data.job_description" theme="snow" toolbar="minimal"   id="postEditor"   contentType="html"></QuillEditor>
+                                        <QuillEditor
+                                            v-model:content="
+                                                update_modal_data.job_description
+                                            "
+                                            theme="snow"
+                                            toolbar="minimal"
+                                            id="postEditor"
+                                            contentType="html"
+                                        ></QuillEditor>
                                     </label>
 
                                     <label class="block mt-3" for="contact">

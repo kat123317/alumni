@@ -394,7 +394,7 @@ function onSelectEmojiSearch(emoji) {
                                         </ul>
                                         <div
                                             class="divide-y max-h-[70vmin] lg:max-h-[20vmin] overflow-hidden overflow-y-auto divide-gray-100"
-                                            >
+                                        >
                                             <div v-if="noftype == 1">
                                                 <div
                                                     v-if="
@@ -423,7 +423,7 @@ function onSelectEmojiSearch(emoji) {
                                                     ) in usePage().props.value
                                                         .user_notification"
                                                     :key="key"
-                                                    class="flex py-3 px-4 hover:bg-gray-100"
+                                                    class="flex py-3 px-4 hover:bg-gray-100 cursor-pointer"
                                                 >
                                                     <div class="flex-shrink-0">
                                                         <img
@@ -474,7 +474,7 @@ function onSelectEmojiSearch(emoji) {
                                                 <div
                                                     v-if="
                                                         usePage().props.value
-                                                            .survey_notification ==
+                                                            .survey_notifications ==
                                                         null
                                                     "
                                                     class="flex justify-center my-10"
@@ -498,15 +498,15 @@ function onSelectEmojiSearch(emoji) {
                                                     v-for="(
                                                         survey_notification, key
                                                     ) in usePage().props.value
-                                                        .survey_notification"
+                                                        .survey_notifications"
                                                     :key="key"
-                                                    class="flex py-3 px-4 hover:bg-gray-100"
+                                                    class="flex py-3 px-4 hover:bg-gray-100 cursor-pointer"
                                                 >
                                                     <div class="flex-shrink-0">
                                                         <img
                                                             class="w-11 h-11 rounded-full"
                                                             :src="
-                                                                user_notification
+                                                                survey_notification
                                                                     .user
                                                                     .profile_photo_url
                                                             "
@@ -521,17 +521,17 @@ function onSelectEmojiSearch(emoji) {
                                                             <span
                                                                 class="font-semibold text-gray-900"
                                                                 >{{
-                                                                    user_notification
+                                                                    survey_notification
                                                                         .user
                                                                         .name
                                                                 }}</span
                                                             >: "{{
-                                                                user_notification.title
+                                                                survey_notification.title
                                                             }}"
                                                             <p
                                                                 class="text-ellipsis max-h-[5vmin] overflow-hidden"
                                                                 v-html="
-                                                                    user_notification.content
+                                                                    survey_notification.content
                                                                 "
                                                             ></p>
                                                         </div>
@@ -540,7 +540,7 @@ function onSelectEmojiSearch(emoji) {
                                                         >
                                                             {{
                                                                 date_conversion_from_now(
-                                                                    user_notification.created_at
+                                                                    survey_notification.created_at
                                                                 )
                                                             }}
                                                         </div>
