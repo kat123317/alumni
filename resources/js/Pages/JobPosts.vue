@@ -317,6 +317,9 @@ const function_search = () => {
                                                 >{{
                                                     usePage().props.value
                                                         .user_notification
+                                                        .length +
+                                                    usePage().props.value
+                                                        .survey_notifications
                                                         .length
                                                 }}</span
                                             ></span
@@ -364,7 +367,16 @@ const function_search = () => {
                                                             d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
                                                             clip-rule="evenodd"
                                                         ></path></svg
-                                                    >Social
+                                                    >Social &nbsp;
+                                                    <span
+                                                        class="bg-blue-500 animate-pulse py-1 px-2 rounded-full text-white text-sm"
+                                                        >{{
+                                                            usePage().props
+                                                                .value
+                                                                .user_notification
+                                                                .length
+                                                        }}</span
+                                                    >
                                                 </a>
                                             </li>
 
@@ -393,6 +405,15 @@ const function_search = () => {
                                                         ></path>
                                                     </svg>
                                                     Surveys
+                                                    <span
+                                                        class="bg-blue-500 animate-pulse py-1 px-2 rounded-full text-white text-sm"
+                                                        >{{
+                                                            usePage().props
+                                                                .value
+                                                                .survey_notifications
+                                                                .length
+                                                        }}</span
+                                                    >
                                                 </a>
                                             </li>
                                         </ul>
