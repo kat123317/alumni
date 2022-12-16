@@ -307,8 +307,8 @@ function onSelectEmojiSearch(emoji) {
                                         class="flex hover:bg-blue-800 hover:text-white p-2 cursor-pointer rounded items-center py-3"
                                     >
                                         <span>Notifications</span>
-                                        <span class="ml-auto"
-                                            ><span
+                                        <span class="ml-auto">
+                                            <span
                                                 class="bg-blue-500 animate-pulse py-1 px-2 rounded-full text-white text-sm"
                                                 >{{
                                                     usePage().props.value
@@ -317,9 +317,9 @@ function onSelectEmojiSearch(emoji) {
                                                     usePage().props.value
                                                         .survey_notifications
                                                         .length
-                                                }}</span
-                                            ></span
-                                        >
+                                                }}
+                                            </span>
+                                        </span>
                                     </li>
 
                                     <div

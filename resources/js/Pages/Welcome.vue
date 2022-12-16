@@ -145,14 +145,8 @@ defineProps({
                                 <h2
                                     class="text-3xl md:text-5xl leading-relaxed md:leading-snug mb-2"
                                 >
-                                    Alumni Association Incorporated
+                                    Alumni
                                 </h2>
-                                <p
-                                    class="text-sm md:text-base text-gray-50 mb-4"
-                                >
-                                    Explore your favourite events and register
-                                    now.
-                                </p>
                                 <a
                                     :href="route('login')"
                                     class="bg-transparent hover:bg-green-300 text-green-300 hover:text-black rounded shadow hover:shadow-lg py-2 px-4 border border-green-300 hover:border-transparent"
@@ -165,15 +159,15 @@ defineProps({
                 </div>
             </section>
 
-            <section class=" mb-2 px-5">
+            <section class="mb-2 px-5">
                 <div class="py-8 px-4 mx-auto sm:py-16 lg:px-6">
-         
-
                     <div
                         class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0"
                     >
                         <div class="">
-                            <figure class="mx-auto max-w-screen-md text-focus-in1  text-center text-gray-800">
+                            <figure
+                                class="mx-auto max-w-screen-md text-focus-in1 text-center text-gray-800"
+                            >
                                 <svg
                                     aria-hidden="true"
                                     class="mx-auto mb-3 w-12 h-12"
@@ -188,7 +182,7 @@ defineProps({
                                 </svg>
                                 <blockquote>
                                     <p
-                                        class="text-2xl italic font-medium  text-gray-800"
+                                        class="text-2xl italic font-medium text-gray-800"
                                     >
                                         Section 2 of Republic Act No. 4498
                                         mandates that Central Mindanao
@@ -211,8 +205,7 @@ defineProps({
                                     <div
                                         class="flex items-center divide-x-2 divide-gray-500"
                                     >
-                                        <cite
-                                            class="pr-3 font-medium "
+                                        <cite class="pr-3 font-medium"
                                             >Mandate</cite
                                         >
                                     </div>
@@ -220,10 +213,12 @@ defineProps({
                             </figure>
                         </div>
                         <div class="">
-                            <figure class="mx-auto max-w-screen-md text-focus-in2 text-gray-800 text-center">
+                            <figure
+                                class="mx-auto max-w-screen-md text-focus-in2 text-gray-800 text-center"
+                            >
                                 <svg
                                     aria-hidden="true"
-                                    class="mx-auto mb-3 w-12 h-12 "
+                                    class="mx-auto mb-3 w-12 h-12"
                                     viewBox="0 0 24 27"
                                     fill="none"
                                     xmlns="http://www.w3.org/2000/svg"
@@ -234,9 +229,7 @@ defineProps({
                                     ></path>
                                 </svg>
                                 <blockquote>
-                                    <p
-                                        class="text-2xl italic font-medium "
-                                    >
+                                    <p class="text-2xl italic font-medium">
                                         To advance the frontier of knowledge
                                         through internationalization of
                                         education and equitable access to
@@ -253,8 +246,7 @@ defineProps({
                                     <div
                                         class="flex items-center divide-x-2 divide-gray-500"
                                     >
-                                        <cite
-                                            class="pr-3 font-medium "
+                                        <cite class="pr-3 font-medium"
                                             >Mission</cite
                                         >
                                     </div>
@@ -262,10 +254,12 @@ defineProps({
                             </figure>
                         </div>
                         <div>
-                            <figure class="mx-auto text-gray-900 text-focus-in3 max-w-screen-md text-center">
+                            <figure
+                                class="mx-auto text-gray-900 text-focus-in3 max-w-screen-md text-center"
+                            >
                                 <svg
                                     aria-hidden="true"
-                                    class="mx-auto mb-3 w-12 h-12 "
+                                    class="mx-auto mb-3 w-12 h-12"
                                     viewBox="0 0 24 27"
                                     fill="none"
                                     xmlns="http://www.w3.org/2000/svg"
@@ -276,9 +270,7 @@ defineProps({
                                     ></path>
                                 </svg>
                                 <blockquote>
-                                    <p
-                                        class="text-2xl italic font-medium "
-                                    >
+                                    <p class="text-2xl italic font-medium">
                                         A leading ASEAN university actively
                                         committed to the total development of
                                         people for a globally sustainable
@@ -291,8 +283,7 @@ defineProps({
                                     <div
                                         class="flex items-center divide-x-2 divide-gray-500"
                                     >
-                                        <cite
-                                            class="pr-3 font-medium "
+                                        <cite class="pr-3 font-medium"
                                             >Vision</cite
                                         >
                                     </div>
@@ -306,17 +297,16 @@ defineProps({
             <div class="font-mono bg-green-900 mb-4 h-[3vmin]">
                 <h2
                     class="mb-2 text-[2rem] font-extrabold text-start ml-4 text-yellow-600 flex"
-                >
-                  
-                  
-                </h2>
+                ></h2>
                 <!-- <p class="text-gray-500 sm:text-xl dark:text-gray-400">Here at Flowbite we focus on markets where technology, innovation, and capital can unlock long-term value and drive economic growth.</p> -->
             </div>
-            <div class="text-3xl w-full flex justify-center text-gray-800 font-cus"><p>Colleges </p></div>
-            <section class=" px-5">
-               
+            <div
+                class="text-3xl w-full flex justify-center text-gray-800 font-cus"
+            >
+                <p>Colleges</p>
+            </div>
+            <section class="px-5">
                 <div class="py-8 px-4 mx-auto sm:py-16 lg:px-6">
-                    
                     <div
                         class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-6 md:gap-12 md:space-y-0"
                     >
@@ -339,16 +329,16 @@ defineProps({
             <div class="font-mono bg-green-900 mb-4 h-[3vmin]">
                 <h2
                     class="mb-2 text-[2rem] font-extrabold text-start ml-4 text-yellow-600 flex"
-                >
-                  
-                  
-                </h2>
+                ></h2>
                 <!-- <p class="text-gray-500 sm:text-xl dark:text-gray-400">Here at Flowbite we focus on markets where technology, innovation, and capital can unlock long-term value and drive economic growth.</p> -->
             </div>
-            <div class="text-3xl w-full flex justify-center text-gray-800 font-cus"><p>Announcements </p></div>
-      
+            <div
+                class="text-3xl w-full flex justify-center text-gray-800 font-cus"
+            >
+                <p>Announcements</p>
+            </div>
+
             <section class="px-10 bg-gray-200">
-              
                 <div class="py-8 px-4 mx-auto sm:py-16 lg:px-6">
                     <div
                         class="space-y-8 md:grid md:grid-cols-1 lg:grid-cols-1 md:gap-12 md:space-y-0"
@@ -429,11 +419,10 @@ defineProps({
                                 >
                                     {{ announcement.title }}</a
                                 >
-                                <p v-html="announcement.content"
+                                <p
+                                    v-html="announcement.content"
                                     class="mt-2 text-gray-600 dark:text-gray-300"
-                                >
-                                 
-                                </p>
+                                ></p>
                             </div>
 
                             <div class="flex items-center justify-end mt-4">
@@ -456,18 +445,19 @@ defineProps({
                     </div>
                 </div>
             </section>
-          
+
             <div class="bg-yellow-600 h-[1vmin]"></div>
             <div class="font-mono bg-green-900 mb-4 h-[3vmin]">
                 <h2
                     class="mb-2 text-[2rem] font-extrabold text-start ml-4 text-yellow-600 flex"
-                >
-                  
-                  
-                </h2>
+                ></h2>
                 <!-- <p class="text-gray-500 sm:text-xl dark:text-gray-400">Here at Flowbite we focus on markets where technology, innovation, and capital can unlock long-term value and drive economic growth.</p> -->
             </div>
-            <div class="text-3xl w-full flex justify-center text-gray-800 font-cus"><p>Events </p></div>
+            <div
+                class="text-3xl w-full flex justify-center text-gray-800 font-cus"
+            >
+                <p>Events</p>
+            </div>
             <section class="px-10 bg-gray-200">
                 <div class="py-8 px-4 mx-auto">
                     <div
@@ -500,11 +490,10 @@ defineProps({
                                 >
                                     {{ events.title }}
                                 </div>
-                                <div v-html="events.content"
+                                <div
+                                    v-html="events.content"
                                     class="bg-yellow-500 mt-1 rounded-lg text-center text-green-800 font-bold"
-                                >
-                                 
-                                </div>
+                                ></div>
 
                                 <div
                                     class="mt-2 grid grid-cols-1 lg:grid-cols-1 sm:grid-cols-1"
@@ -604,42 +593,44 @@ defineProps({
 </template>
 
 <style scoped>
-
 .text-focus-in1 {
-	-webkit-animation: text-focus-in 1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
-	        animation: text-focus-in 1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+    -webkit-animation: text-focus-in 1s cubic-bezier(0.55, 0.085, 0.68, 0.53)
+        both;
+    animation: text-focus-in 1s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
 }
 .text-focus-in2 {
-	-webkit-animation: text-focus-in 2s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
-	        animation: text-focus-in 2s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+    -webkit-animation: text-focus-in 2s cubic-bezier(0.55, 0.085, 0.68, 0.53)
+        both;
+    animation: text-focus-in 2s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
 }
 .text-focus-in3 {
-	-webkit-animation: text-focus-in 3s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
-	        animation: text-focus-in 3s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+    -webkit-animation: text-focus-in 3s cubic-bezier(0.55, 0.085, 0.68, 0.53)
+        both;
+    animation: text-focus-in 3s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
 }
 @-webkit-keyframes text-focus-in {
-  0% {
-    -webkit-filter: blur(12px);
-            filter: blur(12px);
-    opacity: 0;
-  }
-  100% {
-    -webkit-filter: blur(0px);
-            filter: blur(0px);
-    opacity: 1;
-  }
+    0% {
+        -webkit-filter: blur(12px);
+        filter: blur(12px);
+        opacity: 0;
+    }
+    100% {
+        -webkit-filter: blur(0px);
+        filter: blur(0px);
+        opacity: 1;
+    }
 }
 @keyframes text-focus-in {
-  0% {
-    -webkit-filter: blur(12px);
-            filter: blur(12px);
-    opacity: 0;
-  }
-  100% {
-    -webkit-filter: blur(0px);
-            filter: blur(0px);
-    opacity: 1;
-  }
+    0% {
+        -webkit-filter: blur(12px);
+        filter: blur(12px);
+        opacity: 0;
+    }
+    100% {
+        -webkit-filter: blur(0px);
+        filter: blur(0px);
+        opacity: 1;
+    }
 }
 
 .bg-cmu {
@@ -676,17 +667,13 @@ defineProps({
         );
 }
 
-
 .font-cus {
-  color: #363833;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 900;
-  font-size: 5vmin;
-  grid-area: overlap;
-  letter-spacing: 1px;
-  -webkit-text-stroke: 4px transparent;
+    color: #363833;
+    font-family: "Poppins", sans-serif;
+    font-weight: 900;
+    font-size: 5vmin;
+    grid-area: overlap;
+    letter-spacing: 1px;
+    -webkit-text-stroke: 4px transparent;
 }
-
-
-
 </style>
