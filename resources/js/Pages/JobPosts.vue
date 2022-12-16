@@ -826,8 +826,13 @@ const function_search = () => {
                                                 "
                                                 v-if="
                                                     posts.user.id ==
+                                                        usePage().props.value
+                                                            .user.id ||
                                                     usePage().props.value.user
-                                                        .id
+                                                        .user_type == 'admin' ||
+                                                    usePage().props.value.user
+                                                        .user_type ==
+                                                        'staff_admin'
                                                 "
                                                 class="text-lg flex font-bold float-right relative"
                                                 href="#"
@@ -858,8 +863,13 @@ const function_search = () => {
                                                 "
                                                 v-if="
                                                     posts.user.id ==
+                                                        usePage().props.value
+                                                            .user.id ||
                                                     usePage().props.value.user
-                                                        .id
+                                                        .user_type == 'admin' ||
+                                                    usePage().props.value.user
+                                                        .user_type ==
+                                                        'staff_admin'
                                                 "
                                                 class="text-lg font-bold float-right relative flex mr-4"
                                                 title="Delete your post"
