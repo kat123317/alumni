@@ -185,6 +185,10 @@ const openSelectedAchievements = (Data) => {
                     </svg>
 
                     <h1 class="px-2 text-sm">
+                        {{ graduate.yearbook.schoolyear_from }} -
+                        {{ graduate.yearbook.schoolyear_from }}
+                    </h1>
+                    <h1 class="px-2 text-sm">
                         {{ graduate.course.abbreviation }} -
                         {{ graduate.course.name }}
                     </h1>
