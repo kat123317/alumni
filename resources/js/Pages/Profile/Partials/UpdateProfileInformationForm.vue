@@ -395,7 +395,7 @@ const remove_achievement = (key) => {
                     class="mt-1 block w-full"
                     autocomplete="degree_graduated"
                 >
-                    <option value="1">Undergraduate</option>
+                    <option value="1">Batchelor's degree</option>
                     <option value="2">Masters</option>
                     <option value="3">Doctors</option>
                     <option value="4">Certification</option>

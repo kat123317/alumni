@@ -322,7 +322,7 @@ const submit = () => {
                             <option value="" disabled>
                                 Select Degree Graduated
                             </option>
-                            <option value="1">Undergraduate</option>
+                            <option value="1">Batchelor's degree</option>
                             <option value="2">Masters</option>
                             <option value="3">Doctors</option>
                             <option value="4">Certification</option>
