@@ -138,7 +138,7 @@ class UserController extends Controller
             'religion'=>$input['religion'], 
             //educational info
             'degree_graduated'=> $input['degree_graduated'],
-            // 'course_id'=>$input['course_id'],
+            'course_id'=>$input['course_id'],
             'honors_awards'=>$input['honors_awards']??[],
             'professional_examination'=>$input['professional_examination'],
             'current_work'=>$input['current_work'], 
