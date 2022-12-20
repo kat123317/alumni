@@ -363,7 +363,7 @@ const remove_achievement = (key) => {
                     v-model="form.region_of_origin"
                     type="text"
                     class="mt-1 block w-full"
-                    <!-- autocomplete="region_of_origin" -->
+                  
                 />
                 <InputError
                     :message="form.errors.region_of_origin"

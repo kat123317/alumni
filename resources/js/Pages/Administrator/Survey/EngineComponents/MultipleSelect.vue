@@ -33,9 +33,9 @@ const proxyChecked = computed({
 });
 </script>
 <template>
-    <div class="grid grid-cols gap-1 mb-5">
+    <div class="grid grid-cols-9 gap-1 mb-5">
         <template v-for="(choice, i) in choices">
-            <div class="col-span-6">
+            <div class="sm:col-span-4 col-span-9">
                 <div class="flex">
                     <input
                         v-model="proxyChecked['choice_' + choice.value]"
@@ -53,19 +53,27 @@ const proxyChecked = computed({
                             choice.img_src != ''
                         "
                     >
-                        <img
-                            :src="
-                                '/images/questions/' +
-                                choice.img_src +
-                                '?rnd=' +
-                                r_string
-                            "
-                            class="h-[20vmin] ml-10"
-                        />
+                    <div>
+                        <div> 
+                            <p class="text-green-800 break-words w-[40vmin] ml-5 mt-n1 text-2xl ">{{choice.label}}</p>
+                        </div>
+                        <div class="w-screen">
+                            <img
+                                :src="
+                                    '/images/questions/' +
+                                    choice.img_src +
+                                    '?rnd=' +
+                                    r_string
+                                "
+                                class="w-[30vmin] bg-white-200 border-solid border-2 border-gray-500 rounded-md "
+                                :class="image == true ? 'mt-5 mb-10' : ''"
+                            />
+                        </div>
+                    </div>
                     </template>
                     <span
                         v-else
-                        class="ml-2 text-gray-800 text-lg font-lg mr-2 px-2.5 py-0.5 rounded"
+                        class="ml-2   break-words w-[40vmin] text-gray-800 text-lg font-lg mr-2 px-2.5 py-0.5 rounded"
                         >{{ choice.label }}</span
                     >
                 </div>
