@@ -66,7 +66,7 @@ class UserSeeder extends Seeder
             'user_type' => 'admin',
             'college_id' => 1,
             'course_id' => 1,
-            'details' => $admin_details,
+            'details' => json_encode($admin_details),
             'is_active' => 1,
         ], [
             'name' => 'Staff Admin',
@@ -76,7 +76,7 @@ class UserSeeder extends Seeder
             'user_type' => 'staff_admin',
             'college_id' => 1,
             'course_id' => 1,
-            'details' => $staff_admin_details,
+            'details' => json_encode($staff_admin_details),
             'is_active' => 1,
         ]);
     }

@@ -15,7 +15,7 @@ class CourseSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('colleges')->insert([
+        DB::table('courses')->insert([
             'college_id' => 1,
             'name' => 'Information Technology',
             'abbreviation' => 'IT',
