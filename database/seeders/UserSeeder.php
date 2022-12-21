@@ -58,7 +58,7 @@ class UserSeeder extends Seeder
             'region_of_origin' => 'Bukidnon',
             'professional_examination' => 'None',
         );
-        DB::table('users')->insert([
+        DB::table('users')->insert([[
             'name' => 'Administrator',
             'email' => 'administrator@gmail.com',
             'password' => Hash::make('123456789'),
@@ -68,8 +68,7 @@ class UserSeeder extends Seeder
             'course_id' => 1,
             'details' => json_encode($admin_details),
             'is_active' => 1,
-        ]);
-        DB::table('users')->insert([
+        ], [
             'name' => 'Staff Admin',
             'email' => 'staffadministrator@gmail.com',
             'password' => Hash::make('123456789'),
@@ -79,6 +78,6 @@ class UserSeeder extends Seeder
             'course_id' => 1,
             'details' => json_encode($staff_admin_details),
             'is_active' => 1,
-        ]);
+        ]]);
     }
 }
