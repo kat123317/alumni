@@ -68,7 +68,8 @@ class UserSeeder extends Seeder
             'course_id' => 1,
             'details' => json_encode($admin_details),
             'is_active' => 1,
-        ], [
+        ]);
+        DB::table('users')->insert([
             'name' => 'Staff Admin',
             'email' => 'staffadministrator@gmail.com',
             'password' => Hash::make('123456789'),
