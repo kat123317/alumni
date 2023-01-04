@@ -102,17 +102,17 @@ const submit = () => {
     <div
         class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100"
     >
-        <div>
+        <div class="w-2/3 grid grid-cols-4 gap-4">
             <AuthenticationCardLogo />
         </div>
 
         <div
-            class="w-full sm:max-w-[80rem] mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg"
+            class="w-full sm:max-w-[80rem] mt-2 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg"
         >
             <form @submit.prevent="submit">
-                <h1 class="text-center text-[4vmin]">GENERAL INFORMATION</h1>
+                <h1 class="text-center text-[3vmin]">REGISTRATION</h1>
                 <div class="grid grid-cols-6 gap-4">
-                    <div class="mt-4 col-span-3">
+                    <div class="mt-4 col-span-3 text-[2vmin]">
                         <InputLabel for="name" value="Name" />
                         <TextInput
                             id="name"
@@ -304,7 +304,7 @@ const submit = () => {
                         />
                     </div>
                 </div>
-                <h1 class="text-center text-[4vmin] mt-6">
+                <h1 class="text-center text-[3vmin] mt-6">
                     EDUCATIONAL BACKGROUND
                 </h1>
 
