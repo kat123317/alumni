@@ -85,13 +85,13 @@ defineProps({
                         class="flex flex-wrap justify-between items-center mx-auto"
                     >
                         <a
-                            href="https://flowbite.com"
+                            href="https://scontent.fmnl25-3.fna.fbcdn.net/v/t39.30808-6/277753676_1304000960076328_3274280775987084409_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=8bfeb9&_nc_eui2=AeHJcCK3w_9DuFAiXfYAq3S7FvihVsOuc7kW-KFWw65zuQYPI5GPMEC7ErJbk8-BDN4ZeZV3QOdDv5pNH0FMNba-&_nc_ohc=OfNQfGLwYt8AX9rsBeN&_nc_ht=scontent.fmnl25-3.fna&oh=00_AfCtOta09b4tk-aXI30Z7P0ncjWGsLrAHpY6vgaHfESFiQ&oe=63BB4BC1"
                             class="flex items-center"
                         >
                             <img
                                 src="http://devops.cmu.edu.ph/formlinks/assets/dist/assets/img/logos/CMU-LOGO.png"
                                 class="mr-3 h-6 sm:h-9"
-                                alt="Flowbite Logo"
+                                alt="Cmu Logo"
                             />
                             <span
                                 class="self-center text-xl font-bold whitespace-nowrap"
@@ -125,9 +125,12 @@ defineProps({
             </header>
             <section>
                 <div
-                    class="overflow-hidden bg-cmu backdrop-opacity-50 backdrop-blur-lg text-white py-20"
+                    class="overflow-hidden backdrop-opacity-50 backdrop-blur-lg text-white py-20 bg-hero bg-no-repeat bg-cover bg-center h-[100%] flex flex-col"
                     style="
-                        background-image: url('https://devops.cmu.edu.ph/formlinks/assets/dist/assets/img/backgrounds/main_gate.jpg');
+                        background-image: url('https://scontent.fmnl25-3.fna.fbcdn.net/v/t39.30808-6/277753676_1304000960076328_3274280775987084409_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=8bfeb9&_nc_eui2=AeHJcCK3w_9DuFAiXfYAq3S7FvihVsOuc7kW-KFWw65zuQYPI5GPMEC7ErJbk8-BDN4ZeZV3QOdDv5pNH0FMNba-&_nc_ohc=OfNQfGLwYt8AX9rsBeN&_nc_ht=scontent.fmnl25-3.fna&oh=00_AfCtOta09b4tk-aXI30Z7P0ncjWGsLrAHpY6vgaHfESFiQ&oe=63BB4BC1');
+                        background-size: 100%;
+                        /* background-image: url('http://[::1]:5173/resources/assets/farm.jpg'); */
+                        /* background-image: url('https://images.unsplash.com/photo-1444858291040-58f756a3bdd6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1678&q=80'); */
                     "
                 >
                     <scroll-parallax :right="true" direction="x">
@@ -317,7 +320,7 @@ defineProps({
                             :key="key"
                         >
                             <img
-                                class="grayscale w-25"
+                                class="w-25"
                                 :src="'/images/colleges/' + colleges.logo"
                             />
                         </div>
@@ -634,10 +637,10 @@ defineProps({
 }
 
 .bg-cmu {
-    background-image: url("https://devops.cmu.edu.ph/formlinks/assets/dist/assets/img/backgrounds/main_gate.jpg");
+    background-image: url("https://scontent.fmnl25-3.fna.fbcdn.net/v/t39.30808-6/277753676_1304000960076328_3274280775987084409_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=8bfeb9&_nc_eui2=AeHJcCK3w_9DuFAiXfYAq3S7FvihVsOuc7kW-KFWw65zuQYPI5GPMEC7ErJbk8-BDN4ZeZV3QOdDv5pNH0FMNba-&_nc_ohc=OfNQfGLwYt8AX9rsBeN&_nc_ht=scontent.fmnl25-3.fna&oh=00_AfCtOta09b4tk-aXI30Z7P0ncjWGsLrAHpY6vgaHfESFiQ&oe=63BB4BC1");
     background-repeat: no-repeat;
-    object-fit: cover;
     background-size: cover;
+    background: center;
 }
 
 #vertical_date {
