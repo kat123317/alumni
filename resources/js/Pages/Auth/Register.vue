@@ -10,6 +10,13 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { computed, onMounted, ref } from "vue";
 import moment from "moment";
+import {
+    regions,
+    provinces,
+    cities,
+    barangays,
+} from "select-philippines-address";
+//https://github.com/isaacdarcilla/select-philippines-address
 
 const props = defineProps(["colleges", "courses"]);
 
