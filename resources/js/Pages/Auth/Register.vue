@@ -100,7 +100,7 @@ const submit = () => {
     form.post(route("register_user"), {
         onSuccess:() => {
             alert('Your registration will be verified by the admin, wait for the confirmation on your respected email. (or something like within 3-4 working days)');
-            route('welcome');
+            window.location.href = route('welcome');
         },
         onFinish: () => form.reset("password", "password_confirmation"),
     });
