@@ -167,7 +167,8 @@ class UserController extends Controller
             'content' => 'User '.$user->name.' is pending for approval',
             'is_processed' => false
         ]);
-        return Redirect::route('login');
+        // return Redirect::route('login');
+        return Redirect::back();
     }
 
     public function deactivate_user(Request $request, $id){
