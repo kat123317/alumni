@@ -121,7 +121,7 @@ const submit = () => {
             class="w-full sm:max-w-[80rem] mt-2 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg"
         >
             <form @submit.prevent="submit">
-                <h1 class="text-center text-[3vmin]">REGISTRATION</h1>
+                <h1 class="text-center text-[2.5vmin] font-bold">REGISTRATION</h1>
                 <div class="grid grid-cols-6 gap-4">
                     <div class="mt-4 col-span-3 text-[2vmin]">
                         <InputLabel for="name" value="Name" />
@@ -315,7 +315,7 @@ const submit = () => {
                         />
                     </div>
                 </div>
-                <h1 class="text-center text-[3vmin] mt-6">
+                <h1 class="text-center text-[2.5vmin] mt-6 font-bold">
                     EDUCATIONAL BACKGROUND
                 </h1>
 
