@@ -353,7 +353,10 @@ const function_search_user = () => {
                                         address
                                     </th>
                                     <th scope="col" class="py-3 px-6">
-                                        Civil Status & gender
+                                        Civil Status
+                                    </th>
+                                    <th scope="col" class="py-3 px-6">
+                                        Gender
                                     </th>
                                     <th scope="col" class="py-3 px-6">
                                         Current Work
@@ -456,11 +459,29 @@ const function_search_user = () => {
                                                         users.details
                                                             .civil_status == 3
                                                     "
-                                                    >Divorce</span
+                                                    >Annulled</span
+                                                >
+                                                <span
+                                                    v-else-if="
+                                                        users.details
+                                                            .civil_status == 4
+                                                    "
+                                                    >Widdow/Widdower</span
+                                                >
+                                                <span
+                                                    v-else-if="
+                                                        users.details
+                                                            .civil_status == 5
+                                                    "
+                                                    >Single Parent</span
                                                 >
                                             </div>
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-6">
+                                        <div class="pl-3">
                                             <div
-                                                class="font-normal text-gray-500"
+                                                class="text-base font-semibold"
                                             >
                                                 <span
                                                     v-if="
