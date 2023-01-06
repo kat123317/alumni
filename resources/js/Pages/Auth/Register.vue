@@ -8,7 +8,7 @@ import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, reactive } from "vue";
 import moment from "moment";
 import {
     regions,
@@ -51,10 +51,23 @@ const tmp_achievement = ref("");
 const aggreement = ref(false);
 const fillAchive = ref(false);
 
+const address = reactive({
+    region: '',
+    province: '',
+    city: '',
+    barangay: ''
+})
 
+const list_address = reactive({
+    regions: [],
+    provinces: [],
+    cities: [],
+    barangays: []
+})
 
 onMounted(() => {
     year_graduated.value = function_date();
+    regions().then((region) => list_address.regions = region);
 });
 
 const function_date = (startYear) => {
@@ -105,6 +118,39 @@ const submit = () => {
         onFinish: () => form.reset("password", "password_confirmation"),
     });
 };
+
+const listProvinces = () => {
+    address.province = '';
+    provinces(address.region).then((province) => list_address.provinces = province);
+    listCities()
+    fillAddress()
+    form.region_of_origin = list_address.regions.find(region => region.region_code == address.region)?.region_name;
+}
+
+const listCities = () => {
+    address.city = '';
+    cities(address.province).then((cities) => list_address.cities = cities);
+    listBarangay()
+    fillAddress()
+    form.province = list_address.provinces.find(province => province.province_code == address.province)?.province_name;
+}
+
+const listBarangay = () => {
+    address.barangay = '';
+    barangays(address.city).then((barangays) => list_address.barangays = barangays);
+    fillAddress()
+}
+
+const fillAddress = () => {
+    let region = list_address.regions.find(region => region.region_code == address.region)?.region_name;
+    let province = list_address.provinces.find(province => province.province_code == address.province)?.province_name;
+    let city = list_address.cities.find(city => city.city_code == address.city)?.city_name;
+    let barangay = list_address.barangays.find(barangay => barangay.brgy_code == address.barangay)?.brgy_name;
+    form.address = region + 
+                    (province != undefined ? (', ' + province) : '') + 
+                    (city != undefined ? (', ' + city) : '') + 
+                    (barangay != undefined ? (', ' + barangay) : '')
+}
 </script>
 
 <template>
@@ -122,7 +168,7 @@ const submit = () => {
         >
             <form @submit.prevent="submit">
                 <h1 class="text-center text-[3vmin]">REGISTRATION</h1>
-                <div class="grid grid-cols-6 gap-4">
+                <div class="grid grid-cols-12 gap-4">
                     <div class="mt-4 col-span-3 text-[2vmin]">
                         <InputLabel for="name" value="Name" />
                         <TextInput
@@ -183,11 +229,63 @@ const submit = () => {
                             :message="form.errors.password_confirmation"
                         />
                     </div>
-
                     <div class="mt-4 col-span-3">
+                        <InputLabel for="region" value="Region" />
+                        <select
+                            v-model="address.region"
+                            @change="listProvinces()"
+                            class="mt-1 border-gray-300 focus:border-green-300 focus:ring focus:ring-green-200 focus:ring-opacity-50 rounded-md shadow-sm w-full"
+                        >
+                        <option value="" disabled>Select Region</option>
+                        <template v-for="region in list_address.regions">
+                            <option :value="region.region_code">{{ region.region_name }}</option>
+                        </template>
+                        </select>
+                    </div>
+                    <div class="mt-4 col-span-3">
+                        <InputLabel for="province" value="Province" />
+                        <select
+                            v-model="address.province"
+                            @change="listCities()"
+                            class="mt-1 border-gray-300 focus:border-green-300 focus:ring focus:ring-green-200 focus:ring-opacity-50 rounded-md shadow-sm w-full"
+                        >
+                        <option value="" disabled>Select Province</option>
+                        <template v-for="province in list_address.provinces">
+                            <option :value="province.province_code">{{ province.province_name }}</option>
+                        </template>
+                        </select>
+                    </div>
+                    <div class="mt-4 col-span-3">
+                        <InputLabel for="city" value="City" />
+                        <select
+                            v-model="address.city"
+                            @change="listBarangay()"
+                            class="mt-1 border-gray-300 focus:border-green-300 focus:ring focus:ring-green-200 focus:ring-opacity-50 rounded-md shadow-sm w-full"
+                        >
+                        <option value="" disabled>Select City</option>
+                        <template v-for="city in list_address.cities">
+                            <option :value="city.city_code">{{ city.city_name }}</option>
+                        </template>
+                        </select>
+                    </div>
+                    <div class="mt-4 col-span-3">
+                        <InputLabel for="barangay" value="Barangay" />
+                        <select
+                            v-model="address.barangay"
+                            @change="fillAddress()"
+                            class="mt-1 border-gray-300 focus:border-green-300 focus:ring focus:ring-green-200 focus:ring-opacity-50 rounded-md shadow-sm w-full"
+                        >
+                        <option value="" disabled>Select Barangay</option>
+                        <template v-for="barangay in list_address.barangays">
+                            <option :value="barangay.brgy_code">{{ barangay.brgy_name }}</option>
+                        </template>
+                        </select>
+                    </div>
+                    <div class="mt-4 col-span-12 hidden">
                         <InputLabel for="address" value="Permanent Address:" />
                         <TextInput
                             id="address"
+                            readonly
                             v-model="form.address"
                             type="text"
                             class="mt-1 block w-full"
@@ -222,7 +320,7 @@ const submit = () => {
                         <select
                             id="civil_status"
                             v-model="form.civil_status"
-                            class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm w-full"
+                            class="mt-1 border-gray-300 focus:border-green-300 focus:ring focus:ring-green-200 focus:ring-opacity-50 rounded-md shadow-sm w-full"
                         >
                             <option value="1">Single</option>
                             <option value="2">Married</option>
@@ -241,7 +339,7 @@ const submit = () => {
                         <select
                             id="gender"
                             v-model="form.gender"
-                            class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm w-full"
+                            class="mt-1 border-gray-300 focus:border-green-300 focus:ring focus:ring-green-200 focus:ring-opacity-50 rounded-md shadow-sm w-full"
                         >
                             <option value="1">Male</option>
                             <option value="2">Female</option>
@@ -267,7 +365,7 @@ const submit = () => {
                         />
                     </div>
 
-                    <div class="mt-4 col-span-3">
+                    <div class="mt-4 col-span-3 hidden">
                         <InputLabel
                             for="region_of_origin"
                             value="Region of Origin"
@@ -285,7 +383,7 @@ const submit = () => {
                         />
                     </div>
 
-                    <div class="mt-4 col-span-3">
+                    <div class="mt-4 col-span-3 hidden">
                         <InputLabel for="province" value="Province" />
                         <TextInput
                             id="province"
@@ -328,7 +426,7 @@ const submit = () => {
                         <select
                             id="degree_graduated"
                             v-model="form.degree_graduated"
-                            class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm w-full"
+                            class="border-gray-300 focus:border-green-300 focus:ring focus:ring-green-200 focus:ring-opacity-50 rounded-md shadow-sm w-full"
                         >
                             <option value="" disabled>
                                 Select Degree Graduated
@@ -348,7 +446,7 @@ const submit = () => {
                         <select
                             id="college_id"
                             v-model="form.college_id"
-                            class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm w-full"
+                            class="border-gray-300 focus:border-green-300 focus:ring focus:ring-green-200 focus:ring-opacity-50 rounded-md shadow-sm w-full"
                         >
                             <option value="" disabled>Select College</option>
                             <template v-for="college in colleges">
@@ -368,7 +466,7 @@ const submit = () => {
                         <select
                             id="course_id"
                             v-model="form.course_id"
-                            class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm w-full"
+                            class="border-gray-300 focus:border-green-300 focus:ring focus:ring-green-200 focus:ring-opacity-50 rounded-md shadow-sm w-full"
                         >
                             <option value="" disabled>Select Course</option>
                             <template v-for="course in shown_courses">
@@ -391,7 +489,7 @@ const submit = () => {
                         <select
                             id="year_graduated"
                             v-model="form.year_graduated"
-                            class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm w-full"
+                            class="border-gray-300 focus:border-green-300 focus:ring focus:ring-green-200 focus:ring-opacity-50 rounded-md shadow-sm w-full"
                         >
                             <option value="" disabled>
                                 Select Year Graduated
