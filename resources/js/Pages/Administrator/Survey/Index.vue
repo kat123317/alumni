@@ -33,6 +33,10 @@ const form_add_edit = useForm({
     },
 });
 
+const form_copy = useForm({
+    id: 0,
+});
+
 const foreign_list = ref([]);
 
 const modals = reactive({
@@ -49,6 +53,14 @@ const modals = reactive({
         show: false,
         details: {
             title: "Delete Survey",
+            id: 0,
+            content: "",
+        },
+    },
+    copy: {
+        show: false,
+        details: {
+            title: "Copy Survey",
             id: 0,
             content: "",
         },
@@ -107,6 +119,19 @@ const addEditSurvey = () => {
             }
         );
     }
+};
+
+const copySurvey = () => {
+    form_copy.id = modals.copy.details.id;
+    form_copy.post(route("surveys.copy", { id: modals.copy.details.id }), {
+        preserveScroll: true,
+        onSuccess: () => {
+            alertOnMessage.value = "Survey Copied";
+            onAlert("Success");
+            modals.copy.show = false;
+        },
+        onError: (err) => {},
+    });
 };
 
 const deleteSurvey = () => {
@@ -446,6 +471,27 @@ provide("form_add_edit", form_add_edit);
                     class="flex text-white bg-red-500 border-0 py-2 px-8 focus:outline-none hover:bg-red-600 rounded text-lg"
                 >
                     Delete
+                </button>
+            </template>
+        </JetDialogModal>
+
+        <JetDialogModal :show="modals.copy.show">
+            <template #title>{{ modals.copy.details.title }}</template>
+            <template #content>
+                {{ modals.copy.details.content }}
+            </template>
+            <template #footer>
+                <button
+                    @click="modals.copy.show = false"
+                    class="flex mr-2 text-white bg-gray-500 border-0 py-2 px-8 focus:outline-none hover:bg-gray-600 rounded text-lg"
+                >
+                    Cancel
+                </button>
+                <button
+                    @click="copySurvey()"
+                    class="flex text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg"
+                >
+                    Copy
                 </button>
             </template>
         </JetDialogModal>

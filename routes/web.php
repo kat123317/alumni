@@ -157,6 +157,7 @@ Route::middleware([
         Route::put('/update/{id}', [SurveyController::class, 'update'])->name('update');
         Route::put('/send_invitaion/{id}', [SurveyController::class, 'sendSurveyInvitation'])->name('send_invitaion');
         Route::delete('/delete/{id}', [SurveyController::class, 'destroy'])->name('delete');
+        Route::post('/copy/{id}', [SurveyController::class, 'copy'])->name('copy');
 
         Route::prefix('engine/{survey_id}')->name('engine.')->group(function () {
             Route::get('/review', [SurveyController::class, 'review'])->name('review');
