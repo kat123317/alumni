@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Question;
 use App\Models\Survey;
 use App\Models\User;
 use App\Models\UserNotification;
@@ -111,6 +112,27 @@ class SurveyController extends Controller
         $survey = Survey::find($id);
  
         $survey->delete();
+        return Redirect::back();
+    }
+
+    public function copy($id)
+    {
+        $survey = Survey::find($id);
+        $questions = Question::where(['survey_id' => $survey->id])->get();
+
+        $new_survey = $survey->replicate()->fill([
+            'status' => 'draft',
+            'name' => $survey->name .' Copy'
+        ]);
+        $new_survey->save();
+
+        foreach ($questions as $question) {
+            $new_question = $question->replicate()->fill([
+                'survey_id' => $new_survey->id
+            ]);
+            $new_question->save();
+        }
+        
         return Redirect::back();
     }
 

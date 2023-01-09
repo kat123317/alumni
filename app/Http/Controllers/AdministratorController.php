@@ -35,11 +35,12 @@ class AdministratorController extends Controller
             })->with('user')->with('updated_by')->orderBY('id','desc')->paginate(10),
             'search' => $search,
             'notifications' => Notification::whereHas('user', function (Builder $query) {
-                if (Auth::user()->user_type == 'admin') {
+                /* if (Auth::user()->user_type == 'admin') {
                     $query->where('status', 'pre_approved');
                 } else {
                     $query->where('status', 'pending');
-                }
+                } */
+                $query->where('status', 'pending');
             })->with(['user' => function($query) {
                 $query->with('college')->with('course'); 
             }])->where('is_processed', false)->paginate(10)
@@ -60,11 +61,12 @@ class AdministratorController extends Controller
             })->paginate(10),
             'search' => $search,
             'notifications' => Notification::whereHas('user', function (Builder $query) {
-                if (Auth::user()->user_type == 'admin') {
+                /* if (Auth::user()->user_type == 'admin') {
                     $query->where('status', 'pre_approved');
                 } else {
                     $query->where('status', 'pending');
-                }
+                } */
+                $query->where('status', 'pending');
             })->with(['user' => function($query) {
                 $query->with('college')->with('course'); 
             }])->where('is_processed', false)->paginate(10)
@@ -91,11 +93,12 @@ class AdministratorController extends Controller
             'search' => $search,
             'yearbooks' => Yearbook::all(),
             'notifications' => Notification::whereHas('user', function (Builder $query) {
-                if (Auth::user()->user_type == 'admin') {
+                /* if (Auth::user()->user_type == 'admin') {
                     $query->where('status', 'pre_approved');
                 } else {
                     $query->where('status', 'pending');
-                }
+                } */
+                $query->where('status', 'pending');
             })->with(['user' => function($query) {
                 $query->with('college')->with('course'); 
             }])->where('is_processed', false)->paginate(10)
@@ -115,11 +118,12 @@ class AdministratorController extends Controller
             })->paginate(10),
             'search' => $search,
             'notifications' => Notification::whereHas('user', function (Builder $query) {
-                if (Auth::user()->user_type == 'admin') {
+                /* if (Auth::user()->user_type == 'admin') {
                     $query->where('status', 'pre_approved');
                 } else {
                     $query->where('status', 'pending');
-                }
+                } */
+                $query->where('status', 'pending');
             })->with(['user' => function($query) {
                 $query->with('college')->with('course'); 
             }])->where('is_processed', false)->paginate(10)
@@ -137,11 +141,12 @@ class AdministratorController extends Controller
         return Inertia::render('Administrator/Department', [
             'colleges' => $colleges,
             'notifications' => Notification::whereHas('user', function (Builder $query) {
-                if (Auth::user()->user_type == 'admin') {
+                /* if (Auth::user()->user_type == 'admin') {
                     $query->where('status', 'pre_approved');
                 } else {
                     $query->where('status', 'pending');
-                }
+                } */
+                $query->where('status', 'pending');
             })->with(['user' => function($query) {
                 $query->with('college')->with('course'); 
             }])->where('is_processed', false)->paginate(10)
@@ -168,11 +173,12 @@ class AdministratorController extends Controller
             })->paginate(5),
             'search' => $search,
             'notifications' => Notification::whereHas('user', function (Builder $query) {
-                if (Auth::user()->user_type == 'admin') {
+                /* if (Auth::user()->user_type == 'admin') {
                     $query->where('status', 'pre_approved');
                 } else {
                     $query->where('status', 'pending');
-                }
+                } */
+                $query->where('status', 'pending');
             })->with(['user' => function($query) {
                 $query->with('college')->with('course'); 
             }])->where('is_processed', false)->paginate(10)
@@ -197,11 +203,12 @@ class AdministratorController extends Controller
             'users' => User::whereIsActive(1)->whereStatus('approved')->whereUserType('alumni')->get(),//correct data
             // 'users' => User::whereIsActive(1)->whereStatus('approved')->get(),//for testing
             'notifications' => Notification::whereHas('user', function (Builder $query) {
-                if (Auth::user()->user_type == 'admin') {
+                /* if (Auth::user()->user_type == 'admin') {
                     $query->where('status', 'pre_approved');
                 } else {
                     $query->where('status', 'pending');
-                }
+                } */
+                $query->where('status', 'pending');
             })->where('is_processed', false)->paginate(10)
         ]);
             
@@ -223,11 +230,12 @@ class AdministratorController extends Controller
             'from_date' => $request->from_date ?? Carbon::today()->format('Y-m-d'),
             'to_date' => $request->to_date ?? Carbon::today()->format('Y-m-d'),
             'notifications' => Notification::whereHas('user', function (Builder $query) {
-                if (Auth::user()->user_type == 'admin') {
+                /* if (Auth::user()->user_type == 'admin') {
                     $query->where('status', 'pre_approved');
                 } else {
                     $query->where('status', 'pending');
-                }
+                } */
+                $query->where('status', 'pending');
             })->where('is_processed', false)->paginate(10)
         ]);
             
@@ -243,11 +251,12 @@ class AdministratorController extends Controller
         return Inertia::render('Administrator/Notification', [
             'search' => $search,
             'notifications' => Notification::whereHas('user', function (Builder $query) {
-                if (Auth::user()->user_type == 'admin') {
+                /* if (Auth::user()->user_type == 'admin') {
                     $query->where('status', 'pre_approved');
                 } else {
                     $query->where('status', 'pending');
-                }
+                } */
+                $query->where('status', 'pending');
             })->with(['user' => function($query) {
                 $query->with('college')->with('course'); 
             }])->when($search, function($query, $search) {

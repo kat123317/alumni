@@ -8,6 +8,15 @@ const modals = inject("modals");
 const search = inject("search");
 const form_add_edit = inject("form_add_edit");
 
+const showCopyModal = (index) => {
+    modals.copy.details.id = usePage().props.value.surveys.data[index].id;
+    modals.copy.details.content =
+        "Are you sure you want to copy " +
+        usePage().props.value.surveys.data[index].name +
+        "?";
+    modals.copy.show = true;
+};
+
 const showEditModal = (index, method = "edit") => {
     let edit_survey = usePage().props.value.surveys.data[index];
     modals.add_edit.details.method = method;
@@ -96,6 +105,12 @@ const showDeleteModal = (index) => {
                             href="#"
                             class="font-medium text-green-600  hover:underline"
                             >Send Invitation</a
+                        >
+                        <a
+                            @click="showCopyModal(index)"
+                            href="#"
+                            class="font-medium text-blue-600 dark:text-blue-500 hover:underline ml-2"
+                            >Copy</a
                         >
                         <a
                             @click="showEditModal(index)"
