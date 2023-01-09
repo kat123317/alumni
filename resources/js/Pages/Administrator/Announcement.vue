@@ -187,179 +187,12 @@ const remove_image_update = (key) => {
         :alertOnError="alertOnError"
     >
         <section class="text-gray-600 body-font relative">
+   
             <div
-                class="container px-5 py-24 p-10 shadow-lg rounded-lg bg-white mt-10 mx-auto flex sm:flex-nowrap flex-wrap"
+                class="container p-10 mt-10  shadow rounded-lg bg-white  mx-auto "
             >
-                <div
-                    class="lg:w-2/3 md:w-1/2 bg-gray-50 rounded-lg overflow-hidden sm:mr-10 p-10 items-start justify-center relative"
-                >
-                    <nav
-                        class="mb-2 flex justify-end"
-                        aria-label="Page navigation example"
-                    >
-                        <label
-                            for="default-search"
-                            class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300"
-                            >Search</label
-                        >
-                        <div class="relative">
-                            <div
-                                class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
-                            >
-                                <svg
-                                    aria-hidden="true"
-                                    class="w-5 h-5 text-gray-500 dark:text-gray-400"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                                    ></path>
-                                </svg>
-                            </div>
-                            <input
-                                v-model="announcement_search.search"
-                                type="search"
-                                id="default-search"
-                                class="block p-4 pl-10 w-[100%] lg:w-[30vmin] text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-green-500 focus:border-green-500"
-                                placeholder="Search Announcement"
-                            />
-                            <button
-                                @click="searchAnnouncements()"
-                                type="submit"
-                                class="text-white absolute right-2.5 bottom-2.5 bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2"
-                            >
-                                Search
-                            </button>
-                        </div>
-                    </nav>
-                    <div class="overflow-x-auto rounded relative">
-                        <table
-                            class="w-full max-w-7xl text-sm text-left text-gray-500 dark:text-gray-400"
-                        >
-                            <thead
-                                class="text-xs text-gray-700 uppercase bg-green-500 text-white"
-                            >
-                                <tr>
-                                    <th scope="col" class="py-3 px-6">Title</th>
-                                    <th scope="col" class="py-3 px-6">Image</th>
-                                    <th scope="col" class="py-3 px-6">
-                                        Content
-                                    </th>
-                                    <th scope="col" class="py-3 px-6">
-                                        Posted at
-                                    </th>
-                                    <th scope="col" class="py-3 px-6">
-                                        Updated at
-                                    </th>
-                                    <th scope="col" class="py-3 px-6">
-                                        Posted by
-                                    </th>
-                                    <th scope="col" class="py-3 px-6">
-                                        Updated by
-                                    </th>
-                                    <th scope="col" class="py-3 px-6">
-                                        Action
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody
-                                v-for="(announcements, key) in usePage().props
-                                    .value.announcements.data"
-                                :key="key"
-                            >
-                                <tr
-                                    class="bg-white border-b dark:bg-gray-900 dark:border-gray-700"
-                                >
-                                    <th
-                                        scope="row"
-                                        class="py-4 px-6 font-bold capitalize text-gray-900 whitespace-nowrap dark:text-white"
-                                    >
-                                        {{ announcements.title }}
-                                    </th>
-                                    <td
-                                        class="py-4 max-w-[70vmin] w-[26vmin] px-2"
-                                    >
-                                        <div v-if="announcements.photo == null">
-                                            <p>No Image</p>
-                                        </div>
-                                        <div
-                                            v-else
-                                            v-for="(
-                                                photo, key
-                                            ) in announcements.photo"
-                                            :key="key"
-                                        >
-                                            <img
-                                                class="mb-2"
-                                                :src="
-                                                    './../images/announcements/' +
-                                                    photo
-                                                "
-                                                alt=""
-                                            />
-                                        </div>
-                                    </td>
-                                    <td
-                                        v-html="announcements.content"
-                                        class="py-4 max-w-[70vmin] w-[26vmin] px-2"
-                                    ></td>
-                                    <td class="py-4 px-6">
-                                        {{
-                                            date_conversion(
-                                                announcements.created_at
-                                            )
-                                        }}
-                                    </td>
-                                    <td class="py-4 px-6">
-                                        {{
-                                            date_conversion_from_now(
-                                                announcements.updated_at
-                                            )
-                                        }}
-                                    </td>
-                                    <td class="py-4 px-6">
-                                        {{ announcements.user.name }}
-                                    </td>
-                                    <td class="py-4 px-6">
-                                        {{ announcements.updated_by.name }}
-                                    </td>
-                                    <td class="py-4 px-6">
-                                        <a
-                                            href="#"
-                                            @click="
-                                                function_open_update_modal(
-                                                    announcements.id,
-                                                    announcements.title,
-                                                    announcements.content
-                                                )
-                                            "
-                                            class="font-medium text-blue-600 dark:text-blue-500 hover:underline ml-2"
-                                            >Edit</a
-                                        >
-                                        <a
-                                            href="#"
-                                            @click="
-                                                function_open_delete_modal(
-                                                    announcements.id
-                                                )
-                                            "
-                                            class="font-medium text-red-600 hover:underline ml-2"
-                                            >Delete</a
-                                        >
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div
-                    class="lg:w-1/3 md:w-1/2 bg-white flex flex-col md:ml-auto w-full md:py-8 mt-8 md:mt-0"
+            <div
+                    class=" mx-auto   rounded-lg p-10  bg-white flex flex-col md:ml-auto  "
                 >
                     <h2
                         class="text-gray-900 text-lg mb-1 font-medium title-font"
@@ -456,14 +289,187 @@ const remove_image_update = (key) => {
                             id="postEditor"
                             contentType="html"
                         ></QuillEditor>
-                        <button
+                        <div class="w-full flex justify-end">
+                            <button
                             @click="post_announcement()"
-                            class="text-white w-full mt-4 bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded text-lg"
+                            class="text-white w-full max-w-[20vmin] ml-auto mt-4 bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded text-lg"
                         >
                             Post
                         </button>
+                        </div>
+               
                     </div>
                 </div>
+            
+                <div
+                    class=" rounded-lg overflow-hidden sm:mr-10 p-10 items-start justify-center relative"
+                >
+                    <nav
+                        class="mb-2 flex justify-end"
+                        aria-label="Page navigation example"
+                    >
+                        <label
+                            for="default-search"
+                            class="mb-2 text-sm font-medium text-gray-900 sr-only "
+                            >Search</label
+                        >
+                        <div class="relative">
+                            <div
+                                class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
+                            >
+                                <svg
+                                    aria-hidden="true"
+                                    class="w-5 h-5 text-gray-500 "
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                    ></path>
+                                </svg>
+                            </div>
+                            <input
+                                v-model="announcement_search.search"
+                                type="search"
+                                id="default-search"
+                                class="block p-4 pl-10 w-[80vmin] lg:w-[50vmin] text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-green-500 focus:border-green-500"
+                                placeholder="Search Announcement"
+                            />
+                            <button
+                                @click="searchAnnouncements()"
+                                type="submit"
+                                class="text-white absolute right-2.5 bottom-2.5 bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2"
+                            >
+                                Search
+                            </button>
+                        </div>
+                    </nav>
+                    <div class="overflow-x-auto  shadow-lg rounded relative">
+                        <table
+                            class="w-full text-sm text-left text-gray-500 "
+                        >
+                            <thead
+                                class="text-xs text-gray-700 uppercase bg-green-500 text-white"
+                            >
+                                <tr>
+                                    <th scope="col" class="py-3 px-6">Title</th>
+                                    <th scope="col" class="py-3 px-6">Image</th>
+                                    <th scope="col" class="py-3 px-6">
+                                        Content
+                                    </th>
+                                    <th scope="col" class="py-3 px-6">
+                                        Posted at
+                                    </th>
+                                    <th scope="col" class="py-3 px-6">
+                                        Updated at
+                                    </th>
+                                    <th scope="col" class="py-3 px-6">
+                                        Posted by
+                                    </th>
+                                    <th scope="col" class="py-3 px-6">
+                                        Updated by
+                                    </th>
+                                    <th scope="col" class="py-3 px-6">
+                                        Action
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody
+                                v-for="(announcements, key) in usePage().props
+                                    .value.announcements.data"
+                                :key="key"
+                            >
+                                <tr
+                                    class="bg-white border-b "
+                                >
+                                    <th
+                                        scope="row"
+                                        class="py-4 px-6 font-bold capitalize text-gray-900 whitespace-nowrap "
+                                    >
+                                        {{ announcements.title }}
+                                    </th>
+                                    <td
+                                        class="py-4 max-w-[70vmin] w-[26vmin] px-2"
+                                    >
+                                        <div v-if="announcements.photo == null">
+                                            <p>No Image</p>
+                                        </div>
+                                        <div
+                                            v-else
+                                            v-for="(
+                                                photo, key
+                                            ) in announcements.photo"
+                                            :key="key"
+                                        >
+                                            <img
+                                                class="mb-2"
+                                                :src="
+                                                    './../images/announcements/' +
+                                                    photo
+                                                "
+                                                alt=""
+                                            />
+                                        </div>
+                                    </td>
+                                    <td
+                                        v-html="announcements.content"
+                                        class="py-4 max-w-[70vmin] w-[26vmin] px-2"
+                                    ></td>
+                                    <td class="py-4 px-6">
+                                        {{
+                                            date_conversion(
+                                                announcements.created_at
+                                            )
+                                        }}
+                                    </td>
+                                    <td class="py-4 px-6">
+                                        {{
+                                            date_conversion_from_now(
+                                                announcements.updated_at
+                                            )
+                                        }}
+                                    </td>
+                                    <td class="py-4 px-6">
+                                        {{ announcements.user.name }}
+                                    </td>
+                                    <td class="py-4 px-6">
+                                        {{ announcements.updated_by.name }}
+                                    </td>
+                                    <td class="py-4 px-6">
+                                        <a
+                                            href="#"
+                                            @click="
+                                                function_open_update_modal(
+                                                    announcements.id,
+                                                    announcements.title,
+                                                    announcements.content
+                                                )
+                                            "
+                                            class="font-medium text-blue-600  hover:underline ml-2"
+                                            >Edit</a
+                                        >
+                                        <a
+                                            href="#"
+                                            @click="
+                                                function_open_delete_modal(
+                                                    announcements.id
+                                                )
+                                            "
+                                            class="font-medium text-red-600 hover:underline ml-2"
+                                            >Delete</a
+                                        >
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+              
             </div>
 
             <div
@@ -574,7 +580,7 @@ const remove_image_update = (key) => {
                                 <div class="relative">
                                     <label
                                         for="content"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+                                        class="block mb-2 text-sm font-medium text-gray-900 "
                                         >Your content</label
                                     >
                                     <!-- <textarea
@@ -622,7 +628,7 @@ const remove_image_update = (key) => {
                             <div class="p-6 text-center">
                                 <svg
                                     aria-hidden="true"
-                                    class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200"
+                                    class="mx-auto mb-4 w-14 h-14 text-gray-400 "
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
@@ -636,7 +642,7 @@ const remove_image_update = (key) => {
                                     ></path>
                                 </svg>
                                 <h3
-                                    class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400"
+                                    class="mb-5 text-lg font-normal text-gray-500 "
                                 >
                                     Are you sure you want to update this post?
                                 </h3>
@@ -695,7 +701,7 @@ const remove_image_update = (key) => {
                             <div class="p-6 text-center">
                                 <svg
                                     aria-hidden="true"
-                                    class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200"
+                                    class="mx-auto mb-4 w-14 h-14 text-gray-400 "
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
@@ -709,7 +715,7 @@ const remove_image_update = (key) => {
                                     ></path>
                                 </svg>
                                 <h3
-                                    class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400"
+                                    class="mb-5 text-lg font-normal text-gray-500 "
                                 >
                                     Are you sure you want to delete this post?
                                 </h3>

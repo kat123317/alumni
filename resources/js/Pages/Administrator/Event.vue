@@ -249,7 +249,7 @@ const searchEvents = () => {
                     </svg>
                 </div>
             </div>
-            <div class="container  max-w-7xl  px-5 mt-[12vmin] py-2 mx-auto">
+            <div class="container mt-10 p-10  shadow-lg mx-auto">
                 <div class="flex flex-col text-center w-full mb-12">
                     <h1
                         class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900"
@@ -312,7 +312,7 @@ const searchEvents = () => {
                             <div class="relative min-h-[20vmin]">
                                 <label
                                     for="content"
-                                    class=" mb-2 text-sm  font-medium text-gray-900 dark:text-gray-400"
+                                    class=" mb-2 text-sm  font-medium text-gray-900 "
                                     >Your content</label
                                 >
                                 <!-- <textarea
@@ -328,10 +328,10 @@ const searchEvents = () => {
                         
                         </div>
 
-                        <div class="p-2 w-full">
+                        <div class="p-2 flex justify-end w-full">
                             <button
                                 @click="function_submit()"
-                                class="flex mx-auto text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg"
+                                class="flex  text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg"
                             >
                                 Post
                             </button>
@@ -348,7 +348,7 @@ const searchEvents = () => {
                                 >
                                     <label
                                         for="default-search"
-                                        class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300"
+                                        class="mb-2 text-sm font-medium text-gray-900 sr-only "
                                         >Search</label
                                     >
                                     <div class="relative">
@@ -357,7 +357,7 @@ const searchEvents = () => {
                                         >
                                             <svg
                                                 aria-hidden="true"
-                                                class="w-5 h-5 text-gray-500 dark:text-gray-400"
+                                                class="w-5 h-5 text-gray-500 "
                                                 fill="none"
                                                 stroke="currentColor"
                                                 viewBox="0 0 24 24"
@@ -375,24 +375,24 @@ const searchEvents = () => {
                                             v-model="event_search.search"
                                             type="search"
                                             id="default-search"
-                                            class="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
+                                            class="block p-4 pl-10  w-[80vmin] lg:w-[50vmin] text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-green-500 focus:border-green-500 "
                                             placeholder="Search "
                                             required
                                         />
                                         <button
                                             @click="searchEvents()"
                                             type="submit"
-                                            class="text-white absolute right-2.5 bottom-2.5 bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                                            class="text-white absolute right-2.5 bottom-2.5 bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 "
                                         >
                                             Search
                                         </button>
                                     </div>
                                 </nav>
                                 <table
-                                    class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+                                    class="w-full text-sm text-left text-gray-500 "
                                 >
                                     <thead
-                                        class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+                                        class="text-xs text-white uppercase bg-green-500 "
                                     >
                                         <tr>
                                             <th scope="col" class="py-3 px-6">
@@ -479,7 +479,7 @@ const searchEvents = () => {
                                                             events.id
                                                         )
                                                     "
-                                                    class="font-medium text-green-600 dark:text-green-500 hover:underline"
+                                                    class="font-medium text-green-600  hover:underline"
                                                     >Edit</a
                                                 >
                                                 <a
@@ -489,7 +489,7 @@ const searchEvents = () => {
                                                             events.id
                                                         )
                                                     "
-                                                    class="font-medium ml-2 text-red-600 dark:text-red-500 hover:underline"
+                                                    class="font-medium ml-2 text-red-600  hover:underline"
                                                     >Delete</a
                                                 >
                                             </td>
@@ -575,7 +575,7 @@ const searchEvents = () => {
                                                 <div class="relative">
                                                     <label
                                                         for="content"
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 "
                                                         >Your content</label
                                                     >
                                                     <!-- <textarea
@@ -619,7 +619,7 @@ const searchEvents = () => {
                                             <div class="p-6 text-center">
                                                 <svg
                                                     aria-hidden="true"
-                                                    class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200"
+                                                    class="mx-auto mb-4 w-14 h-14 text-gray-400 "
                                                     fill="none"
                                                     stroke="currentColor"
                                                     viewBox="0 0 24 24"
@@ -633,7 +633,7 @@ const searchEvents = () => {
                                                     ></path>
                                                 </svg>
                                                 <h3
-                                                    class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400"
+                                                    class="mb-5 text-lg font-normal text-gray-500 "
                                                 >
                                                     Are you sure you want to
                                                     update this event?
@@ -703,7 +703,7 @@ const searchEvents = () => {
                                             <div class="p-6 text-center">
                                                 <svg
                                                     aria-hidden="true"
-                                                    class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200"
+                                                    class="mx-auto mb-4 w-14 h-14 text-gray-400 "
                                                     fill="none"
                                                     stroke="currentColor"
                                                     viewBox="0 0 24 24"
@@ -717,7 +717,7 @@ const searchEvents = () => {
                                                     ></path>
                                                 </svg>
                                                 <h3
-                                                    class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400"
+                                                    class="mb-5 text-lg font-normal text-gray-500 "
                                                 >
                                                     Are you sure you want to
                                                     delete this event?

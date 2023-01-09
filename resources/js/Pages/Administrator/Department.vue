@@ -241,7 +241,7 @@ const openFile = () => {
                     </svg>
                 </div>
             </div>
-            <div class="container px-5 py-24 mx-auto">
+            <div class="container  shadow rounded-lg p-10 mt-10 mx-auto">
                 <div class="flex flex-col text-center w-full mb-12">
                     <h1
                         class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900"
@@ -250,7 +250,7 @@ const openFile = () => {
                     </h1>
                 </div>
                 <div
-                    class="lg:w-1/2 bg-white p-10 shadow-lg rounded-lg md:w-2/3 mx-auto"
+                    class=" bg-white "
                 >
                     <div class="flex flex-wrap -m-2">
                         <div class="p-2 w-1/3">
@@ -269,7 +269,7 @@ const openFile = () => {
                                 />
                             </div>
                         </div>
-                        <div class="p-2 w-[52vmin]">
+                        <div class="p-2 w-1/2">
                             <div class="relative">
                                 <label
                                     for="email"
@@ -285,7 +285,7 @@ const openFile = () => {
                                 />
                             </div>
                         </div>
-                        <div class="p-2 w-full">
+                        <div class="p-2 w-1/3">
                             <div class="relative">
                                 <label
                                     for="email"
@@ -315,10 +315,10 @@ const openFile = () => {
                             </div>
                         </div>
 
-                        <div class="p-2 w-full">
+                        <div class="p-2 w-full flex justify-end">
                             <button
                                 @click="function_add_college()"
-                                class="flex mx-auto text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg"
+                                class="flex  text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg"
                             >
                                 Add
                             </button>

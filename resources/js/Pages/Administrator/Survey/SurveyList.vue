@@ -39,7 +39,7 @@ const showDeleteModal = (index) => {
 <template>
     <div class="px-2">
         <table
-            class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+            class="w-full text-sm text-left text-gray-500 "
         >
             <thead
                 class="text-xs text-gray-700 uppercase bg-green-500 text-white"
@@ -57,11 +57,11 @@ const showDeleteModal = (index) => {
             <tbody>
                 <tr
                     v-for="(survey, index) in $page.props.surveys.data"
-                    class="bg-white border-b dark:bg-gray-900 dark:border-gray-700"
+                    class="bg-white border-b "
                 >
                     <th
                         scope="row"
-                        class="py-4 px-6 font-bold capitalize text-gray-900 whitespace-nowrap dark:text-white"
+                        class="py-4 px-6 font-bold capitalize text-gray-900 whitespace-nowrap "
                     >
                         <Link
                             :href="
@@ -94,13 +94,13 @@ const showDeleteModal = (index) => {
                         <a
                             @click="showEditModal(index, 'invite')"
                             href="#"
-                            class="font-medium text-green-600 dark:text-green-500 hover:underline"
+                            class="font-medium text-green-600  hover:underline"
                             >Send Invitation</a
                         >
                         <a
                             @click="showEditModal(index)"
                             href="#"
-                            class="font-medium text-blue-600 dark:text-blue-500 hover:underline ml-2"
+                            class="font-medium text-blue-600  hover:underline ml-2"
                             >Edit</a
                         >
                         <a

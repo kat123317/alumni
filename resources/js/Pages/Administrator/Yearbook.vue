@@ -188,8 +188,8 @@ const function_update_yeabook = () => {
                     </svg>
                 </div>
             </div>
-            <div class=" px-5 py-24 container max-w-7xl mx-auto">
-                <div class="flex flex-col text-center w-full mb-12">
+            <div class=" p-10 container shadow   mt-10 mx-auto">
+                <div class="flex flex-col p-10  text-center w-full mb-12">
                     <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">
                         Add Year book
                     </h1>
@@ -207,30 +207,31 @@ const function_update_yeabook = () => {
                                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                         </div>
                     </div>
-                </div>
-                <div class="p-2 w-full">
+                    <div class="p-2 flex justify-end  w-full">
                     <button @click="add_yearbook()"
-                        class="flex mx-auto text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">
+                        class="flex  text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">
                         Add
                     </button>
                 </div>
+                </div>
+     
                 <div class="lg:w-full md:w-2/3 mx-auto">
                     <nav class="mb-10 flex justify-end" aria-label="Page navigation example">
                         <label for="default-search"
-                            class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label>
+                            class="mb-2 text-sm font-medium text-gray-900 sr-only ">Search</label>
                         <div class="relative">
                             <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                                <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none"
+                                <svg aria-hidden="true" class="w-5 h-5 text-gray-500 " fill="none"
                                     stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                                 </svg>
                             </div>
                             <input v-model="search_data.search" type="search" id="default-search"
-                                class="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
+                                class="block p-4 pl-10  w-[80vmin] lg:w-[50vmin] text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-green-500 focus:border-green-500 "
                                 placeholder="Search " required />
                             <button @click="function_search_year()" type="submit"
-                                class="text-white absolute right-2.5 bottom-2.5 bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                                class="text-white absolute right-2.5 bottom-2.5 bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 ">
                                 Search
                             </button>
                         </div>
@@ -238,7 +239,7 @@ const function_update_yeabook = () => {
 
                     <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
                         <table class="w-full text-sm text-left text-gray-500">
-                            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                            <thead class="text-xs text-white uppercase bg-green-500">
                                 <tr>
                                     <th scope="col" class="py-3 px-6">
                                         School year from
@@ -259,7 +260,7 @@ const function_update_yeabook = () => {
                             </thead>
                             <tbody>
                                 <tr v-for="(yearbooks, index) in usePage().props
-                                .value.yearbooks.data" :key="index" class="bg-white border-b">
+                                .value.yearbooks.data" :key="index" class=" border-b">
                                     <th scope="row" class="py-4 px-6 font-medium text-gray-900">
                                         <div class="pl-3">
                                             <div class="font-normal text-gray-500">
@@ -378,12 +379,12 @@ const function_update_yeabook = () => {
                                 </button>
                                 <div class="p-6 text-center">
                                     <svg aria-hidden="true"
-                                        class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200" fill="none"
+                                        class="mx-auto mb-4 w-14 h-14 text-gray-400 " fill="none"
                                         stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
-                                    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                                    <h3 class="mb-5 text-lg font-normal text-gray-500 ">
                                         Are you sure you want to update this
                                         yearbook?
                                     </h3>
@@ -421,12 +422,12 @@ const function_update_yeabook = () => {
                                 </button>
                                 <div class="p-6 text-center">
                                     <svg aria-hidden="true"
-                                        class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200" fill="none"
+                                        class="mx-auto mb-4 w-14 h-14 text-gray-400 " fill="none"
                                         stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
-                                    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                                    <h3 class="mb-5 text-lg font-normal text-gray-500 ">
                                         Are you sure you want to delete this
                                         yearbook?
                                     </h3>

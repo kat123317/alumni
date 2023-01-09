@@ -677,12 +677,12 @@ function onSelectEmojiSearch(emoji) {
                             <!-- About Section -->
 
                             <div
-                                class="flex items-center mx-auto max-w-lg lg:max-w-[60vmin] mb-5"
+                                class="flex items-center   max-w-lg lg:max-w-[60vmin] mb-5"
                             >
                                 <label for="voice-search" class="sr-only"
                                     >Search</label
                                 >
-                                <div class="relative w-full">
+                                <div class="relative bg-red w-full">
                                     <div
                                         class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
                                     >
@@ -879,7 +879,7 @@ function onSelectEmojiSearch(emoji) {
                                             >Search</label
                                         >
 
-                                        <div class="relative w-full mt-10">
+                                        <div class="relative w-[50vmin] mb-5  mt-10">
                                             <!-- <textarea v-model="post_data.content" id="postEditor"
                                                 class=" bg-gray-50 max-h-sm border border-gray-300 overflow-hidden text-gray-900 text-sm rounded-lg border-t-1 border-gray-500 focus:ring-blue-500 focus:border-blue-500 block w-full relative  p-2.5"
                                                 contentType="html">

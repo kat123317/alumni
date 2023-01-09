@@ -280,7 +280,7 @@ const function_search_user = () => {
                 </div>
             </div>
 
-            <div class="container px-5 py-24 mx-auto">
+            <div class="container p-10 mt-10 shadow mx-auto">
                 <div class="flex flex-col text-center w-full mb-12">
                     <h1
                         class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900"
@@ -322,7 +322,7 @@ const function_search_user = () => {
                                 v-model="search_data.search"
                                 type="search"
                                 id="default-search"
-                                class="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-green-500 focus:border-green-500"
+                                class="block p-4 pl-10  w-[80vmin] lg:w-[50vmin] text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-green-500 focus:border-green-500"
                                 placeholder="Search"
                             />
                             <button
