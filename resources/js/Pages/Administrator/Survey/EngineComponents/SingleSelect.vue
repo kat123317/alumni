@@ -43,7 +43,7 @@ const proxyChecked = computed({
 <template>
     <div class="grid grid-cols-9 gap-5 mb-5">
         <template v-for="(choice, i) in choices" :key="i">
-            <div class="sm:col-span-4 col-span-9 ">
+            <div class="sm:col-span-4 col-span-9">
                 <div class="flex">
                     <input
                         :name="'radio-' + ukey"
@@ -51,7 +51,7 @@ const proxyChecked = computed({
                         :disabled="disabled"
                         v-model="proxyChecked"
                         type="radio"
-                        class="border-gray-300 flex  w-6 h-6 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        class="border-gray-300 flex w-6 h-6 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                     />
 
                     <template
@@ -60,25 +60,28 @@ const proxyChecked = computed({
                             choice.img_src != null &&
                             choice.img_src != ''
                         "
-                  
                     >
-                    <div>
-                        <div> 
-                            <p class="text-green-800 break-words w-[40vmin] ml-5 mt-n1 text-2xl ">{{choice.label}}</p>
+                        <div>
+                            <div>
+                                <p
+                                    class="text-green-800 break-words w-[40vmin] ml-5 mt-n1 text-2xl"
+                                >
+                                    {{ choice.label }}
+                                </p>
+                            </div>
+                            <div class="w-screen">
+                                <img
+                                    :src="
+                                        '/images/questions/' +
+                                        choice.img_src +
+                                        '?rnd=' +
+                                        r_string
+                                    "
+                                    class="w-[30vmin] bg-white-200 border-solid border-2 border-gray-500 rounded-md"
+                                    :class="image == true ? 'mt-5 mb-10' : ''"
+                                />
+                            </div>
                         </div>
-                        <div class="w-screen">
-                            <img
-                                :src="
-                                    '/images/questions/' +
-                                    choice.img_src +
-                                    '?rnd=' +
-                                    r_string
-                                "
-                                class="w-[30vmin] bg-white-200 border-solid border-2 border-gray-500 rounded-md "
-                                :class="image == true ? 'mt-5 mb-10' : ''"
-                            />
-                        </div>
-                    </div>
                     </template>
                     <span
                         v-else
@@ -86,9 +89,9 @@ const proxyChecked = computed({
                         >{{ choice.label }}</span
                     >
                 </div>
-                <template  v-if="choice.write_in">
+                <template v-if="choice.write_in">
                     <QInputText
-                        :disabled="checked != choice.value"
+                        :disabled="checked != choice.value || disabled == true"
                         v-model="
                             my_choices.answers['write_in_' + qid][
                                 'write_' + choice.value

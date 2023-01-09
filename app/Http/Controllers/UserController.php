@@ -227,7 +227,17 @@ class UserController extends Controller
         $notification = Notification::find($request->notification_id);
         $user = User::find($request->user_id);
         if ($request->action == 'approve') {
-            switch (Auth::user()->user_type) {
+            $user->update([
+                'status' => 'approved',
+                'details->staff_approved_by' => Auth::user()->name,
+                'details->admin_approved_by' => Auth::user()->name,
+                'is_active' => true
+            ]);
+            $notification->update([
+                'is_processed' => true
+            ]);
+            Mail::to($user->email)->send(new RegisterMail($user->email));
+            /* switch (Auth::user()->user_type) {
                 case 'admin':
                     $user->update([
                         'status' => 'approved',
@@ -240,9 +250,10 @@ class UserController extends Controller
                     Mail::to($user->email)->send(new RegisterMail($user->email));
                     break;
                 case 'staff_admin':
+                case 'admin':
                     $user->update([
-                        'status' => 'pre_approved',
-                        'details->staff_approved_by' => Auth::user()->name
+                        'status' => 'approved',
+                        'details->staff_approved_by' => Auth::user()->name,
                     ]);
                     $notification->update([
                         'user_type' => 'admin'
@@ -251,7 +262,7 @@ class UserController extends Controller
                 default: //student
                     dd('Something went wrong');
                     break;
-            }
+            } */
         } else { //rejected
             $user->update([
                 'status' => 'rejected',
