@@ -67,7 +67,7 @@ function onSelectEmoji(emoji) {
             <textarea
                 @click="emojioverlay = false"
                 v-model="message_data.content"
-                class="w-full border rounded px-2 py-2"
+                class="w-full border rounded px-2 py-2 focus:bg-white focus:ring-2 focus:ring-green-200 focus:border-green-500"
                 type="text"
                 :disabled="usePage().props.value.user_selected == null"
             />

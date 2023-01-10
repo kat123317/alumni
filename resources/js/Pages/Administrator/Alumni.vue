@@ -469,12 +469,15 @@ const function_update_alumni = (id) => {
                                     class="hidden"
                                     accept="image/png, image/gif, image/jpeg"
                                 />
-                                <button
+                                <div class=" mt-8">
+                                    <button
                                     @click="openFile"
-                                    class="mt-2 rounded-sm px-3 py-1 bg-gray-200 hover:bg-gray-300 focus:shadow-outline focus:outline-none"
+                                    class=" rounded-sm px-3 py-1 bg-gray-200 hover:bg-gray-300 focus:shadow-outline focus:outline-none"
                                 >
                                     Select Image
                                 </button>
+                                </div>
+
                             </div>
                         </div>
                         <div class="p-2 w-1/2">

@@ -42,7 +42,7 @@ const openSelectedAchievements = (Data) => {
                 @change="searchAlumni(true)"
                 v-model="form_search.college_id"
                 id="countries"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block ml-2 w-75 p-2.5"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block ml-2 w-75 p-2.5"
             >
                 <option :value="null">Choose a College</option>
                 <option
@@ -58,7 +58,7 @@ const openSelectedAchievements = (Data) => {
                 @change="searchAlumni(true)"
                 v-model="form_search.course_id"
                 id="countries"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block ml-2 w-75 p-2.5"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block ml-2 w-75 p-2.5"
             >
                 <option :value="null">Choose a Course</option>
                 <template v-for="course in $page.props.courses">
@@ -69,7 +69,7 @@ const openSelectedAchievements = (Data) => {
             <select
                 @change="searchAlumni(true)"
                 v-model="form_search.yearbook_id"
-                class="bg-gray-50 border border-gray-300 mt-2 lg:mt-0 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block ml-2 p-2.5"
+                class="bg-gray-50 border border-gray-300 mt-2 lg:mt-0 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block ml-2 p-2.5"
             >
                 <option :value="null">Choose School Year</option>
                 <template v-for="yearbook in $page.props.yearbooks">
@@ -107,7 +107,7 @@ const openSelectedAchievements = (Data) => {
                         v-model="form_search.search"
                         type="text"
                         id="simple-search"
-                        class="bg-gray-50 border border-gray-300 mt-2 lg:mt-0 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
+                        class="bg-gray-50 border border-gray-300 mt-2 lg:mt-0 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full pl-10 p-2.5"
                         placeholder="Search"
                         required
                     />
@@ -115,7 +115,7 @@ const openSelectedAchievements = (Data) => {
                 <button
                     @click="searchAlumni()"
                     type="button"
-                    class="p-2.5 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300"
+                    class="p-2.5 ml-2 text-sm font-medium text-white bg-green-700 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300"
                 >
                     <svg
                         class="w-5 h-5"

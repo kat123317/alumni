@@ -72,7 +72,7 @@ const function_open_messages = (id, user_id) => {
 
         <!-- Search -->
         <div class="flex gap-1 py-2 px-2 bg-grey-lightest">
-            <input v-model="search_data.search_text" type="text" class="w-full px-2 py-2 text-sm"
+            <input v-model="search_data.search_text" type="text" class="w-full border-gray-300 focus:border-green-500 focus:bg-white focus:ring-1 focus:ring-green-700 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                 placeholder="Search or start new chat" />
             <button @click="function_search()" type="submit"
                 class="text-white right-2.5 bottom-2.5 bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 mt-1 float-right">

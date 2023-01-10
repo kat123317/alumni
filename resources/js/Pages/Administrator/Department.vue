@@ -285,13 +285,14 @@ const openFile = () => {
                                 />
                             </div>
                         </div>
-                        <div class="p-2 w-1/3">
+                        <div class="p-2 lg:w-1/3 w-1/2">
                             <div class="relative">
                                 <label
                                     for="email"
                                     class="leading-7 text-sm text-gray-600"
                                     >Logo</label
                                 >
+                               
                                 <input
                                     v-model="logo_name"
                                     disabled
@@ -308,11 +309,12 @@ const openFile = () => {
                                 />
                                 <button
                                     @click="openFile"
-                                    class="mt-2 rounded-sm px-3 py-1 bg-gray-200 hover:bg-gray-300 focus:shadow-outline focus:outline-none"
+                                    class="mt-2 float-right rounded-sm px-3 py-1 bg-gray-200 hover:bg-gray-300 focus:shadow-outline focus:outline-none"
                                 >
                                     Select Logo
                                 </button>
                             </div>
+                          
                         </div>
 
                         <div class="p-2 w-full flex justify-end">

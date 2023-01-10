@@ -233,7 +233,7 @@ const openFileEdit = () => {
                                     class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                             </div>
                         </div>
-                        <div class="p-2 w-[52vmin]">
+                        <div class="p-2  w-1/2">
                             <div class="relative">
                                 <label for="email" class="leading-7 text-sm text-gray-600">Course</label>
                                 <input v-model="add_course_data.name" type="email" id="email" name="email"
@@ -252,15 +252,15 @@ const openFileEdit = () => {
                                 </select>
                             </div>
                         </div>
-                        <div class="p-2 p-2 w-1/2">
-                            <div class="relative">
+                        <div class="p-2 mt-7 p-2 w-1/3 ">
+                            <div class="relative ">
                                 <input v-model="add_course_data.image_name" type="email" id="email" name="email"
                                     class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                                     disabled />
                                 <input id="course-hidden-input" type="file" class="hidden"
                                     accept="image/png, image/gif, image/jpeg" />
                                 <button @click="openFile"
-                                    class="mt-2 rounded-sm px-3 py-1 bg-gray-200 hover:bg-gray-300 focus:shadow-outline focus:outline-none">
+                                    class="mt-2 rounded-sm px-3 py-1 float-right  bg-gray-200 hover:bg-gray-300 focus:shadow-outline focus:outline-none">
                                     Select Logo
                                 </button>
                             </div>
