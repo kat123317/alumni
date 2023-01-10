@@ -84,12 +84,9 @@ defineProps({
                     <div
                         class="flex flex-wrap justify-between items-center mx-auto"
                     >
-                        <a
-                            href="https://scontent.fmnl25-3.fna.fbcdn.net/v/t39.30808-6/277753676_1304000960076328_3274280775987084409_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=8bfeb9&_nc_eui2=AeHJcCK3w_9DuFAiXfYAq3S7FvihVsOuc7kW-KFWw65zuQYPI5GPMEC7ErJbk8-BDN4ZeZV3QOdDv5pNH0FMNba-&_nc_ohc=OfNQfGLwYt8AX9rsBeN&_nc_ht=scontent.fmnl25-3.fna&oh=00_AfCtOta09b4tk-aXI30Z7P0ncjWGsLrAHpY6vgaHfESFiQ&oe=63BB4BC1"
-                            class="flex items-center"
-                        >
+                        <a href="/img/logo.jpg" class="flex items-center">
                             <img
-                                src="https://scontent.fmnl25-3.fna.fbcdn.net/v/t39.30808-6/305620435_493756352759167_5579240386512342003_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeEKAM5yrzsYH8VONLyaYOtJ5axEt3cQ-T3lrES3dxD5PavarxK6xZ120W-emYR9kItw_XaicBZzq3RsqJXpC4rE&_nc_ohc=B-XHQQXdH0kAX92Ux7R&_nc_ht=scontent.fmnl25-3.fna&oh=00_AfD-1d8glzoDHaKcmDVI2YRaHWiAcrL47V5orfyWMf1u6w&oe=63BB199C"
+                                src="/img/logo.jpg"
                                 class="mr-3 h-6 sm:h-9"
                                 alt="Cmu Logo"
                                 style="border-radius: 50%"
@@ -128,7 +125,7 @@ defineProps({
                 <div
                     class="overflow-hidden backdrop-opacity-50 backdrop-blur-lg text-white py-20 bg-hero bg-no-repeat bg-cover bg-center h-[100%] flex flex-col"
                     style="
-                        background-image: url('https://scontent.fmnl25-3.fna.fbcdn.net/v/t39.30808-6/277753676_1304000960076328_3274280775987084409_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=8bfeb9&_nc_eui2=AeHJcCK3w_9DuFAiXfYAq3S7FvihVsOuc7kW-KFWw65zuQYPI5GPMEC7ErJbk8-BDN4ZeZV3QOdDv5pNH0FMNba-&_nc_ohc=OfNQfGLwYt8AX9rsBeN&_nc_ht=scontent.fmnl25-3.fna&oh=00_AfCtOta09b4tk-aXI30Z7P0ncjWGsLrAHpY6vgaHfESFiQ&oe=63BB4BC1');
+                        background-image: url('/img/background.jpg');
                         background-size: 100%;
                         /* background-image: url('http://[::1]:5173/resources/assets/farm.jpg'); */
                         /* background-image: url('https://images.unsplash.com/photo-1444858291040-58f756a3bdd6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1678&q=80'); */
