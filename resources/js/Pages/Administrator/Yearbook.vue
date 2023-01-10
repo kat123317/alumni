@@ -246,14 +246,15 @@ const function_update_yeabook = () => {
                     </svg>
                 </div>
             </div>
-            <div class=" p-10 container shadow border  mt-10 mx-auto">
-                <div class="flex flex-col text-center w-full ">
-                    <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">
+            <div class="p-10 container shadow border mt-10 mx-auto">
+                <div class="flex flex-col text-center w-full">
+                    <h1
+                        class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900"
+                    >
                         Add School Year
                     </h1>
                 </div>
-                <div class="flex flex-col p-10  text-center w-full mb-12">
-
+                <div class="flex flex-col p-10 text-center w-full mb-12">
                     <div class="p-2 w-full">
                         <div class="relative">
                             <label
