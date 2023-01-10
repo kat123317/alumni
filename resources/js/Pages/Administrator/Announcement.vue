@@ -189,8 +189,13 @@ const remove_image_update = (key) => {
         <section class="text-gray-600 body-font relative">
    
             <div
-                class="container p-10 mt-10  shadow rounded-lg bg-white  mx-auto "
+                class="container p-10 mt-10  shadow border rounded-lg bg-white  mx-auto "
             >
+            <div class="flex flex-col text-center w-full ">
+                    <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">
+                        Add Announcement
+                    </h1>
+                </div>
             <div
                     class=" mx-auto   rounded-lg p-10  bg-white flex flex-col md:ml-auto  "
                 >

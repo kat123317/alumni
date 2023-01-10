@@ -682,7 +682,7 @@ function onSelectEmojiSearch(emoji) {
                                 <label for="voice-search" class="sr-only"
                                     >Search</label
                                 >
-                                <div class="relative bg-red w-full">
+                                <div class="relative  w-full">
                                     <div
                                         class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
                                     >
@@ -706,7 +706,7 @@ function onSelectEmojiSearch(emoji) {
                                         v-model="search_data.search_text"
                                         type="text"
                                         id="voice-search"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full pl-10 p-2.5"
                                         placeholder="Search"
                                         required
                                     />
@@ -715,7 +715,7 @@ function onSelectEmojiSearch(emoji) {
                                         @click="emojioverlay2 = false"
                                         v-model="searchUser"
                                         type="text"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full pl-10 p-2.5"
                                         placeholder="Search User"
                                         required
                                     />
@@ -802,7 +802,7 @@ function onSelectEmojiSearch(emoji) {
                                 <select
                                     id="countries"
                                     v-model="SearchType"
-                                    class="bg-gray-50 ml-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-25 p-2.5"
+                                    class="bg-gray-50 ml-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-25 p-2.5"
                                 >
                                     <option selected value="posts" disabled>
                                         Filter

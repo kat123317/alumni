@@ -75,7 +75,7 @@ const function_open_messages = (id, user_id) => {
             <input v-model="search_data.search_text" type="text" class="w-full px-2 py-2 text-sm"
                 placeholder="Search or start new chat" />
             <button @click="function_search()" type="submit"
-                class="text-white right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mt-1 float-right">
+                class="text-white right-2.5 bottom-2.5 bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 mt-1 float-right">
                 Search
             </button>
         </div>

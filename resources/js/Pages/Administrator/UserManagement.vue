@@ -280,8 +280,8 @@ const function_search_user = () => {
                 </div>
             </div>
 
-            <div class="container p-10 mt-10 shadow mx-auto">
-                <div class="flex flex-col text-center w-full mb-12">
+            <div class="container p-10 mt-10 shadow border rounded-lg mx-auto">
+                <div class="flex flex-col text-center w-full ">
                     <h1
                         class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900"
                     >

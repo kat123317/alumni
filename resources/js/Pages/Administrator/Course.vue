@@ -218,8 +218,8 @@ const openFileEdit = () => {
                     </svg>
                 </div>
             </div>
-            <div class="container rounded-lg shadow p-10 mt-10 mx-auto">
-                <div class="flex flex-col text-center w-full mb-12">
+            <div class="container rounded-lg shadow border p-10 mt-10 mx-auto">
+                <div class="flex flex-col text-center w-full ">
                     <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">
                         Add Course
                     </h1>
@@ -244,7 +244,7 @@ const openFileEdit = () => {
                             <div class="relative">
                                 <label for="email" class="leading-7 text-sm text-gray-600">College</label>
                                 <select v-model="add_course_data.college_id" id="countries"
-                                    class="bg-gray-50 border border-gray-300 w text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                    class="bg-gray-50 border border-gray-300 w text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5">
                                     <option v-for="(colleges, key) in usePage()
                                     .props.value.colleges" :key="key" :value="colleges.id">
                                         {{ colleges.name }}
@@ -277,7 +277,7 @@ const openFileEdit = () => {
                                 <div class="p-2 p-2 w-1/4">
                                     <div class="relative">
                                         <select v-model="select_course_view.search" @change="filter_table_show()"
-                                            class="bg-gray-50 border border-gray-300 w text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                            class="bg-gray-50 border border-gray-300 w text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5">
                                             <option value="no_select" selected>
                                                 Choose a College Filter
                                             </option>
