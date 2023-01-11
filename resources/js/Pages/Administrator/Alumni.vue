@@ -242,7 +242,7 @@ const function_update_alumni = (id) => {
                         >Success</span
                     >
                     <span class="font-semibold mr-2 text-left flex-auto"
-                        >Alumni Successfully added</span
+                        >Alum Successfully added</span
                     >
                     <svg
                         class="fill-current opacity-75 h-4 w-4"
@@ -268,7 +268,7 @@ const function_update_alumni = (id) => {
                         >Success</span
                     >
                     <span class="font-semibold mr-2 text-left flex-auto"
-                        >Alumni Successfully updated</span
+                        >Alum Successfully updated</span
                     >
                     <svg
                         class="fill-current opacity-75 h-4 w-4"
@@ -294,7 +294,7 @@ const function_update_alumni = (id) => {
                         >Success</span
                     >
                     <span class="font-semibold mr-2 text-left flex-auto"
-                        >Alumni Successfully deleted</span
+                        >Alum Successfully deleted</span
                     >
                     <svg
                         class="fill-current opacity-75 h-4 w-4"
@@ -334,17 +334,17 @@ const function_update_alumni = (id) => {
                 </div>
             </div>
             <div class="container mt-10 p-10 shadow border rounded-lg mx-auto">
-                <div class="flex flex-col  text-center w-full ">
+                <div class="flex flex-col text-center w-full">
                     <h1
                         class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900"
                     >
-                        Add a Alumnus
+                        Add Alum
                     </h1>
                     <p class="lg:w-2/3 mx-auto leading-relaxed text-base">
-                        Add Alumni Here
+                        Add Alum Here
                     </p>
                 </div>
-                <div class=" mx-auto">
+                <div class="mx-auto">
                     <div class="flex flex-wrap -m-2">
                         <div class="p-2 w-full">
                             <div class="relative">
@@ -469,15 +469,14 @@ const function_update_alumni = (id) => {
                                     class="hidden"
                                     accept="image/png, image/gif, image/jpeg"
                                 />
-                                <div class=" mt-8">
+                                <div class="mt-8">
                                     <button
-                                    @click="openFile"
-                                    class=" rounded-sm px-3 py-1 bg-gray-200 hover:bg-gray-300 focus:shadow-outline focus:outline-none"
-                                >
-                                    Select Image
-                                </button>
+                                        @click="openFile"
+                                        class="rounded-sm px-3 py-1 bg-gray-200 hover:bg-gray-300 focus:shadow-outline focus:outline-none"
+                                    >
+                                        Select Image
+                                    </button>
                                 </div>
-
                             </div>
                         </div>
                         <div class="p-2 w-1/2">
@@ -656,7 +655,7 @@ const function_update_alumni = (id) => {
                 >
                     <label
                         for="default-search"
-                        class="mb-2 text-sm font-medium text-gray-900 sr-only "
+                        class="mb-2 text-sm font-medium text-gray-900 sr-only"
                         >Search</label
                     >
                     <div class="relative">
@@ -665,7 +664,7 @@ const function_update_alumni = (id) => {
                         >
                             <svg
                                 aria-hidden="true"
-                                class="w-5 h-5 text-gray-500 "
+                                class="w-5 h-5 text-gray-500"
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
@@ -683,21 +682,21 @@ const function_update_alumni = (id) => {
                             v-model="search_data.search"
                             type="search"
                             id="default-search"
-                            class="block p-4 pl-10  w-[80vmin] lg:w-[50vmin]  text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-green-500 focus:border-green-500 "
+                            class="block p-4 pl-10 w-[80vmin] lg:w-[50vmin] text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-green-500 focus:border-green-500"
                             placeholder="Search "
                             required
                         />
                         <button
                             @click="function_search_alumni()"
                             type="submit"
-                            class="text-white absolute right-2.5 bottom-2.5 bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 "
+                            class="text-white absolute right-2.5 bottom-2.5 bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2"
                         >
                             Search
                         </button>
                     </div>
                 </nav>
-                <div class="overflow-x-auto shadow-lg rounded-lg  relative">
-                    <table class="w-full  text-sm text-left text-gray-500">
+                <div class="overflow-x-auto shadow-lg rounded-lg relative">
+                    <table class="w-full text-sm text-left text-gray-500">
                         <thead
                             class="text-xs text-white uppercase bg-green-500"
                         >
@@ -778,7 +777,7 @@ const function_update_alumni = (id) => {
                                         :key="achievement_key"
                                     >
                                         <em
-                                            class="mb-3 font-normal text-gray-700 "
+                                            class="mb-3 font-normal text-gray-700"
                                             >{{ achievements }}</em
                                         ><br />
                                     </span>
@@ -1175,7 +1174,7 @@ const function_update_alumni = (id) => {
                                 <div class="p-6 text-center">
                                     <svg
                                         aria-hidden="true"
-                                        class="mx-auto mb-4 w-14 h-14 text-gray-400 "
+                                        class="mx-auto mb-4 w-14 h-14 text-gray-400"
                                         fill="none"
                                         stroke="currentColor"
                                         viewBox="0 0 24 24"
@@ -1189,7 +1188,7 @@ const function_update_alumni = (id) => {
                                         ></path>
                                     </svg>
                                     <h3
-                                        class="mb-5 text-lg font-normal text-gray-500 "
+                                        class="mb-5 text-lg font-normal text-gray-500"
                                     >
                                         Are you sure you want to update this
                                         Alumni?

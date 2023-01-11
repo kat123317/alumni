@@ -502,7 +502,7 @@ const functionDownload = () => {
                                 <div
                                     class="w-1/3 bg-cover"
                                     style="
-                                        background-image: url('http://devops.cmu.edu.ph/formlinks/assets/dist/assets/img/logos/CMU-LOGO.png');
+                                        background-image: url('/img/logo.jpg');
                                     "
                                 ></div>
 

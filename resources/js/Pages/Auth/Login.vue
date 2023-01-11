@@ -161,7 +161,7 @@ const update_expiry = () => {
                             type="email"
                             required
                             autofocus
-                            class="block w-full px-4 py-2 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300"
+                            class="block w-full px-4 py-2 text-gray-700 bg-white border rounded-md focus:border-green-400 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-green-300"
                         />
                         <InputError class="mt-2" :message="form.errors.email" />
                     </div>
@@ -184,7 +184,7 @@ const update_expiry = () => {
                         <input
                             id="password"
                             v-model="form.password"
-                            class="block w-full px-4 py-2 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300"
+                            class="block w-full px-4 py-2 text-gray-700 bg-white border rounded-md focus:border-green-400 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-green-300"
                             type="password"
                         />
                         <InputError
