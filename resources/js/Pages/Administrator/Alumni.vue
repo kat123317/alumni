@@ -1,7 +1,7 @@
 <script setup>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { useForm, usePage } from "@inertiajs/inertia-vue3";
-import { computed, ref, provide, inject } from "vue";
+import { computed, ref, provide, inject, watch } from "vue";
 import moment from "moment";
 import { findProp } from "@vue/compiler-core";
 import Pagination from "./components/Pagination.vue";
@@ -9,6 +9,8 @@ import Pagination from "./components/Pagination.vue";
 // const trigger = inject("trigger");
 
 const modal_update = ref(false);
+const upload_modal = ref(false);
+upload_modal;
 const alertOn = ref(false);
 const alertOnUpdate = ref(false);
 const alertOnDelete = ref(false);
@@ -180,6 +182,15 @@ const close_update_modal = () => {
     modal_update.value = !modal_update.value;
 };
 
+const open_upload_modal = () => {
+    upload_modal.value = !upload_modal.value;
+};
+const close_upload_modal = () => {
+    ready_to_upload.value = [];
+    multiple_images.multiple_images = [];
+    upload_modal.value = !upload_modal.value;
+};
+
 const addAchievementUpdate = () => {
     if (tmp_achievement.value == "") {
         onAlert("Please fill out all fields");
@@ -225,6 +236,78 @@ const function_update_alumni = (id) => {
 };
 
 // provide("alumni_search_key", search_data.alumni_search_key);
+
+const button_excel = useForm({
+    upload: "Upload Excel",
+    import: "Import Excel",
+});
+
+const excel_import = useForm({
+    excel_file: "",
+});
+const excel_import_file = () => {
+    let excel_file_import = document.getElementById("excel_import_file");
+    excel_file_import.click();
+    excel_file_import.onchange = (e) => {
+        let file = e.target.files[0];
+        excel_import.excel_file = file;
+        button_excel.import = "Excel is ready to upload";
+    };
+};
+const import_excel = () => {
+    if (excel_import.excel_file != "") {
+        button_excel.upload = "Please wait...";
+        excel_import.post(route("graduates.import_excel"), {
+            preserveScroll: true,
+            onSuccess: () => {
+                button_excel.reset();
+                excel_import.reset();
+                onAlert("Success");
+            },
+        });
+    } else {
+        onAlert("onError");
+    }
+};
+
+const ready_to_upload = ref([]);
+const multiple_images = useForm({
+    multiple_images: [],
+});
+const upload_multiple_images = () => {
+    let hidden = document.getElementById("upload_multiple_images");
+    hidden.click();
+    hidden.onchange = (e) => {
+        for (let index = 0; index < e.target.files.length; index++) {
+            ready_to_upload.value.push(
+                window.URL.createObjectURL(e.target.files[index])
+            );
+            multiple_images.multiple_images.push(e.target.files[index]);
+        }
+    };
+};
+
+const upload_multiple_images_save = () => {
+    if (multiple_images.multiple_images.length != 0) {
+        multiple_images.post(route("graduates.upload_multiple_images"), {
+            preserveScroll: true,
+            onSuccess: () => {
+                close_upload_modal();
+                ready_to_upload.value = [];
+                multiple_images.reset();
+                multiple_images.multiple_images = [];
+                onAlert("Success");
+            },
+        });
+    } else {
+        onAlert("onError");
+    }
+};
+
+const remove_image = (key) => {
+    ready_to_upload.value.splice(key, 1);
+    multiple_images.multiple_images.splice(key, 1);
+};
 </script>
 <template>
     <AdminLayout>
@@ -333,10 +416,51 @@ const function_update_alumni = (id) => {
                     </svg>
                 </div>
             </div>
-            <div class="container mt-10 p-10 shadow border rounded-lg mx-auto">
-                <div class="flex flex-col text-center w-full">
+            <div class="container mt-2 p-2 shadow border rounded-lg mx-auto">
+                <div class="float-right mt-2">
+                    <input
+                        type="file"
+                        name="file"
+                        class="form-control hidden"
+                        id="excel_import_file"
+                    />
+                    <a
+                        @click="excel_import_file()"
+                        class="mb-2 mr-2 text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-md cursor-pointer"
+                    >
+                        {{ button_excel.import }}
+                    </a>
+                    <a
+                        @click="import_excel()"
+                        class="mb-2 text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-md cursor-pointer"
+                    >
+                        {{ button_excel.upload }}
+                    </a>
+                </div>
+                <div class="float-right mr-2 mt-2">
+                    <input
+                        id="upload_multiple_images"
+                        type="file"
+                        class="hidden"
+                        accept="image/png, image/gif, image/jpeg"
+                        multiple
+                    />
+                    <a
+                        @click="open_upload_modal()"
+                        class="mb-2 mr-2 text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-md cursor-pointer"
+                    >
+                        Import Images
+                    </a>
+                    <!-- <a
+                        @click="upload_multiple_images_save()"
+                        class="mb-2 text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-md cursor-pointer"
+                    >
+                        Upload Images
+                    </a> -->
+                </div>
+                <div class="flex flex-col text-center w-full mt-2">
                     <h1
-                        class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900"
+                        class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900 mt-2"
                     >
                         Add Alum
                     </h1>
@@ -1203,6 +1327,150 @@ const function_update_alumni = (id) => {
                                     </button>
                                     <button
                                         @click="close_update_modal()"
+                                        data-modal-toggle="popup-modal"
+                                        type="button"
+                                        class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10"
+                                    >
+                                        No, cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div v-if="upload_modal" class=" ">
+                    <div
+                        tabindex="-1"
+                        class="overflow-y-auto flex fixed justify-center w-full backdrop-blur-sm overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full"
+                    >
+                        <div
+                            class="relative p-4 w-full animate mt-10 max-w-[80%] h-full md:h-auto"
+                        >
+                            <div class="relative bg-white rounded-lg shadow">
+                                <div class="p-2 w-full">
+                                    <div class="relative">
+                                        <a
+                                            @click="upload_multiple_images()"
+                                            class="mb-2 mr-2 text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-md cursor-pointer"
+                                        >
+                                            Import Images
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="h-[60vmin] overflow-auto">
+                                    <div
+                                        v-if="ready_to_upload != null"
+                                        class="grid mt-2 grid-cols-1 lg:grid-cols-4"
+                                    >
+                                        <div
+                                            v-for="(
+                                                image, key
+                                            ) in ready_to_upload"
+                                            :key="key"
+                                        >
+                                            <div
+                                                class="w-auto mt-2 mx-auto lg:max-w-[20vmin] z-30"
+                                            >
+                                                <div
+                                                    class="shadow-lg bg-white p-3"
+                                                >
+                                                    <img
+                                                        class="w-full max-h-[40vmin] object-cover"
+                                                        :src="image"
+                                                    />
+                                                    <ul
+                                                        class="mt-3 flex justify-end flex-wrap"
+                                                    >
+                                                        <li>
+                                                            <button
+                                                                @click="
+                                                                    remove_image(
+                                                                        key
+                                                                    )
+                                                                "
+                                                                class="flex text-gray-400 hover:text-gray-600"
+                                                            >
+                                                                <svg
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    fill="none"
+                                                                    viewBox="0 0 24 24"
+                                                                    stroke-width="1.5"
+                                                                    stroke="currentColor"
+                                                                    class="w-6 h-6"
+                                                                >
+                                                                    <path
+                                                                        class="text-red-500"
+                                                                        stroke-linecap="round"
+                                                                        stroke-linejoin="round"
+                                                                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                                                    />
+                                                                </svg>
+                                                                <span
+                                                                    class="text-red-500"
+                                                                    >Remove</span
+                                                                >
+                                                            </button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button
+                                    @click="close_upload_modal()"
+                                    type="button"
+                                    class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+                                    data-modal-toggle="popup-modal"
+                                >
+                                    <svg
+                                        aria-hidden="true"
+                                        class="w-5 h-5"
+                                        fill="currentColor"
+                                        viewBox="0 0 20 20"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            fill-rule="evenodd"
+                                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                            clip-rule="evenodd"
+                                        ></path>
+                                    </svg>
+                                    <span class="sr-only">Close modal</span>
+                                </button>
+                                <div class="p-6 text-center">
+                                    <svg
+                                        aria-hidden="true"
+                                        class="mx-auto mb-4 w-14 h-14 text-gray-400"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                        ></path>
+                                    </svg>
+                                    <h3
+                                        class="mb-5 text-lg font-normal text-gray-500"
+                                    >
+                                        Are you sure you want to upload these
+                                        images?
+                                    </h3>
+                                    <button
+                                        @click="upload_multiple_images_save()"
+                                        data-modal-toggle="popup-modal"
+                                        type="button"
+                                        class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"
+                                    >
+                                        Yes, I'm sure
+                                    </button>
+                                    <button
+                                        @click="close_upload_modal()"
                                         data-modal-toggle="popup-modal"
                                         type="button"
                                         class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10"

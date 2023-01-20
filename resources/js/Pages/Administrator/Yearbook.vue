@@ -353,6 +353,7 @@ const function_update_yeabook = () => {
                                 class="text-xs text-white uppercase bg-green-500"
                             >
                                 <tr>
+                                    <th scope="col" class="py-3 px-6">ID</th>
                                     <th scope="col" class="py-3 px-6">
                                         School year from
                                     </th>
@@ -377,6 +378,15 @@ const function_update_yeabook = () => {
                                     :key="index"
                                     class="border-b"
                                 >
+                                    <td class="py-4 px-6">
+                                        <div class="pl-3">
+                                            <div
+                                                class="text-base font-semibold"
+                                            >
+                                                {{ yearbooks.id }}
+                                            </div>
+                                        </div>
+                                    </td>
                                     <th
                                         scope="row"
                                         class="py-4 px-6 font-medium text-gray-900"

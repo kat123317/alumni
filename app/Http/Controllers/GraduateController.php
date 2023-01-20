@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\GraduatesImport;
 use App\Models\Graduate;
 use App\Models\College;
 use App\Models\Course;
@@ -11,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
 use Inertia\Inertia;
+use Maatwebsite\Excel\Facades\Excel;
 
 class GraduateController extends Controller
 {
@@ -104,6 +106,21 @@ class GraduateController extends Controller
         return Redirect::back();
     }
 
+    public function upload_multiple_images(Request $request){
+        // $images = array();
+
+        if($request->hasfile('multiple_images')){
+            foreach($request->file('multiple_images') as $key => $photo){
+                // dd( $_FILES['multiple_images']['name']);
+                $imageName =$_FILES['multiple_images']['name'];
+                $photo->move(public_path().'/images/graduates/', $imageName[$key]); 
+                // array_push($images, $imageName);
+            }
+        }
+        return Redirect::back();
+
+    }
+
     /**
      * Display the specified resource.
      *
@@ -168,5 +185,13 @@ class GraduateController extends Controller
     public function destroy(Graduate $graduate)
     {
         //
+    }
+
+    public function import(Request $request) 
+    {
+        // dd($request->file('excel_file')->getPathName());
+        Excel::import(new GraduatesImport, $request->file('excel_file')->store('files'));
+        
+        return Redirect::back();
     }
 }
