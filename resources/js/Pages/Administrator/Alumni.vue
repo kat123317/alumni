@@ -273,35 +273,35 @@ const ready_to_upload = ref([]);
 const multiple_images = useForm({
     multiple_images: [],
 });
-// const upload_multiple_images = () => {
-//     let hidden = document.getElementById("upload_multiple_images");
-//     hidden.click();
-//     hidden.onchange = (e) => {
-//         for (let index = 0; index < e.target.files.length; index++) {
-//             ready_to_upload.value.push(
-//                 window.URL.createObjectURL(e.target.files[index])
-//             );
-//             multiple_images.multiple_images.push(e.target.files[index]);
-//         }
-//     };
-// };
+const upload_multiple_images = () => {
+    let hidden = document.getElementById("upload_multiple_images");
+    hidden.click();
+    hidden.onchange = (e) => {
+        for (let index = 0; index < e.target.files.length; index++) {
+            ready_to_upload.value.push(
+                window.URL.createObjectURL(e.target.files[index])
+            );
+            multiple_images.multiple_images.push(e.target.files[index]);
+        }
+    };
+};
 
-// const upload_multiple_images_save = () => {
-//     if (multiple_images.multiple_images.length != 0) {
-//         multiple_images.post(route("graduates.upload_multiple_images"), {
-//             preserveScroll: true,
-//             onSuccess: () => {
-//                 close_upload_modal();
-//                 ready_to_upload.value = [];
-//                 multiple_images.reset();
-//                 multiple_images.multiple_images = [];
-//                 onAlert("Success");
-//             },
-//         });
-//     } else {
-//         onAlert("onError");
-//     }
-// };
+const upload_multiple_images_save = () => {
+    if (multiple_images.multiple_images.length != 0) {
+        multiple_images.post(route("graduates.upload_multiple_images"), {
+            preserveScroll: true,
+            onSuccess: () => {
+                close_upload_modal();
+                ready_to_upload.value = [];
+                multiple_images.reset();
+                multiple_images.multiple_images = [];
+                onAlert("Success");
+            },
+        });
+    } else {
+        onAlert("onError");
+    }
+};
 
 const remove_image = (key) => {
     ready_to_upload.value.splice(key, 1);
@@ -416,7 +416,7 @@ const remove_image = (key) => {
                 </div>
             </div>
             <div class="container mt-2 p-2 shadow border rounded-lg mx-auto">
-                <!-- <div class="float-right mt-2">
+                <div class="float-right mt-2">
                     <input
                         type="file"
                         name="file"
@@ -435,7 +435,7 @@ const remove_image = (key) => {
                     >
                         {{ button_excel.upload }}
                     </a>
-                </div> -->
+                </div>
                 <div class="float-right mr-2 mt-2">
                     <input
                         id="upload_multiple_images"
