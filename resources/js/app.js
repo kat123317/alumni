@@ -12,6 +12,9 @@ import ScrollParallax from "vue3-parallax/src/components/ScrollParallax.vue";
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import '@vueup/vue-quill/dist/vue-quill.bubble.css';
+import Carousel3d from 'vue3-carousel-3d';
+import "vue3-carousel-3d/dist/index.css"
+
 
 const appName =
     window.document.getElementsByTagName("title")[0]?.innerText || "Laravel";
@@ -30,6 +33,8 @@ createInertiaApp({
         return MyApp.use(plugin)
             .use(ZiggyVue, Ziggy)
             .use(VueChartkick)
+            .use(Carousel3d)
+     
             .component("scroll-parallax", ScrollParallax)
             .component('QuillEditor', QuillEditor)
             .mount(el);
