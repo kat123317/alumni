@@ -247,7 +247,7 @@ const uploadImages = (res) => {
                                     v-model="choice.write_in"
                                     class="-mt-1"
                                 />
-                                <span class="pl-1">Write In Choice</span>
+                                <span class="pl-1 mb-3">Write In Choice</span>
                             </JetInputLabel>
                         </template>
                         <div class="flex gap-1">

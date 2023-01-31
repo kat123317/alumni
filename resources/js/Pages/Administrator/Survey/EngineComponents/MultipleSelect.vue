@@ -82,7 +82,7 @@ const proxyChecked = computed({
                     >
                 </div>
                 <template v-if="choice.write_in">
-                    <QInputText
+                    <QInputText class="ml-6"
                         :disabled="
                             proxyChecked['choice_' + choice.value] == 0 ||
                             disabled == true

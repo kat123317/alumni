@@ -110,7 +110,7 @@ const addEditSurvey = () => {
             {
                 preserveScroll: true,
                 onSuccess: () => {
-                    alertOnMessage.value = "Survey Invitaion Successfully sent";
+                    alertOnMessage.value = "Survey invitation successfully sent";
                     onAlert("Update");
                     form_add_edit.reset();
                     modals.add_edit.show = false;

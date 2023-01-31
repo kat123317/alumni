@@ -143,7 +143,7 @@ const getStatusButton = (notification) => {
             }
         });
         var status = (count / survey.questions.length) * 100;
-        return status == 100 ? "Retake" : "Answer";
+        return status == 100 ? "Completed" : "Answer";
     } else {
         return "Answer";
     }
@@ -192,6 +192,9 @@ const getSurveyType = (notification) => {
         return "Answer";
     }
 };
+
+const status = () => {
+}
 </script>
 
 <template>
@@ -273,7 +276,7 @@ const getSurveyType = (notification) => {
 
                 <a
                     class="px-6 float-right py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-green-800 rounded-md hover:bg-green-500 focus:outline-none focus:ring focus:ring-green-300 focus:ring-opacity-80"
-                    :href="user_survey.details.link"
+                    :href="getStatusButton(user_survey) == 'Completed' ? status():user_survey.details.link"
                     target="_blank"
                 >
                     {{ getStatusButton(user_survey) }}
