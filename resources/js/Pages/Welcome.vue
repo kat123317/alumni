@@ -2,6 +2,7 @@
 import { Head, Link, useForm, usePage } from "@inertiajs/inertia-vue3";
 import { ref, onMounted, computed } from "vue";
 import moment from "moment";
+import AuthenticationCarLogo from '@/Components/AuthenticationCardLogo.vue'
 
 const datetimeNow = ref("Loading...");
 
@@ -58,8 +59,9 @@ defineProps({
     <div class="bg-image ">
         <nav class="bg-white mb-10 px-2 sm:px-4 py-2.5  fixed w-full z-20 top-0 left-0 border-b border-gray-200 ">
             <div class="container flex flex-wrap items-center justify-between mx-auto">
-                <a href="https://flowbite.com/" class="flex items-center">
-                    <img src="http://devops.cmu.edu.ph/formlinks/assets/dist/assets/img/logos/CMU-LOGO.png" class="h-6 mr-3 sm:h-9" alt="Flowbite Logo">
+                <a href="https://alumni.com/" class="flex items-center">
+                    <AuthenticationCarLogo />
+                    <!-- <img src="http://devops.cmu.edu.ph/formlinks/assets/dist/assets/img/logos/CMU-LOGO.png" class="h-6 mr-3 sm:h-9" alt="Flowbite Logo"> -->
                     <span class="self-center text-xl font-semibold whitespace-nowrap ">Central Mindanao University</span>
                 </a>
                 <div
