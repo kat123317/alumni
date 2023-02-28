@@ -294,6 +294,9 @@ const openFileEdit = () => {
                                     <thead class="text-xs text-white uppercase bg-green-500">
                                         <tr>
                                             <th scope="col" class="py-3 px-6">
+                                                ID
+                                            </th>
+                                            <th scope="col" class="py-3 px-6">
                                                 Logo
                                             </th>
                                             <th scope="col" class="py-3 px-6">
@@ -310,6 +313,9 @@ const openFileEdit = () => {
                                     <tbody>
                                         <tr v-for="(courses, key) in usePage()
                                         .props.value.courses.data" :key="key">
+                                        <th scope="row" class="py-4 px-6 font-medium text-gray-900 word-break">
+                                                {{ courses.id }}
+                                            </th>
                                             <th scope="row"
                                                 class="py-4 px-6 font-medium text-gray-900 word-break font-bold">
                                                 <img :src="

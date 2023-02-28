@@ -339,6 +339,9 @@ const openFile = () => {
                                     >
                                         <tr>
                                             <th scope="col" class="py-3 px-6">
+                                                ID
+                                            </th>
+                                            <th scope="col" class="py-3 px-6">
                                                 College
                                             </th>
                                             <th scope="col" class="py-3 px-6">
@@ -358,6 +361,9 @@ const openFile = () => {
                                         :key="key"
                                     >
                                         <tr>
+                                            <td class="py-4 px-6">
+                                                {{ colleges.id }}
+                                            </td>
                                             <th
                                                 scope="row"
                                                 class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
