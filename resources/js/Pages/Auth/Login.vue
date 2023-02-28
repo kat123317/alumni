@@ -129,7 +129,7 @@ const update_expiry = () => {
                 <div
                     class="hidden bg-cover lg:block lg:w-1/2"
                     style="
-                        background-image: url('https://devops.cmu.edu.ph/formlinks/assets/dist/assets/img/backgrounds/main_gate.jpg');
+                        background-image: url('/img/logo.jpg');
                     "
                 ></div>
 

@@ -387,6 +387,7 @@ defineProps({
     }
 }
 
+
 .bg-cmu {
     background-image: url("https://scontent.fmnl25-3.fna.fbcdn.net/v/t39.30808-6/277753676_1304000960076328_3274280775987084409_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=8bfeb9&_nc_eui2=AeHJcCK3w_9DuFAiXfYAq3S7FvihVsOuc7kW-KFWw65zuQYPI5GPMEC7ErJbk8-BDN4ZeZV3QOdDv5pNH0FMNba-&_nc_ohc=OfNQfGLwYt8AX9rsBeN&_nc_ht=scontent.fmnl25-3.fna&oh=00_AfCtOta09b4tk-aXI30Z7P0ncjWGsLrAHpY6vgaHfESFiQ&oe=63BB4BC1");
     background-repeat: no-repeat;

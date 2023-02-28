@@ -5,19 +5,22 @@ import { Link } from "@inertiajs/inertia-vue3";
 <template>
     <Link :href="'/'">
         <div class="flex">
-            <img
-                class="h-[10vmin]"
-                src="/img/logo.jpg"
+            <div>
+                <img
+                    class="h-[5vmin]"
+                    src="/img/logo.jpg"
+                    alt="Cmu Logo"
+                    style="border-radius: 50%"
+                />
+            </div>
+            <div>
+                <img
+                class="h-[8vmin] mt-[-14px]"
+                src="/img/CMUAI.png"
                 alt="Cmu Logo"
-                style="border-radius: 50%"
+                style="border-radius: 50%;"
             />
-
-            <img
-                class="h-[10vmin]"
-                src="/img/logo.jpg"
-                alt="Cmu Logo"
-                style="border-radius: 50%"
-            />
+            </div>
         </div>
     </Link>
 </template>
