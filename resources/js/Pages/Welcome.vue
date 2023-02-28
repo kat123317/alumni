@@ -172,7 +172,7 @@ defineProps({
                                 and for increasing knowledge and
                                 understanding.</p>
                             <a class="inline-flex items-center">
-                                <img alt="testimonial" src="http://devops.cmu.edu.ph/formlinks/assets/dist/assets/img/logos/CMU-LOGO.png"
+                                <img alt="testimonial" src="/img/logo.jpg"
                                     class="w-12 h-12 rounded-full flex-shrink-0 object-cover object-center">
                                 <span class="flex-grow flex flex-col pl-4">
                                     <span class="title-font font-medium text-gray-900">Mandate</span>
@@ -198,7 +198,7 @@ defineProps({
                                 sensitivity and environmental
                                 consciousness.</p>
                             <a class="inline-flex items-center">
-                                <img alt="testimonial" src="http://devops.cmu.edu.ph/formlinks/assets/dist/assets/img/logos/CMU-LOGO.png"
+                                <img alt="testimonial" src="/img/logo.jpg"
                                     class="w-12 h-12 rounded-full flex-shrink-0 object-cover object-center">
                                 <span class="flex-grow flex flex-col pl-4">
                                     <span class="title-font font-medium text-gray-900">Mission</span>
@@ -221,7 +221,7 @@ defineProps({
                                 people for a globally sustainable
                                 environment and a humane society.</p>
                             <a class="inline-flex items-center">
-                                <img alt="testimonial" src="http://devops.cmu.edu.ph/formlinks/assets/dist/assets/img/logos/CMU-LOGO.png"
+                                <img alt="testimonial" src="/img/logo.jpg"
                                     class="w-12 h-12 rounded-full flex-shrink-0 object-cover object-center">
                                 <span class="flex-grow flex flex-col pl-4">
                                     <span class="title-font font-medium text-gray-900">Vision</span>
