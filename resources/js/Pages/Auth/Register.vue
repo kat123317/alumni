@@ -170,15 +170,43 @@ const fillAddress = () => {
                 <h1 class="text-center text-[2.5vmin] font-bold">REGISTRATION</h1>
                 <div class="grid grid-cols-12 gap-4">
                     <div class="mt-4 col-span-3 text-[2vmin]">
-                        <InputLabel for="name" value="Name" />
+                        <InputLabel for="fname" value="First Name" />
                         <TextInput
-                            id="name"
+                            id="fname"
                             v-model="form.name"
                             type="text"
                             class="mt-1 block w-full"
                             required
                             autofocus
-                            autocomplete="name"
+                            autocomplete="fname"
+                        />
+                        <InputError class="mt-2" :message="form.errors.name" />
+                    </div>
+
+                    <div class="mt-4 col-span-3 text-[2vmin]">
+                        <InputLabel for="mname" value="Middle Name" />
+                        <TextInput
+                            id="mname"
+                            v-model="form.name"
+                            type="text"
+                            class="mt-1 block w-full"
+                            required
+                            autofocus
+                            autocomplete="mname"
+                        />
+                        <InputError class="mt-2" :message="form.errors.name" />
+                    </div>
+
+                    <div class="mt-4 col-span-3 text-[2vmin]">
+                        <InputLabel for="lname" value="Last Name" />
+                        <TextInput
+                            id="lname"
+                            v-model="form.name"
+                            type="text"
+                            class="mt-1 block w-full"
+                            required
+                            autofocus
+                            autocomplete="lname"
                         />
                         <InputError class="mt-2" :message="form.errors.name" />
                     </div>
@@ -462,13 +490,13 @@ const fillAddress = () => {
                     </div>
 
                     <div class="mt-4 col-span-3">
-                        <InputLabel for="course_id" value="Course" />
+                        <InputLabel for="course_id" value="Program" />
                         <select
                             id="course_id"
                             v-model="form.course_id"
                             class="border-gray-300 focus:border-green-300 focus:ring focus:ring-green-200 focus:ring-opacity-50 rounded-md shadow-sm w-full"
                         >
-                            <option value="" disabled>Select Course</option>
+                            <option value="" disabled>Select Program</option>
                             <template v-for="course in shown_courses">
                                 <option :value="course.id">
                                     {{ course.name }}
