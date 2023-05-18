@@ -79,7 +79,7 @@ const search_user = () => {
         :alertOnError="alertOnError"
     >
         <section class="text-gray-600 body-font relative">
-            <div class="container px-5 py-24 mx-auto">
+            <div class="container px-5 py-10 mx-auto">
                 <div class="flex flex-col text-center w-full mb-12">
                     <h1
                         class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900"
@@ -152,7 +152,7 @@ const search_user = () => {
                                         address
                                     </th>
                                     <th scope="col" class="py-3 px-6">
-                                        Civil Status & gender
+                                        Civil Status & sex
                                     </th>
                                     <th scope="col" class="py-3 px-6">
                                         Current Work
@@ -280,6 +280,13 @@ const search_user = () => {
                                                             .details.gender == 2
                                                     "
                                                     >Female</span
+                                                >
+                                                <span class="text-xs"
+                                                    v-else-if="
+                                                        notifications.user
+                                                            .details.gender == 3
+                                                    "
+                                                    >Prefer not to say</span
                                                 >
                                             </div>
                                         </div>

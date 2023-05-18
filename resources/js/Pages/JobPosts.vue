@@ -340,15 +340,15 @@ const function_search = () => {
                                             Notifications
                                         </div>
                                         <ul
-                                            class="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400"
+                                            class="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500"
                                         >
                                             <li class="cursor-pointer">
                                                 <a
                                                     @click="noftype = 1"
                                                     :class="
                                                         noftype == 1
-                                                            ? 'inline-flex p-4 text-blue-600 rounded-t-lg border-b-2 border-blue-600  dark:text-blue-500 dark:border-blue-500 group'
-                                                            : 'inline-flex active p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group '
+                                                            ? 'inline-flex p-4 text-blue-600 rounded-t-lg border-b-2 border-blue-600 group'
+                                                            : 'inline-flex active p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 group '
                                                     "
                                                 >
                                                     <svg
@@ -385,8 +385,8 @@ const function_search = () => {
                                                     @click="noftype = 2"
                                                     :class="
                                                         noftype == 2
-                                                            ? 'inline-flex p-4 text-blue-600 rounded-t-lg border-b-2 border-blue-600  dark:text-blue-500 dark:border-blue-500 group'
-                                                            : 'inline-flex active p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group '
+                                                            ? 'inline-flex p-4 text-blue-600 rounded-t-lg border-b-2 border-blue-600 group'
+                                                            : 'inline-flex active p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 group '
                                                     "
                                                 >
                                                     <svg
@@ -683,22 +683,22 @@ const function_search = () => {
                                 class="flex flex-col mx-auto overflow-hidden bg-white rounded-lg shadow-lg md:flex-row md:h-48"
                             >
                                 <div
-                                    class="md:flex md:items-center md:justify-center md:w-1/2 md:bg-gray-700"
+                                    class="md:flex md:items-center md:justify-center md:w-1/2 "
                                 >
                                     <div class="px-6 py-6 md:px-8 md:py-0">
                                         <h2
-                                            class="text-lg font-bold text-gray-700 md:text-gray-100"
+                                            class="text-lg font-bold text-gray-700 "
                                         >
                                             Post and look for
                                             <span
-                                                class="text-blue-600 md:text-blue-300"
+                                                class="text-blue-600"
                                                 >Jobs</span
                                             >
                                             that fits your skills
                                         </h2>
 
                                         <p
-                                            class="mt-2 text-sm text-gray-600 md:text-gray-400"
+                                            class="mt-2 text-sm text-gray-600 "
                                         >
                                             A wise man will make more
                                             opportunities than he finds.” –
@@ -818,7 +818,7 @@ const function_search = () => {
                                             >{{ posts.user.name }}</a
                                         >
                                         <div class="flex justify-end">
-                                            <button
+                                            <!-- <button
                                                 @click="
                                                     function_open_update_modal(
                                                         posts
@@ -853,7 +853,7 @@ const function_search = () => {
                                                         d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
                                                     />
                                                 </svg>
-                                            </button>
+                                            </button> -->
 
                                             <button
                                                 @click="
@@ -889,6 +889,7 @@ const function_search = () => {
                                                         d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
                                                     />
                                                 </svg>
+                                                
                                             </button>
                                         </div>
                                     </div>
@@ -1017,7 +1018,7 @@ const function_search = () => {
                             <div class="p-6 text-center">
                                 <svg
                                     aria-hidden="true"
-                                    class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200"
+                                    class="mx-auto mb-4 w-14 h-14 text-gray-400 "
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
@@ -1031,7 +1032,7 @@ const function_search = () => {
                                     ></path>
                                 </svg>
                                 <h3
-                                    class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400"
+                                    class="mb-5 text-lg font-normal text-gray-500"
                                 >
                                     Are you sure you want to update your
                                     comment?
@@ -1091,7 +1092,7 @@ const function_search = () => {
                             <div class="p-6 text-center">
                                 <svg
                                     aria-hidden="true"
-                                    class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200"
+                                    class="mx-auto mb-4 w-14 h-14 text-gray-400 "
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
@@ -1105,7 +1106,7 @@ const function_search = () => {
                                     ></path>
                                 </svg>
                                 <h3
-                                    class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400"
+                                    class="mb-5 text-lg font-normal text-gray-500 "
                                 >
                                     Are you sure you want to delete this post?
                                 </h3>

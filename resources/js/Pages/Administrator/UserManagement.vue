@@ -356,7 +356,7 @@ const function_search_user = () => {
                                         Civil Status
                                     </th>
                                     <th scope="col" class="py-3 px-6">
-                                        Gender
+                                        Sex
                                     </th>
                                     <th scope="col" class="py-3 px-6">
                                         Current Work
@@ -496,6 +496,13 @@ const function_search_user = () => {
                                                         2
                                                     "
                                                     >Female</span
+                                                >
+                                                <span class="text-xs"
+                                                    v-else-if="
+                                                        users.details.gender ==
+                                                        3
+                                                    "
+                                                    >Prefer not to say</span
                                                 >
                                             </div>
                                         </div>

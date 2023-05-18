@@ -1,0 +1,1 @@
+import{e as t,b as e,o}from"./app.3fc7250d.js";import r from"./Navbar.bd6bea8c.js";import m from"./PostContent.3efa7272.js";import s from"./ModalAddContent.c154d146.js";const l={__name:"index",setup(a){return(c,n)=>(o(),t("div",null,[e(r),e(m,{class:"mt-[8rem]"}),e(s,{class:"mt-[8rem]"})]))}};export{l as default};

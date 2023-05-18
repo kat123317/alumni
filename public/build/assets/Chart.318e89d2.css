@@ -1,0 +1,1 @@
+.shake-horizontal[data-v-cb40b817]{animation:shake-horizontal-cb40b817 4s cubic-bezier(.455,.03,.515,.955) infinite both}@keyframes shake-horizontal-cb40b817{0%,to{transform:translate(0)}10%,30%,50%,70%{transform:translate(-10px)}20%,40%,60%{transform:translate(10px)}80%{transform:translate(8px)}90%{transform:translate(-8px)}}

@@ -19,7 +19,7 @@ const form_add_edit = useForm({
         dropdown: false,
         multiple_select: false,
         image: false,
-        required: false,
+        required: true,
         choices: [],
     },
 });
@@ -138,6 +138,7 @@ const deleteQuesiton = () => {
                 alertOnMessage.value = "Question Deleted";
                 onAlert("Delete");
                 modals.delete.show = false;
+                location.reload();
             },
             onError: (err) => {},
         }

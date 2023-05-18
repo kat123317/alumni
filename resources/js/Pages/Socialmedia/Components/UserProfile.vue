@@ -149,7 +149,7 @@ const status = (value) => {
                         </h1>
                     </div>
 
-                    <div class="flex items-center mt-4 text-gray-700">
+                    <div class="flex items-center mt-4 text-gray-700" v-if="  usePage().props.value.user_profile[0].details == 3">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -165,7 +165,7 @@ const status = (value) => {
                             />
                         </svg>
 
-                        <h1 class="px-2 text-sm">
+                        <h1 class="px-2 text-sm" >
                             {{
                                 usePage().props.value.user_profile[0].details
                                     .gender == 1

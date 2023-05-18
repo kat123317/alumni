@@ -13,13 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('authentications', function (Blueprint $table) {
-            $table->id();
-            $table->string('secret_code');
-            $table->string('due');
-            $table->string('key');
-            $table->timestamps();
-        });
+        try {
+            Schema::create('authentications', function (Blueprint $table) {
+                $table->id();
+                $table->string('secret_code');
+                $table->string('due');
+                $table->string('key');
+                $table->timestamps();
+            });
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+        
     }
 
     /**

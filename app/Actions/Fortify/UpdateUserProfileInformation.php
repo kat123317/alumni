@@ -19,7 +19,8 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     public function update($user, array $input)
     {
         Validator::make($input, [
-            'name' => ['required', 'string', 'max:255'],
+            'fname' => ['required', 'string', 'max:255'],
+            'lname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
 
@@ -30,6 +31,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'gender'=>['required'],
             'address'=>['required'],
             'phone_number'=>['required'],
+            'telephone_number'=>['required'],
             'current_work'=>['required'],
             'year_graduated'=>['required'],
             'motto'=>['required'],
@@ -49,6 +51,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'gender'=>$input['gender'], 
             'address'=>$input['address'], 
             'phone_number'=>$input['phone_number'], 
+            'telephone_number'=>$input['telephone_number'], 
             'current_work'=>$input['current_work'], 
             'year_graduated'=>$input['year_graduated'], 
             'motto'=>$input['motto'], 
@@ -70,7 +73,10 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             $this->updateVerifiedUser($user, $input);
         } else {
             $user->forceFill([
-                'name' => $input['name'],
+                'fname' => $input['fname'],
+                'mname' => $input['mname'],
+                'lname' => $input['lname'],
+                'name' => $input['fname'].' '.$input['mname'].' '.$input['lname'],
                 'email' => $input['email'],
                 'details' => $user_details,
             ])->save();
@@ -87,7 +93,10 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     protected function updateVerifiedUser($user, array $input)
     {
         $user->forceFill([
-            'name' => $input['name'],
+            'fname' => $input['fname'],
+                'mname' => $input['mname'],
+                'lname' => $input['lname'],
+                'name' => $input['fname'].' '.$input['mname'].' '.$input['lname'],
             'email' => $input['email'],
             'email_verified_at' => null,
         ])->save();

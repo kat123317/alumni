@@ -35,6 +35,7 @@ class CreateNewUser implements CreatesNewUsers
             'gender'=>['required'],
             'address'=>['required'],
             'phone_number'=>['required','integer'],
+            'telephone_number'=>['required','integer'],
             'current_work'=>['required'],
             'year_graduated'=>['required'],
             'motto'=>['required'],
@@ -50,13 +51,17 @@ class CreateNewUser implements CreatesNewUsers
             'gender'=>$input['gender'], 
             'address'=>$input['address'], 
             'phone_number'=>$input['phone_number'], 
+            'telephone_number'=>$input['telephone_number'], 
             'current_work'=>$input['current_work'], 
             'year_graduated'=>$input['year_graduated'], 
             'motto'=>$input['motto'], 
             'nickname'=>$input['nickname']);
             
         return User::create([
-            'name' => $input['name'],
+            'fname' => $input['fname'],
+                'mname' => $input['mname'],
+                'lname' => $input['lname'],
+                'name' => $input['fname'].' '.$input['mname'].' '.$input['lname'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
             'status' => 'pending',

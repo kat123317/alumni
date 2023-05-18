@@ -194,4 +194,9 @@ class GraduateController extends Controller
         
         return Redirect::back();
     }
+
+    public function delete(Graduate $graduate){
+        $graduate -> delete();
+        return back();
+    }
 }

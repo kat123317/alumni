@@ -61,7 +61,7 @@ defineProps({
             <div class="container flex flex-wrap items-center justify-between mx-auto">
                 <a href="https://alumni.com/" class="flex items-center">
                     <AuthenticationCarLogo />
-                    <!-- <img src="http://devops.cmu.edu.ph/formlinks/assets/dist/assets/img/logos/CMU-LOGO.png" class="h-6 mr-3 sm:h-9" alt="Flowbite Logo"> -->
+                    <!-- <img src="/img/logo.jpg" class="h-6 mr-3 sm:h-9" alt="Flowbite Logo"> -->
                     <span class="self-center text-xl font-semibold whitespace-nowrap ">Central Mindanao University</span>
                 </a>
                 <div
@@ -132,12 +132,12 @@ defineProps({
 
  <section class="overflow-hidden mb-5 text-gray-700 ">
   <div class="container px-5 py-2 mx-auto lg:pt-12 lg:px-32">
-    <div class="flex flex-wrap -m-1 md:-m-2">
+    <div class="flex flex-wrap -m-1 md:-m-2 ">
       <div  v-for="(colleges, key) in usePage().props.value
                                 .colleges"
-                            :key="key" class="flex flex-wrap w-1/3">
+                            :key="key" class="flex flex-wrap w-1/4">
         <div class="w-full p-1 md:p-2">
-          <img alt="gallery" class="block object-cover object-center w-full h-full rounded-lg"
+          <img alt="gallery" class="block object-cover object-center w-full h-full rounded-lg max-w-xs"
           :src="'/images/colleges/' + colleges.logo">
         </div>
       </div>
@@ -249,15 +249,15 @@ defineProps({
                     <div v-for="(announcement, key) in usePage().props.value
                     .announcements" :key="key" class="xl:w-1/4  md:w-1/2 p-4 ">
                     <div class="flex justify-evenly">
-                        <div v-for="(photos, key) in announcement.photo" :key="key" class=" w-100  ">
-                                <img class="  object-contain      "
+                        <div v-for="(photos, key) in announcement.photo" :key="key" class="  ">
+                                <img class="  object-cover w-auto max-h-md h-[15rem] "
                                     :src="'./images/announcements/' + photos" alt="content">
                             </div>
                     </div>
                              
                             <img v-if="announcement.photo == '' || announcement.photo == null"
-                                class="h-40 rounded w-full object-cover object-center "
-                                src="http://devops.cmu.edu.ph/formlinks/assets/dist/assets/img/logos/CMU-LOGO.png"
+                                class="h-60 rounded w-full object-cover object-center "
+                                src="/img/logo.jpg"
                                 alt="content">
                         <div class=" shadow-lg p-6  rounded-lg">
                             <h3 class="tracking-widest text-green-500 text-xs font-medium title-font">{{
@@ -268,8 +268,8 @@ defineProps({
                             <h2 class="text-lg text-gray-900 font-medium title-font mb-4"> {{ announcement.title }}</h2>
                             <p class="leading-relaxed text-base" v-html="announcement.content"></p>
                             <div class="flex items-center mt-2 ">
-                                <img class="hidden object-cover w-10 h-10  rounded-full sm:block"
-                                    src="http://devops.cmu.edu.ph/formlinks/assets/dist/assets/img/logos/CMU-LOGO.png"
+                                <img class="hidden object-cover w-10 h-10  rounded-full sm:block mr-2"
+                                    src="/img/logo.jpg"
                                     alt="avatar" />
                                 <a class="font-bold text-gray-700 cursor-pointer " tabindex="0" role="link">Posted by :
                                     Admin -

@@ -21,7 +21,9 @@ import {
 const props = defineProps(["colleges", "courses"]);
 
 const form = useForm({
-    name: "",
+    fname: "",
+    mname: "",
+    lname: "",
     email: "",
     password: "",
     password_confirmation: "",
@@ -34,6 +36,7 @@ const form = useForm({
     course_id: "",
     address: "",
     phone_number: "",
+    telephone_number: "",
     current_work: "",
     year_graduated: "",
     honors_awards: [],
@@ -50,6 +53,8 @@ const tmp_achievement = ref("");
 
 const aggreement = ref(false);
 const fillAchive = ref(false);
+
+const alertOn = ref(false)
 
 const address = reactive({
     region: '',
@@ -112,12 +117,16 @@ const function_aggree = () => {
 const submit = () => {
     form.post(route("register_user"), {
         onSuccess:() => {
-            alert('Your registration will be verified by the admin, wait for the confirmation on your respected email. Make sure that the email you use for the registration is active.');
-            window.location.href = route('welcome');
+            alertOn.value = true;
         },
         onFinish: () => form.reset("password", "password_confirmation"),
     });
 };
+
+const confirm_button = () => {
+    alertOn.value = false;
+    window.location.href = route('welcome');
+}
 
 const listProvinces = () => {
     address.province = '';
@@ -166,6 +175,30 @@ const fillAddress = () => {
         <div
             class="w-full sm:max-w-[80rem] mt-2 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg"
         >
+           
+                <div v-if="alertOn" id="defaultModal" tabindex="-1" aria-hidden="true" class="fixed ml-[30%] mt-60 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                    <div  class="relative w-full max-w-2xl max-h-full">
+                        <!-- Modal content -->
+                        <div class="relative bg-white rounded-lg shadow-lg border">
+                            <!-- Modal header -->
+                            <div class="flex items-start justify-between p-4 border-b rounded-t">
+                                <span
+                            class="flex rounded-full bg-green-500 uppercase px-2 py-1 text-xs font-bold mr-3">Success</span>
+                        <span class="font-semibold mr-2 text-left flex-auto">You are now successfully registered</span>
+                            </div>
+                            <!-- Modal body -->
+                            <div class="p-6 space-y-6">
+                                <p class="text-base leading-relaxed text-gray-500">
+                                    Your registration will be verified by the admin, wait for the confirmation on your respected email. Make sure that the email you use for the registration is active.
+                                </p>
+                            </div>
+                            <!-- Modal footer -->
+                            <div @click="confirm_button()" class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
+                                <button data-modal-hide="defaultModal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Proceed</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             <form @submit.prevent="submit">
                 <h1 class="text-center text-[2.5vmin] font-bold">REGISTRATION</h1>
                 <div class="grid grid-cols-12 gap-4">
@@ -173,42 +206,41 @@ const fillAddress = () => {
                         <InputLabel for="fname" value="First Name" />
                         <TextInput
                             id="fname"
-                            v-model="form.name"
+                            v-model="form.fname"
                             type="text"
                             class="mt-1 block w-full"
                             required
                             autofocus
                             autocomplete="fname"
                         />
-                        <InputError class="mt-2" :message="form.errors.name" />
+                        <InputError class="mt-2" :message="form.errors.fname" />
                     </div>
 
                     <div class="mt-4 col-span-3 text-[2vmin]">
                         <InputLabel for="mname" value="Middle Name" />
                         <TextInput
                             id="mname"
-                            v-model="form.name"
+                            v-model="form.mname"
                             type="text"
                             class="mt-1 block w-full"
                             required
                             autofocus
                             autocomplete="mname"
                         />
-                        <InputError class="mt-2" :message="form.errors.name" />
                     </div>
 
                     <div class="mt-4 col-span-3 text-[2vmin]">
                         <InputLabel for="lname" value="Last Name" />
                         <TextInput
                             id="lname"
-                            v-model="form.name"
+                            v-model="form.lname"
                             type="text"
                             class="mt-1 block w-full"
                             required
                             autofocus
                             autocomplete="lname"
                         />
-                        <InputError class="mt-2" :message="form.errors.name" />
+                        <InputError class="mt-2" :message="form.errors.lname" />
                     </div>
 
                     <div class="mt-4 col-span-3">
@@ -328,7 +360,7 @@ const fillAddress = () => {
                     <div class="mt-4 col-span-3">
                         <InputLabel
                             for="phone_number"
-                            value="Telephone or Contact Number(s):"
+                            value="Mobile Number:"
                         />
                         <TextInput
                             id="phone_number"
@@ -340,6 +372,24 @@ const fillAddress = () => {
                         <InputError
                             class="mt-2"
                             :message="form.errors.phone_number"
+                        />
+                    </div>
+
+                    <div class="mt-4 col-span-3">
+                        <InputLabel
+                            for="telephone_number"
+                            value="Telephone Number:"
+                        />
+                        <TextInput
+                            id="telephone_number"
+                            v-model.number="form.telephone_number"
+                            type="text"
+                            class="mt-1 block w-full"
+                            required
+                        />
+                        <InputError
+                            class="mt-2"
+                            :message="form.errors.telephone_number"
                         />
                     </div>
 
@@ -363,7 +413,7 @@ const fillAddress = () => {
                     </div>
 
                     <div class="mt-4 col-span-3">
-                        <InputLabel for="gender" value="Gender" />
+                        <InputLabel for="gender" value="Sex" />
                         <select
                             id="gender"
                             v-model="form.gender"
@@ -371,6 +421,7 @@ const fillAddress = () => {
                         >
                             <option value="1">Male</option>
                             <option value="2">Female</option>
+                            <option value="3">Prefer not to say</option>
                         </select>
                         <InputError
                             class="mt-2"
@@ -459,7 +510,7 @@ const fillAddress = () => {
                             <option value="" disabled>
                                 Select Degree Graduated
                             </option>
-                            <option value="1">Batchelor's degree</option>
+                            <option value="1">Bachelor's degree</option>
                             <option value="2">Masters</option>
                             <option value="3">Doctors</option>
                             <option value="4">Certification</option>
@@ -496,7 +547,7 @@ const fillAddress = () => {
                             v-model="form.course_id"
                             class="border-gray-300 focus:border-green-300 focus:ring focus:ring-green-200 focus:ring-opacity-50 rounded-md shadow-sm w-full"
                         >
-                            <option value="" disabled>Select Program</option>
+                            <option value="" disabled>Select Course</option>
                             <template v-for="course in shown_courses">
                                 <option :value="course.id">
                                     {{ course.name }}

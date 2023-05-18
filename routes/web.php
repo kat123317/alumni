@@ -85,6 +85,7 @@ Route::middleware([
     Route::prefix('alumni')->name('graduates.')->group(function () {
         Route::get('/', [GraduateController::class, 'index'])->name('index');
         Route::post('/store', [GraduateController::class, 'store'])->name('store');
+        Route::delete('/delete/{graduate}', [GraduateController::class, 'delete'])->name('delete');
         Route::post('/update/{id}', [GraduateController::class, 'update'])->name('update');
         Route::post('/import', [GraduateController::class, 'import'])->name('import_excel');
         Route::post('/upload_multiple_images', [GraduateController::class, 'upload_multiple_images'])->name('upload_multiple_images');

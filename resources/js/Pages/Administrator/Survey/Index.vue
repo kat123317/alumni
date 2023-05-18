@@ -388,7 +388,7 @@ provide("form_add_edit", form_add_edit);
                         <label
                             for="email"
                             class="leading-7 text-sm text-gray-600"
-                            >Private Survey</label
+                            >Transparency to</label
                         >
                         <select
                             v-model="form_add_edit.setup.is_private"

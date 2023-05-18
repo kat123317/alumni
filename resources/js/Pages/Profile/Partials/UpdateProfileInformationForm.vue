@@ -16,6 +16,9 @@ const props = defineProps({
 
 const form = useForm({
     _method: "PUT",
+    fname: props.user.fname,
+    mname: props.user.mname,
+    lname: props.user.lname,
     name: props.user.name,
     email: props.user.email,
     photo: null,
@@ -28,6 +31,7 @@ const form = useForm({
     gender: props.user.details.gender,
     nickname: props.user.details.nickname,
     phone_number: props.user.details.phone_number,
+    telephone_number: props.user.details.telephone_number,
     religion: props.user.details.religion,
     year_graduated: props.user.details.year_graduated,
     region_of_origin: props.user.details.region_of_origin,
@@ -201,15 +205,38 @@ const remove_achievement = (key) => {
 
             <!-- Name -->
             <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="name" value="Name" />
+                <InputLabel for="fname" value="First Name" />
                 <TextInput
-                    id="name"
-                    v-model="form.name"
+                    id="fname"
+                    v-model="form.fname"
                     type="text"
                     class="mt-1 block w-full"
-                    autocomplete="name"
+                    autocomplete="fname"
                 />
-                <InputError :message="form.errors.name" class="mt-2" />
+                <InputError :message="form.errors.fname" class="mt-2" />
+            </div>
+
+            <div class="col-span-6 sm:col-span-4">
+                <InputLabel for="mname" value="Middle Name" />
+                <TextInput
+                    id="mname"
+                    v-model="form.mname"
+                    type="text"
+                    class="mt-1 block w-full"
+                    autocomplete="mname"
+                />
+            </div>
+
+            <div class="col-span-6 sm:col-span-4">
+                <InputLabel for="lname" value="Last Name" />
+                <TextInput
+                    id="lname"
+                    v-model="form.lname"
+                    type="text"
+                    class="mt-1 block w-full"
+                    autocomplete="lname"
+                />
+                <InputError :message="form.errors.lname" class="mt-2" />
             </div>
 
             <!-- Nickname -->
@@ -283,7 +310,7 @@ const remove_achievement = (key) => {
             <div class="col-span-6 sm:col-span-4">
                 <InputLabel
                     for="phone_number"
-                    value="Telephone or Contact Number(s)"
+                    value="Mobile Number"
                 />
                 <TextInput
                     id="phone_number"
@@ -295,9 +322,25 @@ const remove_achievement = (key) => {
                 <InputError :message="form.errors.phone_number" class="mt-2" />
             </div>
 
+            <!-- Telephone number -->
+            <div class="col-span-6 sm:col-span-4">
+                <InputLabel
+                    for="phone_number"
+                    value="Telephone Number"
+                />
+                <TextInput
+                    id="phone_number"
+                    v-model="form.telephone_number"
+                    type="text"
+                    class="mt-1 block w-full"
+                    autocomplete="telephone_number"
+                />
+                <InputError :message="form.errors.telephone_number" class="mt-2" />
+            </div>
+
             <!-- Civil Status -->
             <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="civil_status" value="Civil_status" />
+                <InputLabel for="civil_status" value="Civil status" />
                 <select
                     class="mt-1 block w-full"
                     v-model="form.civil_status"
@@ -325,13 +368,14 @@ const remove_achievement = (key) => {
                 >
                     <option value="1">Male</option>
                     <option value="2">Female</option>
+                    <option value="3">Prefer not to say</option>
                 </select>
                 <InputError :message="form.errors.gender" class="mt-2" />
             </div>
 
             <!-- Date of Birth -->
             <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="date_of_birth" value="Date_of_birth" />
+                <InputLabel for="date_of_birth" value="Date of birth" />
                 <TextInput
                     id="date_of_birth"
                     v-model="form.date_of_birth"

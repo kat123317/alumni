@@ -82,7 +82,7 @@ defineProps({
                     </button>
                     <button class="mr-5 text-white hover:text-gray-200">
                         <Link :href="route('administrator.course')">
-                            Course
+                            Program
                         </Link>
                     </button>
                     <button class="mr-5 text-white hover:text-gray-200">

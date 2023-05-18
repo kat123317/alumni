@@ -101,7 +101,8 @@ class UserController extends Controller
     public function register(Request $request){
         $input = $request->toArray();
         Validator::make($input, [
-            'name' => ['required', 'string', 'max:255'],
+            'fname' => ['required', 'string', 'max:255'],
+            'lname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
@@ -115,6 +116,7 @@ class UserController extends Controller
             'gender'=>['required'],
             'address'=>['required', 'string'],
             'phone_number'=>['required', 'integer'],
+            'telephone_number'=>['required', 'integer'],
             'current_work'=>['required'],
             'year_graduated'=>['required'],
             // 'motto'=>['required'],
@@ -123,13 +125,13 @@ class UserController extends Controller
             'province'=> ['required', 'string'],
             'degree_graduated' => ['required'],
 
-
         ])->validate();
         
         $user_details = array(
             //personal info
             'address'=>$input['address'], 
             'phone_number'=>$input['phone_number'], 
+            'telephone_number'=>$input['telephone_number'], 
             'civil_status'=>$input['civil_status'], 
             'gender'=>$input['gender'], 
             'date_of_birth'=>$input['date_of_birth'], 
@@ -148,7 +150,10 @@ class UserController extends Controller
         );
             
         $user = User::create([
-            'name' => $input['name'],
+            'fname' => $input['fname'],
+            'mname' => $input['mname'],
+            'lname' => $input['lname'],
+            'name' => $input['fname'].' '.$input['mname'].' '.$input['lname'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
             'status' => 'pending',
