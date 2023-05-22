@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Builder;
+
 
 
 class AnnouncementController extends Controller
@@ -103,7 +105,15 @@ class AnnouncementController extends Controller
         $job_posts = JobPost::with('user')->whereHas('user', function($query){
             $query->where('is_active', '1');
         })->when($search, function($query, $search){
-            $query -> where('job_title','like',"%{$search}%");
+            $query -> whereHas('user', function (Builder $query) use ($search) {
+                $query -> where('job_title','like',"%{$search}%");
+            }) -> orWhereHas('user', function (Builder $query) use ($search) {
+                $query -> where('job_description','like',"%{$search}%");
+            })-> orWhereHas('user', function (Builder $query) use ($search) {
+                $query -> where('job_salary','like',"%{$search}%");
+            })-> orWhereHas('user', function (Builder $query) use ($search) {
+                $query -> where('location','like',"%{$search}%");
+            });
         })->orderBy('updated_at', 'desc')->get();
 
         $user_notification = UserNotification::with('user')->where(function($query){

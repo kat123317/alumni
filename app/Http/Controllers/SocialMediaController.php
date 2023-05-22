@@ -234,7 +234,14 @@ class SocialMediaController extends Controller
 
     public function post_job(Request $request)
     {   
+        if($request->hasfile('photos')){
+            foreach($request->file('photos') as $photo){
+                $imageName = Str::random(40).'.'.$photo->extension();
+                $photo->move(public_path().'/images/jobposts/', $imageName); 
+            }
+        }
         $input = $request->toArray();
+
         Validator::make($input, [
             'job_email' => ['required', 'string', 'email', 'max:255'],
         ])->validate();
@@ -246,13 +253,16 @@ class SocialMediaController extends Controller
             'job_email' => $request->job_email,
             'job_salary' => $request->job_salary,
             'job_company'=>$request->job_company,
-            'details' => []
+            'location'=>$request->location,
+            'details' => array('photo'=>$imageName),
+
         ]);
         return Redirect::back();
     }
 
     public function update_post(Request $request, $id)
     {   
+        
         $update = UserPosts::find($id);
         $update->update([
             'content' => $request->content
@@ -324,7 +334,12 @@ class SocialMediaController extends Controller
 
     public function update_job_post(Request $request, $id)
     {   
-
+        if($request->hasfile('photos')){
+            foreach($request->file('photos') as $photo){
+                $imageName = Str::random(40).'.'.$photo->extension();
+                $photo->move(public_path().'/images/jobposts/', $imageName); 
+            }
+        }
         $input = $request->toArray();
         Validator::make($input, [
             'job_email' => ['required', 'string', 'email', 'max:255'],
@@ -337,6 +352,8 @@ class SocialMediaController extends Controller
             'job_email' => $request->job_email,
             'job_salary' => $request->job_salary,
             'job_company'=>$request->job_company,
+            'location'=>$request->location,
+            'details->photo' => $imageName
         ]);
         return Redirect::back();
     }

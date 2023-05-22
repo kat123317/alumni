@@ -437,6 +437,10 @@ const form_announcement = useForm({
                         <ResponsiveNavLink
                             :href="route('graduates.index')"
                             :active="route().current('graduates.index')"
+                            v-if="
+                                $page.props.user.user_type == 'admin' ||
+                                $page.props.user.user_type == 'staff_admin'
+                            "
                         >
                             E - Yearbook
                         </ResponsiveNavLink>

@@ -9,6 +9,7 @@ import modalViewJob from "./JobsComponents/modalView.vue";
 import DynamicAlert from "./GlobalComponents/DynamicAlert.vue";
 import moment from "moment";
 
+
 //Delete data
 const modal_delete_post = ref(false);
 //update data
@@ -19,6 +20,9 @@ const postAlert = ref("");
 const titleModal = ref(false);
 const showJob = ref(false);
 const notificationTrigger = ref(false);
+
+const post_images = ref([]);
+
 
 const noftype = ref(1);
 // Dynamic Trigger
@@ -107,6 +111,9 @@ const update_modal_data = useForm({
     job_email: "",
     job_salary: "",
     job_company: "",
+    location: "",
+    photos:[]
+
 });
 
 const search_data = useForm({
@@ -137,6 +144,7 @@ const function_open_update_modal = (post) => {
     update_modal_data.job_email = post.job_email;
     update_modal_data.job_salary = post.job_salary;
     update_modal_data.job_company = post.job_company;
+    update_modal_data.location = post.location;
     modal_update_post.value = !modal_update_post.value;
 };
 
@@ -151,7 +159,8 @@ const function_update_post = () => {
         update_modal_data.job_description == "" ||
         update_modal_data.job_email == "" ||
         update_modal_data.job_salary == "" ||
-        update_modal_data.job_company == ""
+        update_modal_data.job_company == "" ||
+        update_modal_data.location == "" 
     ) {
         errorAlert("System will not allow empty posts");
     } else {
@@ -161,6 +170,8 @@ const function_update_post = () => {
                 preserveScroll: true,
                 onSuccess: () => {
                     update_modal_data.reset();
+                    post_images.value = [];
+                    update_modal_data.photos = [];
                     modal_update_post.value = !modal_update_post.value;
                 },
             }
@@ -173,6 +184,29 @@ const function_search = () => {
         preserveScroll: true,
         onSuccess: () => {},
     });
+};
+
+const openFile = () => {
+    let hidden = document.getElementById("post_image");
+    hidden.click();
+    hidden.onchange = (e) => {
+        if (post_images.value.length + e.target.files.length > 1) {
+            errorAlert("Only 1 images can be selected");
+            return;
+        } else {
+            for (let index = 0; index < e.target.files.length; index++) {
+                post_images.value.push(
+                    window.URL.createObjectURL(e.target.files[index])
+                );
+                update_modal_data.photos.push(e.target.files[index]);
+            }
+        }
+    };
+};
+
+const remove_image = (key) => {
+    post_images.value.splice(key, 1);
+    update_modal_data.photos.splice(key, 1);
 };
 </script>
 
@@ -792,6 +826,28 @@ const function_search = () => {
                                         v-html="posts.job_description"
                                         class="mt-2 text-gray-600"
                                     ></div>
+                                    <div class="mt-2 text-gray-600 flex">
+                                        <svg
+                                            aria-label="suitcase icon"
+                                            class="w-6 h-6 fill-current"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path d="M14 11H10V13H14V11Z" />
+                                            ><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        </svg>
+                                       {{ posts.location}}
+                                        </div>
+                                </div>
+
+                                <div v-if="posts.details.photo != null">
+                                    <div class="flex justify-center">
+                                            <img
+                                                class="w-screen object-contain max-h-[50vmin] max-w-[50vmin]"
+                                                :src="'./../../images/jobposts/' + posts.details.photo"
+                                            />
+                                    </div>
                                 </div>
 
                                 <div
@@ -818,7 +874,7 @@ const function_search = () => {
                                             >{{ posts.user.name }}</a
                                         >
                                         <div class="flex justify-end">
-                                            <!-- <button
+                                            <button
                                                 @click="
                                                     function_open_update_modal(
                                                         posts
@@ -827,12 +883,7 @@ const function_search = () => {
                                                 v-if="
                                                     posts.user.id ==
                                                         usePage().props.value
-                                                            .user.id ||
-                                                    usePage().props.value.user
-                                                        .user_type == 'admin' ||
-                                                    usePage().props.value.user
-                                                        .user_type ==
-                                                        'staff_admin'
+                                                            .user.id 
                                                 "
                                                 class="text-lg flex font-bold float-right relative"
                                                 href="#"
@@ -853,7 +904,7 @@ const function_search = () => {
                                                         d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
                                                     />
                                                 </svg>
-                                            </button> -->
+                                            </button>
 
                                             <button
                                                 @click="
@@ -992,6 +1043,119 @@ const function_search = () => {
                                             class="block w-full px-4 py-3 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"
                                         />
                                     </label>
+
+                                    <label class="block mt-3" for="Location">
+                                        <input
+                                            type="text"
+                                            name="Location"
+                                            id="Location"
+                                            placeholder="Location"
+                                            v-model="
+                                                update_modal_data.location
+                                            "
+                                            class="block w-full px-4 py-3 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"
+                                        />
+                                    </label>
+                                    <div class="w-full h-5 flex justify-between mt-6 px-3 md:px-10 lg:px-24 xl:px-5">
+                                    <div class="flex">
+                                        <button
+                                            @click="openFile()"
+                                            class="flex h-full items-center"
+                                        >
+                                            <svg
+                                                class="h-12 text-green-500 stroke-current"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="27"
+                                                height="27"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="#b0b0b0"
+                                                stroke-width="2"
+                                                stroke-linecap="square"
+                                                stroke-linejoin="round"
+                                            >
+                                                <rect
+                                                    x="3"
+                                                    y="3"
+                                                    width="18"
+                                                    height="18"
+                                                    rx="2"
+                                                />
+                                                <circle
+                                                    cx="8.5"
+                                                    cy="8.5"
+                                                    r="1.5"
+                                                />
+                                                <path
+                                                    d="M20.4 14.5L16 10 4 20"
+                                                />
+                                            </svg>
+                                            <span
+                                                class="text-xs lg:text-md mx-2 font-semibold text-gray-500"
+                                                >Update Photo
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <input
+                                        id="post_image"
+                                        type="file"
+                                        class="hidden"
+                                        accept="image/png, image/gif, image/jpeg"
+                                        multiple
+                                    />
+                                </div>
+                                <div
+                                v-if="post_images != null"
+                                class="grid mt-2 grid-cols-1"
+                            >
+                                <div
+                                    v-for="(image, key) in post_images"
+                                    :key="key"
+                                >
+                                    <div
+                                        class="w-auto mt-2 mx-auto  z-30"
+                                    >
+                                        <div class="shadow-lg bg-white p-3">
+                                            <img
+                                                class="w-full max-h-[100%] object-cover"
+                                                :src="image"
+                                            />
+                                            <ul
+                                                class="mt-3 flex justify-end flex-wrap"
+                                            >
+                                                <li>
+                                                    <button
+                                                        @click="
+                                                            remove_image(key)
+                                                        "
+                                                        class="flex text-gray-400 hover:text-gray-600"
+                                                    >
+                                                        <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            fill="none"
+                                                            viewBox="0 0 24 24"
+                                                            stroke-width="1.5"
+                                                            stroke="currentColor"
+                                                            class="w-6 h-6"
+                                                        >
+                                                            <path
+                                                                class="text-red-500"
+                                                                stroke-linecap="round"
+                                                                stroke-linejoin="round"
+                                                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                                            />
+                                                        </svg>
+                                                        <span
+                                                            class="text-red-500"
+                                                            >Remove</span
+                                                        >
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                                 </div>
                             </div>
                             <button

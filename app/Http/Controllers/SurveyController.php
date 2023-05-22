@@ -12,6 +12,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SurveyNotification;
+
+
 
 class SurveyController extends Controller
 {
@@ -171,6 +175,8 @@ class SurveyController extends Controller
                     'survey_id' => $survey->id
                 )
             ]);
+
+            Mail::to($user->email)->send(new SurveyNotification($user->email));
         }
         return Redirect::back();
     }

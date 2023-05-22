@@ -23,6 +23,7 @@ const { alertOn, alertOnDelete, alertOnUpdate, alertOnMessage, onAlert } =
     helpers();
 
 const search = ref(usePage().props.value.search);
+const searchUserValue = ref('');
 const form_add_edit = useForm({
     name: "",
     setup: {
@@ -399,7 +400,17 @@ provide("form_add_edit", form_add_edit);
                             <option value="1">Public</option>
                         </select>
                     </div>
+                    <div class="col-span-7" v-if="form_add_edit.setup.shown_only != 'all'">
+                            <input
+                                type="search"
+                                v-model="searchUserValue"
+                                id="default-search"
+                                class="block pr-4 pl-10 py-3 w-[300px] text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-green-500 focus:border-green-500"
+                                placeholder="Search User"
+                            />
+                        </div>
                     <template v-if="form_add_edit.setup.shown_only != 'all'">
+                        
                         <div class="col-span-6 flex">
                             <JetInputLabel>
                                 <JetCheckbox
@@ -420,11 +431,18 @@ provide("form_add_edit", form_add_edit);
                                 }}</span>
                             </JetInputLabel>
                         </div>
+                        
                         <template
                             v-for="(ids, index) in foreign_list"
                             :key="index"
                         >
-                            <div class="col-span-3">
+                            <div class="col-span-3" v-if="
+                                                        ids.name
+                                                            .toLowerCase()
+                                                            .includes(
+                                                                searchUserValue.toLowerCase()
+                                                            )
+                                                    ">
                                 <JetInputLabel>
                                     <JetCheckbox
                                         v-model:checked="ids.is_checked"
@@ -434,6 +452,7 @@ provide("form_add_edit", form_add_edit);
                                 </JetInputLabel>
                             </div>
                         </template>
+
                     </template>
                 </div>
             </template>

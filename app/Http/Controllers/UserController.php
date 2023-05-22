@@ -241,7 +241,11 @@ class UserController extends Controller
             $notification->update([
                 'is_processed' => true
             ]);
-            Mail::to($user->email)->send(new RegisterMail($user->email));
+            try {
+                Mail::to($user->email)->send(new RegisterMail($user->email));
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
             /* switch (Auth::user()->user_type) {
                 case 'admin':
                     $user->update([
