@@ -16,6 +16,7 @@ use Laravel\Jetstream\Jetstream;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -110,23 +111,39 @@ class UserController extends Controller
             // 'user_type' => ['required', 'string', 'max:255'],
             'college_id' => ['required', 'integer'],
             'course_id' => ['required', 'integer'],
-            'date_of_birth' => ['required', 'date'],
-            'religion'=>['required', 'string'],
-            'civil_status'=>['required'],
-            'gender'=>['required'],
+            
+            // 'date_of_birth' => ['required', 'date'],
+            
+            // 'religion'=>['required', 'string'],
+            // 'civil_status'=>['required'],
+            // 'gender'=>['required'],
+
             'address'=>['required', 'string'],
-            'phone_number'=>['required', 'integer'],
-            'telephone_number'=>['required', 'integer'],
-            'current_work'=>['required'],
+
+            // 'phone_number'=>['required', 'integer'],
+            // 'telephone_number'=>['required', 'integer'],
+
+            // 'current_work'=>['required'],
             'year_graduated'=>['required'],
             // 'motto'=>['required'],
             // 'nickname' => ['required'], 
             'region_of_origin'=> ['required', 'string'],
             'province'=> ['required', 'string'],
             'degree_graduated' => ['required'],
+            'photos' => ['required'],
 
         ])->validate();
         
+
+        $images = array();
+        if($request->hasfile('photos')){
+            foreach($request->file('photos') as $photo){
+                $imageName = Str::random(40).'.'.$photo->extension();
+                $photo->move(public_path().'/images/verification/', $imageName); 
+                array_push($images, $imageName);
+            }
+        }
+
         $user_details = array(
             //personal info
             'address'=>$input['address'], 
@@ -146,7 +163,8 @@ class UserController extends Controller
             'current_work'=>$input['current_work'], 
             'year_graduated'=>$input['year_graduated'], 
             'motto'=>$input['motto']??'', 
-            'nickname'=>$input['nickname']??''
+            'nickname'=>$input['nickname']??'',
+            'photos'=> $images??[]
         );
             
         $user = User::create([
