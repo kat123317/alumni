@@ -34,7 +34,7 @@ const proxyChecked = computed({
             <div class="px-4 py-2">
                 <h1
                     v-html="question.instruction"
-                    class="text-2xl text-focus-in text-green-900 font-bold text-black uppercase"
+                    class="text-2xl text-focus-in text-green-900 font-bold text-black"
                 ></h1>
             </div>
 
