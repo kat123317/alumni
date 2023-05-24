@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\RegisterMail;
 use App\Actions\Fortify\PasswordValidationRules;
 use App\Models\Authentication;
+use App\Models\Graduate;
 use App\Models\User;
 use App\Models\Notification;
 use Illuminate\Contracts\Encryption\DecryptException;
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -101,6 +103,9 @@ class UserController extends Controller
 
     public function register(Request $request){
         $input = $request->toArray();
+
+        $graduate = DB::table('graduates')->where('firstname',$input['fname'])->where('middlename',$input['mname'])->where('lastname',$input['lname'])->first();
+        // dd($graduate);
         Validator::make($input, [
             'fname' => ['required', 'string', 'max:255'],
             'lname' => ['required', 'string', 'max:255'],
@@ -166,7 +171,8 @@ class UserController extends Controller
             'nickname'=>$input['nickname']??'',
             'photos'=> $images??[]
         );
-            
+
+        
         $user = User::create([
             'fname' => $input['fname'],
             'mname' => $input['mname'],

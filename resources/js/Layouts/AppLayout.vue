@@ -98,7 +98,7 @@ const form_announcement = useForm({
                                     :href="route('graduates.index')"
                                     :active="route().current('graduates.index')"
                                 >
-                                    E - Yearbook
+                                    Graduate lists
                                 </NavLink>
                             </div>
 
