@@ -104,8 +104,7 @@ class UserController extends Controller
     public function register(Request $request){
         $input = $request->toArray();
 
-        $graduate = DB::table('graduates')->where('firstname',$input['fname'])->where('middlename',$input['mname'])->where('lastname',$input['lname'])->first();
-        // dd($graduate);
+       
         Validator::make($input, [
             'fname' => ['required', 'string', 'max:255'],
             'lname' => ['required', 'string', 'max:255'],
@@ -172,31 +171,55 @@ class UserController extends Controller
             'photos'=> $images??[]
         );
 
-        
-        $user = User::create([
-            'fname' => $input['fname'],
-            'mname' => $input['mname'],
-            'lname' => $input['lname'],
-            'name' => $input['fname'].' '.$input['mname'].' '.$input['lname'],
-            'email' => $input['email'],
-            'password' => Hash::make($input['password']),
-            'status' => 'pending',
-            'user_type' => 'alumni',
-            'college_id' => $input['college_id'],
-            'course_id' => $input['course_id'],
-            'details' => $user_details,
-            'is_active' => 0,
-        ]);
+        $graduate = DB::table('graduates')->where('firstname',$input['fname'])->where('middlename',$input['mname'])->where('lastname',$input['lname'])->first();
+        // dd($graduate);
 
-        //insert notification for new registrating users
-        Notification::create([
-            'user_id' => $user->id,
-            'title' => 'New user registration',
-            'user_type' => 'staff_admin',
-            'content' => 'User '.$user->name.' is pending for approval',
-            'is_processed' => false
-        ]);
-        // return Redirect::route('login');
+        if($graduate != null){
+            $user = User::create([
+                'fname' => $input['fname'],
+                'mname' => $input['mname'],
+                'lname' => $input['lname'],
+                'name' => $input['fname'].' '.$input['mname'].' '.$input['lname'],
+                'email' => $input['email'],
+                'password' => Hash::make($input['password']),
+                'status' => 'approved',
+                'user_type' => 'alumni',
+                'college_id' => $input['college_id'],
+                'course_id' => $input['course_id'],
+                'details' => $user_details,
+                'is_active' => 1,
+            ]);
+
+            $graduate -> update([
+                'user_id' => $user->id
+            ]);
+        }
+        else{
+            $user = User::create([
+                'fname' => $input['fname'],
+                'mname' => $input['mname'],
+                'lname' => $input['lname'],
+                'name' => $input['fname'].' '.$input['mname'].' '.$input['lname'],
+                'email' => $input['email'],
+                'password' => Hash::make($input['password']),
+                'status' => 'pending',
+                'user_type' => 'alumni',
+                'college_id' => $input['college_id'],
+                'course_id' => $input['course_id'],
+                'details' => $user_details,
+                'is_active' => 0,
+            ]);
+    
+            //insert notification for new registrating users
+            Notification::create([
+                'user_id' => $user->id,
+                'title' => 'New user registration',
+                'user_type' => 'staff_admin',
+                'content' => 'User '.$user->name.' is pending for approval',
+                'is_processed' => false
+            ]);
+            // return Redirect::route('login');
+        }
         return Redirect::back();
     }
 

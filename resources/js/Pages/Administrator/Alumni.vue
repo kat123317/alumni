@@ -387,20 +387,20 @@ const remove_image = (key) => {
                         {{ button_excel.upload }}
                     </a>
                 </div>
-                <div class="float-right mr-2 mt-2">
+                <!-- <div class="float-right mr-2 mt-2">
                     <input id="upload_multiple_images" type="file" class="hidden" accept="image/png, image/gif, image/jpeg"
                         multiple />
                     <a @click="open_upload_modal()"
                         class="mb-2 mr-2 text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-md cursor-pointer">
                         Import Images
-                    </a>
+                    </a> -->
                     <!-- <a
                             @click="upload_multiple_images_save()"
                             class="mb-2 text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-md cursor-pointer"
                         >
                             Upload Images
                         </a> -->
-                </div>
+                <!-- </div> -->
                 <div class="flex flex-col text-center w-full mt-2">
                     <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900 mt-2">
                         Add Alum
@@ -464,7 +464,7 @@ const remove_image = (key) => {
                                     class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                             </div>
                         </div>
-                        <div class="p-2 w-1/2">
+                        <!-- <div class="p-2 w-1/2">
                             <div class="relative">
                                 <label for="image" class="leading-7 text-sm text-gray-600">Image</label>
                                 <input v-model="image_name" type="text" id="image" name="image" readonly
@@ -482,7 +482,7 @@ const remove_image = (key) => {
                                     </button>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="p-2 w-1/2">
                             <div class="relative">
                                 <label for="email" class="leading-7 text-sm text-gray-600">Add Achievement</label>

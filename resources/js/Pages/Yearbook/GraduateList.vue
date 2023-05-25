@@ -142,26 +142,15 @@ const openSelectedAchievements = (Data) => {
                 class="w-full max-w-md px-8 py-4 mt-16 bg-white rounded-lg shadow-lg"
             >
                 <div class="flex justify-center -mt-16 md:justify-end">
-                    <img
-                        class="object-cover w-20 h-20 border-2 border-green-500 rounded-full"
-                        alt="Testimonial avatar"
-                        :src="
-                            '/images/graduates/' +
-                            graduate.details.profile_picture
-                        "
-                    />
+                    <img class="object-cover w-20 h-20 border-2 border-green-500 rounded-full" alt="Testimonial avatar" :src="(graduate.user?.profile_photo_url != null) ? graduate.user?.profile_photo_url:'./img/logo.jpg'" />
                 </div>
 
-                <h2
-                    class="mb-2 text-2xl font-bold tracking-tight text-gray-900"
-                >
-                    <span>{{ graduate.firstname }} </span>
+                <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">
+                    <span>{{ graduate.firstname }}</span>
                     &nbsp;
-                    <span v-if="graduate.middlename != null"
-                        >{{ graduate.middlename }}
-                    </span>
+                    <span v-if="graduate.middlename != null">{{ graduate.middlename }}</span>
                     &nbsp;
-                    <span>{{ graduate.lastname }} </span>
+                    <span>{{ graduate.lastname }}</span>
                     &nbsp;
                     <span v-if="graduate.suffix == null"></span>
                     <span v-else>{{ graduate.suffix }}</span>

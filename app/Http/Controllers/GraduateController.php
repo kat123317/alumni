@@ -28,7 +28,7 @@ class GraduateController extends Controller
         $course_id = $request->course_id ?? null;
         $college_id = $request->college_id ?? null;
         if ($search != null) {
-            $graduates = Graduate::with('yearbook')->with(['course' => function($query) {
+            $graduates = Graduate::with('yearbook')->with('user')->with(['course' => function($query) {
                 $query->with('college');
             }])->when($search, function($query, $search) {
                 $query->where('firstname', 'like', "%{$search}%")
@@ -40,7 +40,7 @@ class GraduateController extends Controller
             $course_id = null;
             $college_id = null;
         } else {
-            $graduates = Graduate::with('yearbook')->with(['course' => function($query) use ($college_id) {
+            $graduates = Graduate::with('yearbook')->with('user')->with(['course' => function($query) use ($college_id) {
                 $query->with('college');
             }])->when($yearbook_id, function($query, $yearbook_id) {
                 $query->where('yearbook_id', $yearbook_id);
