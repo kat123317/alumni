@@ -162,7 +162,7 @@ class SurveyController extends Controller
                 break;
         }
 
-        dd($users);
+        // dd($users);
         foreach ($users as $user) {
             UserNotification::create([
                 'user_id' => Auth::user()->id,
