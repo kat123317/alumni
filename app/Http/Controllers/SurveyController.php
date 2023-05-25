@@ -147,7 +147,6 @@ class SurveyController extends Controller
             'status' => 'live',
             'setup' => $request->setup
         ]);
-        
         switch ($survey->setup['shown_only']) {
             case 'college':
                 $users = User::whereIn('college_id', $survey->setup['foreign_ids'])->get();
@@ -155,13 +154,15 @@ class SurveyController extends Controller
             case 'courses':
                 $users = User::whereIn('course_id', $survey->setup['foreign_ids'])->get();
                 break;
-            case 'users':
+            case 'user':
                 $users = User::whereIn('id', $survey->setup['foreign_ids'])->get();
                 break;
             default:
                 $users = User::whereIsActive(1)->whereStatus('approved')->whereUserType('alumni')->get();
                 break;
         }
+
+        dd($users);
         foreach ($users as $user) {
             UserNotification::create([
                 'user_id' => Auth::user()->id,
@@ -176,7 +177,12 @@ class SurveyController extends Controller
                 )
             ]);
 
-            Mail::to($user->email)->send(new SurveyNotification($user->email));
+            try {
+                Mail::to($user->email)->send(new SurveyNotification($user->email));
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
+            
         }
         return Redirect::back();
     }
