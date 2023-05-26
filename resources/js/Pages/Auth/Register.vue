@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
+import { Head, Link, useForm, usePage } from "@inertiajs/inertia-vue3";
 import AuthenticationCard from "@/Components/AuthenticationCard.vue";
 import AuthenticationCardLogo from "@/Components/AuthenticationCardLogo.vue";
 import Checkbox from "@/Components/Checkbox.vue";
@@ -213,8 +213,7 @@ const remove_image = (key) => {
                         <!-- Modal body -->
                         <div class="p-6 space-y-6">
                             <p class="text-base leading-relaxed text-gray-500">
-                                Your registration will be verified by the admin, wait for the confirmation on your respected
-                                email. Make sure that the email you use for the registration is active.
+                                {{ usePage().props.value.message_notification??'' }}
                             </p>
                         </div>
                         <!-- Modal footer -->
@@ -231,7 +230,10 @@ const remove_image = (key) => {
                 <div class="grid grid-cols-12 gap-4">
                     
                     <div class="mt-4 col-span-3 text-[2vmin]">
-                        <InputLabel for="fname" value="First Name" />
+                        <div class="flex">
+                            <p class="text-red-600 mr-1">*</p>
+                            <InputLabel for="fname" value="First Name" />
+                        </div>
                         <TextInput id="fname" v-model="form.fname" type="text" class="mt-1 block w-full" required autofocus
                             autocomplete="fname" />
                         <InputError class="mt-2" :message="form.errors.fname" />
@@ -239,38 +241,53 @@ const remove_image = (key) => {
 
                     <div class="mt-4 col-span-3 text-[2vmin]">
                         <InputLabel for="mname" value="Middle Name" />
-                        <TextInput id="mname" v-model="form.mname" type="text" class="mt-1 block w-full" autofocus
+                        <TextInput id="mname" v-model="form.mname" type="text" class="mt-3 block w-full" autofocus
                             autocomplete="mname" />
                     </div>
 
                     <div class="mt-4 col-span-3 text-[2vmin]">
-                        <InputLabel for="lname" value="Last Name" />
+                        <div class="flex">
+                            <p class="text-red-600 mr-1">*</p>
+                            <InputLabel for="lname" value="Last Name" />
+                        </div>
                         <TextInput id="lname" v-model="form.lname" type="text" class="mt-1 block w-full" required autofocus
                             autocomplete="lname" />
                         <InputError class="mt-2" :message="form.errors.lname" />
                     </div>
 
                     <div class="mt-4 col-span-3">
+                        <div class="flex">
+                            <p class="text-red-600 mr-1">*</p>
                         <InputLabel for="email" value="Email" />
+                        </div>
                         <TextInput id="email" v-model="form.email" type="email" class="mt-1 block w-full" required />
                         <InputError class="mt-2" :message="form.errors.email" />
                     </div>
 
                     <div class="mt-4 col-span-3">
+                        <div class="flex">
+                            <p class="text-red-600 mr-1">*</p>
                         <InputLabel for="password" value="Password" />
+                        </div>
                         <TextInput id="password" v-model="form.password" type="password" class="mt-1 block w-full" required
                             autocomplete="new-password" />
                         <InputError class="mt-2" :message="form.errors.password" />
                     </div>
 
                     <div class="mt-4 col-span-3">
+                        <div class="flex">
+                            <p class="text-red-600 mr-1">*</p>
                         <InputLabel for="password_confirmation" value="Confirm Password" />
+                        </div>
                         <TextInput id="password_confirmation" v-model="form.password_confirmation" type="password"
                             class="mt-1 block w-full" required autocomplete="new-password" />
                         <InputError class="mt-2" :message="form.errors.password_confirmation" />
                     </div>
                     <div class="mt-4 col-span-3">
+                        <div class="flex">
+                            <p class="text-red-600 mr-1">*</p>
                         <InputLabel for="region" value="Region" />
+                        </div>
                         <select v-model="address.region" @change="listProvinces()"
                             class="mt-1 border-gray-300 focus:border-green-300 focus:ring focus:ring-green-200 focus:ring-opacity-50 rounded-md shadow-sm w-full">
                             <option value="" disabled>Select Region</option>
@@ -280,7 +297,10 @@ const remove_image = (key) => {
                         </select>
                     </div>
                     <div class="mt-4 col-span-3">
+                        <div class="flex">
+                            <p class="text-red-600 mr-1">*</p>
                         <InputLabel for="province" value="Province" />
+                        </div>
                         <select v-model="address.province" @change="listCities()"
                             class="mt-1 border-gray-300 focus:border-green-300 focus:ring focus:ring-green-200 focus:ring-opacity-50 rounded-md shadow-sm w-full">
                             <option value="" disabled>Select Province</option>
@@ -290,7 +310,10 @@ const remove_image = (key) => {
                         </select>
                     </div>
                     <div class="mt-4 col-span-3">
+                        <div class="flex">
+                            <p class="text-red-600 mr-1">*</p>
                         <InputLabel for="city" value="City" />
+                        </div>
                         <select v-model="address.city" @change="listBarangay()"
                             class="mt-1 border-gray-300 focus:border-green-300 focus:ring focus:ring-green-200 focus:ring-opacity-50 rounded-md shadow-sm w-full">
                             <option value="" disabled>Select City</option>
@@ -300,7 +323,10 @@ const remove_image = (key) => {
                         </select>
                     </div>
                     <div class="mt-4 col-span-3">
+                        <div class="flex">
+                            <p class="text-red-600 mr-1">*</p>
                         <InputLabel for="barangay" value="Barangay" />
+                        </div>
                         <select v-model="address.barangay" @change="fillAddress()"
                             class="mt-1 border-gray-300 focus:border-green-300 focus:ring focus:ring-green-200 focus:ring-opacity-50 rounded-md shadow-sm w-full">
                             <option value="" disabled>Select Barangay</option>
@@ -311,7 +337,7 @@ const remove_image = (key) => {
                     </div>
                     <div class="mt-4 col-span-12 hidden">
                         <InputLabel for="address" value="Permanent Address:" />
-                        <TextInput id="address" readonly v-model="form.address" type="text" class="mt-1 block w-full"
+                        <TextInput id="address" readonly v-model="form.address" type="text" class="mt-3 block w-full"
                             required />
                         <InputError class="mt-2" :message="form.errors.address" />
                     </div>
@@ -319,14 +345,14 @@ const remove_image = (key) => {
                     <div class="mt-4 col-span-3">
                         <InputLabel for="phone_number" value="Mobile Number:" />
                         <TextInput id="phone_number" v-model.number="form.phone_number" type="text"
-                            class="mt-1 block w-full"  />
+                            class="mt-3 block w-full"  />
                         <InputError class="mt-2" :message="form.errors.phone_number" />
                     </div>
 
                     <div class="mt-4 col-span-3">
                         <InputLabel for="telephone_number" value="Telephone Number:" />
                         <TextInput id="telephone_number" v-model.number="form.telephone_number" type="text"
-                            class="mt-1 block w-full"  />
+                            class="mt-3 block w-full"  />
                         <InputError class="mt-2" :message="form.errors.telephone_number" />
                     </div>
 
@@ -386,7 +412,10 @@ const remove_image = (key) => {
 
                 <div class="grid grid-cols-6 gap-4">
                     <div class="mt-4 col-span-3">
+                        <div class="flex">
+                            <p class="text-red-600 mr-1">*</p>
                         <InputLabel for="degree_graduated" value="Degree Graduated" />
+                        </div>
                         <select id="degree_graduated" v-model="form.degree_graduated"
                             class="border-gray-300 focus:border-green-300 focus:ring focus:ring-green-200 focus:ring-opacity-50 rounded-md shadow-sm w-full">
                             <option value="" disabled>
@@ -400,7 +429,10 @@ const remove_image = (key) => {
                         <InputError class="mt-2" :message="form.errors.degree_graduated" />
                     </div>
                     <div class="mt-4 col-span-3">
+                        <div class="flex">
+                            <p class="text-red-600 mr-1">*</p>
                         <InputLabel for="college_id" value="College" />
+                        </div>
                         <select id="college_id" v-model="form.college_id"
                             class="border-gray-300 focus:border-green-300 focus:ring focus:ring-green-200 focus:ring-opacity-50 rounded-md shadow-sm w-full">
                             <option value="" disabled>Select College</option>
@@ -414,7 +446,10 @@ const remove_image = (key) => {
                     </div>
 
                     <div class="mt-4 col-span-3">
+                        <div class="flex">
+                            <p class="text-red-600 mr-1">*</p>
                         <InputLabel for="course_id" value="Program" />
+                        </div>
                         <select id="course_id" v-model="form.course_id"
                             class="border-gray-300 focus:border-green-300 focus:ring focus:ring-green-200 focus:ring-opacity-50 rounded-md shadow-sm w-full">
                             <option value="" disabled>Select Program</option>
@@ -428,7 +463,10 @@ const remove_image = (key) => {
                     </div>
 
                     <div class="mt-4 col-span-3">
+                        <div class="flex">
+                            <p class="text-red-600 mr-1">*</p>
                         <InputLabel for="year_graduated" value="Year Graduated" />
+                        </div>
                         <select id="year_graduated" v-model="form.year_graduated"
                             class="border-gray-300 focus:border-green-300 focus:ring focus:ring-green-200 focus:ring-opacity-50 rounded-md shadow-sm w-full">
                             <option value="" disabled>
@@ -497,7 +535,10 @@ const remove_image = (key) => {
                         <InputError class="mt-2" :message="form.errors.nickname" />
                     </div>
                     <div class="col-span-3">
-                        <InputLabel class="mt-6" for="nickname" value="Upload ID for verification" />
+                        <div class="flex">
+                            <p class="text-red-600 mr-1 mt-6">*</p>
+                            <InputLabel class="mt-6" for="nickname" value="Upload ID for verification" />
+                        </div>
                         <div class="w-full h-10 flex justify-between ">
                             <div class="flex">
                                 <a @click="openFile()" class="flex h-full items-center cursor-pointer">

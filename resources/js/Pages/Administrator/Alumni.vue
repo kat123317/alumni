@@ -624,10 +624,7 @@ const remove_image = (key) => {
                                 .value.graduates.data" :key="index">
                                 <th scope="row" class="py-4 px-6 font-medium text-gray-900">
                                     <div class="pl-3">
-                                        <img class="w-20 h-20 rounded-full" :src="
-                                            '/images/graduates/' +
-                                            graduate.details.profile_picture
-                                        " alt="" />
+                                        <img class="w-20 h-20 rounded-full" :src="(graduate.user?.profile_photo_url != null) ? graduate.user?.profile_photo_url:'./../img/logo.jpg'" alt="" />
                                         <div class="text-base font-semibold">
                                             <span>{{ graduate.firstname }}
                                             </span>
@@ -777,14 +774,14 @@ const remove_image = (key) => {
                                             class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                                     </div>
                                 </div>
-                                <div class="p-2 w-full">
+                                <!-- <div class="p-2 w-full">
                                     <div class="relative">
                                         <label for="image" class="leading-7 text-sm text-gray-600">Image</label>
                                         <input v-model="image_name" type="text" id="image" name="image" readonly
                                             class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                                     </div>
-                                </div>
-                                <div class="p-2 w-full">
+                                </div> -->
+                                <!-- <div class="p-2 w-full">
                                     <div class="relative">
                                         <input id="alumni-hidden-input_update" type="file" class="hidden"
                                             accept="image/png, image/gif, image/jpeg" />
@@ -793,7 +790,7 @@ const remove_image = (key) => {
                                             Select Image
                                         </button>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="p-2 w-full">
                                     <div class="relative">
                                         <label for="email" class="leading-7 text-sm text-gray-600">Add Achievement</label>

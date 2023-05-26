@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class UserController extends Controller
 {
@@ -193,6 +194,9 @@ class UserController extends Controller
             $graduate_to_update -> update([
                 'user_id' => $user->id
             ]);
+            return Inertia::render('Auth/Register', [
+                'message_notification' => 'You may login your account now.'
+            ]);
         }
         else{
             $user = User::create([
@@ -219,8 +223,12 @@ class UserController extends Controller
                 'is_processed' => false
             ]);
             // return Redirect::route('login');
+
+            return Inertia::render('Auth/Register', [
+                'message_notification' => 'Your registration will be verified by the admin, wait for the confirmation on your respected
+                email. Make sure that the email you use for the registration is active.'
+            ]);
         }
-        return Redirect::back();
     }
 
     public function deactivate_user(Request $request, $id){
