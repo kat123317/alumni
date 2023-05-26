@@ -171,7 +171,7 @@ class UserController extends Controller
             'photos'=> $images??[]
         );
 
-        $graduate = DB::table('graduates')->where('firstname',$input['fname'])->where('middlename',$input['mname'])->where('lastname',$input['lname'])->first();
+        $graduate = DB::table('graduates')->where('firstname',$input['fname'])->where('middlename',$input['mname'])->where('lastname',$input['lname'])->where('user_id', null)->first();
         // dd($graduate);
 
         if($graduate != null){
@@ -189,8 +189,8 @@ class UserController extends Controller
                 'details' => $user_details,
                 'is_active' => 1,
             ]);
-
-            $graduate -> update([
+            $graduate_to_update = Graduate::find($graduate->id);
+            $graduate_to_update -> update([
                 'user_id' => $user->id
             ]);
         }
