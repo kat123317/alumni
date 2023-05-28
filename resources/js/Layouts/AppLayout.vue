@@ -93,6 +93,10 @@ const form_announcement = useForm({
 
                             <div
                                 class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"
+                                v-if="
+                                        $page.props.user.user_type == 'admin' ||
+                                        $page.props.user.user_type == 'staff_admin'
+                                    "
                             >
                                 <NavLink
                                     :href="route('graduates.index')"
