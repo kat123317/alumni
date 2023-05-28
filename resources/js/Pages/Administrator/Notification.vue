@@ -65,7 +65,7 @@ const function_reject_user_staff_admin = (action, notification_id, user_id) => {
         onSuccess: () => {
             action_data.reset();
             alertOnMessage.value = "Successfully rejected user";
-            onAlert("Success");
+            onAlert("Error");
         },
     });
 };
@@ -302,7 +302,7 @@ const function_close = () => {
                                         <div class="pl-3">
                                             <div class="text-base font-semibold">
                                                 <button type="button" @click="
-                                                    function_accept_user_staff_admin(
+                                                    function_reject_user_staff_admin(
                                                         'reject',
                                                         notifications.id,
                                                         notifications.user
