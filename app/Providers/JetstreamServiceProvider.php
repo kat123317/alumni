@@ -43,9 +43,9 @@ class JetstreamServiceProvider extends ServiceProvider
             // dd($user);
             if ($user == null) {
                 throw ValidationException::withMessages([
-                    'custom'=> "Sorry! looks like the email you entered is not in the system",
+                    'custom' => "Sorry! looks like the email you entered is not in the system",
                 ]);
-            }else{
+            } else {
                 $d = Carbon::today()->format('Y-m-d');
 
                 $ciphering = "AES-128-CTR";
@@ -54,73 +54,60 @@ class JetstreamServiceProvider extends ServiceProvider
                 $authentication = Authentication::first();
                 $due = $authentication->due;
                 $key = $authentication->key;
-    
+
                 $decryption = openssl_decrypt($due, $ciphering, $key, $options, $encryption_iv);
                 $ans = false;
-                if(strtotime($d) <= strtotime($decryption)){
+                if (strtotime($decryption) >= strtotime($d)) {
                     $ans = true;
+                } else {
+                    $ans = false;
                 }
-                else{
-                    $ans =false;
-                }
-                if($authentication->due == null){
+                if ($authentication->due == null) {
                     throw ValidationException::withMessages([
-                        'custom'=> "Sorry! The system has been expired",
+                        'custom' => "Sorry! The system has been expired",
                     ]);
-                }
-                elseif($authentication->key == null){
+                } elseif ($authentication->key == null) {
                     throw ValidationException::withMessages([
-                        'custom'=> "Sorry! The system has been expired",
+                        'custom' => "Sorry! The system has been expired",
                     ]);
-                }
-                elseif($ans == false){
+                } elseif ($ans == true) {
                     throw ValidationException::withMessages([
-                        'custom'=> "Sorry! The system has been expired",
+                        'custom' => "Sorry! The system has been expired",
                     ]);
-                }
-                else{
-                    try{
-                        if(Hash::check($request->password, $user->password)){
+                } else {
+                    try {
+                        if (Hash::check($request->password, $user->password)) {
                             if ($user->status == 'approved') {
-                                if($user->is_active == 0){
+                                if ($user->is_active == 0) {
                                     throw ValidationException::withMessages([
-                                        'custom'=> "Sorry! Your account has been deactivated by the administrators.",
+                                        'custom' => "Sorry! Your account has been deactivated by the administrators.",
                                     ]);
-                                }
-                                else{
+                                } else {
                                     return $user;
                                 }
-                            }
-                            elseif($user->status == 'rejected'){
+                            } elseif ($user->status == 'rejected') {
                                 throw ValidationException::withMessages([
-                                    'custom'=> "Sorry! Your account has been decline by the administrators.",
+                                    'custom' => "Sorry! Your account has been decline by the administrators.",
+                                ]);
+                            } elseif ($user->status == 'pre_approved') {
+                                throw ValidationException::withMessages([
+                                    'custom' => "Sorry! Your account has been pre-approved by the administrators.",
+                                ]);
+                            } else {
+                                throw ValidationException::withMessages([
+                                    'custom' => "Sorry! Your account is not yet validated by the administrators.",
                                 ]);
                             }
-                            elseif($user->status == 'pre_approved'){
-                                throw ValidationException::withMessages([
-                                    'custom'=> "Sorry! Your account has been pre-approved by the administrators.",
-                                ]);
-                            }
-                            
-                            else {
-                                throw ValidationException::withMessages([
-                                    'custom'=> "Sorry! Your account is not yet validated by the administrators.",
-                                ]);
-                            }
-                        }
-                        else{
+                        } else {
                             throw ValidationException::withMessages([
                                 'custom' => "Opps! wrong password",
                             ]);
                         }
-                        
-                    }
-                    catch(DecryptException $e){
+                    } catch (DecryptException $e) {
                         throw ValidationException::withMessages([
                             'custom' => "Opps! These credentials do not match our records.",
                         ]);
                     }
-    
                 }
             }
         });

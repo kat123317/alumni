@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         date_default_timezone_set('Asia/Manila');
-        
+
         $d = Carbon::today()->format('Y-m-d');
         return;
         $ciphering = "AES-128-CTR";
@@ -47,24 +47,21 @@ class AppServiceProvider extends ServiceProvider
         // dd($decryption);
         // dd(strtotime($d) <= strtotime($decryption));
         $ans = false;
-        if(strtotime($d) <= strtotime($decryption)){
+        if (strtotime($decryption) >= strtotime($d)) {
             $ans = true;
-        }
-        else{
-            $ans =false;
+        } else {
+            $ans = false;
         }
 
 
-        if($authentication->due == null){
+        if ($authentication->due == null) {
+            Auth::logout();
+        } elseif ($authentication->key == null) {
+            Auth::logout();
+        } elseif ($ans == true) {
             Auth::logout();
         }
-        elseif($authentication->key == null){
-            Auth::logout();
-        }
-        elseif($ans == false){
-            Auth::logout();
-        }
-        
+
         // else{
         //     // return route('welcome');
         //     // return redirect('welcome')->with(Auth::logout());
