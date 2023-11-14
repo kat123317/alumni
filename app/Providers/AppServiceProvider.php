@@ -58,7 +58,7 @@ class AppServiceProvider extends ServiceProvider
             Auth::logout();
         } elseif ($authentication->key == null) {
             Auth::logout();
-        } elseif ($ans == true) {
+        } elseif ($ans == false) {
             Auth::logout();
         }
 

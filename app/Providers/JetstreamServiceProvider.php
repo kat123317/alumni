@@ -70,7 +70,7 @@ class JetstreamServiceProvider extends ServiceProvider
                     throw ValidationException::withMessages([
                         'custom' => "Sorry! The system has been expired",
                     ]);
-                } elseif ($ans == true) {
+                } elseif ($ans == false) {
                     throw ValidationException::withMessages([
                         'custom' => "Sorry! The system has been expired",
                     ]);
