@@ -57,10 +57,16 @@ class JetstreamServiceProvider extends ServiceProvider
 
                 $decryption = openssl_decrypt($due, $ciphering, $key, $options, $encryption_iv);
                 $ans = false;
-                if (strtotime($decryption) >= strtotime($d)) {
-                    $ans = true;
+                if (strtotime($decryption) === false) {
+                    throw ValidationException::withMessages([
+                        'custom' => "Looks like the inputed code is invalid, please update!",
+                    ]);
                 } else {
-                    $ans = false;
+                    if (strtotime($decryption) >= strtotime($d)) {
+                        $ans = true;
+                    } else {
+                        $ans = false;
+                    }
                 }
                 if ($authentication->due == null) {
                     throw ValidationException::withMessages([

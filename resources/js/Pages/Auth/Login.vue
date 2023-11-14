@@ -36,11 +36,11 @@ watch(() => {
     ) {
         button_expire.value = true;
     }
+    else if (form.errors.custom ==
+        "Looks like the inputed code is invalid, please update!") {
+        button_expire.value = true;
+    }
 });
-// const x = ref(0);
-// watch(x.value, (newX) => {
-//     console.log(`x is ${newX}`);
-// });
 
 const submit = () => {
     form.transform((data) => ({
@@ -63,9 +63,13 @@ const update_expiry = () => {
             preserveScroll: true,
             onSuccess: () => {
                 expire_data.reset();
-                alert("Updated the due date :)");
+                alert("Updated the due date)");
                 modal_expire.value = !modal_expire.value;
+                button_expire.value = false;
             },
+            onError: () => {
+                alert(expire_data.errors.expire_error);
+            }
         });
     }
 };
